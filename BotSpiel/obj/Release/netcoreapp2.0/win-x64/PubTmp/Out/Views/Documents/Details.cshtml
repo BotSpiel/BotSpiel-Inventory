@@ -1,0 +1,58 @@
+
+@model BotSpiel.DataAccess.Models.Documents
+
+@{
+    ViewBag.Title = "Details Documents";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Documents</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixDocument)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixDocument)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sDocument)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sDocument)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.DocumentMessageTypes.sDocumentMessageType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.DocumentMessageTypes.sDocumentMessageType, "Details", "DocumentMessageTypes", new { id = Model.ixDocumentMessageType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sVersion)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sVersion)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sRevision)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sRevision)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

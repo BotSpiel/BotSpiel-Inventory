@@ -1,0 +1,21 @@
+
+
+@model IEnumerable<BotSpiel.DataAccess.Models.InboundModuleGrids>
+
+@{
+    ViewBag.Title = "Index Inbound Module Grids";
+}
+<br>
+<h2>Inbound Module Grids</h2>
+
+<p>
+    @Html.ActionLink(" | Grid Export", "IndexExport")
+</p>
+
+<p>    
+    <button type="button" id="refresh-grid" class="btn btn-default content-refresh">Refresh Grid</button>
+</p>
+
+@Html.AjaxGrid(Url.Action("IndexGrid"), new { id = "inboundmodulegrids-ajax-grid" })
+ 
+

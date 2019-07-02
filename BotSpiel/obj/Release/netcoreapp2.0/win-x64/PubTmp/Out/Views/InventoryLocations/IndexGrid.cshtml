@@ -1,0 +1,72 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IInventoryLocationsService _inventorylocationsService
+@model IEnumerable<BotSpiel.DataAccess.Models.InventoryLocations>
+
+@{
+	List<SelectListItem> queryCompanies = new List<SelectListItem>();
+	queryCompanies.AddRange(_inventorylocationsService.selectCompanies().ToList().OrderBy(de => de.sCompany).Select(de => new SelectListItem() { Text = de.sCompany, Value = de.sCompany.ToString()}));
+	List<SelectListItem> queryFacilityAisleFaces = new List<SelectListItem>();
+	queryFacilityAisleFaces.AddRange(_inventorylocationsService.selectFacilityAisleFaces().ToList().OrderBy(de => de.sFacilityAisleFace).Select(de => new SelectListItem() { Text = de.sFacilityAisleFace, Value = de.sFacilityAisleFace.ToString()}));
+	List<SelectListItem> queryFacilityFloors = new List<SelectListItem>();
+	queryFacilityFloors.AddRange(_inventorylocationsService.selectFacilityFloors().ToList().OrderBy(de => de.sFacilityFloor).Select(de => new SelectListItem() { Text = de.sFacilityFloor, Value = de.sFacilityFloor.ToString()}));
+	List<SelectListItem> queryFacilityWorkAreas = new List<SelectListItem>();
+	queryFacilityWorkAreas.AddRange(_inventorylocationsService.selectFacilityWorkAreas().ToList().OrderBy(de => de.sFacilityWorkArea).Select(de => new SelectListItem() { Text = de.sFacilityWorkArea, Value = de.sFacilityWorkArea.ToString()}));
+	List<SelectListItem> queryFacilityZones = new List<SelectListItem>();
+	queryFacilityZones.AddRange(_inventorylocationsService.selectFacilityZones().ToList().OrderBy(de => de.sFacilityZone).Select(de => new SelectListItem() { Text = de.sFacilityZone, Value = de.sFacilityZone.ToString()}));
+	List<SelectListItem> queryInventoryLocationSizes = new List<SelectListItem>();
+	queryInventoryLocationSizes.AddRange(_inventorylocationsService.selectInventoryLocationSizes().ToList().OrderBy(de => de.sInventoryLocationSize).Select(de => new SelectListItem() { Text = de.sInventoryLocationSize, Value = de.sInventoryLocationSize.ToString()}));
+	List<SelectListItem> queryLocationFunctions = new List<SelectListItem>();
+	queryLocationFunctions.AddRange(_inventorylocationsService.selectLocationFunctions().ToList().OrderBy(de => de.sLocationFunction).Select(de => new SelectListItem() { Text = de.sLocationFunction, Value = de.sLocationFunction.ToString()}));
+	List<SelectListItem> queryUnitsOfMeasurement = new List<SelectListItem>();
+	queryUnitsOfMeasurement.AddRange(_inventorylocationsService.selectUnitsOfMeasurement().ToList().OrderBy(de => de.sUnitOfMeasurement).Select(de => new SelectListItem() { Text = de.sUnitOfMeasurement, Value = de.sUnitOfMeasurement.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixInventoryLocation, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixInventoryLocation).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixInventoryLocation }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixInventoryLocationEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixInventoryLocation }, new { @class = "modal-link" }));
+				columns.Add(model => model.sInventoryLocation).Titled("Inventory Location").Sortable(true).Filterable(true);
+				columns.Add(model => model.LocationFunctions.sLocationFunction).Titled("Location Function").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryLocationFunctions);
+				columns.Add(model => model.FacilityFloors.sFacilityFloor).Titled("Facility Floor").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilityFloors);
+				columns.Add(model => model.FacilityZones.sFacilityZone).Titled("Facility Zone").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilityZones);
+				columns.Add(model => model.FacilityWorkAreas.sFacilityWorkArea).Titled("Facility Work Area").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilityWorkAreas);
+				columns.Add(model => model.FacilityAisleFaces.sFacilityAisleFace).Titled("Facility Aisle Face").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilityAisleFaces);
+				columns.Add(model => model.sLevel).Titled("Level").Sortable(true).Filterable(true);
+				columns.Add(model => model.sBay).Titled("Bay").Sortable(true).Filterable(true);
+				columns.Add(model => model.sSlot).Titled("Slot").Sortable(true).Filterable(true);
+				columns.Add(model => model.nSequence).Titled("Sequence").Sortable(true).Filterable(true);
+				columns.Add(model => model.nXOffset).Titled("X Offset").Sortable(true).Filterable(true);
+				columns.Add(model => model.nYOffset).Titled("Y Offset").Sortable(true).Filterable(true);
+				columns.Add(model => model.nZOffset).Titled("Z Offset").Sortable(true).Filterable(true);
+				columns.Add(model => model.sLatitude).Titled("Latitude").Sortable(true).Filterable(true);
+				columns.Add(model => model.sLongitude).Titled("Longitude").Sortable(true).Filterable(true);
+				columns.Add(model => model.bTrackUtilisation).Titled("Track Utilisation").Sortable(true).Filterable(true);
+				columns.Add(model => model.nUtilisationPercent).Titled("Utilisation Percent").Sortable(true).Filterable(true);
+				columns.Add(model => model.nQueuedUtilisationPercent).Titled("Queued Utilisation Percent").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("inventorylocations-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

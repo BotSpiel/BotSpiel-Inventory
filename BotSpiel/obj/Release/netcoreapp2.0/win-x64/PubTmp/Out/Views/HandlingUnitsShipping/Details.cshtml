@@ -1,0 +1,46 @@
+
+@model BotSpiel.DataAccess.Models.HandlingUnitsShipping
+
+@{
+    ViewBag.Title = "Details Handling Units Shipping";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Handling Units Shipping</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixHandlingUnitShipping)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixHandlingUnitShipping)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sHandlingUnitShipping)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sHandlingUnitShipping)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.HandlingUnits.sHandlingUnit)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.HandlingUnits.sHandlingUnit, "Details", "HandlingUnits", new { id = Model.ixHandlingUnit }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

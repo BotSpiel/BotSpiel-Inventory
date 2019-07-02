@@ -1,0 +1,150 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
+@inject IOutboundOrdersService _outboundordersService
+@model BotSpiel.DataAccess.Models.OutboundOrders
+
+@{
+    ViewBag.Title = "Delete Outbound Orders";
+}
+
+@{
+    string conCat = "";
+    List<string> existInEntities = new List<string>();
+    bool DeleteOK = true;
+    existInEntities = _outboundordersService.VerifyOutboundOrderDeleteOK(Model.ixOutboundOrder, Model.sOutboundOrder);
+    if (existInEntities.Any()) { DeleteOK = false; }
+}
+
+
+@if (DeleteOK)
+{
+
+<br>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Outbound Orders</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixOutboundOrder)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixOutboundOrder)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sOutboundOrder)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sOutboundOrder)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sOrderReference)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sOrderReference)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.OutboundOrderTypes.sOutboundOrderType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.OutboundOrderTypes.sOutboundOrderType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Facilities.sFacility)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Facilities.sFacility)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Companies.sCompany)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Companies.sCompany)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.BusinessPartners.sBusinessPartner)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.BusinessPartners.sBusinessPartner)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtDeliverEarliest)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtDeliverEarliest)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtDeliverLatest)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtDeliverLatest)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.CarrierServices.sCarrierService)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.CarrierServices.sCarrierService)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Statuses.sStatus)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.PickBatches.sPickBatch)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.PickBatches.sPickBatch)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.OutboundShipments.sOutboundShipment)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.OutboundShipments.sOutboundShipment)
+		</dd>
+ 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+</div>
+}
+else
+{
+    <br>
+    <h2>Delete</h2>
+
+    <h3>The OutboundOrder @Model.sOutboundOrder cannot be deleted. It is referenced by the following entities:</h3>
+    <hr />
+    @foreach (var entity in existInEntities)
+    {
+        conCat = String.Join(" ", StringSplitters.SplitCamelCase(@entity.ToString()));
+        <h4>@Html.ActionLink(@conCat.ToString(), "Index", @entity.ToString())</h4>
+        <hr />
+    }
+
+    <h3>If you want to delete the OutboundOrder, delete the dependent references first.</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+
+}
+ 
+

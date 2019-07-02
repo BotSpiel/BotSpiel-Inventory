@@ -1,0 +1,93 @@
+
+@model BotSpiel.DataAccess.Models.CarriersPost
+
+@{
+    ViewBag.Title = "Create Carriers";
+}
+<br>
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Carriers</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sCarrier, "Carrier", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sCarrier, new { htmlAttributes = new { @class = "form-control", @Value = @Html.Raw(""), @placeholder = "Required" } })
+                @Html.ValidationMessageFor(model => model.sCarrier, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Carrier Type ID", "Index", "CarrierTypes", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixCarrierType", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixCarrierType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sStandardCarrierAlphaCode, "Standard Carrier Alpha Code", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sStandardCarrierAlphaCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sStandardCarrierAlphaCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sCarrierConsignmentNumberPrefix, "Carrier Consignment Number Prefix", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sCarrierConsignmentNumberPrefix, new { htmlAttributes = new { @class = "form-control", @placeholder = "Required" } })
+                @Html.ValidationMessageFor(model => model.sCarrierConsignmentNumberPrefix, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nCarrierConsignmentNumberStart, "Carrier Consignment Number Start", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nCarrierConsignmentNumberStart, new { htmlAttributes = new { @class = "form-control", @placeholder = "Required" } })
+                @Html.ValidationMessageFor(model => model.nCarrierConsignmentNumberStart, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nCarrierConsignmentNumberLastUsed, "Carrier Consignment Number Last Used", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nCarrierConsignmentNumberLastUsed, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nCarrierConsignmentNumberLastUsed, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dtScheduledPickupTime, "Scheduled Pickup Time", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dtScheduledPickupTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.dtScheduledPickupTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Grid", "Index")
+</div>
+
+@section Scripts {
+}
+
+ 
+

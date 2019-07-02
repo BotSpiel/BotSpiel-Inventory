@@ -1,0 +1,36 @@
+
+@model BotSpiel.DataAccess.Models.Companies
+
+@{
+    ViewBag.Title = "Details Companies";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Companies</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixCompany)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixCompany)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCompany)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCompany)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixCompany }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixCompany }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

@@ -1,0 +1,46 @@
+
+@model BotSpiel.DataAccess.Models.Countries
+
+@{
+    ViewBag.Title = "Details Countries";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Countries</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixCountry)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixCountry)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCountry)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCountry)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.PlanetSubRegions.sPlanetSubRegion)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.PlanetSubRegions.sPlanetSubRegion, "Details", "PlanetSubRegions", new { id = Model.ixPlanetSubRegion }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCountryCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCountryCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

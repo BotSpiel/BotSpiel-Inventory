@@ -1,0 +1,64 @@
+
+@model BotSpiel.DataAccess.Models.CountryLocations
+
+@{
+    ViewBag.Title = "Details Country Locations";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Country Locations</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixCountryLocation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixCountryLocation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCountryLocation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCountryLocation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.CountrySubDivisions.sCountrySubDivision)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.CountrySubDivisions.sCountrySubDivision, "Details", "CountrySubDivisions", new { id = Model.ixCountrySubDivision }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLocationCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLocationCode)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sNameWithoutDiacritics)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sNameWithoutDiacritics)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLatitude)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLatitude)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLongitude)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLongitude)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

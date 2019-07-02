@@ -1,0 +1,9 @@
+C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.DataAccess\bin\Release\netstandard2.0\BotSpiel.DataAccess.deps.json
+C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.DataAccess\bin\Release\netstandard2.0\BotSpiel.DataAccess.dll
+C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.DataAccess\bin\Release\netstandard2.0\BotSpiel.DataAccess.pdb
+C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.DataAccess\obj\Release\netstandard2.0\BotSpiel.DataAccess.csprojAssemblyReference.cache
+C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.DataAccess\obj\Release\netstandard2.0\BotSpiel.DataAccess.csproj.CoreCompileInputs.cache
+C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.DataAccess\obj\Release\netstandard2.0\BotSpiel.DataAccess.AssemblyInfoInputs.cache
+C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.DataAccess\obj\Release\netstandard2.0\BotSpiel.DataAccess.AssemblyInfo.cs
+C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.DataAccess\obj\Release\netstandard2.0\BotSpiel.DataAccess.dll
+C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.DataAccess\obj\Release\netstandard2.0\BotSpiel.DataAccess.pdb

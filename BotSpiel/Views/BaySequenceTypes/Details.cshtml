@@ -1,0 +1,34 @@
+
+@model BotSpiel.DataAccess.Models.BaySequenceTypes
+
+@{
+    ViewBag.Title = "Details Bay Sequence Types";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Bay Sequence Types</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixBaySequenceType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixBaySequenceType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBaySequenceType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBaySequenceType)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

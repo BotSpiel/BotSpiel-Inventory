@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.DocumentMessageTypes
+
+@{
+    ViewBag.Title = "Details Document Message Types";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Document Message Types</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixDocumentMessageType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixDocumentMessageType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sDocumentMessageType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sDocumentMessageType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sDocumentMessageTypeCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sDocumentMessageTypeCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

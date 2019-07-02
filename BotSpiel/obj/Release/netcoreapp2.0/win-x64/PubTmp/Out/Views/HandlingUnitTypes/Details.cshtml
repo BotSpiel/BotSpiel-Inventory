@@ -1,0 +1,34 @@
+
+@model BotSpiel.DataAccess.Models.HandlingUnitTypes
+
+@{
+    ViewBag.Title = "Details Handling Unit Types";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Handling Unit Types</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixHandlingUnitType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixHandlingUnitType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sHandlingUnitType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sHandlingUnitType)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

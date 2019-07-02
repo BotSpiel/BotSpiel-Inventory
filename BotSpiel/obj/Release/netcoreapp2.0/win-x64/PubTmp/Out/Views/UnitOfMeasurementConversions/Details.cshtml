@@ -1,0 +1,52 @@
+
+@model BotSpiel.DataAccess.Models.UnitOfMeasurementConversions
+
+@{
+    ViewBag.Title = "Details Unit Of Measurement Conversions";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Unit Of Measurement Conversions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixUnitOfMeasurementConversion)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixUnitOfMeasurementConversion)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sUnitOfMeasurementConversion)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sUnitOfMeasurementConversion)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixUnitOfMeasurementFrom)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.UnitsOfMeasurementFKDiffUnitOfMeasurementFrom.sUnitOfMeasurement, "Details", "UnitsOfMeasurement", new { id = Model.ixUnitOfMeasurementFrom }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixUnitOfMeasurementTo)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.UnitsOfMeasurementFKDiffUnitOfMeasurementTo.sUnitOfMeasurement, "Details", "UnitsOfMeasurement", new { id = Model.ixUnitOfMeasurementTo }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nMultiplier)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nMultiplier)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

@@ -1,0 +1,178 @@
+
+@model BotSpiel.DataAccess.Models.InventoryUnitTransactions
+
+@{
+    ViewBag.Title = "Details Inventory Unit Transactions";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Inventory Unit Transactions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryUnitTransaction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixInventoryUnitTransaction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sInventoryUnitTransaction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sInventoryUnitTransaction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InventoryUnits.sInventoryUnit)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InventoryUnits.sInventoryUnit, "Details", "InventoryUnits", new { id = Model.ixInventoryUnit }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InventoryUnitTransactionContexts.sInventoryUnitTransactionContext)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InventoryUnitTransactionContexts.sInventoryUnitTransactionContext, "Details", "InventoryUnitTransactionContexts", new { id = Model.ixInventoryUnitTransactionContext }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixFacilityBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.FacilitiesFKDiffFacilityBefore.sFacility)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixFacilityAfter)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.FacilitiesFKDiffFacilityAfter.sFacility, "Details", "Facilities", new { id = Model.ixFacilityAfter }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixCompanyBefore)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.CompaniesFKDiffCompanyBefore.sCompany, "Details", "Companies", new { id = Model.ixCompanyBefore }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixCompanyAfter)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.CompaniesFKDiffCompanyAfter.sCompany, "Details", "Companies", new { id = Model.ixCompanyAfter }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixMaterialBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.MaterialsFKDiffMaterialBefore.sMaterial)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixMaterialAfter)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.MaterialsFKDiffMaterialAfter.sMaterial, "Details", "Materials", new { id = Model.ixMaterialAfter }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryStateBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryStatesFKDiffInventoryStateBefore.sInventoryState)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryStateAfter)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InventoryStatesFKDiffInventoryStateAfter.sInventoryState, "Details", "InventoryStates", new { id = Model.ixInventoryStateAfter }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixHandlingUnitBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.HandlingUnitsFKDiffHandlingUnitBefore.sHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixHandlingUnitAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.HandlingUnitsFKDiffHandlingUnitAfter.sHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryLocationBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryLocationsFKDiffInventoryLocationBefore.sInventoryLocation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryLocationAfter)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InventoryLocationsFKDiffInventoryLocationAfter.sInventoryLocation, "Details", "InventoryLocations", new { id = Model.ixInventoryLocationAfter }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantityBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantityBefore)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantityAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantityAfter)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sSerialNumberBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sSerialNumberBefore)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sSerialNumberAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sSerialNumberAfter)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBatchNumberBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBatchNumberBefore)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBatchNumberAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBatchNumberAfter)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtExpireAtBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtExpireAtBefore)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtExpireAtAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtExpireAtAfter)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixStatusBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.StatusesFKDiffStatusBefore.sStatus)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixStatusAfter)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.StatusesFKDiffStatusAfter.sStatus, "Details", "Statuses", new { id = Model.ixStatusAfter }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

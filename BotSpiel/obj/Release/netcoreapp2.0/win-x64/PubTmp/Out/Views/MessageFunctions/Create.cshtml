@@ -1,0 +1,53 @@
+
+@model BotSpiel.DataAccess.Models.MessageFunctionsPost
+
+@{
+    ViewBag.Title = "Create Message Functions";
+}
+<br>
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Message Functions</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sMessageFunction, "Message Function", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sMessageFunction, new { htmlAttributes = new { @class = "form-control", @Value = @Html.Raw(""), @placeholder = "Required" } })
+                @Html.ValidationMessageFor(model => model.sMessageFunction, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sMessageFunctionCode, "Message Function Code", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sMessageFunctionCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Required" } })
+                @Html.ValidationMessageFor(model => model.sMessageFunctionCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Grid", "Index")
+</div>
+
+@section Scripts {
+}
+
+ 
+

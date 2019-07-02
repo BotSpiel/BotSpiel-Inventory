@@ -1,0 +1,48 @@
+
+@model BotSpiel.DataAccess.Models.BotspielBotMessages
+
+@{
+    ViewBag.Title = "Details Botspiel Bot Messages";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Botspiel Bot Messages</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixBotspielBotMessage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixBotspielBotMessage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBotspielBotMessage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBotspielBotMessage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMyMessage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMyMessage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sYourReply)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sYourReply)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixBotspielBotMessage }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixBotspielBotMessage }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

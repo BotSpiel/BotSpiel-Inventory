@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.DateTimePeriodFunctions
+
+@{
+    ViewBag.Title = "Details Date Time Period Functions";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Date Time Period Functions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixDateTimePeriodFunction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixDateTimePeriodFunction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sDateTimePeriodFunction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sDateTimePeriodFunction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sDateTimePeriodFunctionCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sDateTimePeriodFunctionCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

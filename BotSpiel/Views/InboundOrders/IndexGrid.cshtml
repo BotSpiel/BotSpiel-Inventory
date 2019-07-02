@@ -1,0 +1,56 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IInboundOrdersService _inboundordersService
+@model IEnumerable<BotSpiel.DataAccess.Models.InboundOrders>
+
+@{
+	List<SelectListItem> queryBusinessPartners = new List<SelectListItem>();
+	queryBusinessPartners.AddRange(_inboundordersService.selectBusinessPartners().ToList().OrderBy(de => de.sBusinessPartner).Select(de => new SelectListItem() { Text = de.sBusinessPartner, Value = de.sBusinessPartner.ToString()}));
+	List<SelectListItem> queryCompanies = new List<SelectListItem>();
+	queryCompanies.AddRange(_inboundordersService.selectCompanies().ToList().OrderBy(de => de.sCompany).Select(de => new SelectListItem() { Text = de.sCompany, Value = de.sCompany.ToString()}));
+	List<SelectListItem> queryFacilities = new List<SelectListItem>();
+	queryFacilities.AddRange(_inboundordersService.selectFacilities().ToList().OrderBy(de => de.sFacility).Select(de => new SelectListItem() { Text = de.sFacility, Value = de.sFacility.ToString()}));
+	List<SelectListItem> queryInboundOrderTypes = new List<SelectListItem>();
+	queryInboundOrderTypes.AddRange(_inboundordersService.selectInboundOrderTypes().ToList().OrderBy(de => de.sInboundOrderType).Select(de => new SelectListItem() { Text = de.sInboundOrderType, Value = de.sInboundOrderType.ToString()}));
+	List<SelectListItem> queryStatuses = new List<SelectListItem>();
+	queryStatuses.AddRange(_inboundordersService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixInboundOrder, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixInboundOrder).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixInboundOrder }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixInboundOrderEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixInboundOrder }, new { @class = "modal-link" }));
+				columns.Add(model => model.sInboundOrder).Titled("Inbound Order").Sortable(true).Filterable(true);
+				columns.Add(model => model.sOrderReference).Titled("Order Reference").Sortable(true).Filterable(true);
+				columns.Add(model => model.InboundOrderTypes.sInboundOrderType).Titled("Inbound Order Type").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInboundOrderTypes);
+				columns.Add(model => model.Facilities.sFacility).Titled("Facility").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilities);
+				columns.Add(model => model.Companies.sCompany).Titled("Company").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCompanies);
+				columns.Add(model => model.BusinessPartners.sBusinessPartner).Titled("Business Partner").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryBusinessPartners);
+				columns.Add(model => model.dtExpectedAt).Titled("Expected At").Sortable(true).Filterable(true);
+				columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("inboundorders-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

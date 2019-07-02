@@ -1,0 +1,65 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IMoveQueuesService _movequeuesService
+@model IEnumerable<BotSpiel.DataAccess.Models.MoveQueues>
+
+@{
+	List<SelectListItem> queryHandlingUnits = new List<SelectListItem>();
+	queryHandlingUnits.AddRange(_movequeuesService.selectHandlingUnits().ToList().OrderBy(de => de.sHandlingUnit).Select(de => new SelectListItem() { Text = de.sHandlingUnit, Value = de.sHandlingUnit.ToString()}));
+	List<SelectListItem> queryInboundOrderLines = new List<SelectListItem>();
+	queryInboundOrderLines.AddRange(_movequeuesService.selectInboundOrderLines().ToList().OrderBy(de => de.sInboundOrderLine).Select(de => new SelectListItem() { Text = de.sInboundOrderLine, Value = de.sInboundOrderLine.ToString()}));
+	List<SelectListItem> queryInventoryLocations = new List<SelectListItem>();
+	queryInventoryLocations.AddRange(_movequeuesService.selectInventoryLocations().ToList().OrderBy(de => de.sInventoryLocation).Select(de => new SelectListItem() { Text = de.sInventoryLocation, Value = de.sInventoryLocation.ToString()}));
+	List<SelectListItem> queryInventoryUnits = new List<SelectListItem>();
+	queryInventoryUnits.AddRange(_movequeuesService.selectInventoryUnits().ToList().OrderBy(de => de.sInventoryUnit).Select(de => new SelectListItem() { Text = de.sInventoryUnit, Value = de.sInventoryUnit.ToString()}));
+	List<SelectListItem> queryMoveQueueContexts = new List<SelectListItem>();
+	queryMoveQueueContexts.AddRange(_movequeuesService.selectMoveQueueContexts().ToList().OrderBy(de => de.sMoveQueueContext).Select(de => new SelectListItem() { Text = de.sMoveQueueContext, Value = de.sMoveQueueContext.ToString()}));
+	List<SelectListItem> queryMoveQueueTypes = new List<SelectListItem>();
+	queryMoveQueueTypes.AddRange(_movequeuesService.selectMoveQueueTypes().ToList().OrderBy(de => de.sMoveQueueType).Select(de => new SelectListItem() { Text = de.sMoveQueueType, Value = de.sMoveQueueType.ToString()}));
+	List<SelectListItem> queryOutboundOrderLines = new List<SelectListItem>();
+	queryOutboundOrderLines.AddRange(_movequeuesService.selectOutboundOrderLines().ToList().OrderBy(de => de.sOutboundOrderLine).Select(de => new SelectListItem() { Text = de.sOutboundOrderLine, Value = de.sOutboundOrderLine.ToString()}));
+	List<SelectListItem> queryPickBatches = new List<SelectListItem>();
+	queryPickBatches.AddRange(_movequeuesService.selectPickBatches().ToList().OrderBy(de => de.sPickBatch).Select(de => new SelectListItem() { Text = de.sPickBatch, Value = de.sPickBatch.ToString()}));
+	List<SelectListItem> queryStatuses = new List<SelectListItem>();
+	queryStatuses.AddRange(_movequeuesService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixMoveQueue, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixMoveQueue).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixMoveQueue }, new { @class = "modal-link" }));
+				columns.Add(model => model.sMoveQueue).Titled("Move Queue").Sortable(true).Filterable(true);
+				columns.Add(model => model.MoveQueueTypes.sMoveQueueType).Titled("Move Queue Type").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryMoveQueueTypes);
+				columns.Add(model => model.MoveQueueContexts.sMoveQueueContext).Titled("Move Queue Context").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryMoveQueueContexts);
+				columns.Add(model => model.sPreferredResource).Titled("Preferred Resource").Sortable(true).Filterable(true);
+				columns.Add(model => model.nBaseUnitQuantity).Titled("Base Unit Quantity").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtStartBy).Titled("Start By").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtCompleteBy).Titled("Complete By").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtStartedAt).Titled("Started At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtCompletedAt).Titled("Completed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("movequeues-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

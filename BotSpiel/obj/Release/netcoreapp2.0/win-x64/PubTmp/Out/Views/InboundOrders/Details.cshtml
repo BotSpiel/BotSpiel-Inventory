@@ -1,0 +1,78 @@
+
+@model BotSpiel.DataAccess.Models.InboundOrders
+
+@{
+    ViewBag.Title = "Details Inbound Orders";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Inbound Orders</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInboundOrder)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixInboundOrder)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sInboundOrder)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sInboundOrder)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sOrderReference)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sOrderReference)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InboundOrderTypes.sInboundOrderType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InboundOrderTypes.sInboundOrderType, "Details", "InboundOrderTypes", new { id = Model.ixInboundOrderType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Facilities.sFacility)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Facilities.sFacility, "Details", "Facilities", new { id = Model.ixFacility }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Companies.sCompany)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Companies.sCompany, "Details", "Companies", new { id = Model.ixCompany }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.BusinessPartners.sBusinessPartner)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.BusinessPartners.sBusinessPartner, "Details", "BusinessPartners", new { id = Model.ixBusinessPartner }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtExpectedAt)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtExpectedAt)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixInboundOrder }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixInboundOrder }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

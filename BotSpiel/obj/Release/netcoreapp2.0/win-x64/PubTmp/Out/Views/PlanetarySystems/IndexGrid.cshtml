@@ -1,0 +1,41 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IPlanetarySystemsService _planetarysystemsService
+@model IEnumerable<BotSpiel.DataAccess.Models.PlanetarySystems>
+
+@{
+	List<SelectListItem> queryGalaxies = new List<SelectListItem>();
+	queryGalaxies.AddRange(_planetarysystemsService.selectGalaxies().ToList().OrderBy(de => de.sGalaxy).Select(de => new SelectListItem() { Text = de.sGalaxy, Value = de.sGalaxy.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixPlanetarySystem, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixPlanetarySystem).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixPlanetarySystem }, new { @class = "modal-link" }));
+				columns.Add(model => model.sPlanetarySystem).Titled("Planetary System").Sortable(true).Filterable(true);
+				columns.Add(model => model.Galaxies.sGalaxy).Titled("Galaxy").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryGalaxies);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("planetarysystems-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

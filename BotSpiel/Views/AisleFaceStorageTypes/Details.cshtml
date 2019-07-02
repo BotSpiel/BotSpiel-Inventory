@@ -1,0 +1,34 @@
+
+@model BotSpiel.DataAccess.Models.AisleFaceStorageTypes
+
+@{
+    ViewBag.Title = "Details Aisle Face Storage Types";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Aisle Face Storage Types</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixAisleFaceStorageType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixAisleFaceStorageType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sAisleFaceStorageType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sAisleFaceStorageType)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

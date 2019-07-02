@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.CommunicationMediums
+
+@{
+    ViewBag.Title = "Details Communication Mediums";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Communication Mediums</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixCommunicationMedium)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixCommunicationMedium)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCommunicationMedium)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCommunicationMedium)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCommunicationMediumCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCommunicationMediumCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

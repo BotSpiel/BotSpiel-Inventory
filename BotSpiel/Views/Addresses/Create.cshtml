@@ -1,0 +1,96 @@
+@model BotSpiel.DataAccess.Models.AddressesPost
+
+@{
+    ViewBag.Title = "Create Addresses";
+}
+<br>
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Addresses</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sStreetAndNumberOrPostOfficeBoxOne, "Street And Number Or Post Office Box One", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sStreetAndNumberOrPostOfficeBoxOne, new { htmlAttributes = new { @class = "form-control", @placeholder = "Required" } })
+                @Html.ValidationMessageFor(model => model.sStreetAndNumberOrPostOfficeBoxOne, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sStreetAndNumberOrPostOfficeBoxTwo, "Street And Number Or Post Office Box Two", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sStreetAndNumberOrPostOfficeBoxTwo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sStreetAndNumberOrPostOfficeBoxTwo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sStreetAndNumberOrPostOfficeBoxThree, "Street And Number Or Post Office Box Three", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sStreetAndNumberOrPostOfficeBoxThree, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sStreetAndNumberOrPostOfficeBoxThree, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sCityOrSuburb, "City Or Suburb", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sCityOrSuburb, new { htmlAttributes = new { @class = "form-control", @placeholder = "Required" } })
+                @Html.ValidationMessageFor(model => model.sCityOrSuburb, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sZipOrPostCode, "Zip Or Post Code", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sZipOrPostCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Required" } })
+                @Html.ValidationMessageFor(model => model.sZipOrPostCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("State Or Province ID", "Index", "CountrySubDivisions", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixStateOrProvince", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixStateOrProvince, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Country ID", "Index", "Countries", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*//Custom Code Start | Replaced Code Block
+                //Replaced Code Block Start
+                //@Html.DropDownList("ixCountry", null, htmlAttributes: new { @class = "form-control" })
+                //Replaced Code Block End*@
+                @Html.DropDownList("ixCountry", null, htmlAttributes: new { @class = "form-control", @onchange = "getCountrySubDivisionsForCountries()" })
+                @*//Custom Code End*@
+                @Html.ValidationMessageFor(model => model.ixCountry, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Grid", "Index")
+</div>
+
+@section Scripts {
+}
+
+ 

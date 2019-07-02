@@ -1,0 +1,90 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
+@inject ICarrierServicesService _carrierservicesService
+@model BotSpiel.DataAccess.Models.CarrierServices
+
+@{
+    ViewBag.Title = "Delete Carrier Services";
+}
+
+@{
+    string conCat = "";
+    List<string> existInEntities = new List<string>();
+    bool DeleteOK = true;
+    existInEntities = _carrierservicesService.VerifyCarrierServiceDeleteOK(Model.ixCarrierService, Model.sCarrierService);
+    if (existInEntities.Any()) { DeleteOK = false; }
+}
+
+
+@if (DeleteOK)
+{
+
+<br>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Carrier Services</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixCarrierService)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixCarrierService)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCarrierService)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCarrierService)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Carriers.sCarrier)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Carriers.sCarrier)
+		</dd>
+ 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+</div>
+}
+else
+{
+    <br>
+    <h2>Delete</h2>
+
+    <h3>The CarrierService @Model.sCarrierService cannot be deleted. It is referenced by the following entities:</h3>
+    <hr />
+    @foreach (var entity in existInEntities)
+    {
+        conCat = String.Join(" ", StringSplitters.SplitCamelCase(@entity.ToString()));
+        <h4>@Html.ActionLink(@conCat.ToString(), "Index", @entity.ToString())</h4>
+        <hr />
+    }
+
+    <h3>If you want to delete the CarrierService, delete the dependent references first.</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+
+}
+ 
+

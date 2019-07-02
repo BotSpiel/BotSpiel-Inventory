@@ -1,0 +1,61 @@
+
+@model BotSpiel.DataAccess.Models.CountrySubDivisionsPost
+
+@{
+    ViewBag.Title = "Create Country Sub Divisions";
+}
+<br>
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Country Sub Divisions</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sCountrySubDivision, "Country Sub Division", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sCountrySubDivision, new { htmlAttributes = new { @class = "form-control", @Value = @Html.Raw(""), @placeholder = "Required" } })
+                @Html.ValidationMessageFor(model => model.sCountrySubDivision, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Country ID", "Index", "Countries", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixCountry", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixCountry, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sCountrySubDivisionCode, "Country Sub Division Code", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sCountrySubDivisionCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Required" } })
+                @Html.ValidationMessageFor(model => model.sCountrySubDivisionCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Grid", "Index")
+</div>
+
+@section Scripts {
+}
+
+ 
+

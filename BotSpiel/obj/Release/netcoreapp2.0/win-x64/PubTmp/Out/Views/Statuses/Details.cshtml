@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.Statuses
+
+@{
+    ViewBag.Title = "Details Statuses";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Statuses</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixStatus)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixStatus)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sStatus)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sStatus)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sStatusCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sStatusCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

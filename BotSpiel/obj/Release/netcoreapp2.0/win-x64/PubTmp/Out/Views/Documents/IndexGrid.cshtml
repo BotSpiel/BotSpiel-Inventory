@@ -1,0 +1,46 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IDocumentsService _documentsService
+@model IEnumerable<BotSpiel.DataAccess.Models.Documents>
+
+@{
+	List<SelectListItem> queryDocumentMessageTypes = new List<SelectListItem>();
+	queryDocumentMessageTypes.AddRange(_documentsService.selectDocumentMessageTypes().ToList().OrderBy(de => de.sDocumentMessageType).Select(de => new SelectListItem() { Text = de.sDocumentMessageType, Value = de.sDocumentMessageType.ToString()}));
+	List<SelectListItem> queryStatuses = new List<SelectListItem>();
+	queryStatuses.AddRange(_documentsService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixDocument, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixDocument).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixDocument }, new { @class = "modal-link" }));
+				columns.Add(model => model.sDocument).Titled("Document").Sortable(true).Filterable(true);
+				columns.Add(model => model.DocumentMessageTypes.sDocumentMessageType).Titled("Document Message Type").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryDocumentMessageTypes);
+				columns.Add(model => model.sVersion).Titled("Version").Sortable(true).Filterable(true);
+				columns.Add(model => model.sRevision).Titled("Revision").Sortable(true).Filterable(true);
+				columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("documents-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

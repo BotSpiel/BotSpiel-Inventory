@@ -1,0 +1,62 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IReceivingService _receivingService
+@model IEnumerable<BotSpiel.DataAccess.Models.Receiving>
+
+@{
+	List<SelectListItem> queryHandlingUnits = new List<SelectListItem>();
+	queryHandlingUnits.AddRange(_receivingService.selectHandlingUnits().ToList().OrderBy(de => de.sHandlingUnit).Select(de => new SelectListItem() { Text = de.sHandlingUnit, Value = de.sHandlingUnit.ToString()}));
+	List<SelectListItem> queryHandlingUnitTypes = new List<SelectListItem>();
+	queryHandlingUnitTypes.AddRange(_receivingService.selectHandlingUnitTypes().ToList().OrderBy(de => de.sHandlingUnitType).Select(de => new SelectListItem() { Text = de.sHandlingUnitType, Value = de.sHandlingUnitType.ToString()}));
+	List<SelectListItem> queryInboundOrders = new List<SelectListItem>();
+	queryInboundOrders.AddRange(_receivingService.selectInboundOrders().ToList().OrderBy(de => de.sInboundOrder).Select(de => new SelectListItem() { Text = de.sInboundOrder, Value = de.sInboundOrder.ToString()}));
+	List<SelectListItem> queryInventoryLocations = new List<SelectListItem>();
+	queryInventoryLocations.AddRange(_receivingService.selectInventoryLocations().ToList().OrderBy(de => de.sInventoryLocation).Select(de => new SelectListItem() { Text = de.sInventoryLocation, Value = de.sInventoryLocation.ToString()}));
+	List<SelectListItem> queryMaterialHandlingUnitConfigurations = new List<SelectListItem>();
+	queryMaterialHandlingUnitConfigurations.AddRange(_receivingService.selectMaterialHandlingUnitConfigurations().ToList().OrderBy(de => de.sMaterialHandlingUnitConfiguration).Select(de => new SelectListItem() { Text = de.sMaterialHandlingUnitConfiguration, Value = de.sMaterialHandlingUnitConfiguration.ToString()}));
+	List<SelectListItem> queryMaterials = new List<SelectListItem>();
+	queryMaterials.AddRange(_receivingService.selectMaterials().ToList().OrderBy(de => de.sMaterial).Select(de => new SelectListItem() { Text = de.sMaterial, Value = de.sMaterial.ToString()}));
+	List<SelectListItem> queryStatuses = new List<SelectListItem>();
+	queryStatuses.AddRange(_receivingService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixReceipt, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixReceipt).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixReceipt }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixReceiptEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixReceipt }, new { @class = "modal-link" }));
+				columns.Add(model => model.sReceipt).Titled("Receipt").Sortable(true).Filterable(true);
+				columns.Add(model => model.InventoryLocations.sInventoryLocation).Titled("Inventory Location").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInventoryLocations);
+				columns.Add(model => model.InboundOrders.sInboundOrder).Titled("Inbound Order").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInboundOrders);
+				columns.Add(model => model.HandlingUnits.sHandlingUnit).Titled("Handling Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryHandlingUnits);
+				columns.Add(model => model.Materials.sMaterial).Titled("Material").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryMaterials);
+				columns.Add(model => model.nHandlingUnitQuantity).Titled("Handling Unit Quantity").Sortable(true).Filterable(true);
+				columns.Add(model => model.sBatchNumber).Titled("Batch Number").Sortable(true).Filterable(true);
+				columns.Add(model => model.sSerialNumber).Titled("Serial Number").Sortable(true).Filterable(true);
+				columns.Add(model => model.nBaseUnitQuantityReceived).Titled("Base Unit Quantity Received").Sortable(true).Filterable(true);
+				columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("receiving-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

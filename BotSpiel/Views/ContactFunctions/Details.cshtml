@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.ContactFunctions
+
+@{
+    ViewBag.Title = "Details Contact Functions";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Contact Functions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixContactFunction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixContactFunction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sContactFunction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sContactFunction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sContactFunctionCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sContactFunctionCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

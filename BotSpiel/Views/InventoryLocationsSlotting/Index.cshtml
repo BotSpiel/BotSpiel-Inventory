@@ -1,0 +1,23 @@
+
+
+@model IEnumerable<BotSpiel.DataAccess.Models.InventoryLocationsSlotting>
+
+@{
+    ViewBag.Title = "Index Inventory Locations Slotting";
+}
+<br>
+<h2>Inventory Locations Slotting</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink(" | Grid Export", "IndexExport")
+</p>
+
+<p>    
+    <button type="button" id="refresh-grid" class="btn btn-default content-refresh">Refresh Grid</button>
+    <button type="button" class="btn btn-default delete-rows" onclick="deleteRows('InventoryLocationsSlotting')">Delete Selected Rows</button>
+</p>
+
+@Html.AjaxGrid(Url.Action("IndexGrid"), new { id = "inventorylocationsslotting-ajax-grid" })
+ 
+

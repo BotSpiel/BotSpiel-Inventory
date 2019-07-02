@@ -1,0 +1,72 @@
+
+@model BotSpiel.DataAccess.Models.Carriers
+
+@{
+    ViewBag.Title = "Details Carriers";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Carriers</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixCarrier)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixCarrier)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCarrier)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCarrier)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.CarrierTypes.sCarrierType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.CarrierTypes.sCarrierType, "Details", "CarrierTypes", new { id = Model.ixCarrierType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sStandardCarrierAlphaCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sStandardCarrierAlphaCode)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCarrierConsignmentNumberPrefix)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCarrierConsignmentNumberPrefix)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nCarrierConsignmentNumberStart)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nCarrierConsignmentNumberStart)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nCarrierConsignmentNumberLastUsed)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nCarrierConsignmentNumberLastUsed)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtScheduledPickupTime)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtScheduledPickupTime)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixCarrier }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixCarrier }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

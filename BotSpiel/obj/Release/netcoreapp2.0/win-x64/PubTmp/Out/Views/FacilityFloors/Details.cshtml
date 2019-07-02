@@ -1,0 +1,36 @@
+
+@model BotSpiel.DataAccess.Models.FacilityFloors
+
+@{
+    ViewBag.Title = "Details Facility Floors";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Facility Floors</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixFacilityFloor)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixFacilityFloor)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sFacilityFloor)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sFacilityFloor)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixFacilityFloor }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixFacilityFloor }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

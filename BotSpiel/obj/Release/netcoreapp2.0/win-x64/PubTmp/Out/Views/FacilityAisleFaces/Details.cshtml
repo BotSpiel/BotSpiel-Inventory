@@ -1,0 +1,132 @@
+
+@model BotSpiel.DataAccess.Models.FacilityAisleFaces
+
+@{
+    ViewBag.Title = "Details Facility Aisle Faces";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Facility Aisle Faces</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixFacilityAisleFace)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixFacilityAisleFace)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sFacilityAisleFace)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sFacilityAisleFace)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.FacilityFloors.sFacilityFloor)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.FacilityFloors.sFacilityFloor, "Details", "FacilityFloors", new { id = Model.ixFacilityFloor }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nSequence)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nSequence)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.BaySequenceTypes.sBaySequenceType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.BaySequenceTypes.sBaySequenceType, "Details", "BaySequenceTypes", new { id = Model.ixBaySequenceType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixPairedAisleFace)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.FacilityAisleFacesFKDiffPairedAisleFace.sFacilityAisleFace)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.LogicalOrientations.sLogicalOrientation)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.LogicalOrientations.sLogicalOrientation, "Details", "LogicalOrientations", new { id = Model.ixLogicalOrientation }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.AisleFaceStorageTypes.sAisleFaceStorageType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.AisleFaceStorageTypes.sAisleFaceStorageType, "Details", "AisleFaceStorageTypes", new { id = Model.ixAisleFaceStorageType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nXOffset)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nXOffset)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixXOffsetUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffXOffsetUnit.sUnitOfMeasurement)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nYOffset)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nYOffset)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixYOffsetUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffYOffsetUnit.sUnitOfMeasurement)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nLevels)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nLevels)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nDefaultNumberOfBays)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nDefaultNumberOfBays)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nDefaultNumberOfSlotsInBay)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nDefaultNumberOfSlotsInBay)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixDefaultFacilityZone)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.FacilityZonesFKDiffDefaultFacilityZone.sFacilityZone)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixDefaultLocationFunction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.LocationFunctionsFKDiffDefaultLocationFunction.sLocationFunction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixDefaultInventoryLocationSize)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InventoryLocationSizesFKDiffDefaultInventoryLocationSize.sInventoryLocationSize, "Details", "InventoryLocationSizes", new { id = Model.ixDefaultInventoryLocationSize }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixFacilityAisleFace }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixFacilityAisleFace }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

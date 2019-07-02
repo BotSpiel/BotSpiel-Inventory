@@ -1,0 +1,47 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject ICarriersService _carriersService
+@model IEnumerable<BotSpiel.DataAccess.Models.Carriers>
+
+@{
+	List<SelectListItem> queryCarrierTypes = new List<SelectListItem>();
+	queryCarrierTypes.AddRange(_carriersService.selectCarrierTypes().ToList().OrderBy(de => de.sCarrierType).Select(de => new SelectListItem() { Text = de.sCarrierType, Value = de.sCarrierType.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixCarrier, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixCarrier).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixCarrier }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixCarrierEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixCarrier }, new { @class = "modal-link" }));
+				columns.Add(model => model.sCarrier).Titled("Carrier").Sortable(true).Filterable(true);
+				columns.Add(model => model.CarrierTypes.sCarrierType).Titled("Carrier Type").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCarrierTypes);
+				columns.Add(model => model.sStandardCarrierAlphaCode).Titled("Standard Carrier Alpha Code").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCarrierConsignmentNumberPrefix).Titled("Carrier Consignment Number Prefix").Sortable(true).Filterable(true);
+				columns.Add(model => model.nCarrierConsignmentNumberStart).Titled("Carrier Consignment Number Start").Sortable(true).Filterable(true);
+				columns.Add(model => model.nCarrierConsignmentNumberLastUsed).Titled("Carrier Consignment Number Last Used").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtScheduledPickupTime).Titled("Scheduled Pickup Time").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("carriers-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

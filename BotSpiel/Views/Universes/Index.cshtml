@@ -1,0 +1,21 @@
+
+
+@model IEnumerable<BotSpiel.DataAccess.Models.Universes>
+
+@{
+    ViewBag.Title = "Index Universes";
+}
+<br>
+<h2>Universes</h2>
+
+<p>
+    @Html.ActionLink(" | Grid Export", "IndexExport")
+</p>
+
+<p>    
+    <button type="button" id="refresh-grid" class="btn btn-default content-refresh">Refresh Grid</button>
+</p>
+
+@Html.AjaxGrid(Url.Action("IndexGrid"), new { id = "universes-ajax-grid" })
+ 
+

@@ -1,0 +1,45 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IOutboundCarrierManifestPickupsService _outboundcarriermanifestpickupsService
+@model IEnumerable<BotSpiel.DataAccess.Models.OutboundCarrierManifestPickups>
+
+@{
+	List<SelectListItem> queryOutboundCarrierManifests = new List<SelectListItem>();
+	queryOutboundCarrierManifests.AddRange(_outboundcarriermanifestpickupsService.selectOutboundCarrierManifests().ToList().OrderBy(de => de.sOutboundCarrierManifest).Select(de => new SelectListItem() { Text = de.sOutboundCarrierManifest, Value = de.sOutboundCarrierManifest.ToString()}));
+	List<SelectListItem> queryStatuses = new List<SelectListItem>();
+	queryStatuses.AddRange(_outboundcarriermanifestpickupsService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixOutboundCarrierManifestPickup, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixOutboundCarrierManifestPickup).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixOutboundCarrierManifestPickup }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixOutboundCarrierManifestPickupEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixOutboundCarrierManifestPickup }, new { @class = "modal-link" }));
+				columns.Add(model => model.sOutboundCarrierManifestPickup).Titled("Outbound Carrier Manifest Pickup").Sortable(true).Filterable(true);
+				columns.Add(model => model.OutboundCarrierManifests.sOutboundCarrierManifest).Titled("Outbound Carrier Manifest").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryOutboundCarrierManifests);
+				columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("outboundcarriermanifestpickups-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

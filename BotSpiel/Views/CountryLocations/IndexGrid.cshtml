@@ -1,0 +1,45 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject ICountryLocationsService _countrylocationsService
+@model IEnumerable<BotSpiel.DataAccess.Models.CountryLocations>
+
+@{
+	List<SelectListItem> queryCountrySubDivisions = new List<SelectListItem>();
+	queryCountrySubDivisions.AddRange(_countrylocationsService.selectCountrySubDivisions().ToList().OrderBy(de => de.sCountrySubDivision).Select(de => new SelectListItem() { Text = de.sCountrySubDivision, Value = de.sCountrySubDivision.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixCountryLocation, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixCountryLocation).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixCountryLocation }, new { @class = "modal-link" }));
+				columns.Add(model => model.sCountryLocation).Titled("Country Location").Sortable(true).Filterable(true);
+				columns.Add(model => model.CountrySubDivisions.sCountrySubDivision).Titled("Country Sub Division").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCountrySubDivisions);
+				columns.Add(model => model.sLocationCode).Titled("Location Code").Sortable(true).Filterable(true);
+				columns.Add(model => model.sNameWithoutDiacritics).Titled("Name Without Diacritics").Sortable(true).Filterable(true);
+				columns.Add(model => model.sLatitude).Titled("Latitude").Sortable(true).Filterable(true);
+				columns.Add(model => model.sLongitude).Titled("Longitude").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("countrylocations-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

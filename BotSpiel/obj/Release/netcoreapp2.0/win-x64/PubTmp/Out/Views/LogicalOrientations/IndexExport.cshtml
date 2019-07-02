@@ -1,0 +1,16 @@
+@model IGrid<BotSpiel.DataAccess.Models.LogicalOrientations>
+
+@{
+    ViewBag.Title = "Index Logical Orientations Export";
+}
+<br>
+<h2>Logical Orientations Export</h2>
+
+<p>
+    <a href="@(Url.Action("ExportIndex") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+    @Html.ActionLink(" | Grid", "Index")
+</p>
+
+@(new HtmlGrid<BotSpiel.DataAccess.Models.LogicalOrientations>(Html, Model))
+ 
+

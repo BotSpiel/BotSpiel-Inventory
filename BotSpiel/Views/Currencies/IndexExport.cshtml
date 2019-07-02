@@ -1,0 +1,16 @@
+@model IGrid<BotSpiel.DataAccess.Models.Currencies>
+
+@{
+    ViewBag.Title = "Index Currencies Export";
+}
+<br>
+<h2>Currencies Export</h2>
+
+<p>
+    <a href="@(Url.Action("ExportIndex") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+    @Html.ActionLink(" | Grid", "Index")
+</p>
+
+@(new HtmlGrid<BotSpiel.DataAccess.Models.Currencies>(Html, Model))
+ 
+

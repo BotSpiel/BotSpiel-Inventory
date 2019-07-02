@@ -1,0 +1,52 @@
+
+@model BotSpiel.DataAccess.Models.OutboundOrderPacking
+
+@{
+    ViewBag.Title = "Details Outbound Order Packing";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Outbound Order Packing</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixOutboundOrderPack)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixOutboundOrderPack)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sOutboundOrderPack)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sOutboundOrderPack)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.OutboundOrderLines.sOutboundOrderLine)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.OutboundOrderLines.sOutboundOrderLine, "Details", "OutboundOrderLines", new { id = Model.ixOutboundOrderLine }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.HandlingUnits.sHandlingUnit)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.HandlingUnits.sHandlingUnit, "Details", "HandlingUnits", new { id = Model.ixHandlingUnit }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

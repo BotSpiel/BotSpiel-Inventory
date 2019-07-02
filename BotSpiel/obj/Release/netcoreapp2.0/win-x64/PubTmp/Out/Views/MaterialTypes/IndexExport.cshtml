@@ -1,0 +1,16 @@
+@model IGrid<BotSpiel.DataAccess.Models.MaterialTypes>
+
+@{
+    ViewBag.Title = "Index Material Types Export";
+}
+<br>
+<h2>Material Types Export</h2>
+
+<p>
+    <a href="@(Url.Action("ExportIndex") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+    @Html.ActionLink(" | Grid", "Index")
+</p>
+
+@(new HtmlGrid<BotSpiel.DataAccess.Models.MaterialTypes>(Html, Model))
+ 
+

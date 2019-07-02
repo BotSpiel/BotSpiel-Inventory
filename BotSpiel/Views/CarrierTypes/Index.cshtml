@@ -1,0 +1,21 @@
+
+
+@model IEnumerable<BotSpiel.DataAccess.Models.CarrierTypes>
+
+@{
+    ViewBag.Title = "Index Carrier Types";
+}
+<br>
+<h2>Carrier Types</h2>
+
+<p>
+    @Html.ActionLink(" | Grid Export", "IndexExport")
+</p>
+
+<p>    
+    <button type="button" id="refresh-grid" class="btn btn-default content-refresh">Refresh Grid</button>
+</p>
+
+@Html.AjaxGrid(Url.Action("IndexGrid"), new { id = "carriertypes-ajax-grid" })
+ 
+

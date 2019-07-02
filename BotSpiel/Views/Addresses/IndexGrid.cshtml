@@ -1,0 +1,59 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IAddressesService _addressesService
+@model IEnumerable<BotSpiel.DataAccess.Models.Addresses>
+
+@{
+    @*//Custom Code Start | Replaced Code Block
+        //Replaced Code Block Start
+        //List<SelectListItem> queryCountries = new List<SelectListItem>();
+        //queryCountries.AddRange(_addressesService.selectCountries().ToList().OrderBy(de => de.sCountry).Select(de => new SelectListItem() { Text = de.sCountry, Value = de.sCountry.ToString() }));
+        //List<SelectListItem> queryCountrySubDivisions = new List<SelectListItem>();
+        //queryCountrySubDivisions.AddRange(_addressesService.selectCountrySubDivisions().ToList().OrderBy(de => de.sCountrySubDivision).Select(de => new SelectListItem() { Text = de.sCountrySubDivision, Value = de.sCountrySubDivision.ToString() }));
+        //Replaced Code Block End*@
+    @*//Custom Code End*@
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixAddress, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixAddress).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixAddress }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixAddressEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixAddress }, new { @class = "modal-link" }));
+				columns.Add(model => model.sAddress).Titled("Address").Sortable(true).Filterable(true);
+				columns.Add(model => model.sStreetAndNumberOrPostOfficeBoxOne).Titled("Street And Number Or Post Office Box One").Sortable(true).Filterable(true);
+				columns.Add(model => model.sStreetAndNumberOrPostOfficeBoxTwo).Titled("Street And Number Or Post Office Box Two").Sortable(true).Filterable(true);
+				columns.Add(model => model.sStreetAndNumberOrPostOfficeBoxThree).Titled("Street And Number Or Post Office Box Three").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCityOrSuburb).Titled("City Or Suburb").Sortable(true).Filterable(true);
+				columns.Add(model => model.sZipOrPostCode).Titled("Zip Or Post Code").Sortable(true).Filterable(true);
+                @*//Custom Code Start | Replaced Code Block
+                //Replaced Code Block Start
+                //columns.Add(model => model.CountrySubDivisionsFKDiffStateOrProvince.sCountrySubDivision).Titled("State Or Province").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCountrySubDivisions);
+                //columns.Add(model => model.Countries.sCountry).Titled("Country").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCountries);
+                //Replaced Code Block End*@
+                columns.Add(model => model.CountrySubDivisionsFKDiffStateOrProvince.sCountrySubDivision).Titled("State Or Province").Sortable(true).Filterable(true).MultiFilterable(true);
+                columns.Add(model => model.Countries.sCountry).Titled("Country").Sortable(true).Filterable(true).MultiFilterable(true);
+                @*//Custom Code End*@
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("addresses-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 

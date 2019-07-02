@@ -1,0 +1,167 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BotSpiel Inventory</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/MvcGrid/mvc-grid.css" >
+    </environment>
+    <environment exclude="Development">
+        @*<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />*@
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/MvcGrid/mvc-grid.css">
+    </environment>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area=" asp-controller="BotspielBotMessages" asp-action="Create" class="navbar-brand">BotSpiel Inventory</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Inbound Operations<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Inbound Orders", "Index", "InboundOrders")</li>
+                            <li>@Html.ActionLink("Inbound Order Lines", "Index", "InboundOrderLines")</li>
+                            <li>@Html.ActionLink("Receiving", "Index", "Receiving")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Inventory<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Inventory Units", "Index", "InventoryUnits")</li>
+                            <li>@Html.ActionLink("Handling Units", "Index", "HandlingUnits")</li>
+                            <li>@Html.ActionLink("Materials", "Index", "Materials")</li>
+                            <li>@Html.ActionLink("Material Handling Unit Configurations", "Index", "MaterialHandlingUnitConfigurations")</li>
+                            <li>@Html.ActionLink("Inventory Locations Slotting", "Index", "InventoryLocationsSlotting")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Outbound Operations<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Outbound Orders", "Index", "OutboundOrders")</li>
+                            <li>@Html.ActionLink("Outbound Order Lines", "Index", "OutboundOrderLines")</li>
+                            <li>@Html.ActionLink("Pick Batches", "Index", "PickBatches")</li>
+                            <li>@Html.ActionLink("Outbound Shipments", "Index", "OutboundShipments")</li>
+                            <li>@Html.ActionLink("Outbound Carrier Manifests", "Index", "OutboundCarrierManifests")</li>
+                            <li>@Html.ActionLink("Outbound Carrier Manifest Pickups", "Index", "OutboundCarrierManifestPickups")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Network Definition<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("People", "Index", "People")</li>
+                            <li>@Html.ActionLink("Addresses", "Index", "Addresses")</li>
+                            <li>@Html.ActionLink("Facilities", "Index", "Facilities")</li>
+                            <li>@Html.ActionLink("Companies", "Index", "Companies")</li>
+                            <li>@Html.ActionLink("BusinessPartners", "Index", "BusinessPartners")</li>
+                            <li>@Html.ActionLink("Carriers", "Index", "Carriers")</li>
+                            <li>@Html.ActionLink("Carrier Services", "Index", "CarrierServices")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Facility Definition<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Facility Floors", "Index", "FacilityFloors")</li>
+                            <li>@Html.ActionLink("Facility Zones", "Index", "FacilityZones")</li>
+                            <li>@Html.ActionLink("Facility Work Areas", "Index", "FacilityWorkAreas")</li>
+                            <li>@Html.ActionLink("Inventory Location Sizes", "Index", "InventoryLocationSizes")</li>
+                            <li>@Html.ActionLink("Facility Aisle Faces", "Index", "FacilityAisleFaces")</li>
+                            <li>@Html.ActionLink("Inventory Locations", "Index", "InventoryLocations")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reference<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Foundation (TD)", "Indextx", "FoundationModuleGrids")</li>
+                            <li>@Html.ActionLink("Inbound (TD)", "Indextx", "InboundModuleGrids")</li>
+                            <li>@Html.ActionLink("Inventory (TD)", "Indextx", "InventoryModuleGrids")</li>
+                            <li>@Html.ActionLink("Outbound (TD)", "Indextx", "OutboundModuleGrids")</li>
+                            <li>@Html.ActionLink("Execution (TD)", "Indextx", "ExecutionModuleGrids")</li>
+                            <li>@Html.ActionLink("Foundation (MD)", "Indexmd", "FoundationModuleGrids")</li>
+                            <li>@Html.ActionLink("Network (MD)", "Indexmd", "NetworkModuleGrids")</li>
+                            <li>@Html.ActionLink("Inbound (MD)", "Indexmd", "InboundModuleGrids")</li>
+                            <li>@Html.ActionLink("Inventory (MD)", "Indexmd", "InventoryModuleGrids")</li>
+                            <li>@Html.ActionLink("Foundation (C)", "Indexconfig", "FoundationModuleGrids")</li>
+                            <li>@Html.ActionLink("Network (C)", "Indexconfig", "NetworkModuleGrids")</li>
+                            <li>@Html.ActionLink("Inbound (C)", "Indexconfig", "InboundModuleGrids")</li>
+                            <li>@Html.ActionLink("Inventory (C)", "Indexconfig", "InventoryModuleGrids")</li>
+                            <li>@Html.ActionLink("Outbound (C)", "Indexconfig", "OutboundModuleGrids")</li>
+                            <li>@Html.ActionLink("Execution (C)", "Indexconfig", "ExecutionModuleGrids")</li>
+                        </ul>
+                    </li>
+                </ul>
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - BotSpiel Inventory</p>
+        </footer>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/MvcGrid/mvc-grid.js"></script>
+        <script>
+            $('.mvc-grid').mvcgrid();
+        </script>
+        <script src="~/js/BotSpiel/botspiel.js"></script>
+        <script src="~/js/BotSpiel/botspiel-actions.js"></script>
+    </environment>
+    <environment exclude="Development">
+        @*<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>*@
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/MvcGrid/mvc-grid.js"></script>
+        <script>
+            $('.mvc-grid').mvcgrid();
+        </script>
+        <script src="~/js/BotSpiel/botspiel.js"></script>
+        <script src="~/js/BotSpiel/botspiel-actions.js"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+ 
+

@@ -1,0 +1,34 @@
+
+@model BotSpiel.DataAccess.Models.MeasurementUnitsOf
+
+@{
+    ViewBag.Title = "Details Measurement Units Of";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Measurement Units Of</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixMeasurementUnitOf)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixMeasurementUnitOf)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMeasurementUnitOf)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMeasurementUnitOf)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

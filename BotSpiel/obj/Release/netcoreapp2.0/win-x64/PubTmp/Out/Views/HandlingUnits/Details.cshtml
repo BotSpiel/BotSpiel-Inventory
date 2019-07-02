@@ -1,0 +1,96 @@
+
+@model BotSpiel.DataAccess.Models.HandlingUnits
+
+@{
+    ViewBag.Title = "Details Handling Units";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Handling Units</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixHandlingUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sHandlingUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.HandlingUnitTypes.sHandlingUnitType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.HandlingUnitTypes.sHandlingUnitType, "Details", "HandlingUnitTypes", new { id = Model.ixHandlingUnitType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixParentHandlingUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.HandlingUnitsFKDiffParentHandlingUnit.sHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nLength)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nLength)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixLengthUnit)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.UnitsOfMeasurementFKDiffLengthUnit.sUnitOfMeasurement, "Details", "UnitsOfMeasurement", new { id = Model.ixLengthUnit }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nHeight)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nHeight)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixHeightUnit)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.UnitsOfMeasurementFKDiffHeightUnit.sUnitOfMeasurement, "Details", "UnitsOfMeasurement", new { id = Model.ixHeightUnit }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nWeight)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nWeight)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixWeightUnit)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.UnitsOfMeasurementFKDiffWeightUnit.sUnitOfMeasurement, "Details", "UnitsOfMeasurement", new { id = Model.ixWeightUnit }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.MaterialHandlingUnitConfigurations.sMaterialHandlingUnitConfiguration)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.MaterialHandlingUnitConfigurations.sMaterialHandlingUnitConfiguration)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixHandlingUnit }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixHandlingUnit }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

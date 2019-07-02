@@ -1,0 +1,16 @@
+@model IGrid<BotSpiel.DataAccess.Models.UnitOfMeasurementConversions>
+
+@{
+    ViewBag.Title = "Index Unit Of Measurement Conversions Export";
+}
+<br>
+<h2>Unit Of Measurement Conversions Export</h2>
+
+<p>
+    <a href="@(Url.Action("ExportIndex") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+    @Html.ActionLink(" | Grid", "Index")
+</p>
+
+@(new HtmlGrid<BotSpiel.DataAccess.Models.UnitOfMeasurementConversions>(Html, Model))
+ 
+

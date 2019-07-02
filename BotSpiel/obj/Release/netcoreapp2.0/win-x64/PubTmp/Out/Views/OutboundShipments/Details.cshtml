@@ -1,0 +1,78 @@
+
+@model BotSpiel.DataAccess.Models.OutboundShipments
+
+@{
+    ViewBag.Title = "Details Outbound Shipments";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Outbound Shipments</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixOutboundShipment)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixOutboundShipment)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sOutboundShipment)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sOutboundShipment)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Facilities.sFacility)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Facilities.sFacility, "Details", "Facilities", new { id = Model.ixFacility }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Companies.sCompany)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Companies.sCompany, "Details", "Companies", new { id = Model.ixCompany }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Carriers.sCarrier)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Carriers.sCarrier, "Details", "Carriers", new { id = Model.ixCarrier }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCarrierConsignmentNumber)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCarrierConsignmentNumber)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Addresses.sAddress)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Addresses.sAddress, "Details", "Addresses", new { id = Model.ixAddress }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.OutboundCarrierManifests.sOutboundCarrierManifest)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.OutboundCarrierManifests.sOutboundCarrierManifest)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixOutboundShipment }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixOutboundShipment }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

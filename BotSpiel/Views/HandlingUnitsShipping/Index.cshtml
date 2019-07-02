@@ -1,0 +1,21 @@
+
+
+@model IEnumerable<BotSpiel.DataAccess.Models.HandlingUnitsShipping>
+
+@{
+    ViewBag.Title = "Index Handling Units Shipping";
+}
+<br>
+<h2>Handling Units Shipping</h2>
+
+<p>
+    @Html.ActionLink(" | Grid Export", "IndexExport")
+</p>
+
+<p>    
+    <button type="button" id="refresh-grid" class="btn btn-default content-refresh">Refresh Grid</button>
+</p>
+
+@Html.AjaxGrid(Url.Action("IndexGrid"), new { id = "handlingunitsshipping-ajax-grid" })
+ 
+

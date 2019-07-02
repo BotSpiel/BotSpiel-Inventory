@@ -1,0 +1,41 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IPlanetSubRegionsService _planetsubregionsService
+@model IEnumerable<BotSpiel.DataAccess.Models.PlanetSubRegions>
+
+@{
+	List<SelectListItem> queryPlanetRegions = new List<SelectListItem>();
+	queryPlanetRegions.AddRange(_planetsubregionsService.selectPlanetRegions().ToList().OrderBy(de => de.sPlanetRegion).Select(de => new SelectListItem() { Text = de.sPlanetRegion, Value = de.sPlanetRegion.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixPlanetSubRegion, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixPlanetSubRegion).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixPlanetSubRegion }, new { @class = "modal-link" }));
+				columns.Add(model => model.sPlanetSubRegion).Titled("Planet Sub Region").Sortable(true).Filterable(true);
+				columns.Add(model => model.PlanetRegions.sPlanetRegion).Titled("Planet Region").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryPlanetRegions);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("planetsubregions-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

@@ -1,0 +1,16 @@
+@model IGrid<BotSpiel.DataAccess.Models.NetworkModuleGrids>
+
+@{
+    ViewBag.Title = "Index Network Module Grids Export";
+}
+<br>
+<h2>Network Module Grids Export</h2>
+
+<p>
+    <a href="@(Url.Action("ExportIndex") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+    @Html.ActionLink(" | Grid", "Index")
+</p>
+
+@(new HtmlGrid<BotSpiel.DataAccess.Models.NetworkModuleGrids>(Html, Model))
+ 
+

@@ -1,0 +1,35 @@
+
+
+@model IEnumerable<BotSpiel.DataAccess.Models.ExecutionModuleGridsanalytics>
+
+@{
+    ViewBag.Title = "Index Execution Module Grids - Analytical Data";
+}
+<br>
+<h2>Execution Module Grids - Analytical Data</h2>
+
+
+
+
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => model.ixExecutionModuleGrid).Titled("Grids").Encoded(false).RenderedAs(item => Html.ActionLink("Grid", "Index", item.sExecutionModuleGrid));
+				columns.Add(model => model.sExecutionModuleGrid).Titled("Execution Module Grid").Sortable(true).Filterable(true);
+				columns.Add(model => model.sShortDescription).Titled("Short Description").Sortable(true).Filterable(true);
+
+        })
+        .Pageable(pager =>
+        {
+            pager.RowsPerPage = 20;
+        })
+		//.Filterable()
+ )
+
+
+
+ 
+

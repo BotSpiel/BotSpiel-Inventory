@@ -1,0 +1,72 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IInventoryUnitTransactionsService _inventoryunittransactionsService
+@model IEnumerable<BotSpiel.DataAccess.Models.InventoryUnitTransactions>
+
+@{
+	List<SelectListItem> queryCompanies = new List<SelectListItem>();
+	queryCompanies.AddRange(_inventoryunittransactionsService.selectCompanies().ToList().OrderBy(de => de.sCompany).Select(de => new SelectListItem() { Text = de.sCompany, Value = de.sCompany.ToString()}));
+	List<SelectListItem> queryFacilities = new List<SelectListItem>();
+	queryFacilities.AddRange(_inventoryunittransactionsService.selectFacilities().ToList().OrderBy(de => de.sFacility).Select(de => new SelectListItem() { Text = de.sFacility, Value = de.sFacility.ToString()}));
+	List<SelectListItem> queryHandlingUnits = new List<SelectListItem>();
+	queryHandlingUnits.AddRange(_inventoryunittransactionsService.selectHandlingUnits().ToList().OrderBy(de => de.sHandlingUnit).Select(de => new SelectListItem() { Text = de.sHandlingUnit, Value = de.sHandlingUnit.ToString()}));
+	List<SelectListItem> queryInventoryLocations = new List<SelectListItem>();
+	queryInventoryLocations.AddRange(_inventoryunittransactionsService.selectInventoryLocations().ToList().OrderBy(de => de.sInventoryLocation).Select(de => new SelectListItem() { Text = de.sInventoryLocation, Value = de.sInventoryLocation.ToString()}));
+	List<SelectListItem> queryInventoryStates = new List<SelectListItem>();
+	queryInventoryStates.AddRange(_inventoryunittransactionsService.selectInventoryStates().ToList().OrderBy(de => de.sInventoryState).Select(de => new SelectListItem() { Text = de.sInventoryState, Value = de.sInventoryState.ToString()}));
+	List<SelectListItem> queryInventoryUnits = new List<SelectListItem>();
+	queryInventoryUnits.AddRange(_inventoryunittransactionsService.selectInventoryUnits().ToList().OrderBy(de => de.sInventoryUnit).Select(de => new SelectListItem() { Text = de.sInventoryUnit, Value = de.sInventoryUnit.ToString()}));
+	List<SelectListItem> queryInventoryUnitTransactionContexts = new List<SelectListItem>();
+	queryInventoryUnitTransactionContexts.AddRange(_inventoryunittransactionsService.selectInventoryUnitTransactionContexts().ToList().OrderBy(de => de.sInventoryUnitTransactionContext).Select(de => new SelectListItem() { Text = de.sInventoryUnitTransactionContext, Value = de.sInventoryUnitTransactionContext.ToString()}));
+	List<SelectListItem> queryMaterials = new List<SelectListItem>();
+	queryMaterials.AddRange(_inventoryunittransactionsService.selectMaterials().ToList().OrderBy(de => de.sMaterial).Select(de => new SelectListItem() { Text = de.sMaterial, Value = de.sMaterial.ToString()}));
+	List<SelectListItem> queryStatuses = new List<SelectListItem>();
+	queryStatuses.AddRange(_inventoryunittransactionsService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixInventoryUnitTransaction, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixInventoryUnitTransaction).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixInventoryUnitTransaction }, new { @class = "modal-link" }));
+				columns.Add(model => model.sInventoryUnitTransaction).Titled("Inventory Unit Transaction").Sortable(true).Filterable(true);
+				columns.Add(model => model.InventoryUnits.sInventoryUnit).Titled("Inventory Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInventoryUnits);
+				columns.Add(model => model.InventoryUnitTransactionContexts.sInventoryUnitTransactionContext).Titled("Inventory Unit Transaction Context").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInventoryUnitTransactionContexts);
+				columns.Add(model => model.FacilitiesFKDiffFacilityAfter.sFacility).Titled("Facility After").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilities);
+				columns.Add(model => model.CompaniesFKDiffCompanyAfter.sCompany).Titled("Company After").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCompanies);
+				columns.Add(model => model.MaterialsFKDiffMaterialAfter.sMaterial).Titled("Material After").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryMaterials);
+				columns.Add(model => model.InventoryStatesFKDiffInventoryStateAfter.sInventoryState).Titled("Inventory State After").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInventoryStates);
+				columns.Add(model => model.InventoryLocationsFKDiffInventoryLocationAfter.sInventoryLocation).Titled("Inventory Location After").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInventoryLocations);
+				columns.Add(model => model.nBaseUnitQuantityBefore).Titled("Base Unit Quantity Before").Sortable(true).Filterable(true);
+				columns.Add(model => model.nBaseUnitQuantityAfter).Titled("Base Unit Quantity After").Sortable(true).Filterable(true);
+				columns.Add(model => model.sSerialNumberBefore).Titled("Serial Number Before").Sortable(true).Filterable(true);
+				columns.Add(model => model.sSerialNumberAfter).Titled("Serial Number After").Sortable(true).Filterable(true);
+				columns.Add(model => model.sBatchNumberBefore).Titled("Batch Number Before").Sortable(true).Filterable(true);
+				columns.Add(model => model.sBatchNumberAfter).Titled("Batch Number After").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtExpireAtBefore).Titled("Expire At Before").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtExpireAtAfter).Titled("Expire At After").Sortable(true).Filterable(true);
+				columns.Add(model => model.StatusesFKDiffStatusAfter.sStatus).Titled("Status After").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("inventoryunittransactions-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

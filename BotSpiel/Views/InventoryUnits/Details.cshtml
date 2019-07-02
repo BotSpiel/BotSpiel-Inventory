@@ -1,0 +1,102 @@
+
+@model BotSpiel.DataAccess.Models.InventoryUnits
+
+@{
+    ViewBag.Title = "Details Inventory Units";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Inventory Units</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixInventoryUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sInventoryUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sInventoryUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Facilities.sFacility)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Facilities.sFacility, "Details", "Facilities", new { id = Model.ixFacility }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Companies.sCompany)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Companies.sCompany, "Details", "Companies", new { id = Model.ixCompany }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Materials.sMaterial)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Materials.sMaterial, "Details", "Materials", new { id = Model.ixMaterial }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InventoryStates.sInventoryState)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InventoryStates.sInventoryState, "Details", "InventoryStates", new { id = Model.ixInventoryState }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.HandlingUnits.sHandlingUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.HandlingUnits.sHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InventoryLocations.sInventoryLocation)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InventoryLocations.sInventoryLocation, "Details", "InventoryLocations", new { id = Model.ixInventoryLocation }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantity)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantity)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sSerialNumber)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sSerialNumber)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBatchNumber)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBatchNumber)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtExpireAt)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtExpireAt)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixInventoryUnit }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixInventoryUnit }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

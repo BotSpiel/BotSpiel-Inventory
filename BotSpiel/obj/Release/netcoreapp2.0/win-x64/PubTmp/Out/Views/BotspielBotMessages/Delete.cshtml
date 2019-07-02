@@ -1,0 +1,96 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
+@inject IBotspielBotMessagesService _botspielbotmessagesService
+@model BotSpiel.DataAccess.Models.BotspielBotMessages
+
+@{
+    ViewBag.Title = "Delete Botspiel Bot Messages";
+}
+
+@{
+    string conCat = "";
+    List<string> existInEntities = new List<string>();
+    bool DeleteOK = true;
+    existInEntities = _botspielbotmessagesService.VerifyBotspielBotMessageDeleteOK(Model.ixBotspielBotMessage, Model.sBotspielBotMessage);
+    if (existInEntities.Any()) { DeleteOK = false; }
+}
+
+
+@if (DeleteOK)
+{
+
+<br>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Botspiel Bot Messages</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixBotspielBotMessage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixBotspielBotMessage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBotspielBotMessage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBotspielBotMessage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMyMessage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMyMessage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sYourReply)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sYourReply)
+		</dd>
+ 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+</div>
+}
+else
+{
+    <br>
+    <h2>Delete</h2>
+
+    <h3>The BotspielBotMessage @Model.sBotspielBotMessage cannot be deleted. It is referenced by the following entities:</h3>
+    <hr />
+    @foreach (var entity in existInEntities)
+    {
+        conCat = String.Join(" ", StringSplitters.SplitCamelCase(@entity.ToString()));
+        <h4>@Html.ActionLink(@conCat.ToString(), "Index", @entity.ToString())</h4>
+        <hr />
+    }
+
+    <h3>If you want to delete the BotspielBotMessage, delete the dependent references first.</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+
+}
+ 
+

@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.MessageResponseTypes
+
+@{
+    ViewBag.Title = "Details Message Response Types";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Message Response Types</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixMessageResponseType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixMessageResponseType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMessageResponseType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMessageResponseType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMessageResponseTypeCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMessageResponseTypeCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

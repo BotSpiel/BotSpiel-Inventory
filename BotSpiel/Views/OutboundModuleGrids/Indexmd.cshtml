@@ -1,0 +1,35 @@
+
+
+@model IEnumerable<BotSpiel.DataAccess.Models.OutboundModuleGridsmd>
+
+@{
+    ViewBag.Title = "Index Outbound Module Grids - Master Data";
+}
+<br>
+<h2>Outbound Module Grids - Master Data</h2>
+
+
+
+
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => model.ixOutboundModuleGrid).Titled("Grids").Encoded(false).RenderedAs(item => Html.ActionLink("Grid", "Index", item.sOutboundModuleGrid));
+				columns.Add(model => model.sOutboundModuleGrid).Titled("Outbound Module Grid").Sortable(true).Filterable(true);
+				columns.Add(model => model.sShortDescription).Titled("Short Description").Sortable(true).Filterable(true);
+
+        })
+        .Pageable(pager =>
+        {
+            pager.RowsPerPage = 20;
+        })
+		//.Filterable()
+ )
+
+
+
+ 
+

@@ -1,0 +1,142 @@
+
+@model BotSpiel.DataAccess.Models.MoveQueues
+
+@{
+    ViewBag.Title = "Details Move Queues";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Move Queues</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixMoveQueue)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixMoveQueue)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMoveQueue)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMoveQueue)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.MoveQueueTypes.sMoveQueueType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.MoveQueueTypes.sMoveQueueType, "Details", "MoveQueueTypes", new { id = Model.ixMoveQueueType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.MoveQueueContexts.sMoveQueueContext)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.MoveQueueContexts.sMoveQueueContext, "Details", "MoveQueueContexts", new { id = Model.ixMoveQueueContext }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixSourceInventoryUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryUnitsFKDiffSourceInventoryUnit.sInventoryUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixTargetInventoryUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryUnitsFKDiffTargetInventoryUnit.sInventoryUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixSourceInventoryLocation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryLocationsFKDiffSourceInventoryLocation.sInventoryLocation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixTargetInventoryLocation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryLocationsFKDiffTargetInventoryLocation.sInventoryLocation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixSourceHandlingUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.HandlingUnitsFKDiffSourceHandlingUnit.sHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixTargetHandlingUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.HandlingUnitsFKDiffTargetHandlingUnit.sHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPreferredResource)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPreferredResource)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantity)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantity)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtStartBy)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtStartBy)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtCompleteBy)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtCompleteBy)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtStartedAt)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtStartedAt)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtCompletedAt)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtCompletedAt)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InboundOrderLines.sInboundOrderLine)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InboundOrderLines.sInboundOrderLine)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.OutboundOrderLines.sOutboundOrderLine)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.OutboundOrderLines.sOutboundOrderLine)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.PickBatches.sPickBatch)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.PickBatches.sPickBatch)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

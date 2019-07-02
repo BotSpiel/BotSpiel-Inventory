@@ -1,0 +1,102 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
+@inject IUnitOfMeasurementConversionsService _unitofmeasurementconversionsService
+@model BotSpiel.DataAccess.Models.UnitOfMeasurementConversions
+
+@{
+    ViewBag.Title = "Delete Unit Of Measurement Conversions";
+}
+
+@{
+    string conCat = "";
+    List<string> existInEntities = new List<string>();
+    bool DeleteOK = true;
+    existInEntities = _unitofmeasurementconversionsService.VerifyUnitOfMeasurementConversionDeleteOK(Model.ixUnitOfMeasurementConversion, Model.sUnitOfMeasurementConversion);
+    if (existInEntities.Any()) { DeleteOK = false; }
+}
+
+
+@if (DeleteOK)
+{
+
+<br>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Unit Of Measurement Conversions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixUnitOfMeasurementConversion)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixUnitOfMeasurementConversion)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sUnitOfMeasurementConversion)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sUnitOfMeasurementConversion)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixUnitOfMeasurementFrom)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffUnitOfMeasurementFrom.sUnitOfMeasurement)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixUnitOfMeasurementTo)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffUnitOfMeasurementTo.sUnitOfMeasurement)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nMultiplier)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nMultiplier)
+		</dd>
+ 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+</div>
+}
+else
+{
+    <br>
+    <h2>Delete</h2>
+
+    <h3>The UnitOfMeasurementConversion @Model.sUnitOfMeasurementConversion cannot be deleted. It is referenced by the following entities:</h3>
+    <hr />
+    @foreach (var entity in existInEntities)
+    {
+        conCat = String.Join(" ", StringSplitters.SplitCamelCase(@entity.ToString()));
+        <h4>@Html.ActionLink(@conCat.ToString(), "Index", @entity.ToString())</h4>
+        <hr />
+    }
+
+    <h3>If you want to delete the UnitOfMeasurementConversion, delete the dependent references first.</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+
+}
+ 
+

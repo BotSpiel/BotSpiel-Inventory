@@ -1,0 +1,34 @@
+
+@model BotSpiel.DataAccess.Models.MoveQueueTypes
+
+@{
+    ViewBag.Title = "Details Move Queue Types";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Move Queue Types</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixMoveQueueType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixMoveQueueType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMoveQueueType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMoveQueueType)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

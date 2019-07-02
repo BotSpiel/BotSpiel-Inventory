@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.DateTimePeriodFormats
+
+@{
+    ViewBag.Title = "Details Date Time Period Formats";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Date Time Period Formats</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixDateTimePeriodFormat)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixDateTimePeriodFormat)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sDateTimePeriodFormat)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sDateTimePeriodFormat)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sDateTimePeriodFormatCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sDateTimePeriodFormatCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

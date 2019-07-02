@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.PlanetarySystems
+
+@{
+    ViewBag.Title = "Details Planetary Systems";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Planetary Systems</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixPlanetarySystem)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixPlanetarySystem)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPlanetarySystem)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPlanetarySystem)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Galaxies.sGalaxy)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Galaxies.sGalaxy, "Details", "Galaxies", new { id = Model.ixGalaxy }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

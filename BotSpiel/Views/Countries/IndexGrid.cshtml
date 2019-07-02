@@ -1,0 +1,42 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject ICountriesService _countriesService
+@model IEnumerable<BotSpiel.DataAccess.Models.Countries>
+
+@{
+	List<SelectListItem> queryPlanetSubRegions = new List<SelectListItem>();
+	queryPlanetSubRegions.AddRange(_countriesService.selectPlanetSubRegions().ToList().OrderBy(de => de.sPlanetSubRegion).Select(de => new SelectListItem() { Text = de.sPlanetSubRegion, Value = de.sPlanetSubRegion.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixCountry, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixCountry).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixCountry }, new { @class = "modal-link" }));
+				columns.Add(model => model.sCountry).Titled("Country").Sortable(true).Filterable(true);
+				columns.Add(model => model.PlanetSubRegions.sPlanetSubRegion).Titled("Planet Sub Region").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryPlanetSubRegions);
+				columns.Add(model => model.sCountryCode).Titled("Country Code").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("countries-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

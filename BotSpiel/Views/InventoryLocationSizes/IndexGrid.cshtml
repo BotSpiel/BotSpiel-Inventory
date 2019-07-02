@@ -1,0 +1,49 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IInventoryLocationSizesService _inventorylocationsizesService
+@model IEnumerable<BotSpiel.DataAccess.Models.InventoryLocationSizes>
+
+@{
+	List<SelectListItem> queryUnitsOfMeasurement = new List<SelectListItem>();
+	queryUnitsOfMeasurement.AddRange(_inventorylocationsizesService.selectUnitsOfMeasurement().ToList().OrderBy(de => de.sUnitOfMeasurement).Select(de => new SelectListItem() { Text = de.sUnitOfMeasurement, Value = de.sUnitOfMeasurement.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixInventoryLocationSize, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixInventoryLocationSize).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixInventoryLocationSize }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixInventoryLocationSizeEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixInventoryLocationSize }, new { @class = "modal-link" }));
+				columns.Add(model => model.sInventoryLocationSize).Titled("Inventory Location Size").Sortable(true).Filterable(true);
+				columns.Add(model => model.nLength).Titled("Length").Sortable(true).Filterable(true);
+				columns.Add(model => model.UnitsOfMeasurementFKDiffLengthUnit.sUnitOfMeasurement).Titled("Length Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryUnitsOfMeasurement);
+				columns.Add(model => model.nWidth).Titled("Width").Sortable(true).Filterable(true);
+				columns.Add(model => model.UnitsOfMeasurementFKDiffWidthUnit.sUnitOfMeasurement).Titled("Width Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryUnitsOfMeasurement);
+				columns.Add(model => model.nHeight).Titled("Height").Sortable(true).Filterable(true);
+				columns.Add(model => model.UnitsOfMeasurementFKDiffHeightUnit.sUnitOfMeasurement).Titled("Height Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryUnitsOfMeasurement);
+				columns.Add(model => model.nUsableVolume).Titled("Usable Volume").Sortable(true).Filterable(true);
+				columns.Add(model => model.UnitsOfMeasurementFKDiffUsableVolumeUnit.sUnitOfMeasurement).Titled("Usable Volume Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryUnitsOfMeasurement);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("inventorylocationsizes-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

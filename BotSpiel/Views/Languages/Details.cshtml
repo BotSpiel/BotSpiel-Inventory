@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.Languages
+
+@{
+    ViewBag.Title = "Details Languages";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Languages</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixLanguage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixLanguage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLanguage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLanguage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLanguageCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLanguageCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

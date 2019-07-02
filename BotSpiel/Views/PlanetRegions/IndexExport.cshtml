@@ -1,0 +1,16 @@
+@model IGrid<BotSpiel.DataAccess.Models.PlanetRegions>
+
+@{
+    ViewBag.Title = "Index Planet Regions Export";
+}
+<br>
+<h2>Planet Regions Export</h2>
+
+<p>
+    <a href="@(Url.Action("ExportIndex") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+    @Html.ActionLink(" | Grid", "Index")
+</p>
+
+@(new HtmlGrid<BotSpiel.DataAccess.Models.PlanetRegions>(Html, Model))
+ 
+

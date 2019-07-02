@@ -1,0 +1,44 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IFacilitiesService _facilitiesService
+@model IEnumerable<BotSpiel.DataAccess.Models.Facilities>
+
+@{
+	List<SelectListItem> queryAddresses = new List<SelectListItem>();
+	queryAddresses.AddRange(_facilitiesService.selectAddresses().ToList().OrderBy(de => de.sAddress).Select(de => new SelectListItem() { Text = de.sAddress, Value = de.sAddress.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixFacility, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixFacility).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixFacility }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixFacilityEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixFacility }, new { @class = "modal-link" }));
+				columns.Add(model => model.sFacility).Titled("Facility").Sortable(true).Filterable(true);
+				columns.Add(model => model.Addresses.sAddress).Titled("Address").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryAddresses);
+				columns.Add(model => model.sLatitude).Titled("Latitude").Sortable(true).Filterable(true);
+				columns.Add(model => model.sLongitude).Titled("Longitude").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("facilities-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

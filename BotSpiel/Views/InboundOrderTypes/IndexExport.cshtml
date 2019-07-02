@@ -1,0 +1,16 @@
+@model IGrid<BotSpiel.DataAccess.Models.InboundOrderTypes>
+
+@{
+    ViewBag.Title = "Index Inbound Order Types Export";
+}
+<br>
+<h2>Inbound Order Types Export</h2>
+
+<p>
+    <a href="@(Url.Action("ExportIndex") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+    @Html.ActionLink(" | Grid", "Index")
+</p>
+
+@(new HtmlGrid<BotSpiel.DataAccess.Models.InboundOrderTypes>(Html, Model))
+ 
+

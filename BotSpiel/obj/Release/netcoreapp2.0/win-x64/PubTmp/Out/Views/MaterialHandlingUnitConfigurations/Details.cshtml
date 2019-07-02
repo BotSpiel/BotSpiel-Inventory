@@ -1,0 +1,96 @@
+
+@model BotSpiel.DataAccess.Models.MaterialHandlingUnitConfigurations
+
+@{
+    ViewBag.Title = "Details Material Handling Unit Configurations";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Material Handling Unit Configurations</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixMaterialHandlingUnitConfiguration)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixMaterialHandlingUnitConfiguration)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMaterialHandlingUnitConfiguration)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMaterialHandlingUnitConfiguration)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Materials.sMaterial)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Materials.sMaterial, "Details", "Materials", new { id = Model.ixMaterial }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nNestingLevel)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nNestingLevel)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.HandlingUnitTypes.sHandlingUnitType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.HandlingUnitTypes.sHandlingUnitType, "Details", "HandlingUnitTypes", new { id = Model.ixHandlingUnitType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nQuantity)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nQuantity)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nLength)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nLength)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixLengthUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffLengthUnit.sUnitOfMeasurement)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nWidth)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nWidth)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixWidthUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffWidthUnit.sUnitOfMeasurement)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nHeight)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nHeight)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixHeightUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffHeightUnit.sUnitOfMeasurement)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixMaterialHandlingUnitConfiguration }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixMaterialHandlingUnitConfiguration }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

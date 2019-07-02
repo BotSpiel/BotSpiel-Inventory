@@ -1,0 +1,16 @@
+@model IGrid<BotSpiel.DataAccess.Models.BaySequenceTypes>
+
+@{
+    ViewBag.Title = "Index Bay Sequence Types Export";
+}
+<br>
+<h2>Bay Sequence Types Export</h2>
+
+<p>
+    <a href="@(Url.Action("ExportIndex") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+    @Html.ActionLink(" | Grid", "Index")
+</p>
+
+@(new HtmlGrid<BotSpiel.DataAccess.Models.BaySequenceTypes>(Html, Model))
+ 
+

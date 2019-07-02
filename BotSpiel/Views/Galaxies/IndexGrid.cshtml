@@ -1,0 +1,41 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IGalaxiesService _galaxiesService
+@model IEnumerable<BotSpiel.DataAccess.Models.Galaxies>
+
+@{
+	List<SelectListItem> queryUniverses = new List<SelectListItem>();
+	queryUniverses.AddRange(_galaxiesService.selectUniverses().ToList().OrderBy(de => de.sUniverse).Select(de => new SelectListItem() { Text = de.sUniverse, Value = de.sUniverse.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixGalaxy, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixGalaxy).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixGalaxy }, new { @class = "modal-link" }));
+				columns.Add(model => model.sGalaxy).Titled("Galaxy").Sortable(true).Filterable(true);
+				columns.Add(model => model.Universes.sUniverse).Titled("Universe").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryUniverses);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("galaxies-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

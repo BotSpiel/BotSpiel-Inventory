@@ -1,0 +1,64 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IOutboundOrdersService _outboundordersService
+@model IEnumerable<BotSpiel.DataAccess.Models.OutboundOrders>
+
+@{
+	List<SelectListItem> queryBusinessPartners = new List<SelectListItem>();
+	queryBusinessPartners.AddRange(_outboundordersService.selectBusinessPartners().ToList().OrderBy(de => de.sBusinessPartner).Select(de => new SelectListItem() { Text = de.sBusinessPartner, Value = de.sBusinessPartner.ToString()}));
+	List<SelectListItem> queryCarrierServices = new List<SelectListItem>();
+	queryCarrierServices.AddRange(_outboundordersService.selectCarrierServices().ToList().OrderBy(de => de.sCarrierService).Select(de => new SelectListItem() { Text = de.sCarrierService, Value = de.sCarrierService.ToString()}));
+	List<SelectListItem> queryCompanies = new List<SelectListItem>();
+	queryCompanies.AddRange(_outboundordersService.selectCompanies().ToList().OrderBy(de => de.sCompany).Select(de => new SelectListItem() { Text = de.sCompany, Value = de.sCompany.ToString()}));
+	List<SelectListItem> queryFacilities = new List<SelectListItem>();
+	queryFacilities.AddRange(_outboundordersService.selectFacilities().ToList().OrderBy(de => de.sFacility).Select(de => new SelectListItem() { Text = de.sFacility, Value = de.sFacility.ToString()}));
+	List<SelectListItem> queryOutboundOrderTypes = new List<SelectListItem>();
+	queryOutboundOrderTypes.AddRange(_outboundordersService.selectOutboundOrderTypes().ToList().OrderBy(de => de.sOutboundOrderType).Select(de => new SelectListItem() { Text = de.sOutboundOrderType, Value = de.sOutboundOrderType.ToString()}));
+	List<SelectListItem> queryOutboundShipments = new List<SelectListItem>();
+	queryOutboundShipments.AddRange(_outboundordersService.selectOutboundShipments().ToList().OrderBy(de => de.sOutboundShipment).Select(de => new SelectListItem() { Text = de.sOutboundShipment, Value = de.sOutboundShipment.ToString()}));
+	List<SelectListItem> queryPickBatches = new List<SelectListItem>();
+	queryPickBatches.AddRange(_outboundordersService.selectPickBatches().ToList().OrderBy(de => de.sPickBatch).Select(de => new SelectListItem() { Text = de.sPickBatch, Value = de.sPickBatch.ToString()}));
+	List<SelectListItem> queryStatuses = new List<SelectListItem>();
+	queryStatuses.AddRange(_outboundordersService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixOutboundOrder, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixOutboundOrder).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixOutboundOrder }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixOutboundOrderEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixOutboundOrder }, new { @class = "modal-link" }));
+				columns.Add(model => model.sOutboundOrder).Titled("Outbound Order").Sortable(true).Filterable(true);
+				columns.Add(model => model.sOrderReference).Titled("Order Reference").Sortable(true).Filterable(true);
+				columns.Add(model => model.OutboundOrderTypes.sOutboundOrderType).Titled("Outbound Order Type").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryOutboundOrderTypes);
+				columns.Add(model => model.Facilities.sFacility).Titled("Facility").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilities);
+				columns.Add(model => model.Companies.sCompany).Titled("Company").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCompanies);
+				columns.Add(model => model.BusinessPartners.sBusinessPartner).Titled("Business Partner").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryBusinessPartners);
+				columns.Add(model => model.dtDeliverEarliest).Titled("Deliver Earliest").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtDeliverLatest).Titled("Deliver Latest").Sortable(true).Filterable(true);
+				columns.Add(model => model.CarrierServices.sCarrierService).Titled("Carrier Service").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCarrierServices);
+				columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("outboundorders-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

@@ -1,0 +1,102 @@
+
+@model BotSpiel.DataAccess.Models.InboundOrderLines
+
+@{
+    ViewBag.Title = "Details Inbound Order Lines";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Inbound Order Lines</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInboundOrderLine)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixInboundOrderLine)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sInboundOrderLine)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sInboundOrderLine)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InboundOrders.sInboundOrder)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InboundOrders.sInboundOrder, "Details", "InboundOrders", new { id = Model.ixInboundOrder }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sOrderLineReference)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sOrderLineReference)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Materials.sMaterial)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Materials.sMaterial, "Details", "Materials", new { id = Model.ixMaterial }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.MaterialHandlingUnitConfigurations.sMaterialHandlingUnitConfiguration)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.MaterialHandlingUnitConfigurations.sMaterialHandlingUnitConfiguration)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.HandlingUnitTypes.sHandlingUnitType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.HandlingUnitTypes.sHandlingUnitType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nHandlingUnitQuantity)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nHandlingUnitQuantity)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantityExpected)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantityExpected)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantityReceived)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantityReceived)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBatchNumber)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBatchNumber)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sSerialNumber)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sSerialNumber)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixInboundOrderLine }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixInboundOrderLine }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

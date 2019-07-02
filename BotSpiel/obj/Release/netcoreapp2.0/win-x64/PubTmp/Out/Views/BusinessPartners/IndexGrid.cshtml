@@ -1,0 +1,48 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IBusinessPartnersService _businesspartnersService
+@model IEnumerable<BotSpiel.DataAccess.Models.BusinessPartners>
+
+@{
+	List<SelectListItem> queryAddresses = new List<SelectListItem>();
+	queryAddresses.AddRange(_businesspartnersService.selectAddresses().ToList().OrderBy(de => de.sAddress).Select(de => new SelectListItem() { Text = de.sAddress, Value = de.sAddress.ToString()}));
+	List<SelectListItem> queryBusinessPartnerTypes = new List<SelectListItem>();
+	queryBusinessPartnerTypes.AddRange(_businesspartnersService.selectBusinessPartnerTypes().ToList().OrderBy(de => de.sBusinessPartnerType).Select(de => new SelectListItem() { Text = de.sBusinessPartnerType, Value = de.sBusinessPartnerType.ToString()}));
+	List<SelectListItem> queryCompanies = new List<SelectListItem>();
+	queryCompanies.AddRange(_businesspartnersService.selectCompanies().ToList().OrderBy(de => de.sCompany).Select(de => new SelectListItem() { Text = de.sCompany, Value = de.sCompany.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixBusinessPartner, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixBusinessPartner).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixBusinessPartner }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixBusinessPartnerEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixBusinessPartner }, new { @class = "modal-link" }));
+				columns.Add(model => model.sBusinessPartner).Titled("Business Partner").Sortable(true).Filterable(true);
+				columns.Add(model => model.BusinessPartnerTypes.sBusinessPartnerType).Titled("Business Partner Type").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryBusinessPartnerTypes);
+				columns.Add(model => model.Companies.sCompany).Titled("Company").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCompanies);
+				columns.Add(model => model.Addresses.sAddress).Titled("Address").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryAddresses);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("businesspartners-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.MessageFunctions
+
+@{
+    ViewBag.Title = "Details Message Functions";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Message Functions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixMessageFunction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixMessageFunction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMessageFunction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMessageFunction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMessageFunctionCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMessageFunctionCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

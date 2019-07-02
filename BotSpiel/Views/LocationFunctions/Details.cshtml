@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.LocationFunctions
+
+@{
+    ViewBag.Title = "Details Location Functions";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Location Functions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixLocationFunction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixLocationFunction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLocationFunction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLocationFunction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLocationFunctionCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLocationFunctionCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

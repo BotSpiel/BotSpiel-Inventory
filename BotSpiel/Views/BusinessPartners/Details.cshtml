@@ -1,0 +1,54 @@
+
+@model BotSpiel.DataAccess.Models.BusinessPartners
+
+@{
+    ViewBag.Title = "Details Business Partners";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Business Partners</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixBusinessPartner)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixBusinessPartner)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBusinessPartner)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBusinessPartner)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.BusinessPartnerTypes.sBusinessPartnerType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.BusinessPartnerTypes.sBusinessPartnerType, "Details", "BusinessPartnerTypes", new { id = Model.ixBusinessPartnerType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Companies.sCompany)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Companies.sCompany, "Details", "Companies", new { id = Model.ixCompany }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Addresses.sAddress)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Addresses.sAddress, "Details", "Addresses", new { id = Model.ixAddress }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixBusinessPartner }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixBusinessPartner }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

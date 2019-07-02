@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.CurrencyTypes
+
+@{
+    ViewBag.Title = "Details Currency Types";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Currency Types</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixCurrencyType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixCurrencyType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCurrencyType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCurrencyType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCurrencyTypeCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCurrencyTypeCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

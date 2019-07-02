@@ -1,0 +1,192 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
+@inject IMoveQueuesService _movequeuesService
+@model BotSpiel.DataAccess.Models.MoveQueues
+
+@{
+    ViewBag.Title = "Delete Move Queues";
+}
+
+@{
+    string conCat = "";
+    List<string> existInEntities = new List<string>();
+    bool DeleteOK = true;
+    existInEntities = _movequeuesService.VerifyMoveQueueDeleteOK(Model.ixMoveQueue, Model.sMoveQueue);
+    if (existInEntities.Any()) { DeleteOK = false; }
+}
+
+
+@if (DeleteOK)
+{
+
+<br>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Move Queues</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixMoveQueue)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixMoveQueue)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMoveQueue)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMoveQueue)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.MoveQueueTypes.sMoveQueueType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.MoveQueueTypes.sMoveQueueType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.MoveQueueContexts.sMoveQueueContext)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.MoveQueueContexts.sMoveQueueContext)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixSourceInventoryUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryUnitsFKDiffSourceInventoryUnit.sInventoryUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixTargetInventoryUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryUnitsFKDiffTargetInventoryUnit.sInventoryUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixSourceInventoryLocation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryLocationsFKDiffSourceInventoryLocation.sInventoryLocation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixTargetInventoryLocation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryLocationsFKDiffTargetInventoryLocation.sInventoryLocation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixSourceHandlingUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.HandlingUnitsFKDiffSourceHandlingUnit.sHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixTargetHandlingUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.HandlingUnitsFKDiffTargetHandlingUnit.sHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPreferredResource)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPreferredResource)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantity)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantity)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtStartBy)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtStartBy)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtCompleteBy)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtCompleteBy)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtStartedAt)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtStartedAt)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtCompletedAt)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtCompletedAt)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InboundOrderLines.sInboundOrderLine)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InboundOrderLines.sInboundOrderLine)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.OutboundOrderLines.sOutboundOrderLine)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.OutboundOrderLines.sOutboundOrderLine)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.PickBatches.sPickBatch)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.PickBatches.sPickBatch)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Statuses.sStatus)
+		</dd>
+ 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+</div>
+}
+else
+{
+    <br>
+    <h2>Delete</h2>
+
+    <h3>The MoveQueue @Model.sMoveQueue cannot be deleted. It is referenced by the following entities:</h3>
+    <hr />
+    @foreach (var entity in existInEntities)
+    {
+        conCat = String.Join(" ", StringSplitters.SplitCamelCase(@entity.ToString()));
+        <h4>@Html.ActionLink(@conCat.ToString(), "Index", @entity.ToString())</h4>
+        <hr />
+    }
+
+    <h3>If you want to delete the MoveQueue, delete the dependent references first.</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+
+}
+ 
+

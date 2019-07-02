@@ -1,0 +1,78 @@
+
+@model BotSpiel.DataAccess.Models.OutboundOrderLines
+
+@{
+    ViewBag.Title = "Details Outbound Order Lines";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Outbound Order Lines</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixOutboundOrderLine)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixOutboundOrderLine)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sOutboundOrderLine)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sOutboundOrderLine)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sOrderLineReference)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sOrderLineReference)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Materials.sMaterial)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Materials.sMaterial, "Details", "Materials", new { id = Model.ixMaterial }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBatchNumber)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBatchNumber)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sSerialNumber)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sSerialNumber)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantityOrdered)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantityOrdered)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantityShipped)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantityShipped)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixOutboundOrderLine }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixOutboundOrderLine }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

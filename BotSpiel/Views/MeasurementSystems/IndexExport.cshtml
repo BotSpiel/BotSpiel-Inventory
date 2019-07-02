@@ -1,0 +1,16 @@
+@model IGrid<BotSpiel.DataAccess.Models.MeasurementSystems>
+
+@{
+    ViewBag.Title = "Index Measurement Systems Export";
+}
+<br>
+<h2>Measurement Systems Export</h2>
+
+<p>
+    <a href="@(Url.Action("ExportIndex") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+    @Html.ActionLink(" | Grid", "Index")
+</p>
+
+@(new HtmlGrid<BotSpiel.DataAccess.Models.MeasurementSystems>(Html, Model))
+ 
+

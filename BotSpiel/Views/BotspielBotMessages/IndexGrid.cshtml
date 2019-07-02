@@ -1,0 +1,41 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IBotspielBotMessagesService _botspielbotmessagesService
+@model IEnumerable<BotSpiel.DataAccess.Models.BotspielBotMessages>
+
+@{
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixBotspielBotMessage, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixBotspielBotMessage).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixBotspielBotMessage }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixBotspielBotMessageEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixBotspielBotMessage }, new { @class = "modal-link" }));
+				columns.Add(model => model.sBotspielBotMessage).Titled("Botspiel Bot Message").Sortable(true).Filterable(true);
+				columns.Add(model => model.sMyMessage).Titled("My Message").Sortable(true).Filterable(true);
+				columns.Add(model => model.sYourReply).Titled("Your Reply").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("botspielbotmessages-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

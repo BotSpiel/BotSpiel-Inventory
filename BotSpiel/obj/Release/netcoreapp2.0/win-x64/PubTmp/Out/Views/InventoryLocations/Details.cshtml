@@ -1,0 +1,168 @@
+
+@model BotSpiel.DataAccess.Models.InventoryLocations
+
+@{
+    ViewBag.Title = "Details Inventory Locations";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Inventory Locations</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryLocation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixInventoryLocation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sInventoryLocation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sInventoryLocation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.LocationFunctions.sLocationFunction)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.LocationFunctions.sLocationFunction, "Details", "LocationFunctions", new { id = Model.ixLocationFunction }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Companies.sCompany)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Companies.sCompany)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.FacilityFloors.sFacilityFloor)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.FacilityFloors.sFacilityFloor, "Details", "FacilityFloors", new { id = Model.ixFacilityFloor }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.FacilityZones.sFacilityZone)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.FacilityZones.sFacilityZone, "Details", "FacilityZones", new { id = Model.ixFacilityZone }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.FacilityWorkAreas.sFacilityWorkArea)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.FacilityWorkAreas.sFacilityWorkArea, "Details", "FacilityWorkAreas", new { id = Model.ixFacilityWorkArea }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.FacilityAisleFaces.sFacilityAisleFace)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.FacilityAisleFaces.sFacilityAisleFace, "Details", "FacilityAisleFaces", new { id = Model.ixFacilityAisleFace }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLevel)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLevel)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBay)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBay)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sSlot)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sSlot)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InventoryLocationSizes.sInventoryLocationSize)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryLocationSizes.sInventoryLocationSize)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nSequence)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nSequence)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nXOffset)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nXOffset)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixXOffsetUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffXOffsetUnit.sUnitOfMeasurement)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nYOffset)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nYOffset)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixYOffsetUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffYOffsetUnit.sUnitOfMeasurement)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nZOffset)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nZOffset)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixZOffsetUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffZOffsetUnit.sUnitOfMeasurement)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLatitude)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLatitude)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLongitude)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLongitude)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.bTrackUtilisation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.bTrackUtilisation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nUtilisationPercent)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nUtilisationPercent)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nQueuedUtilisationPercent)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nQueuedUtilisationPercent)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixInventoryLocation }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixInventoryLocation }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

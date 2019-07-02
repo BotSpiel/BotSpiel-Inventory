@@ -1,0 +1,66 @@
+
+@model BotSpiel.DataAccess.Models.PickBatches
+
+@{
+    ViewBag.Title = "Details Pick Batches";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Pick Batches</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixPickBatch)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixPickBatch)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPickBatch)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPickBatch)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.PickBatchTypes.sPickBatchType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.PickBatchTypes.sPickBatchType, "Details", "PickBatchTypes", new { id = Model.ixPickBatchType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.bMultiResource)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.bMultiResource)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtStartBy)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtStartBy)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtCompleteBy)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtCompleteBy)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixPickBatch }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixPickBatch }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

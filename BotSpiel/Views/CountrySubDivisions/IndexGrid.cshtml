@@ -1,0 +1,42 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject ICountrySubDivisionsService _countrysubdivisionsService
+@model IEnumerable<BotSpiel.DataAccess.Models.CountrySubDivisions>
+
+@{
+	List<SelectListItem> queryCountries = new List<SelectListItem>();
+	queryCountries.AddRange(_countrysubdivisionsService.selectCountries().ToList().OrderBy(de => de.sCountry).Select(de => new SelectListItem() { Text = de.sCountry, Value = de.sCountry.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixCountrySubDivision, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixCountrySubDivision).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixCountrySubDivision }, new { @class = "modal-link" }));
+				columns.Add(model => model.sCountrySubDivision).Titled("Country Sub Division").Sortable(true).Filterable(true);
+				columns.Add(model => model.Countries.sCountry).Titled("Country").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCountries);
+				columns.Add(model => model.sCountrySubDivisionCode).Titled("Country Sub Division Code").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("countrysubdivisions-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

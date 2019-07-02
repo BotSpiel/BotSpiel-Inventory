@@ -1,0 +1,181 @@
+
+@model BotSpiel.DataAccess.Models.MoveQueuesPost
+
+@{
+    ViewBag.Title = "Create Move Queues";
+}
+<br>
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Move Queues</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+			@Html.ActionLink("Move Queue Type ID", "Index", "MoveQueueTypes", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixMoveQueueType", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixMoveQueueType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Move Queue Context ID", "Index", "MoveQueueContexts", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixMoveQueueContext", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixMoveQueueContext, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Source Inventory Unit ID", "Index", "InventoryUnits", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixSourceInventoryUnit", null, "None", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixSourceInventoryUnit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Target Inventory Unit ID", "Index", "InventoryUnits", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixTargetInventoryUnit", null, "None", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixTargetInventoryUnit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Source Inventory Location ID", "Index", "InventoryLocations", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixSourceInventoryLocation", null, "None", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixSourceInventoryLocation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Target Inventory Location ID", "Index", "InventoryLocations", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixTargetInventoryLocation", null, "None", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixTargetInventoryLocation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Source Handling Unit ID", "Index", "HandlingUnits", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixSourceHandlingUnit", null, "None", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixSourceHandlingUnit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Target Handling Unit ID", "Index", "HandlingUnits", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixTargetHandlingUnit", null, "None", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixTargetHandlingUnit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sPreferredResource, "Preferred Resource", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sPreferredResource, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sPreferredResource, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nBaseUnitQuantity, "Base Unit Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nBaseUnitQuantity, new { htmlAttributes = new { @class = "form-control", @placeholder = "Required" } })
+                @Html.ValidationMessageFor(model => model.nBaseUnitQuantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dtStartBy, "Start By", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control" type="text" id="dtStartBy" name="dtStartBy" data-date-picker="" />
+                @Html.ValidationMessageFor(model => model.dtStartBy, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dtCompleteBy, "Complete By", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control" type="text" id="dtCompleteBy" name="dtCompleteBy" data-date-picker="" />
+                @Html.ValidationMessageFor(model => model.dtCompleteBy, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dtStartedAt, "Started At", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control" type="text" id="dtStartedAt" name="dtStartedAt" data-date-picker="" />
+                @Html.ValidationMessageFor(model => model.dtStartedAt, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dtCompletedAt, "Completed At", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control" type="text" id="dtCompletedAt" name="dtCompletedAt" data-date-picker="" />
+                @Html.ValidationMessageFor(model => model.dtCompletedAt, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Inbound Order Line ID", "Index", "InboundOrderLines", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixInboundOrderLine", null, "None", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixInboundOrderLine, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Outbound Order Line ID", "Index", "OutboundOrderLines", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixOutboundOrderLine", null, "None", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixOutboundOrderLine, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Pick Batch ID", "Index", "PickBatches", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixPickBatch", null, "None", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixPickBatch, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Status ID", "Index", "Statuses", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixStatus", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixStatus, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Grid", "Index")
+</div>
+
+@section Scripts {
+}
+
+ 
+

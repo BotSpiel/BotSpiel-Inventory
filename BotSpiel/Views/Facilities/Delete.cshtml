@@ -1,0 +1,102 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
+@inject IFacilitiesService _facilitiesService
+@model BotSpiel.DataAccess.Models.Facilities
+
+@{
+    ViewBag.Title = "Delete Facilities";
+}
+
+@{
+    string conCat = "";
+    List<string> existInEntities = new List<string>();
+    bool DeleteOK = true;
+    existInEntities = _facilitiesService.VerifyFacilityDeleteOK(Model.ixFacility, Model.sFacility);
+    if (existInEntities.Any()) { DeleteOK = false; }
+}
+
+
+@if (DeleteOK)
+{
+
+<br>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Facilities</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixFacility)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixFacility)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sFacility)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sFacility)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Addresses.sAddress)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Addresses.sAddress)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLatitude)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLatitude)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLongitude)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLongitude)
+		</dd>
+ 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+</div>
+}
+else
+{
+    <br>
+    <h2>Delete</h2>
+
+    <h3>The Facility @Model.sFacility cannot be deleted. It is referenced by the following entities:</h3>
+    <hr />
+    @foreach (var entity in existInEntities)
+    {
+        conCat = String.Join(" ", StringSplitters.SplitCamelCase(@entity.ToString()));
+        <h4>@Html.ActionLink(@conCat.ToString(), "Index", @entity.ToString())</h4>
+        <hr />
+    }
+
+    <h3>If you want to delete the Facility, delete the dependent references first.</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+
+}
+ 
+

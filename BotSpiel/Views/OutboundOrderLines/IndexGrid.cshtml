@@ -1,0 +1,50 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IOutboundOrderLinesService _outboundorderlinesService
+@model IEnumerable<BotSpiel.DataAccess.Models.OutboundOrderLines>
+
+@{
+	List<SelectListItem> queryMaterials = new List<SelectListItem>();
+	queryMaterials.AddRange(_outboundorderlinesService.selectMaterials().ToList().OrderBy(de => de.sMaterial).Select(de => new SelectListItem() { Text = de.sMaterial, Value = de.sMaterial.ToString()}));
+	List<SelectListItem> queryStatuses = new List<SelectListItem>();
+	queryStatuses.AddRange(_outboundorderlinesService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixOutboundOrderLine, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixOutboundOrderLine).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixOutboundOrderLine }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixOutboundOrderLineEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixOutboundOrderLine }, new { @class = "modal-link" }));
+				columns.Add(model => model.sOutboundOrderLine).Titled("Outbound Order Line").Sortable(true).Filterable(true);
+				columns.Add(model => model.sOrderLineReference).Titled("Order Line Reference").Sortable(true).Filterable(true);
+				columns.Add(model => model.Materials.sMaterial).Titled("Material").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryMaterials);
+				columns.Add(model => model.sBatchNumber).Titled("Batch Number").Sortable(true).Filterable(true);
+				columns.Add(model => model.sSerialNumber).Titled("Serial Number").Sortable(true).Filterable(true);
+				columns.Add(model => model.nBaseUnitQuantityOrdered).Titled("Base Unit Quantity Ordered").Sortable(true).Filterable(true);
+				columns.Add(model => model.nBaseUnitQuantityShipped).Titled("Base Unit Quantity Shipped").Sortable(true).Filterable(true);
+				columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("outboundorderlines-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

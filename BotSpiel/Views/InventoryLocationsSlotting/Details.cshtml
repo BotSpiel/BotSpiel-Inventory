@@ -1,0 +1,60 @@
+
+@model BotSpiel.DataAccess.Models.InventoryLocationsSlotting
+
+@{
+    ViewBag.Title = "Details Inventory Locations Slotting";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Inventory Locations Slotting</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryLocationSlotting)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixInventoryLocationSlotting)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sInventoryLocationSlotting)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sInventoryLocationSlotting)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InventoryLocations.sInventoryLocation)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InventoryLocations.sInventoryLocation, "Details", "InventoryLocations", new { id = Model.ixInventoryLocation }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Materials.sMaterial)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Materials.sMaterial, "Details", "Materials", new { id = Model.ixMaterial }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nMinimumBaseUnitQuantity)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nMinimumBaseUnitQuantity)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nMaximumBaseUnitQuantity)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nMaximumBaseUnitQuantity)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixInventoryLocationSlotting }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixInventoryLocationSlotting }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

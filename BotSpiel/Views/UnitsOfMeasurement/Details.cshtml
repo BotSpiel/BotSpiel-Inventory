@@ -1,0 +1,52 @@
+
+@model BotSpiel.DataAccess.Models.UnitsOfMeasurement
+
+@{
+    ViewBag.Title = "Details Units Of Measurement";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Units Of Measurement</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixUnitOfMeasurement)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixUnitOfMeasurement)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sUnitOfMeasurement)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sUnitOfMeasurement)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.MeasurementUnitsOf.sMeasurementUnitOf)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.MeasurementUnitsOf.sMeasurementUnitOf, "Details", "MeasurementUnitsOf", new { id = Model.ixMeasurementUnitOf }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.MeasurementSystems.sMeasurementSystem)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.MeasurementSystems.sMeasurementSystem, "Details", "MeasurementSystems", new { id = Model.ixMeasurementSystem }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sSymbol)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sSymbol)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

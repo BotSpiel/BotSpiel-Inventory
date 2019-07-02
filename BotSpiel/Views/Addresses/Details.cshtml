@@ -1,0 +1,78 @@
+
+@model BotSpiel.DataAccess.Models.Addresses
+
+@{
+    ViewBag.Title = "Details Addresses";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Addresses</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixAddress)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixAddress)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sAddress)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sAddress)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sStreetAndNumberOrPostOfficeBoxOne)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sStreetAndNumberOrPostOfficeBoxOne)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sStreetAndNumberOrPostOfficeBoxTwo)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sStreetAndNumberOrPostOfficeBoxTwo)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sStreetAndNumberOrPostOfficeBoxThree)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sStreetAndNumberOrPostOfficeBoxThree)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCityOrSuburb)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCityOrSuburb)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sZipOrPostCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sZipOrPostCode)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixStateOrProvince)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.CountrySubDivisionsFKDiffStateOrProvince.sCountrySubDivision, "Details", "CountrySubDivisions", new { id = Model.ixStateOrProvince }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Countries.sCountry)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Countries.sCountry, "Details", "Countries", new { id = Model.ixCountry }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixAddress }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixAddress }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

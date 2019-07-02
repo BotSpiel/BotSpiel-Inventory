@@ -1,0 +1,51 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IMaterialsService _materialsService
+@model IEnumerable<BotSpiel.DataAccess.Models.Materials>
+
+@{
+	List<SelectListItem> queryMaterialTypes = new List<SelectListItem>();
+	queryMaterialTypes.AddRange(_materialsService.selectMaterialTypes().ToList().OrderBy(de => de.sMaterialType).Select(de => new SelectListItem() { Text = de.sMaterialType, Value = de.sMaterialType.ToString()}));
+	List<SelectListItem> queryUnitsOfMeasurement = new List<SelectListItem>();
+	queryUnitsOfMeasurement.AddRange(_materialsService.selectUnitsOfMeasurement().ToList().OrderBy(de => de.sUnitOfMeasurement).Select(de => new SelectListItem() { Text = de.sUnitOfMeasurement, Value = de.sUnitOfMeasurement.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixMaterial, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixMaterial).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixMaterial }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixMaterialEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixMaterial }, new { @class = "modal-link" }));
+				columns.Add(model => model.sMaterial).Titled("Material").Sortable(true).Filterable(true);
+				columns.Add(model => model.sDescription).Titled("Description").Sortable(true).Filterable(true);
+				columns.Add(model => model.MaterialTypes.sMaterialType).Titled("Material Type").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryMaterialTypes);
+				columns.Add(model => model.UnitsOfMeasurementFKDiffBaseUnit.sUnitOfMeasurement).Titled("Base Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryUnitsOfMeasurement);
+				columns.Add(model => model.bTrackSerialNumber).Titled("Track Serial Number").Sortable(true).Filterable(true);
+				columns.Add(model => model.bTrackBatchNumber).Titled("Track Batch Number").Sortable(true).Filterable(true);
+				columns.Add(model => model.bTrackExpiry).Titled("Track Expiry").Sortable(true).Filterable(true);
+				columns.Add(model => model.nDensity).Titled("Density").Sortable(true).Filterable(true);
+				columns.Add(model => model.nShelflife).Titled("Shelflife").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("materials-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

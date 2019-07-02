@@ -1,0 +1,228 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
+@inject IInventoryUnitTransactionsService _inventoryunittransactionsService
+@model BotSpiel.DataAccess.Models.InventoryUnitTransactions
+
+@{
+    ViewBag.Title = "Delete Inventory Unit Transactions";
+}
+
+@{
+    string conCat = "";
+    List<string> existInEntities = new List<string>();
+    bool DeleteOK = true;
+    existInEntities = _inventoryunittransactionsService.VerifyInventoryUnitTransactionDeleteOK(Model.ixInventoryUnitTransaction, Model.sInventoryUnitTransaction);
+    if (existInEntities.Any()) { DeleteOK = false; }
+}
+
+
+@if (DeleteOK)
+{
+
+<br>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Inventory Unit Transactions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryUnitTransaction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixInventoryUnitTransaction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sInventoryUnitTransaction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sInventoryUnitTransaction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InventoryUnits.sInventoryUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryUnits.sInventoryUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InventoryUnitTransactionContexts.sInventoryUnitTransactionContext)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryUnitTransactionContexts.sInventoryUnitTransactionContext)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixFacilityBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.FacilitiesFKDiffFacilityBefore.sFacility)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixFacilityAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.FacilitiesFKDiffFacilityAfter.sFacility)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixCompanyBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.CompaniesFKDiffCompanyBefore.sCompany)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixCompanyAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.CompaniesFKDiffCompanyAfter.sCompany)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixMaterialBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.MaterialsFKDiffMaterialBefore.sMaterial)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixMaterialAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.MaterialsFKDiffMaterialAfter.sMaterial)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryStateBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryStatesFKDiffInventoryStateBefore.sInventoryState)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryStateAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryStatesFKDiffInventoryStateAfter.sInventoryState)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixHandlingUnitBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.HandlingUnitsFKDiffHandlingUnitBefore.sHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixHandlingUnitAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.HandlingUnitsFKDiffHandlingUnitAfter.sHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryLocationBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryLocationsFKDiffInventoryLocationBefore.sInventoryLocation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInventoryLocationAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.InventoryLocationsFKDiffInventoryLocationAfter.sInventoryLocation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantityBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantityBefore)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantityAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantityAfter)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sSerialNumberBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sSerialNumberBefore)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sSerialNumberAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sSerialNumberAfter)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBatchNumberBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBatchNumberBefore)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBatchNumberAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBatchNumberAfter)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtExpireAtBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtExpireAtBefore)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtExpireAtAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtExpireAtAfter)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixStatusBefore)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.StatusesFKDiffStatusBefore.sStatus)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixStatusAfter)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.StatusesFKDiffStatusAfter.sStatus)
+		</dd>
+ 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+</div>
+}
+else
+{
+    <br>
+    <h2>Delete</h2>
+
+    <h3>The InventoryUnitTransaction @Model.sInventoryUnitTransaction cannot be deleted. It is referenced by the following entities:</h3>
+    <hr />
+    @foreach (var entity in existInEntities)
+    {
+        conCat = String.Join(" ", StringSplitters.SplitCamelCase(@entity.ToString()));
+        <h4>@Html.ActionLink(@conCat.ToString(), "Index", @entity.ToString())</h4>
+        <hr />
+    }
+
+    <h3>If you want to delete the InventoryUnitTransaction, delete the dependent references first.</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+
+}
+ 
+

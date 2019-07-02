@@ -1,0 +1,40 @@
+
+@model BotSpiel.DataAccess.Models.MonetaryAmountTypes
+
+@{
+    ViewBag.Title = "Details Monetary Amount Types";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Monetary Amount Types</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixMonetaryAmountType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixMonetaryAmountType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMonetaryAmountType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMonetaryAmountType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sMonetaryAmountTypeCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sMonetaryAmountTypeCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+
