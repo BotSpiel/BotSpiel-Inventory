@@ -23,6 +23,7 @@ This interface ....
         FacilityWorkAreasPost GetPost(Int64 ixFacilityWorkArea);        
 		FacilityWorkAreas Get(Int64 ixFacilityWorkArea);
         IQueryable<FacilityWorkAreas> Index();
+        IQueryable<FacilityWorkAreas> IndexDb();
         bool VerifyFacilityWorkAreaUnique(Int64 ixFacilityWorkArea, string sFacilityWorkArea);
         List<string> VerifyFacilityWorkAreaDeleteOK(Int64 ixFacilityWorkArea, string sFacilityWorkArea);
 

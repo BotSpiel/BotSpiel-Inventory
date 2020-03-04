@@ -1,0 +1,46 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IOutboundOrderLinesInventoryAllocationService _outboundorderlinesinventoryallocationService
+@model IEnumerable<BotSpiel.DataAccess.Models.OutboundOrderLinesInventoryAllocation>
+
+@{
+	List<SelectListItem> queryOutboundOrderLines = new List<SelectListItem>();
+	queryOutboundOrderLines.AddRange(_outboundorderlinesinventoryallocationService.selectOutboundOrderLines().ToList().OrderBy(de => de.sOutboundOrderLine).Select(de => new SelectListItem() { Text = de.sOutboundOrderLine, Value = de.sOutboundOrderLine.ToString()}));
+	List<SelectListItem> queryStatuses = new List<SelectListItem>();
+	queryStatuses.AddRange(_outboundorderlinesinventoryallocationService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixOutboundOrderLineInventoryAllocation, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixOutboundOrderLineInventoryAllocation).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixOutboundOrderLineInventoryAllocation }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixOutboundOrderLineInventoryAllocationEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixOutboundOrderLineInventoryAllocation }, new { @class = "modal-link" }));
+				columns.Add(model => model.sOutboundOrderLineInventoryAllocation).Titled("Outbound Order Line Inventory Allocation").Sortable(true).Filterable(true);
+				columns.Add(model => model.OutboundOrderLines.sOutboundOrderLine).Titled("Outbound Order Line").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryOutboundOrderLines);
+				columns.Add(model => model.nBaseUnitQuantityAllocated).Titled("Base Unit Quantity Allocated").Sortable(true).Filterable(true);
+				columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("outboundorderlinesinventoryallocation-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

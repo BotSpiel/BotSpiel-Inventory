@@ -99,6 +99,7 @@ This class ....
             grid.ViewContext = new ViewContext { HttpContext = HttpContext };
             grid.Query = Request.Query;
 				grid.Columns.Add(model => model.sOutboundOrderLine).Titled("Outbound Order Line").Sortable(true).Filterable(true).MultiFilterable(true);
+				grid.Columns.Add(model => model.OutboundOrders.sOutboundOrder).Titled("Outbound Order").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.sOrderLineReference).Titled("Order Line Reference").Sortable(true).Filterable(true).MultiFilterable(true);
 				grid.Columns.Add(model => model.Materials.sMaterial).Titled("Material").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.sBatchNumber).Titled("Batch Number").Sortable(true).Filterable(true).MultiFilterable(true);
@@ -135,6 +136,7 @@ This class ....
         public ActionResult Create()
         {
 			ViewBag.ixMaterial = new SelectList(_outboundorderlinesService.selectMaterials().Select( x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial");
+			ViewBag.ixOutboundOrder = new SelectList(_outboundorderlinesService.selectOutboundOrders().Select( x => new { x.ixOutboundOrder, x.sOutboundOrder }), "ixOutboundOrder", "sOutboundOrder");
 			ViewBag.ixStatus = new SelectList(_outboundorderlinesService.selectStatuses().Select( x => new { x.ixStatus, x.sStatus }), "ixStatus", "sStatus");
 
             return View();
@@ -143,7 +145,7 @@ This class ....
         // POST: OutboundOrderLines/Create 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("ixOutboundOrderLine,sOutboundOrderLine,sOrderLineReference,ixMaterial,sBatchNumber,sSerialNumber,nBaseUnitQuantityOrdered,nBaseUnitQuantityShipped,ixStatus")] OutboundOrderLinesPost outboundorderlines)
+        public ActionResult Create([Bind("ixOutboundOrderLine,sOutboundOrderLine,ixOutboundOrder,sOrderLineReference,ixMaterial,sBatchNumber,sSerialNumber,nBaseUnitQuantityOrdered,nBaseUnitQuantityShipped,ixStatus")] OutboundOrderLinesPost outboundorderlines)
         {
             if (ModelState.IsValid)
             {
@@ -152,10 +154,45 @@ This class ....
                 return RedirectToAction("Index");
             }
 			ViewBag.ixMaterial = new SelectList(_outboundorderlinesService.selectMaterials().Select( x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial");
+			ViewBag.ixOutboundOrder = new SelectList(_outboundorderlinesService.selectOutboundOrders().Select( x => new { x.ixOutboundOrder, x.sOutboundOrder }), "ixOutboundOrder", "sOutboundOrder");
 			ViewBag.ixStatus = new SelectList(_outboundorderlinesService.selectStatuses().Select( x => new { x.ixStatus, x.sStatus }), "ixStatus", "sStatus");
 
             return View(outboundorderlines);
         }
+
+        //Custom Code Start | Removed Block 
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult CreateWithID(long id)
+        {
+            ViewBag.ixMaterial = new SelectList(_outboundorderlinesService.selectMaterials().Select(x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial");
+            ViewBag.ixOutboundOrder = new SelectList(_outboundorderlinesService.selectOutboundOrders().Where(x => x.ixOutboundOrder == id).Select(x => new { x.ixOutboundOrder, x.sOutboundOrder }), "ixOutboundOrder", "sOutboundOrder");
+            ViewBag.ixStatus = new SelectList(_outboundorderlinesService.selectStatuses().Select(x => new { x.ixStatus, x.sStatus }), "ixStatus", "sStatus");
+
+            return View();
+        }
+
+        // POST: OutboundOrderLines/Create 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateWithID([Bind("ixOutboundOrderLine,sOutboundOrderLine,ixOutboundOrder,sOrderLineReference,ixMaterial,sBatchNumber,sSerialNumber,nBaseUnitQuantityOrdered,nBaseUnitQuantityShipped,ixStatus")] OutboundOrderLinesPost outboundorderlines)
+        {
+            if (ModelState.IsValid)
+            {
+                outboundorderlines.UserName = User.Identity.Name;
+                _outboundorderlinesService.Create(outboundorderlines);
+                return RedirectToAction("Edit", "OutboundOrders", new { id = outboundorderlines.ixOutboundOrder });
+            }
+            ViewBag.ixMaterial = new SelectList(_outboundorderlinesService.selectMaterials().Select(x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial");
+            ViewBag.ixOutboundOrder = new SelectList(_outboundorderlinesService.selectOutboundOrders().Select(x => new { x.ixOutboundOrder, x.sOutboundOrder }), "ixOutboundOrder", "sOutboundOrder");
+            ViewBag.ixStatus = new SelectList(_outboundorderlinesService.selectStatuses().Select(x => new { x.ixStatus, x.sStatus }), "ixStatus", "sStatus");
+
+            return View(outboundorderlines);
+        }
+
+        //Custom Code End			
+
 
         // GET: OutboundOrderLines/Edit/1
         [Authorize]
@@ -168,6 +205,7 @@ This class ....
                 return NotFound();
             }
 			ViewBag.ixMaterial = new SelectList(_outboundorderlinesService.selectMaterials().Select( x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial", outboundorderlines.ixMaterial);
+			ViewBag.ixOutboundOrder = new SelectList(_outboundorderlinesService.selectOutboundOrders().Select( x => new { x.ixOutboundOrder, x.sOutboundOrder }), "ixOutboundOrder", "sOutboundOrder", outboundorderlines.ixOutboundOrder);
 			ViewBag.ixStatus = new SelectList(_outboundorderlinesService.selectStatuses().Select( x => new { x.ixStatus, x.sStatus }), "ixStatus", "sStatus", outboundorderlines.ixStatus);
 
             return View(outboundorderlines);
@@ -176,7 +214,7 @@ This class ....
         // POST: OutboundOrderLines/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("ixOutboundOrderLine,sOutboundOrderLine,sOrderLineReference,ixMaterial,sBatchNumber,sSerialNumber,nBaseUnitQuantityOrdered,nBaseUnitQuantityShipped,ixStatus")] OutboundOrderLinesPost outboundorderlines)
+        public ActionResult Edit([Bind("ixOutboundOrderLine,sOutboundOrderLine,ixOutboundOrder,sOrderLineReference,ixMaterial,sBatchNumber,sSerialNumber,nBaseUnitQuantityOrdered,nBaseUnitQuantityShipped,ixStatus")] OutboundOrderLinesPost outboundorderlines)
         {
             if (ModelState.IsValid)
             {
@@ -185,6 +223,7 @@ This class ....
                 return RedirectToAction("Index");
             }
 			ViewBag.ixMaterial = new SelectList(_outboundorderlinesService.selectMaterials().Select( x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial", outboundorderlines.ixMaterial);
+			ViewBag.ixOutboundOrder = new SelectList(_outboundorderlinesService.selectOutboundOrders().Select( x => new { x.ixOutboundOrder, x.sOutboundOrder }), "ixOutboundOrder", "sOutboundOrder", outboundorderlines.ixOutboundOrder);
 			ViewBag.ixStatus = new SelectList(_outboundorderlinesService.selectStatuses().Select( x => new { x.ixStatus, x.sStatus }), "ixStatus", "sStatus", outboundorderlines.ixStatus);
 
             return View(outboundorderlines);

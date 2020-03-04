@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is StatusesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is StatusesPost)).ToList())
             {
                 var config_vw_statusespost = e.Entity as StatusesPost;
                 switch (e.State)
@@ -88,12 +88,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixStatus"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeStatuses @ixStatus = @p0, @sStatus = @p1, @sStatusCode = @p2, @UserName = @p3", config_vw_statusespost.ixStatus, config_vw_statusespost.sStatus, config_vw_statusespost.sStatusCode, config_vw_statusespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

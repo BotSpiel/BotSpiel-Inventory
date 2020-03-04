@@ -23,7 +23,8 @@ This interface ....
 		String sBotspielBotMessage { get; set; }
 		String sMyMessage { get; set; }
 		String sYourReply { get; set; }
-		DateTime dtCreatedAt { get; set; }
+        String sMyNextMessage { get; set; }
+        DateTime dtCreatedAt { get; set; }
 		DateTime dtChangedAt { get; set; }
 		String sCreatedBy { get; set; }
 		String sChangedBy { get; set; }

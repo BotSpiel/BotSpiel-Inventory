@@ -43,6 +43,12 @@ This class ....
             var aislefacestoragetypes = _context.AisleFaceStorageTypes.AsNoTracking(); 
             return aislefacestoragetypes;
         }
+
+        public IQueryable<AisleFaceStorageTypes> IndexDb()
+        {
+            var aislefacestoragetypes = _context.AisleFaceStorageTypes.AsNoTracking(); 
+            return aislefacestoragetypes;
+        }
         public bool VerifyAisleFaceStorageTypeUnique(Int64 ixAisleFaceStorageType, string sAisleFaceStorageType)
         {
             if (_context.AisleFaceStorageTypes.AsNoTracking().Where(x => x.sAisleFaceStorageType == sAisleFaceStorageType).Any() && ixAisleFaceStorageType == 0L) return false;

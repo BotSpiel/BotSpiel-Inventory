@@ -54,6 +54,18 @@
 			@Html.DisplayFor(model => model.HandlingUnitsFKDiffParentHandlingUnit.sHandlingUnit)
 		</dd>
 		<dt>
+			@Html.DisplayNameFor(model => model.ixPackingMaterial)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.MaterialsFKDiffPackingMaterial.sMaterial)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.MaterialHandlingUnitConfigurations.sMaterialHandlingUnitConfiguration)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.MaterialHandlingUnitConfigurations.sMaterialHandlingUnitConfiguration)
+		</dd>
+		<dt>
 			@Html.DisplayNameFor(model => model.nLength)
 		</dt>
 		<dd>
@@ -64,6 +76,18 @@
 		</dt>
 		<dd>
 			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffLengthUnit.sUnitOfMeasurement)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nWidth)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nWidth)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixWidthUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffWidthUnit.sUnitOfMeasurement)
 		</dd>
 		<dt>
 			@Html.DisplayNameFor(model => model.nHeight)
@@ -87,19 +111,13 @@
 			@Html.DisplayNameFor(model => model.ixWeightUnit)
 		</dt>
 		<dd>
-			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffWeightUnit.sUnitOfMeasurement)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.MaterialHandlingUnitConfigurations.sMaterialHandlingUnitConfiguration)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.MaterialHandlingUnitConfigurations.sMaterialHandlingUnitConfiguration)
+			@Html.DisplayFor(model => model.Statuses.sStatus)
 		</dd>
 		<dt>
 			@Html.DisplayNameFor(model => model.Statuses.sStatus)
 		</dt>
 		<dd>
-			@Html.DisplayFor(model => model.Statuses.sStatus)
+			@Html.DisplayFor(model => model.UnitsOfMeasurementFKDiffWeightUnit.sUnitOfMeasurement)
 		</dd>
  
     </dl>

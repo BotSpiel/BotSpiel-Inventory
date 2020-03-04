@@ -23,6 +23,7 @@ This interface ....
         BusinessPartnerTypesPost GetPost(Int64 ixBusinessPartnerType);        
 		BusinessPartnerTypes Get(Int64 ixBusinessPartnerType);
         IQueryable<BusinessPartnerTypes> Index();
+        IQueryable<BusinessPartnerTypes> IndexDb();
         bool VerifyBusinessPartnerTypeUnique(Int64 ixBusinessPartnerType, string sBusinessPartnerType);
         List<string> VerifyBusinessPartnerTypeDeleteOK(Int64 ixBusinessPartnerType, string sBusinessPartnerType);
 

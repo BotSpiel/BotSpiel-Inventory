@@ -1,0 +1,49 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IPickBatchPickingService _pickbatchpickingService
+@model IEnumerable<BotSpiel.DataAccess.Models.PickBatchPicking>
+
+@{
+	List<SelectListItem> queryHandlingUnits = new List<SelectListItem>();
+	queryHandlingUnits.AddRange(_pickbatchpickingService.selectHandlingUnits().ToList().OrderBy(de => de.sHandlingUnit).Select(de => new SelectListItem() { Text = de.sHandlingUnit, Value = de.sHandlingUnit.ToString()}));
+	List<SelectListItem> queryInventoryUnits = new List<SelectListItem>();
+	queryInventoryUnits.AddRange(_pickbatchpickingService.selectInventoryUnits().ToList().OrderBy(de => de.sInventoryUnit).Select(de => new SelectListItem() { Text = de.sInventoryUnit, Value = de.sInventoryUnit.ToString()}));
+	List<SelectListItem> queryPickBatches = new List<SelectListItem>();
+	queryPickBatches.AddRange(_pickbatchpickingService.selectPickBatches().ToList().OrderBy(de => de.sPickBatch).Select(de => new SelectListItem() { Text = de.sPickBatch, Value = de.sPickBatch.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixPickBatchPick, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixPickBatchPick).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixPickBatchPick }, new { @class = "modal-link" }));
+				columns.Add(model => model.sPickBatchPick).Titled("Pick Batch Pick").Sortable(true).Filterable(true);
+				columns.Add(model => model.PickBatches.sPickBatch).Titled("Pick Batch").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryPickBatches);
+				columns.Add(model => model.InventoryUnits.sInventoryUnit).Titled("Inventory Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInventoryUnits);
+				columns.Add(model => model.nBaseUnitQuantityPicked).Titled("Base Unit Quantity Picked").Sortable(true).Filterable(true);
+				columns.Add(model => model.sPackToHandlingUnit).Titled("Pack To Handling Unit").Sortable(true).Filterable(true);
+				columns.Add(model => model.HandlingUnits.sHandlingUnit).Titled("Handling Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryHandlingUnits);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("pickbatchpicking-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

@@ -33,8 +33,9 @@
 				columns.Add(model => model.nHandlingUnitQuantity).Titled("Handling Unit Quantity").Sortable(true).Filterable(true);
 				columns.Add(model => model.nBaseUnitQuantityExpected).Titled("Base Unit Quantity Expected").Sortable(true).Filterable(true);
 				columns.Add(model => model.nBaseUnitQuantityReceived).Titled("Base Unit Quantity Received").Sortable(true).Filterable(true);
-				columns.Add(model => model.sBatchNumber).Titled("Batch Number").Sortable(true).Filterable(true);
 				columns.Add(model => model.sSerialNumber).Titled("Serial Number").Sortable(true).Filterable(true);
+				columns.Add(model => model.sBatchNumber).Titled("Batch Number").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtExpireAt).Titled("Expire At").Sortable(true).Filterable(true);
 				columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);
 				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
 				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);

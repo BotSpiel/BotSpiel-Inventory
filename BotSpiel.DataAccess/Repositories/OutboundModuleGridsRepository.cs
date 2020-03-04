@@ -41,6 +41,12 @@ This class ....
             var outboundmodulegrids = _context.OutboundModuleGrids.AsNoTracking(); 
             return outboundmodulegrids;
         }
+
+        public IQueryable<OutboundModuleGrids> IndexDb()
+        {
+            var outboundmodulegrids = _context.OutboundModuleGrids.AsNoTracking(); 
+            return outboundmodulegrids;
+        }
 		public IQueryable<OutboundModuleGridsconfig> Indexconfig() => _context.OutboundModuleGridsconfig;
 		public IQueryable<OutboundModuleGridsmd> Indexmd() => _context.OutboundModuleGridsmd;
 		public IQueryable<OutboundModuleGridstx> Indextx() => _context.OutboundModuleGridstx;

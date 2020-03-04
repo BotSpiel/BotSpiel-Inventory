@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is MessageResponseTypesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is MessageResponseTypesPost)).ToList())
             {
                 var config_vw_messageresponsetypespost = e.Entity as MessageResponseTypesPost;
                 switch (e.State)
@@ -88,12 +88,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixMessageResponseType"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeMessageResponseTypes @ixMessageResponseType = @p0, @sMessageResponseType = @p1, @sMessageResponseTypeCode = @p2, @UserName = @p3", config_vw_messageresponsetypespost.ixMessageResponseType, config_vw_messageresponsetypespost.sMessageResponseType, config_vw_messageresponsetypespost.sMessageResponseTypeCode, config_vw_messageresponsetypespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

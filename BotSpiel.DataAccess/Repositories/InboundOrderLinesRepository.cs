@@ -55,6 +55,12 @@ This class ....
             var inboundorderlines = _context.InboundOrderLines.Include(a => a.InboundOrders).Include(a => a.Materials).Include(a => a.Statuses).AsNoTracking(); 
             return inboundorderlines;
         }
+
+        public IQueryable<InboundOrderLines> IndexDb()
+        {
+            var inboundorderlines = _context.InboundOrderLines.Include(a => a.InboundOrders).Include(a => a.Materials).Include(a => a.Statuses).AsNoTracking(); 
+            return inboundorderlines;
+        }
        public IQueryable<HandlingUnitTypes> selectHandlingUnitTypes()
         {
             List<HandlingUnitTypes> handlingunittypes = new List<HandlingUnitTypes>();
@@ -88,6 +94,46 @@ This class ....
             return materials.AsQueryable();
         }
         public IQueryable<Statuses> selectStatuses()
+        {
+            List<Statuses> statuses = new List<Statuses>();
+            _context.Statuses.AsNoTracking()
+                .ToList()
+                .ForEach(x => statuses.Add(x));
+            return statuses.AsQueryable();
+        }
+       public IQueryable<HandlingUnitTypes> HandlingUnitTypesDb()
+        {
+            List<HandlingUnitTypes> handlingunittypes = new List<HandlingUnitTypes>();
+            _context.HandlingUnitTypes.AsNoTracking()
+                .ToList()
+                .ForEach(x => handlingunittypes.Add(x));
+            return handlingunittypes.AsQueryable();
+        }
+        public IQueryable<InboundOrders> InboundOrdersDb()
+        {
+            List<InboundOrders> inboundorders = new List<InboundOrders>();
+            _context.InboundOrders.Include(a => a.BusinessPartners).Include(a => a.Companies).Include(a => a.Facilities).Include(a => a.InboundOrderTypes).Include(a => a.Statuses).AsNoTracking()
+                .ToList()
+                .ForEach(x => inboundorders.Add(x));
+            return inboundorders.AsQueryable();
+        }
+        public IQueryable<MaterialHandlingUnitConfigurations> MaterialHandlingUnitConfigurationsDb()
+        {
+            List<MaterialHandlingUnitConfigurations> materialhandlingunitconfigurations = new List<MaterialHandlingUnitConfigurations>();
+            _context.MaterialHandlingUnitConfigurations.Include(a => a.HandlingUnitTypes).Include(a => a.Materials).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => materialhandlingunitconfigurations.Add(x));
+            return materialhandlingunitconfigurations.AsQueryable();
+        }
+        public IQueryable<Materials> MaterialsDb()
+        {
+            List<Materials> materials = new List<Materials>();
+            _context.Materials.Include(a => a.MaterialTypes).Include(a => a.UnitsOfMeasurementFKDiffBaseUnit).Include(a => a.UnitsOfMeasurementFKDiffDensityUnit).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffShelflifeUnit).Include(a => a.UnitsOfMeasurementFKDiffWeightUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => materials.Add(x));
+            return materials.AsQueryable();
+        }
+        public IQueryable<Statuses> StatusesDb()
         {
             List<Statuses> statuses = new List<Statuses>();
             _context.Statuses.AsNoTracking()

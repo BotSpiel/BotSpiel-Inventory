@@ -71,6 +71,9 @@ This class ....
 		[Display(Name = "Expire At")]
 		public virtual DateTime? dtExpireAt { get; set; }
 		[Required]
+		[Display(Name = "Base Unit Quantity Queued")]
+		public virtual Double nBaseUnitQuantityQueued { get; set; }
+		[Required]
 		[Display(Name = "Status ID")]
 		public virtual Int64 ixStatus { get; set; }
 		[Required]

@@ -43,6 +43,12 @@ This class ....
             var baysequencetypes = _context.BaySequenceTypes.AsNoTracking(); 
             return baysequencetypes;
         }
+
+        public IQueryable<BaySequenceTypes> IndexDb()
+        {
+            var baysequencetypes = _context.BaySequenceTypes.AsNoTracking(); 
+            return baysequencetypes;
+        }
         public bool VerifyBaySequenceTypeUnique(Int64 ixBaySequenceType, string sBaySequenceType)
         {
             if (_context.BaySequenceTypes.AsNoTracking().Where(x => x.sBaySequenceType == sBaySequenceType).Any() && ixBaySequenceType == 0L) return false;

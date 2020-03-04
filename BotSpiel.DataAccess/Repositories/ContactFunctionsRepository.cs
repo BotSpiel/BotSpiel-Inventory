@@ -41,6 +41,12 @@ This class ....
             var contactfunctions = _context.ContactFunctions.AsNoTracking(); 
             return contactfunctions;
         }
+
+        public IQueryable<ContactFunctions> IndexDb()
+        {
+            var contactfunctions = _context.ContactFunctions.AsNoTracking(); 
+            return contactfunctions;
+        }
         public bool VerifyContactFunctionUnique(Int64 ixContactFunction, string sContactFunction)
         {
             if (_context.ContactFunctions.AsNoTracking().Where(x => x.sContactFunction == sContactFunction).Any() && ixContactFunction == 0L) return false;

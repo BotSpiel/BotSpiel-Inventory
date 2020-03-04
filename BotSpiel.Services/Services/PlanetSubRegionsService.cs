@@ -32,7 +32,9 @@ This class ....
         public PlanetSubRegionsPost GetPost(Int64 ixPlanetSubRegion) => _planetsubregionsRepository.GetPost(ixPlanetSubRegion);
         public PlanetSubRegions Get(Int64 ixPlanetSubRegion) => _planetsubregionsRepository.Get(ixPlanetSubRegion);
         public IQueryable<PlanetSubRegions> Index() => _planetsubregionsRepository.Index();
+        public IQueryable<PlanetSubRegions> IndexDb() => _planetsubregionsRepository.IndexDb();
        public IQueryable<PlanetRegions> selectPlanetRegions() => _planetsubregionsRepository.selectPlanetRegions();
+       public IQueryable<PlanetRegions> PlanetRegionsDb() => _planetsubregionsRepository.PlanetRegionsDb();
         public bool VerifyPlanetSubRegionUnique(Int64 ixPlanetSubRegion, string sPlanetSubRegion) => _planetsubregionsRepository.VerifyPlanetSubRegionUnique(ixPlanetSubRegion, sPlanetSubRegion);
         public List<string> VerifyPlanetSubRegionDeleteOK(Int64 ixPlanetSubRegion, string sPlanetSubRegion) => _planetsubregionsRepository.VerifyPlanetSubRegionDeleteOK(ixPlanetSubRegion, sPlanetSubRegion);
 

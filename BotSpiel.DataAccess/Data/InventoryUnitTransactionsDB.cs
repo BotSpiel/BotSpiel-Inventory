@@ -36,18 +36,18 @@ This class ....
 		public DbSet<InventoryUnitsPost> InventoryUnitsPost { get; set; }
 		public DbSet<InventoryUnitTransactionContexts> InventoryUnitTransactionContexts { get; set; }
 		public DbSet<InventoryUnitTransactionContextsPost> InventoryUnitTransactionContextsPost { get; set; }
-		public DbSet<Facilities> Facilities { get; set; }
-		public DbSet<FacilitiesPost> FacilitiesPost { get; set; }
 		public DbSet<InventoryStates> InventoryStates { get; set; }
 		public DbSet<InventoryStatesPost> InventoryStatesPost { get; set; }
 		public DbSet<InventoryLocations> InventoryLocations { get; set; }
 		public DbSet<InventoryLocationsPost> InventoryLocationsPost { get; set; }
-		public DbSet<Addresses> Addresses { get; set; }
-		public DbSet<AddressesPost> AddressesPost { get; set; }
 		public DbSet<Companies> Companies { get; set; }
 		public DbSet<CompaniesPost> CompaniesPost { get; set; }
+		public DbSet<Facilities> Facilities { get; set; }
+		public DbSet<FacilitiesPost> FacilitiesPost { get; set; }
 		public DbSet<FacilityWorkAreas> FacilityWorkAreas { get; set; }
 		public DbSet<FacilityWorkAreasPost> FacilityWorkAreasPost { get; set; }
+		public DbSet<Addresses> Addresses { get; set; }
+		public DbSet<AddressesPost> AddressesPost { get; set; }
 		public DbSet<CountrySubDivisions> CountrySubDivisions { get; set; }
 		public DbSet<CountrySubDivisionsPost> CountrySubDivisionsPost { get; set; }
 		public DbSet<Countries> Countries { get; set; }
@@ -118,12 +118,6 @@ This class ....
             modelBuilder.Entity<InventoryUnitTransactionContextsPost>()
                 .ToTable("config_vw_InventoryUnitTransactionContextsPost")
                 .HasKey(c => new { c.ixInventoryUnitTransactionContext });
-            modelBuilder.Entity<Facilities>()
-                .ToTable("md_vw_Facilities")
-                .HasKey(c => new { c.ixFacility });
-            modelBuilder.Entity<FacilitiesPost>()
-                .ToTable("md_vw_FacilitiesPost")
-                .HasKey(c => new { c.ixFacility });
             modelBuilder.Entity<InventoryStates>()
                 .ToTable("config_vw_InventoryStates")
                 .HasKey(c => new { c.ixInventoryState });
@@ -136,24 +130,30 @@ This class ....
             modelBuilder.Entity<InventoryLocationsPost>()
                 .ToTable("md_vw_InventoryLocationsPost")
                 .HasKey(c => new { c.ixInventoryLocation });
-            modelBuilder.Entity<Addresses>()
-                .ToTable("md_vw_Addresses")
-                .HasKey(c => new { c.ixAddress });
-            modelBuilder.Entity<AddressesPost>()
-                .ToTable("md_vw_AddressesPost")
-                .HasKey(c => new { c.ixAddress });
             modelBuilder.Entity<Companies>()
                 .ToTable("md_vw_Companies")
                 .HasKey(c => new { c.ixCompany });
             modelBuilder.Entity<CompaniesPost>()
                 .ToTable("md_vw_CompaniesPost")
                 .HasKey(c => new { c.ixCompany });
+            modelBuilder.Entity<Facilities>()
+                .ToTable("md_vw_Facilities")
+                .HasKey(c => new { c.ixFacility });
+            modelBuilder.Entity<FacilitiesPost>()
+                .ToTable("md_vw_FacilitiesPost")
+                .HasKey(c => new { c.ixFacility });
             modelBuilder.Entity<FacilityWorkAreas>()
                 .ToTable("md_vw_FacilityWorkAreas")
                 .HasKey(c => new { c.ixFacilityWorkArea });
             modelBuilder.Entity<FacilityWorkAreasPost>()
                 .ToTable("md_vw_FacilityWorkAreasPost")
                 .HasKey(c => new { c.ixFacilityWorkArea });
+            modelBuilder.Entity<Addresses>()
+                .ToTable("md_vw_Addresses")
+                .HasKey(c => new { c.ixAddress });
+            modelBuilder.Entity<AddressesPost>()
+                .ToTable("md_vw_AddressesPost")
+                .HasKey(c => new { c.ixAddress });
             modelBuilder.Entity<CountrySubDivisions>()
                 .ToTable("md_vw_CountrySubDivisions")
                 .HasKey(c => new { c.ixCountrySubDivision });
@@ -309,7 +309,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is InventoryUnitTransactionsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is InventoryUnitTransactionsPost)).ToList())
             {
                 var tx_vw_inventoryunittransactionspost = e.Entity as InventoryUnitTransactionsPost;
                 switch (e.State)
@@ -462,12 +462,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixInventoryUnitTransaction"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeInventoryUnitTransactions @ixInventoryUnitTransaction = @p0, @ixInventoryUnit = @p1, @ixInventoryUnitTransactionContext = @p2, @ixFacilityBefore = @p3, @ixFacilityAfter = @p4, @ixCompanyBefore = @p5, @ixCompanyAfter = @p6, @ixMaterialBefore = @p7, @ixMaterialAfter = @p8, @ixInventoryStateBefore = @p9, @ixInventoryStateAfter = @p10, @ixHandlingUnitBefore = @p11, @ixHandlingUnitAfter = @p12, @ixInventoryLocationBefore = @p13, @ixInventoryLocationAfter = @p14, @nBaseUnitQuantityBefore = @p15, @nBaseUnitQuantityAfter = @p16, @sSerialNumberBefore = @p17, @sSerialNumberAfter = @p18, @sBatchNumberBefore = @p19, @sBatchNumberAfter = @p20, @dtExpireAtBefore = @p21, @dtExpireAtAfter = @p22, @ixStatusBefore = @p23, @ixStatusAfter = @p24, @UserName = @p25", tx_vw_inventoryunittransactionspost.ixInventoryUnitTransaction, tx_vw_inventoryunittransactionspost.ixInventoryUnit, tx_vw_inventoryunittransactionspost.ixInventoryUnitTransactionContext, tx_vw_inventoryunittransactionspost.ixFacilityBefore, tx_vw_inventoryunittransactionspost.ixFacilityAfter, tx_vw_inventoryunittransactionspost.ixCompanyBefore, tx_vw_inventoryunittransactionspost.ixCompanyAfter, tx_vw_inventoryunittransactionspost.ixMaterialBefore, tx_vw_inventoryunittransactionspost.ixMaterialAfter, tx_vw_inventoryunittransactionspost.ixInventoryStateBefore, tx_vw_inventoryunittransactionspost.ixInventoryStateAfter, tx_vw_inventoryunittransactionspost.ixHandlingUnitBefore, tx_vw_inventoryunittransactionspost.ixHandlingUnitAfter, tx_vw_inventoryunittransactionspost.ixInventoryLocationBefore, tx_vw_inventoryunittransactionspost.ixInventoryLocationAfter, tx_vw_inventoryunittransactionspost.nBaseUnitQuantityBefore, tx_vw_inventoryunittransactionspost.nBaseUnitQuantityAfter, tx_vw_inventoryunittransactionspost.sSerialNumberBefore, tx_vw_inventoryunittransactionspost.sSerialNumberAfter, tx_vw_inventoryunittransactionspost.sBatchNumberBefore, tx_vw_inventoryunittransactionspost.sBatchNumberAfter, tx_vw_inventoryunittransactionspost.dtExpireAtBefore, tx_vw_inventoryunittransactionspost.dtExpireAtAfter, tx_vw_inventoryunittransactionspost.ixStatusBefore, tx_vw_inventoryunittransactionspost.ixStatusAfter, tx_vw_inventoryunittransactionspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

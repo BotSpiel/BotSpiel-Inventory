@@ -53,7 +53,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is CarriersPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is CarriersPost)).ToList())
             {
                 var md_vw_carrierspost = e.Entity as CarriersPost;
                 switch (e.State)
@@ -121,12 +121,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixCarrier"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeCarriers @ixCarrier = @p0, @sCarrier = @p1, @ixCarrierType = @p2, @sStandardCarrierAlphaCode = @p3, @sCarrierConsignmentNumberPrefix = @p4, @nCarrierConsignmentNumberStart = @p5, @nCarrierConsignmentNumberLastUsed = @p6, @dtScheduledPickupTime = @p7, @UserName = @p8", md_vw_carrierspost.ixCarrier, md_vw_carrierspost.sCarrier, md_vw_carrierspost.ixCarrierType, md_vw_carrierspost.sStandardCarrierAlphaCode, md_vw_carrierspost.sCarrierConsignmentNumberPrefix, md_vw_carrierspost.nCarrierConsignmentNumberStart, md_vw_carrierspost.nCarrierConsignmentNumberLastUsed, md_vw_carrierspost.dtScheduledPickupTime, md_vw_carrierspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

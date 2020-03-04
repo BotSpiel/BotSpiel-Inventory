@@ -32,6 +32,7 @@ This class ....
         public AisleFaceStorageTypesPost GetPost(Int64 ixAisleFaceStorageType) => _aislefacestoragetypesRepository.GetPost(ixAisleFaceStorageType);
         public AisleFaceStorageTypes Get(Int64 ixAisleFaceStorageType) => _aislefacestoragetypesRepository.Get(ixAisleFaceStorageType);
         public IQueryable<AisleFaceStorageTypes> Index() => _aislefacestoragetypesRepository.Index();
+        public IQueryable<AisleFaceStorageTypes> IndexDb() => _aislefacestoragetypesRepository.IndexDb();
         public bool VerifyAisleFaceStorageTypeUnique(Int64 ixAisleFaceStorageType, string sAisleFaceStorageType) => _aislefacestoragetypesRepository.VerifyAisleFaceStorageTypeUnique(ixAisleFaceStorageType, sAisleFaceStorageType);
         public List<string> VerifyAisleFaceStorageTypeDeleteOK(Int64 ixAisleFaceStorageType, string sAisleFaceStorageType) => _aislefacestoragetypesRepository.VerifyAisleFaceStorageTypeDeleteOK(ixAisleFaceStorageType, sAisleFaceStorageType);
 

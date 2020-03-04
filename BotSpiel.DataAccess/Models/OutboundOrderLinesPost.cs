@@ -9,20 +9,29 @@ namespace BotSpiel.DataAccess.Models
     public class OutboundOrderLinesPost : IOutboundOrderLinesPost
     {
 
-/*
--- =============================================
--- Author:		<BotSpiel>
+        /*
+        -- =============================================
+        -- Author:		<BotSpiel>
 
--- Description:	<Description>
+        -- Description:	<Description>
 
-This class ....
+        This class ....
 
-*/
- 
-		[Display(Name = "Outbound Order Line ID")]
+        */
+        //Custom Code Start | Added Code Block
+        public OutboundOrderLinesPost()
+        {
+            ixStatus = 5;
+        }
+        //Custom Code End
+
+        [Display(Name = "Outbound Order Line ID")]
 		public virtual Int64 ixOutboundOrderLine { get; set; }
 		[Display(Name = "Outbound Order Line")]
 		public virtual String sOutboundOrderLine { get; set; }
+		[Required]
+		[Display(Name = "Outbound Order ID")]
+		public virtual Int64 ixOutboundOrder { get; set; }
 		[StringLength(300)]
 		[Required]
 		[Display(Name = "Order Line Reference")]

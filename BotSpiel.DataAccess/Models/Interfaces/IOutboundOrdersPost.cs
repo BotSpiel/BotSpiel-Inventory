@@ -24,8 +24,8 @@ This interface ....
 		Int64 ixFacility { get; set; }
 		Int64 ixCompany { get; set; }
 		Int64 ixBusinessPartner { get; set; }
-		DateTime dtDeliverEarliest { get; set; }
-		DateTime dtDeliverLatest { get; set; }
+		DateTime? dtDeliverEarliest { get; set; }
+		DateTime? dtDeliverLatest { get; set; }
 		Int64 ixCarrierService { get; set; }
 		Int64 ixStatus { get; set; }
 		Int64? ixPickBatch { get; set; }

@@ -1,0 +1,85 @@
+
+@model BotSpiel.DataAccess.Models.PickBatchPickingPost 
+
+@{
+    ViewBag.Title = "Edit Pick Batch Picking";
+}
+<br>
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Pick Batch Picking</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ixPickBatchPick)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sPickBatchPick, "Pick Batch Pick", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sPickBatchPick, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sPickBatchPick, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Pick Batch ID", "Index", "PickBatches", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixPickBatch", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixPickBatch, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Inventory Unit ID", "Index", "InventoryUnits", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixInventoryUnit", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixInventoryUnit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nBaseUnitQuantityPicked, "Base Unit Quantity Picked", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nBaseUnitQuantityPicked, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nBaseUnitQuantityPicked, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sPackToHandlingUnit, "Pack To Handling Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sPackToHandlingUnit, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sPackToHandlingUnit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Handling Unit ID", "Index", "HandlingUnits", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixHandlingUnit", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixHandlingUnit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Edit" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Grid", "Index")
+</div>
+
+@section Scripts {
+}
+
+
+ 
+

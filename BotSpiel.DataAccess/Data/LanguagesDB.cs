@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is LanguagesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is LanguagesPost)).ToList())
             {
                 var md_vw_languagespost = e.Entity as LanguagesPost;
                 switch (e.State)
@@ -88,12 +88,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixLanguage"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeLanguages @ixLanguage = @p0, @sLanguage = @p1, @sLanguageCode = @p2, @UserName = @p3", md_vw_languagespost.ixLanguage, md_vw_languagespost.sLanguage, md_vw_languagespost.sLanguageCode, md_vw_languagespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

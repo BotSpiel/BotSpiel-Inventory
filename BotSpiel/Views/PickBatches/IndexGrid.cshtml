@@ -1,22 +1,26 @@
 @using System.Linq;
 @using System.Collections.Generic;
 @using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
 @inject IPickBatchesService _pickbatchesService
+@*//Custom Code Start | Added Code Block*@
+@inject Picking _picking
+@*//Custom Code End*@
 @model IEnumerable<BotSpiel.DataAccess.Models.PickBatches>
 
 @{
 	List<SelectListItem> queryPickBatchTypes = new List<SelectListItem>();
-	queryPickBatchTypes.AddRange(_pickbatchesService.selectPickBatchTypes().ToList().OrderBy(de => de.sPickBatchType).Select(de => new SelectListItem() { Text = de.sPickBatchType, Value = de.sPickBatchType.ToString()}));
+	queryPickBatchTypes.AddRange(_pickbatchesService.selectPickBatchTypes().ToList().OrderBy(de => de.sPickBatchType).Select(de => new SelectListItem() { Text = de.sPickBatchType, Value = de.sPickBatchType.ToString() }));
 	List<SelectListItem> queryStatuses = new List<SelectListItem>();
-	queryStatuses.AddRange(_pickbatchesService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString()}));
+	queryStatuses.AddRange(_pickbatchesService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString() }));
 
 }
 
 
 @(Html
-        .Grid(Model)
-        .Build(columns =>
-        {
+		.Grid(Model)
+		.Build(columns =>
+		{
 				columns.Add(model => Html.CheckBox("Check_" + model.ixPickBatch, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
 				columns.Add(model => model.ixPickBatch).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixPickBatch }, new { @class = "modal-link" }));
 				columns.Add(model => model.ixPickBatchEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixPickBatch }, new { @class = "modal-link" }));
@@ -26,23 +30,26 @@
 				columns.Add(model => model.dtStartBy).Titled("Start By").Sortable(true).Filterable(true);
 				columns.Add(model => model.dtCompleteBy).Titled("Complete By").Sortable(true).Filterable(true);
 				columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);
+				//Custom Code Start | Added Code Block 
+				columns.Add(model => _picking.getPickBatchAllocationStatus(model.ixPickBatch)).Titled("Allocation Status").Sortable(true).Filterable(true);			
+				//Custom Code End
 				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
 				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
 				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
 				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
-        })
-        .Empty("No data found")
-        .Id("pickbatches-ajax-grid")
-        .Pageable(pager =>
-        {
-            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
-            pager.ShowPageSizes = true;
-            pager.RowsPerPage = 20;
-        })
-        .Css("css-classes")
-        .AppendCss("table-hover")
- )
+		})
+		.Empty("No data found")
+		.Id("pickbatches-ajax-grid")
+		.Pageable(pager =>
+		{
+			pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+			pager.ShowPageSizes = true;
+			pager.RowsPerPage = 20;
+		})
+		.Css("css-classes")
+		.AppendCss("table-hover")
+)
 
 
- 
+
 

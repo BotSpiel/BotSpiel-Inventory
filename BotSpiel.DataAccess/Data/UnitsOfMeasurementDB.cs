@@ -61,7 +61,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is UnitsOfMeasurementPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is UnitsOfMeasurementPost)).ToList())
             {
                 var config_vw_unitsofmeasurementpost = e.Entity as UnitsOfMeasurementPost;
                 switch (e.State)
@@ -114,12 +114,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixUnitOfMeasurement"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeUnitsOfMeasurement @ixUnitOfMeasurement = @p0, @sUnitOfMeasurement = @p1, @ixMeasurementUnitOf = @p2, @ixMeasurementSystem = @p3, @sSymbol = @p4, @UserName = @p5", config_vw_unitsofmeasurementpost.ixUnitOfMeasurement, config_vw_unitsofmeasurementpost.sUnitOfMeasurement, config_vw_unitsofmeasurementpost.ixMeasurementUnitOf, config_vw_unitsofmeasurementpost.ixMeasurementSystem, config_vw_unitsofmeasurementpost.sSymbol, config_vw_unitsofmeasurementpost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

@@ -1,0 +1,48 @@
+
+@model BotSpiel.DataAccess.Models.RequestsForInformationSimiles
+
+@{
+    ViewBag.Title = "Details Requests For Information Similes";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Requests For Information Similes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixRequestsForInformationSimile)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixRequestsForInformationSimile)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sRequestsForInformationSimile)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sRequestsForInformationSimile)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.RequestsForInformation.sRequestForInformation)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.RequestsForInformation.sRequestForInformation, "Details", "RequestsForInformation", new { id = Model.ixRequestForInformation }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sRequestsForInformationSimileText)
+		</dt>
+		<dd>
+			@Html.TextAreaFor(model => model.sRequestsForInformationSimileText, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;" ,  @readonly = true })
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixRequestsForInformationSimile }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixRequestsForInformationSimile }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

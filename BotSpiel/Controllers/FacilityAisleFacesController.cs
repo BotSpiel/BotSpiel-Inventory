@@ -99,6 +99,7 @@ This class ....
             grid.ViewContext = new ViewContext { HttpContext = HttpContext };
             grid.Query = Request.Query;
 				grid.Columns.Add(model => model.sFacilityAisleFace).Titled("Facility Aisle Face").Sortable(true).Filterable(true).MultiFilterable(true);
+				grid.Columns.Add(model => model.Facilities.sFacility).Titled("Facility").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.FacilityFloors.sFacilityFloor).Titled("Facility Floor").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.nSequence).Titled("Sequence").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.BaySequenceTypes.sBaySequenceType).Titled("Bay Sequence Type").Sortable(true).Filterable(true);
@@ -143,6 +144,7 @@ This class ....
 			ViewBag.ixDefaultFacilityZone = new SelectList(_facilityaislefacesService.selectFacilityZones().Select( x => new { x.ixFacilityZone, x.sFacilityZone }), "ixFacilityZone", "sFacilityZone");
 			ViewBag.ixDefaultInventoryLocationSize = new SelectList(_facilityaislefacesService.selectInventoryLocationSizes().Select( x => new { x.ixInventoryLocationSize, x.sInventoryLocationSize }), "ixInventoryLocationSize", "sInventoryLocationSize");
 			ViewBag.ixDefaultLocationFunction = new SelectList(_facilityaislefacesService.selectLocationFunctions().Select( x => new { x.ixLocationFunction, x.sLocationFunction }), "ixLocationFunction", "sLocationFunction");
+			ViewBag.ixFacility = new SelectList(_facilityaislefacesService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility");
 			ViewBag.ixFacilityFloor = new SelectList(_facilityaislefacesService.selectFacilityFloors().Select( x => new { x.ixFacilityFloor, x.sFacilityFloor }), "ixFacilityFloor", "sFacilityFloor");
 			ViewBag.ixLogicalOrientation = new SelectList(_facilityaislefacesService.selectLogicalOrientations().Select( x => new { x.ixLogicalOrientation, x.sLogicalOrientation }), "ixLogicalOrientation", "sLogicalOrientation");
 			ViewBag.ixPairedAisleFace = new SelectList(_facilityaislefacesService.selectFacilityAisleFaces().Select( x => new { x.ixFacilityAisleFace, x.sFacilityAisleFace }), "ixFacilityAisleFace", "sFacilityAisleFace");
@@ -155,19 +157,26 @@ This class ....
         // POST: FacilityAisleFaces/Create 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("ixFacilityAisleFace,sFacilityAisleFace,ixFacilityFloor,nSequence,ixBaySequenceType,ixPairedAisleFace,ixLogicalOrientation,ixAisleFaceStorageType,nXOffset,ixXOffsetUnit,nYOffset,ixYOffsetUnit,nLevels,nDefaultNumberOfBays,nDefaultNumberOfSlotsInBay,ixDefaultFacilityZone,ixDefaultLocationFunction,ixDefaultInventoryLocationSize")] FacilityAisleFacesPost facilityaislefaces)
+        public ActionResult Create([Bind("ixFacilityAisleFace,sFacilityAisleFace,ixFacility,ixFacilityFloor,nSequence,ixBaySequenceType,ixPairedAisleFace,ixLogicalOrientation,ixAisleFaceStorageType,nXOffset,ixXOffsetUnit,nYOffset,ixYOffsetUnit,nLevels,nDefaultNumberOfBays,nDefaultNumberOfSlotsInBay,ixDefaultFacilityZone,ixDefaultLocationFunction,ixDefaultInventoryLocationSize")] FacilityAisleFacesPost facilityaislefaces)
         {
             if (ModelState.IsValid)
             {
                 facilityaislefaces.UserName = User.Identity.Name;
-                _facilityaislefacesService.Create(facilityaislefaces);
-                return RedirectToAction("Index");
+                //Custom Code Start | Replaced Code Block
+                //Replaced Code Block Start
+                //_facilityaislefacesService.Create(facilityaislefaces);
+                //return RedirectToAction("Index");
+                //Replaced Code Block End
+                var ixFacilityAisleFace = _facilityaislefacesService.Create(facilityaislefaces).Result;
+                return RedirectToAction("Edit", new { id = ixFacilityAisleFace });
+                //Custom Code End
             }
 			ViewBag.ixAisleFaceStorageType = new SelectList(_facilityaislefacesService.selectAisleFaceStorageTypes().Select( x => new { x.ixAisleFaceStorageType, x.sAisleFaceStorageType }), "ixAisleFaceStorageType", "sAisleFaceStorageType");
 			ViewBag.ixBaySequenceType = new SelectList(_facilityaislefacesService.selectBaySequenceTypes().Select( x => new { x.ixBaySequenceType, x.sBaySequenceType }), "ixBaySequenceType", "sBaySequenceType");
 			ViewBag.ixDefaultFacilityZone = new SelectList(_facilityaislefacesService.selectFacilityZones().Select( x => new { x.ixFacilityZone, x.sFacilityZone }), "ixFacilityZone", "sFacilityZone");
 			ViewBag.ixDefaultInventoryLocationSize = new SelectList(_facilityaislefacesService.selectInventoryLocationSizes().Select( x => new { x.ixInventoryLocationSize, x.sInventoryLocationSize }), "ixInventoryLocationSize", "sInventoryLocationSize");
 			ViewBag.ixDefaultLocationFunction = new SelectList(_facilityaislefacesService.selectLocationFunctions().Select( x => new { x.ixLocationFunction, x.sLocationFunction }), "ixLocationFunction", "sLocationFunction");
+			ViewBag.ixFacility = new SelectList(_facilityaislefacesService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility");
 			ViewBag.ixFacilityFloor = new SelectList(_facilityaislefacesService.selectFacilityFloors().Select( x => new { x.ixFacilityFloor, x.sFacilityFloor }), "ixFacilityFloor", "sFacilityFloor");
 			ViewBag.ixLogicalOrientation = new SelectList(_facilityaislefacesService.selectLogicalOrientations().Select( x => new { x.ixLogicalOrientation, x.sLogicalOrientation }), "ixLogicalOrientation", "sLogicalOrientation");
 			ViewBag.ixPairedAisleFace = new SelectList(_facilityaislefacesService.selectFacilityAisleFaces().Select( x => new { x.ixFacilityAisleFace, x.sFacilityAisleFace }), "ixFacilityAisleFace", "sFacilityAisleFace");
@@ -192,6 +201,7 @@ This class ....
 			ViewBag.ixDefaultFacilityZone = new SelectList(_facilityaislefacesService.selectFacilityZonesNullable().Select( x => new { ixFacilityZone = x.Key, sFacilityZone = x.Value }), "ixFacilityZone", "sFacilityZone", facilityaislefaces.ixDefaultFacilityZone);
 			ViewBag.ixDefaultInventoryLocationSize = new SelectList(_facilityaislefacesService.selectInventoryLocationSizes().Select( x => new { x.ixInventoryLocationSize, x.sInventoryLocationSize }), "ixInventoryLocationSize", "sInventoryLocationSize", facilityaislefaces.ixDefaultInventoryLocationSize);
 			ViewBag.ixDefaultLocationFunction = new SelectList(_facilityaislefacesService.selectLocationFunctionsNullable().Select( x => new { ixLocationFunction = x.Key, sLocationFunction = x.Value }), "ixLocationFunction", "sLocationFunction", facilityaislefaces.ixDefaultLocationFunction);
+			ViewBag.ixFacility = new SelectList(_facilityaislefacesService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility", facilityaislefaces.ixFacility);
 			ViewBag.ixFacilityFloor = new SelectList(_facilityaislefacesService.selectFacilityFloors().Select( x => new { x.ixFacilityFloor, x.sFacilityFloor }), "ixFacilityFloor", "sFacilityFloor", facilityaislefaces.ixFacilityFloor);
 			ViewBag.ixLogicalOrientation = new SelectList(_facilityaislefacesService.selectLogicalOrientations().Select( x => new { x.ixLogicalOrientation, x.sLogicalOrientation }), "ixLogicalOrientation", "sLogicalOrientation", facilityaislefaces.ixLogicalOrientation);
 			ViewBag.ixPairedAisleFace = new SelectList(_facilityaislefacesService.selectFacilityAisleFacesNullable().Select( x => new { ixFacilityAisleFace = x.Key, sFacilityAisleFace = x.Value }), "ixFacilityAisleFace", "sFacilityAisleFace", facilityaislefaces.ixPairedAisleFace);
@@ -204,7 +214,7 @@ This class ....
         // POST: FacilityAisleFaces/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("ixFacilityAisleFace,sFacilityAisleFace,ixFacilityFloor,nSequence,ixBaySequenceType,ixPairedAisleFace,ixLogicalOrientation,ixAisleFaceStorageType,nXOffset,ixXOffsetUnit,nYOffset,ixYOffsetUnit,nLevels,nDefaultNumberOfBays,nDefaultNumberOfSlotsInBay,ixDefaultFacilityZone,ixDefaultLocationFunction,ixDefaultInventoryLocationSize")] FacilityAisleFacesPost facilityaislefaces)
+        public ActionResult Edit([Bind("ixFacilityAisleFace,sFacilityAisleFace,ixFacility,ixFacilityFloor,nSequence,ixBaySequenceType,ixPairedAisleFace,ixLogicalOrientation,ixAisleFaceStorageType,nXOffset,ixXOffsetUnit,nYOffset,ixYOffsetUnit,nLevels,nDefaultNumberOfBays,nDefaultNumberOfSlotsInBay,ixDefaultFacilityZone,ixDefaultLocationFunction,ixDefaultInventoryLocationSize")] FacilityAisleFacesPost facilityaislefaces)
         {
             if (ModelState.IsValid)
             {
@@ -217,6 +227,7 @@ This class ....
 			ViewBag.ixDefaultFacilityZone = new SelectList(_facilityaislefacesService.selectFacilityZonesNullable().Select( x => new { ixFacilityZone = x.Key, sFacilityZone = x.Value }), "ixFacilityZone", "sFacilityZone", facilityaislefaces.ixDefaultFacilityZone);
 			ViewBag.ixDefaultInventoryLocationSize = new SelectList(_facilityaislefacesService.selectInventoryLocationSizes().Select( x => new { x.ixInventoryLocationSize, x.sInventoryLocationSize }), "ixInventoryLocationSize", "sInventoryLocationSize", facilityaislefaces.ixDefaultInventoryLocationSize);
 			ViewBag.ixDefaultLocationFunction = new SelectList(_facilityaislefacesService.selectLocationFunctionsNullable().Select( x => new { ixLocationFunction = x.Key, sLocationFunction = x.Value }), "ixLocationFunction", "sLocationFunction", facilityaislefaces.ixDefaultLocationFunction);
+			ViewBag.ixFacility = new SelectList(_facilityaislefacesService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility", facilityaislefaces.ixFacility);
 			ViewBag.ixFacilityFloor = new SelectList(_facilityaislefacesService.selectFacilityFloors().Select( x => new { x.ixFacilityFloor, x.sFacilityFloor }), "ixFacilityFloor", "sFacilityFloor", facilityaislefaces.ixFacilityFloor);
 			ViewBag.ixLogicalOrientation = new SelectList(_facilityaislefacesService.selectLogicalOrientations().Select( x => new { x.ixLogicalOrientation, x.sLogicalOrientation }), "ixLogicalOrientation", "sLogicalOrientation", facilityaislefaces.ixLogicalOrientation);
 			ViewBag.ixPairedAisleFace = new SelectList(_facilityaislefacesService.selectFacilityAisleFacesNullable().Select( x => new { ixFacilityAisleFace = x.Key, sFacilityAisleFace = x.Value }), "ixFacilityAisleFace", "sFacilityAisleFace", facilityaislefaces.ixPairedAisleFace);

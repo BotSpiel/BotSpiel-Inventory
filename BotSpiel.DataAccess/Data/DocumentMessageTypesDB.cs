@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is DocumentMessageTypesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is DocumentMessageTypesPost)).ToList())
             {
                 var config_vw_documentmessagetypespost = e.Entity as DocumentMessageTypesPost;
                 switch (e.State)
@@ -88,12 +88,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixDocumentMessageType"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeDocumentMessageTypes @ixDocumentMessageType = @p0, @sDocumentMessageType = @p1, @sDocumentMessageTypeCode = @p2, @UserName = @p3", config_vw_documentmessagetypespost.ixDocumentMessageType, config_vw_documentmessagetypespost.sDocumentMessageType, config_vw_documentmessagetypespost.sDocumentMessageTypeCode, config_vw_documentmessagetypespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

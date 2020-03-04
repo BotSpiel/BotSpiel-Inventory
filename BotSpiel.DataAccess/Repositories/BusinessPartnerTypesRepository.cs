@@ -43,6 +43,12 @@ This class ....
             var businesspartnertypes = _context.BusinessPartnerTypes.AsNoTracking(); 
             return businesspartnertypes;
         }
+
+        public IQueryable<BusinessPartnerTypes> IndexDb()
+        {
+            var businesspartnertypes = _context.BusinessPartnerTypes.AsNoTracking(); 
+            return businesspartnertypes;
+        }
         public bool VerifyBusinessPartnerTypeUnique(Int64 ixBusinessPartnerType, string sBusinessPartnerType)
         {
             if (_context.BusinessPartnerTypes.AsNoTracking().Where(x => x.sBusinessPartnerType == sBusinessPartnerType).Any() && ixBusinessPartnerType == 0L) return false;

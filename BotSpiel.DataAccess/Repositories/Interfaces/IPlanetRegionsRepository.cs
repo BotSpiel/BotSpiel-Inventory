@@ -22,7 +22,9 @@ This interface ....
         PlanetRegionsPost GetPost(Int64 ixPlanetRegion);        
 		PlanetRegions Get(Int64 ixPlanetRegion);
         IQueryable<PlanetRegions> Index();
+        IQueryable<PlanetRegions> IndexDb();
        IQueryable<Planets> selectPlanets();
+       IQueryable<Planets> PlanetsDb();
         bool VerifyPlanetRegionUnique(Int64 ixPlanetRegion, string sPlanetRegion);
         List<string> VerifyPlanetRegionDeleteOK(Int64 ixPlanetRegion, string sPlanetRegion);
         void RegisterCreate(PlanetRegionsPost planetregionsPost);

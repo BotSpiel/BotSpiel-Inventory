@@ -133,7 +133,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is BusinessPartnersPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is BusinessPartnersPost)).ToList())
             {
                 var md_vw_businesspartnerspost = e.Entity as BusinessPartnersPost;
                 switch (e.State)
@@ -186,12 +186,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixBusinessPartner"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeBusinessPartners @ixBusinessPartner = @p0, @sBusinessPartner = @p1, @ixBusinessPartnerType = @p2, @ixCompany = @p3, @ixAddress = @p4, @UserName = @p5", md_vw_businesspartnerspost.ixBusinessPartner, md_vw_businesspartnerspost.sBusinessPartner, md_vw_businesspartnerspost.ixBusinessPartnerType, md_vw_businesspartnerspost.ixCompany, md_vw_businesspartnerspost.ixAddress, md_vw_businesspartnerspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

@@ -65,6 +65,9 @@ This class ....
 		[Display(Name = "Expire At")]
 		public virtual DateTime? dtExpireAt { get; set; }
 		[Required]
+		[Display(Name = "Base Unit Quantity Queued")]
+		public virtual Double nBaseUnitQuantityQueued { get; set; }
+		[Required]
 		[Display(Name = "Status ID")]
 		public virtual Int64 ixStatus { get; set; }
 		public virtual String UserName { get; set; }
@@ -75,10 +78,49 @@ This class ....
     {
         private readonly VolumeAndWeight _volumeAndWeight;
         private readonly IInventoryLocationsRepository _inventorylocationsRepository;
-        public InventoryUnitsPostValidator(VolumeAndWeight volumeAndWeight, IInventoryLocationsRepository inventorylocationsRepository)
+        private readonly IMaterialsRepository _materialsRepository;
+        public InventoryUnitsPostValidator(VolumeAndWeight volumeAndWeight, IInventoryLocationsRepository inventorylocationsRepository, IMaterialsRepository materialsRepository)
         {
             _volumeAndWeight = volumeAndWeight;
             _inventorylocationsRepository = inventorylocationsRepository;
+            _materialsRepository = materialsRepository;
+
+            RuleFor(u => u.nBaseUnitQuantity)
+                .GreaterThanOrEqualTo(0)
+                .WithMessage("The base unit quantity must be a positive number.");
+
+            When(iu => _materialsRepository.GetPost(iu.ixMaterial).bTrackSerialNumber, () =>
+            {
+                RuleFor(iu => iu.sSerialNumber)
+                .NotEmpty()
+                .WithMessage("The material is serial tracked. Please enter a serial number.");
+            }
+            );
+
+            When(iu => _materialsRepository.GetPost(iu.ixMaterial).bTrackSerialNumber, () =>
+            {
+                RuleFor(iu => iu.nBaseUnitQuantity)
+                .LessThanOrEqualTo(1)
+                .WithMessage("The material is serial tracked. The base unit quantity must be 0 or 1");
+            }
+            );
+
+            When(iu => _materialsRepository.GetPost(iu.ixMaterial).bTrackBatchNumber, () =>
+            {
+                RuleFor(iu => iu.sBatchNumber)
+                .NotEmpty()
+                .WithMessage("The material is batch tracked. Please enter a batch.");
+            }
+            );
+
+            When(iu => _materialsRepository.GetPost(iu.ixMaterial).bTrackExpiry, () =>
+            {
+                RuleFor(iu => iu.dtExpireAt)
+                .NotEmpty()
+                .WithMessage("The material is expiry tracked. Please enter an expiry date.");
+            }
+            );
+
 
             When(inventoryUnit => !_volumeAndWeight.inventoryUnitWillFitLocation(inventoryUnit, _inventorylocationsRepository.GetPost(inventoryUnit.ixInventoryLocation)), () =>
             {
@@ -87,6 +129,7 @@ This class ....
                 .WithMessage("The inventory will not fit into the selected location.");
             }
             );
+
         }
 
     }
@@ -94,4 +137,5 @@ This class ....
 
 
 }
+  
 

@@ -12,7 +12,9 @@ using BotSpiel.Services;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using NonFactors.Mvc.Grid;
-
+//Custom Code Start | Added Code Block 
+using BotSpiel.Services.Utilities;
+//Custom Code End
 
 namespace BotSpiel
 {
@@ -31,10 +33,25 @@ This class ....
 */
  
         private readonly IPickBatchesService _pickbatchesService;
+        //Custom Code Start | Added Code Block 
+        private readonly Inventory _inventory;
+        private readonly Picking _picking;
+        private readonly IStatusesService _statusesService;
+        private readonly IOutboundOrdersService _outboundordersService;
+        //Custom Code End
 
-        public PickBatchesController(IPickBatchesService pickbatchesService )
+        //Custom Code Start | Replaced Code Block
+        //Replaced Code Block Start
+        //public PickBatchesController(IPickBatchesService pickbatchesService)
+        //Replaced Code Block End
+        public PickBatchesController(IPickBatchesService pickbatchesService, Inventory inventory, IStatusesService statusesService, IOutboundOrdersService outboundordersService, Picking picking)
+        //Custom Code End
         {
             _pickbatchesService = pickbatchesService;
+            _inventory = inventory;
+            _statusesService = statusesService;
+            _outboundordersService = outboundordersService;
+            _picking = picking;
         }
 
         // GET: PickBatches
@@ -241,6 +258,87 @@ This class ....
 
             return Json(validationResponse);
         }
+
+        //Custom Code Start | Added Code Block 
+
+        [AcceptVerbs("Get", "Post")]
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+        public ActionResult MultiRowPickBatchAllocate(string Ids)
+        {
+            string validationResponse = "";
+            string[] sIDs = Ids.Split("|");
+            List<long> iDs = new List<long>();
+            long nID;
+            string sPickBatch;
+
+            PickBatchesPost pickbatches;
+
+            sIDs.ToList()
+                .ForEach(s =>
+                {
+                    if (long.TryParse(s, out nID))
+                    {
+                        _inventory.allocateBatch(nID, User.Identity.Name);
+                        iDs.Add(nID);
+                    }
+                }
+                );
+
+            iDs.ForEach(n => validationResponse = validationResponse + ", " + n.ToString());
+
+            return Json(validationResponse);
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+        public ActionResult MultiRowPickBatchActivate(string Ids)
+        {
+            string validationResponse = "";
+            string[] sIDs = Ids.Split("|");
+            List<long> iDs = new List<long>();
+            long nID;
+            string sPickBatch;
+            bool bIsAllocated = true;
+
+            PickBatchesPost pickbatches;
+
+            sIDs.ToList()
+                .ForEach(s =>
+                {
+                    if (long.TryParse(s, out nID))
+                    {
+                        //First check if activation OK
+                        bIsAllocated = true;
+                        var pickBatch = _pickbatchesService.GetPost(nID);
+                        //We need to check if the batch has been allocated and that the batch is Inactive
+                        _outboundordersService.IndexDb().Where(x => x.ixPickBatch == nID).Select(x => x.ixOutboundOrder).ToList()
+                        .ForEach(o =>
+                        {
+                            if (_picking.getOrderAllocationStatus(o) == "Not Allocated")
+                            {
+                                bIsAllocated = false;
+                            }
+                        });
+
+                        if (bIsAllocated)
+                        {
+                            pickBatch.ixStatus = _statusesService.IndexDb().Where(x => x.sStatus == "Active").Select(x => x.ixStatus).FirstOrDefault();
+                            pickBatch.UserName = User.Identity.Name;
+                            _pickbatchesService.Edit(pickBatch);
+                            iDs.Add(nID);
+                        }
+                    }
+                }
+                );
+
+            iDs.ForEach(n => validationResponse = validationResponse + ", " + n.ToString());
+
+            return Json(validationResponse);
+        }
+
+        //Custom Code End
+
+
 
         [AcceptVerbs("Get","Post")]
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]

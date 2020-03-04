@@ -45,6 +45,12 @@ This class ....
             var inventorystates = _context.InventoryStates.AsNoTracking(); 
             return inventorystates;
         }
+
+        public IQueryable<InventoryStates> IndexDb()
+        {
+            var inventorystates = _context.InventoryStates.AsNoTracking(); 
+            return inventorystates;
+        }
         public bool VerifyInventoryStateUnique(Int64 ixInventoryState, string sInventoryState)
         {
             if (_context.InventoryStates.AsNoTracking().Where(x => x.sInventoryState == sInventoryState).Any() && ixInventoryState == 0L) return false;

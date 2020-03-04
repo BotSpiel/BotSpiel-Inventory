@@ -43,6 +43,12 @@ This class ....
             var documentmessagetypes = _context.DocumentMessageTypes.AsNoTracking(); 
             return documentmessagetypes;
         }
+
+        public IQueryable<DocumentMessageTypes> IndexDb()
+        {
+            var documentmessagetypes = _context.DocumentMessageTypes.AsNoTracking(); 
+            return documentmessagetypes;
+        }
         public bool VerifyDocumentMessageTypeUnique(Int64 ixDocumentMessageType, string sDocumentMessageType)
         {
             if (_context.DocumentMessageTypes.AsNoTracking().Where(x => x.sDocumentMessageType == sDocumentMessageType).Any() && ixDocumentMessageType == 0L) return false;

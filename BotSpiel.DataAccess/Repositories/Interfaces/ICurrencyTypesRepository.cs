@@ -22,6 +22,7 @@ This interface ....
         CurrencyTypesPost GetPost(Int64 ixCurrencyType);        
 		CurrencyTypes Get(Int64 ixCurrencyType);
         IQueryable<CurrencyTypes> Index();
+        IQueryable<CurrencyTypes> IndexDb();
         bool VerifyCurrencyTypeUnique(Int64 ixCurrencyType, string sCurrencyType);
         List<string> VerifyCurrencyTypeDeleteOK(Int64 ixCurrencyType, string sCurrencyType);
         void RegisterCreate(CurrencyTypesPost currencytypesPost);

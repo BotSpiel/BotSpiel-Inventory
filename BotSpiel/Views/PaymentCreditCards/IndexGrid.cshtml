@@ -1,0 +1,45 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IPaymentCreditCardsService _paymentcreditcardsService
+@model IEnumerable<BotSpiel.DataAccess.Models.PaymentCreditCards>
+
+@{
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixPaymentCreditCard, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixPaymentCreditCard).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixPaymentCreditCard }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixPaymentCreditCardEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixPaymentCreditCard }, new { @class = "modal-link" }));
+				columns.Add(model => model.sPaymentCreditCard).Titled("Payment Credit Card").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreditCardType).Titled("Credit Card Type").Sortable(true).Filterable(true);
+				columns.Add(model => model.sFirstName).Titled("First Name").Sortable(true).Filterable(true);
+				columns.Add(model => model.sLastName).Titled("Last Name").Sortable(true).Filterable(true);
+				columns.Add(model => model.nExpireMonth).Titled("Expire Month").Sortable(true).Filterable(true);
+				columns.Add(model => model.nExpireYear).Titled("Expire Year").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCvvTwo).Titled("Cvv Two").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("paymentcreditcards-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

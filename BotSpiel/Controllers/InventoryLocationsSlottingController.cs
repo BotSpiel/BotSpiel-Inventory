@@ -154,6 +154,37 @@ This class ....
             return View(inventorylocationsslotting);
         }
 
+        //Custom Code Start | Added Code Block 
+        [Authorize]
+        [HttpGet]
+        public ActionResult CreateWithID(long id)
+        {
+            ViewBag.ixInventoryLocation = new SelectList(_inventorylocationsslottingService.selectInventoryLocations().Where(x => x.ixInventoryLocation == id).Select(x => new { x.ixInventoryLocation, x.sInventoryLocation }), "ixInventoryLocation", "sInventoryLocation");
+            ViewBag.ixMaterial = new SelectList(_inventorylocationsslottingService.selectMaterials().Select(x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial");
+
+            return View();
+        }
+
+        // POST: InventoryLocationsSlotting/Create 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateWithID([Bind("ixInventoryLocationSlotting,sInventoryLocationSlotting,ixInventoryLocation,ixMaterial,nMinimumBaseUnitQuantity,nMaximumBaseUnitQuantity")] InventoryLocationsSlottingPost inventorylocationsslotting)
+        {
+            if (ModelState.IsValid)
+            {
+                inventorylocationsslotting.UserName = User.Identity.Name;
+                _inventorylocationsslottingService.Create(inventorylocationsslotting);
+                return RedirectToAction("Edit", "InventoryLocations", new { id = inventorylocationsslotting.ixInventoryLocation });
+            }
+            ViewBag.ixInventoryLocation = new SelectList(_inventorylocationsslottingService.selectInventoryLocations().Where(x => x.ixInventoryLocation == inventorylocationsslotting.ixInventoryLocation).Select(x => new { x.ixInventoryLocation, x.sInventoryLocation }), "ixInventoryLocation", "sInventoryLocation");
+            ViewBag.ixMaterial = new SelectList(_inventorylocationsslottingService.selectMaterials().Select(x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial");
+
+            return View(inventorylocationsslotting);
+        }
+        //Custom Code End
+
+
+
         // GET: InventoryLocationsSlotting/Edit/1
         [Authorize]
         [HttpGet]

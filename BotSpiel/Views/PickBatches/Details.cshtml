@@ -1,16 +1,22 @@
-
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IOutboundOrdersService _outboundOrdersService
+@*//Custom Code End*@
 @model BotSpiel.DataAccess.Models.PickBatches
 
 @{
-    ViewBag.Title = "Details Pick Batches";
+	ViewBag.Title = "Details Pick Batches";
 }
 <br>
 <h2>Details</h2>
 
 <div>
-    <h4>Pick Batches</h4>
-    <hr />
-    <dl class="dl-horizontal">
+	<h4>Pick Batches</h4>
+	<hr />
+	<dl class="dl-horizontal">
 		<dt>
 			@Html.DisplayNameFor(model => model.ixPickBatch)
 		</dt>
@@ -55,12 +61,33 @@
 		</dd>
 
 
-    </dl>
+	</dl>
 </div>
-<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixPickBatch }) |
+
+@*//Custom Code Start | Added Code Block*@
+<div>
+	@{
+		List<BotSpiel.DataAccess.Models.OutboundOrders> outboundOrders = new List<OutboundOrders>();
+		//Add empty record
+		OutboundOrders outboundOrder = new OutboundOrders();
+		outboundOrder.ixPickBatch = Model.ixPickBatch;
+		outboundOrder.PickBatches.ixPickBatch = Model.ixPickBatch;
+		outboundOrders.Add(outboundOrder);
+		_outboundOrdersService.IndexDb().Where(x => x.ixPickBatch == Model.ixPickBatch).ToList().ForEach(x =>
+			{
+				outboundOrders.Add(x);
+			}
+			);
+	}
+	@await Html.PartialAsync("IndexOutboundOrders", outboundOrders)
+</div>
+@*//Custom Code End*@
+
+<p>
+	@Html.ActionLink("Edit", "Edit", new { id = Model.ixPickBatch }) |
 	@Html.ActionLink("Delete", "Delete", new { id = Model.ixPickBatch }) |
-    @Html.ActionLink("Grid", "Index")
+	@Html.ActionLink("Grid", "Index")
 </p>
 
- 
+
 

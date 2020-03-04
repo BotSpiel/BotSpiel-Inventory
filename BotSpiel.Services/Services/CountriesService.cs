@@ -32,7 +32,9 @@ This class ....
         public CountriesPost GetPost(Int64 ixCountry) => _countriesRepository.GetPost(ixCountry);
         public Countries Get(Int64 ixCountry) => _countriesRepository.Get(ixCountry);
         public IQueryable<Countries> Index() => _countriesRepository.Index();
+        public IQueryable<Countries> IndexDb() => _countriesRepository.IndexDb();
        public IQueryable<PlanetSubRegions> selectPlanetSubRegions() => _countriesRepository.selectPlanetSubRegions();
+       public IQueryable<PlanetSubRegions> PlanetSubRegionsDb() => _countriesRepository.PlanetSubRegionsDb();
         public bool VerifyCountryUnique(Int64 ixCountry, string sCountry) => _countriesRepository.VerifyCountryUnique(ixCountry, sCountry);
         public List<string> VerifyCountryDeleteOK(Int64 ixCountry, string sCountry) => _countriesRepository.VerifyCountryDeleteOK(ixCountry, sCountry);
 

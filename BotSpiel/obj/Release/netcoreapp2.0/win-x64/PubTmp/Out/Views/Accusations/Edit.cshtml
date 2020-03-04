@@ -1,0 +1,93 @@
+
+@model BotSpiel.DataAccess.Models.AccusationsPost 
+
+@{
+    ViewBag.Title = "Edit Accusations";
+}
+<br>
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Accusations</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ixAccusation)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sAccusation, "Accusation", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sAccusation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sAccusation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Language ID", "Index", "Languages", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixLanguage", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixLanguage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Language Style ID", "Index", "LanguageStyles", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixLanguageStyle", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixLanguageStyle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sAccusationMade, "Accusation Made", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.sAccusationMade, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
+                @Html.ValidationMessageFor(model => model.sAccusationMade, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sAdmissionDenial, "Admission Denial", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.sAdmissionDenial, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
+                @Html.ValidationMessageFor(model => model.sAdmissionDenial, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Response Type ID", "Index", "ResponseTypes", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixResponseType", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixResponseType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.bActive, "Active", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bActive, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.bActive, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Edit" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Grid", "Index")
+</div>
+
+@section Scripts {
+}
+
+
+ 
+

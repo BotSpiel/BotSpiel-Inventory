@@ -69,7 +69,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is InventoryLocationSizesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is InventoryLocationSizesPost)).ToList())
             {
                 var md_vw_inventorylocationsizespost = e.Entity as InventoryLocationSizesPost;
                 switch (e.State)
@@ -147,12 +147,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixInventoryLocationSize"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeInventoryLocationSizes @ixInventoryLocationSize = @p0, @sInventoryLocationSize = @p1, @nLength = @p2, @ixLengthUnit = @p3, @nWidth = @p4, @ixWidthUnit = @p5, @nHeight = @p6, @ixHeightUnit = @p7, @nUsableVolume = @p8, @ixUsableVolumeUnit = @p9, @UserName = @p10", md_vw_inventorylocationsizespost.ixInventoryLocationSize, md_vw_inventorylocationsizespost.sInventoryLocationSize, md_vw_inventorylocationsizespost.nLength, md_vw_inventorylocationsizespost.ixLengthUnit, md_vw_inventorylocationsizespost.nWidth, md_vw_inventorylocationsizespost.ixWidthUnit, md_vw_inventorylocationsizespost.nHeight, md_vw_inventorylocationsizespost.ixHeightUnit, md_vw_inventorylocationsizespost.nUsableVolume, md_vw_inventorylocationsizespost.ixUsableVolumeUnit, md_vw_inventorylocationsizespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

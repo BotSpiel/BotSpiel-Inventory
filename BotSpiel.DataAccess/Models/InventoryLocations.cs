@@ -22,6 +22,8 @@ This class ....
         {
 		LocationFunctions _LocationFunctions = new LocationFunctions();
 		LocationFunctions = _LocationFunctions;
+		Facilities _Facilities = new Facilities();
+		Facilities = _Facilities;
 		Companies _Companies = new Companies();
 		Companies = _Companies;
 		FacilityFloors _FacilityFloors = new FacilityFloors();
@@ -53,6 +55,9 @@ This class ....
 		[Required]
 		[Display(Name = "Location Function ID")]
 		public virtual Int64 ixLocationFunction { get; set; }
+		[Required]
+		[Display(Name = "Facility ID")]
+		public virtual Int64 ixFacility { get; set; }
 		[Display(Name = "Company ID")]
 		public virtual Int64? ixCompany { get; set; }
 		[Required]
@@ -122,6 +127,8 @@ This class ....
 		public virtual String sChangedBy { get; set; }
 		[ForeignKey("ixLocationFunction")]
 		public virtual LocationFunctions LocationFunctions { get; set; }
+		[ForeignKey("ixFacility")]
+		public virtual Facilities Facilities { get; set; }
 		[ForeignKey("ixCompany")]
 		public virtual Companies Companies { get; set; }
 		[ForeignKey("ixFacilityFloor")]

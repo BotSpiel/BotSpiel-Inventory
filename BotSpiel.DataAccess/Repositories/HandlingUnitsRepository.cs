@@ -4,6 +4,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using BotSpiel.DataAccess.Models;
 using BotSpiel.DataAccess.Data;
+//Custom Code Start | Added Code Block 
+using BotSpiel.DataAccess.Utilities;
+//Custom Code End
 
 namespace BotSpiel.DataAccess.Repositories
 {
@@ -26,10 +29,19 @@ This class ....
         private readonly InventoryUnitsDB _contextInventoryUnits;
         private readonly InventoryUnitTransactionsDB _contextInventoryUnitTransactions;
         private readonly MoveQueuesDB _contextMoveQueues;
-        private readonly OutboundOrderPackingDB _contextOutboundOrderPacking;
+        private readonly OutboundOrderLinePackingDB _contextOutboundOrderLinePacking;
         private readonly ReceivingDB _contextReceiving;
-  
-        public HandlingUnitsRepository(HandlingUnitsDB context, HandlingUnitsDB contextHandlingUnits, HandlingUnitsShippingDB contextHandlingUnitsShipping, InventoryUnitsDB contextInventoryUnits, InventoryUnitTransactionsDB contextInventoryUnitTransactions, MoveQueuesDB contextMoveQueues, OutboundOrderPackingDB contextOutboundOrderPacking, ReceivingDB contextReceiving)
+        //Custom Code Start | Added Code Block 
+        //private readonly CommonLookUpsRepository _commonLookUpsRepository;
+        private readonly IStatusesRepository _statusesRepository;
+        //Custom Code End
+
+        //Custom Code Start | Replaced Code Block
+        //Replaced Code Block Start
+        //public HandlingUnitsRepository(HandlingUnitsDB context, HandlingUnitsDB contextHandlingUnits, HandlingUnitsShippingDB contextHandlingUnitsShipping, InventoryUnitsDB contextInventoryUnits, InventoryUnitTransactionsDB contextInventoryUnitTransactions, MoveQueuesDB contextMoveQueues, OutboundOrderLinePackingDB contextOutboundOrderLinePacking, ReceivingDB contextReceiving)
+        //Replaced Code Block End
+        public HandlingUnitsRepository(HandlingUnitsDB context, HandlingUnitsDB contextHandlingUnits, HandlingUnitsShippingDB contextHandlingUnitsShipping, InventoryUnitsDB contextInventoryUnits, InventoryUnitTransactionsDB contextInventoryUnitTransactions, MoveQueuesDB contextMoveQueues, OutboundOrderLinePackingDB contextOutboundOrderLinePacking, ReceivingDB contextReceiving, IStatusesRepository statusesRepository)
+        //Custom Code End
         {
             _context = context;
            _contextHandlingUnits = contextHandlingUnits;
@@ -37,9 +49,11 @@ This class ....
             _contextInventoryUnits = contextInventoryUnits;
             _contextInventoryUnitTransactions = contextInventoryUnitTransactions;
             _contextMoveQueues = contextMoveQueues;
-            _contextOutboundOrderPacking = contextOutboundOrderPacking;
+            _contextOutboundOrderLinePacking = contextOutboundOrderLinePacking;
             _contextReceiving = contextReceiving;
-  
+            //Custom Code Start | Added Code Block 
+            _statusesRepository = statusesRepository;
+            //Custom Code End
         }
 
         public HandlingUnitsPost GetPost(Int64 ixHandlingUnit) => _context.HandlingUnitsPost.AsNoTracking().Where(x => x.ixHandlingUnit == ixHandlingUnit).First();
@@ -85,6 +99,21 @@ This class ....
         }
 
         public IQueryable<HandlingUnits> Index()
+        {
+            //Custom Code Start | Added Code Block 
+            var statusInactive = _statusesRepository.IndexDb().Where(x => x.sStatus == "Inactive").Select(x => x.ixStatus).FirstOrDefault();
+            //Custom Code End
+
+            //Custom Code Start | Replaced Code Block
+            //Replaced Code Block Start
+            //var handlingunits = _context.HandlingUnits.Include(a => a.HandlingUnitTypes).AsNoTracking();
+            //Replaced Code Block End
+            var handlingunits = _context.HandlingUnits.Where(a => (a.ixStatus ?? 0) != statusInactive).Include(a => a.HandlingUnitTypes).AsNoTracking();
+            //Custom Code End
+            return handlingunits;
+        }
+
+        public IQueryable<HandlingUnits> IndexDb()
         {
             var handlingunits = _context.HandlingUnits.Include(a => a.HandlingUnitTypes).AsNoTracking(); 
             return handlingunits;
@@ -135,6 +164,54 @@ This class ....
             return statuses.AsQueryable();
         }
         public IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement()
+        {
+            List<UnitsOfMeasurement> unitsofmeasurement = new List<UnitsOfMeasurement>();
+            _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()
+                .ToList()
+                .ForEach(x => unitsofmeasurement.Add(x));
+            return unitsofmeasurement.AsQueryable();
+        }
+       public IQueryable<HandlingUnits> HandlingUnitsDb()
+        {
+            List<HandlingUnits> handlingunits = new List<HandlingUnits>();
+            _context.HandlingUnits.Include(a => a.HandlingUnitsFKDiffParentHandlingUnit).Include(a => a.HandlingUnitTypes).Include(a => a.MaterialHandlingUnitConfigurations).Include(a => a.MaterialsFKDiffPackingMaterial).Include(a => a.Statuses).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffWeightUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => handlingunits.Add(x));
+            return handlingunits.AsQueryable();
+        }
+        public IQueryable<HandlingUnitTypes> HandlingUnitTypesDb()
+        {
+            List<HandlingUnitTypes> handlingunittypes = new List<HandlingUnitTypes>();
+            _context.HandlingUnitTypes.AsNoTracking()
+                .ToList()
+                .ForEach(x => handlingunittypes.Add(x));
+            return handlingunittypes.AsQueryable();
+        }
+        public IQueryable<MaterialHandlingUnitConfigurations> MaterialHandlingUnitConfigurationsDb()
+        {
+            List<MaterialHandlingUnitConfigurations> materialhandlingunitconfigurations = new List<MaterialHandlingUnitConfigurations>();
+            _context.MaterialHandlingUnitConfigurations.Include(a => a.HandlingUnitTypes).Include(a => a.Materials).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => materialhandlingunitconfigurations.Add(x));
+            return materialhandlingunitconfigurations.AsQueryable();
+        }
+        public IQueryable<Materials> MaterialsDb()
+        {
+            List<Materials> materials = new List<Materials>();
+            _context.Materials.Include(a => a.MaterialTypes).Include(a => a.UnitsOfMeasurementFKDiffBaseUnit).Include(a => a.UnitsOfMeasurementFKDiffDensityUnit).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffShelflifeUnit).Include(a => a.UnitsOfMeasurementFKDiffWeightUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => materials.Add(x));
+            return materials.AsQueryable();
+        }
+        public IQueryable<Statuses> StatusesDb()
+        {
+            List<Statuses> statuses = new List<Statuses>();
+            _context.Statuses.AsNoTracking()
+                .ToList()
+                .ForEach(x => statuses.Add(x));
+            return statuses.AsQueryable();
+        }
+        public IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb()
         {
             List<UnitsOfMeasurement> unitsofmeasurement = new List<UnitsOfMeasurement>();
             _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()
@@ -209,7 +286,7 @@ This class ....
             if (_contextInventoryUnitTransactions.InventoryUnitTransactions.AsNoTracking().Where(x => x.ixHandlingUnitBefore == ixHandlingUnit).Any()) existInEntities.Add("InventoryUnitTransactions");
             if (_contextMoveQueues.MoveQueues.AsNoTracking().Where(x => x.ixSourceHandlingUnit == ixHandlingUnit).Any()) existInEntities.Add("MoveQueues");
             if (_contextMoveQueues.MoveQueues.AsNoTracking().Where(x => x.ixTargetHandlingUnit == ixHandlingUnit).Any()) existInEntities.Add("MoveQueues");
-            if (_contextOutboundOrderPacking.OutboundOrderPacking.AsNoTracking().Where(x => x.ixHandlingUnit == ixHandlingUnit).Any()) existInEntities.Add("OutboundOrderPacking");
+            if (_contextOutboundOrderLinePacking.OutboundOrderLinePacking.AsNoTracking().Where(x => x.ixHandlingUnit == ixHandlingUnit).Any()) existInEntities.Add("OutboundOrderLinePacking");
             if (_contextReceiving.Receiving.AsNoTracking().Where(x => x.ixHandlingUnit == ixHandlingUnit).Any()) existInEntities.Add("Receiving");
 
             return existInEntities;

@@ -1,0 +1,72 @@
+
+@model BotSpiel.DataAccess.Models.PaymentAddresses
+
+@{
+    ViewBag.Title = "Details Payment Addresses";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Payment Addresses</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixPaymentAddress)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixPaymentAddress)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPaymentAddress)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPaymentAddress)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sStreetAndNumberOrPostOfficeBoxOne)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sStreetAndNumberOrPostOfficeBoxOne)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sStreetAndNumberOrPostOfficeBoxTwo)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sStreetAndNumberOrPostOfficeBoxTwo)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCityOrSuburb)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCityOrSuburb)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCountrySubDivisionCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCountrySubDivisionCode)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sZipOrPostCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sZipOrPostCode)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCountryCode)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCountryCode)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixPaymentAddress }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixPaymentAddress }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

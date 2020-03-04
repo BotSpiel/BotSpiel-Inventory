@@ -31,7 +31,10 @@ This class ....
 		[Required]
 		[Display(Name = "Your Reply")]
 		public virtual String sYourReply { get; set; }
-		public virtual String UserName { get; set; }
+        [StringLength(4000)]
+        [Display(Name = "My Next Message")]
+        public virtual String sMyNextMessage { get; set; }
+        public virtual String UserName { get; set; }
     }
 }
   

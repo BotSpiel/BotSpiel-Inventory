@@ -23,6 +23,7 @@ This interface ....
         BaySequenceTypesPost GetPost(Int64 ixBaySequenceType);        
 		BaySequenceTypes Get(Int64 ixBaySequenceType);
         IQueryable<BaySequenceTypes> Index();
+        IQueryable<BaySequenceTypes> IndexDb();
         bool VerifyBaySequenceTypeUnique(Int64 ixBaySequenceType, string sBaySequenceType);
         List<string> VerifyBaySequenceTypeDeleteOK(Int64 ixBaySequenceType, string sBaySequenceType);
 

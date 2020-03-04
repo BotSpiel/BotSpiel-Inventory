@@ -19,6 +19,7 @@ This interface ....
 */
 		Int64 ixOutboundCarrierManifest { get; set; }
 		String sOutboundCarrierManifest { get; set; }
+		Int64 ixFacility { get; set; }
 		Int64 ixCarrier { get; set; }
 		Int64? ixPickupInventoryLocation { get; set; }
 		DateTime? dtScheduledPickupAt { get; set; }

@@ -41,6 +41,12 @@ This class ....
             var communicationmediums = _context.CommunicationMediums.AsNoTracking(); 
             return communicationmediums;
         }
+
+        public IQueryable<CommunicationMediums> IndexDb()
+        {
+            var communicationmediums = _context.CommunicationMediums.AsNoTracking(); 
+            return communicationmediums;
+        }
         public bool VerifyCommunicationMediumUnique(Int64 ixCommunicationMedium, string sCommunicationMedium)
         {
             if (_context.CommunicationMediums.AsNoTracking().Where(x => x.sCommunicationMedium == sCommunicationMedium).Any() && ixCommunicationMedium == 0L) return false;

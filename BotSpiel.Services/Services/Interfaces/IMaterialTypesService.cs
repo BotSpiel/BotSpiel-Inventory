@@ -23,6 +23,7 @@ This interface ....
         MaterialTypesPost GetPost(Int64 ixMaterialType);        
 		MaterialTypes Get(Int64 ixMaterialType);
         IQueryable<MaterialTypes> Index();
+        IQueryable<MaterialTypes> IndexDb();
         bool VerifyMaterialTypeUnique(Int64 ixMaterialType, string sMaterialType);
         List<string> VerifyMaterialTypeDeleteOK(Int64 ixMaterialType, string sMaterialType);
 

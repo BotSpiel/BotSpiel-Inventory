@@ -32,6 +32,7 @@ This class ....
         public OutboundOrderTypesPost GetPost(Int64 ixOutboundOrderType) => _outboundordertypesRepository.GetPost(ixOutboundOrderType);
         public OutboundOrderTypes Get(Int64 ixOutboundOrderType) => _outboundordertypesRepository.Get(ixOutboundOrderType);
         public IQueryable<OutboundOrderTypes> Index() => _outboundordertypesRepository.Index();
+        public IQueryable<OutboundOrderTypes> IndexDb() => _outboundordertypesRepository.IndexDb();
         public bool VerifyOutboundOrderTypeUnique(Int64 ixOutboundOrderType, string sOutboundOrderType) => _outboundordertypesRepository.VerifyOutboundOrderTypeUnique(ixOutboundOrderType, sOutboundOrderType);
         public List<string> VerifyOutboundOrderTypeDeleteOK(Int64 ixOutboundOrderType, string sOutboundOrderType) => _outboundordertypesRepository.VerifyOutboundOrderTypeDeleteOK(ixOutboundOrderType, sOutboundOrderType);
 

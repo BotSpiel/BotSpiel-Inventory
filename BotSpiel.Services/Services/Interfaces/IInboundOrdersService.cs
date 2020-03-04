@@ -23,11 +23,17 @@ This interface ....
         InboundOrdersPost GetPost(Int64 ixInboundOrder);        
 		InboundOrders Get(Int64 ixInboundOrder);
         IQueryable<InboundOrders> Index();
+        IQueryable<InboundOrders> IndexDb();
        IQueryable<Statuses> selectStatuses();
         IQueryable<Companies> selectCompanies();
         IQueryable<Facilities> selectFacilities();
         IQueryable<BusinessPartners> selectBusinessPartners();
         IQueryable<InboundOrderTypes> selectInboundOrderTypes();
+       IQueryable<Statuses> StatusesDb();
+        IQueryable<Companies> CompaniesDb();
+        IQueryable<Facilities> FacilitiesDb();
+        IQueryable<BusinessPartners> BusinessPartnersDb();
+        IQueryable<InboundOrderTypes> InboundOrderTypesDb();
         bool VerifyInboundOrderUnique(Int64 ixInboundOrder, string sInboundOrder);
         List<string> VerifyInboundOrderDeleteOK(Int64 ixInboundOrder, string sInboundOrder);
 

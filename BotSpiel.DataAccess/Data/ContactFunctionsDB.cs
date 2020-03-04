@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is ContactFunctionsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is ContactFunctionsPost)).ToList())
             {
                 var config_vw_contactfunctionspost = e.Entity as ContactFunctionsPost;
                 switch (e.State)
@@ -88,12 +88,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixContactFunction"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeContactFunctions @ixContactFunction = @p0, @sContactFunction = @p1, @sContactFunctionCode = @p2, @UserName = @p3", config_vw_contactfunctionspost.ixContactFunction, config_vw_contactfunctionspost.sContactFunction, config_vw_contactfunctionspost.sContactFunctionCode, config_vw_contactfunctionspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

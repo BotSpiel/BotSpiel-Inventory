@@ -2,6 +2,12 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+//Custom Code Start | Added Code Block 
+using FluentValidation;
+using BotSpiel.DataAccess.Repositories;
+using System.Collections.Generic;
+using System.Linq;
+//Custom Code End
 
 namespace BotSpiel.DataAccess.Models
 {
@@ -9,17 +15,24 @@ namespace BotSpiel.DataAccess.Models
     public class InboundOrdersPost : IInboundOrdersPost
     {
 
-/*
--- =============================================
--- Author:		<BotSpiel>
+        /*
+        -- =============================================
+        -- Author:		<BotSpiel>
 
--- Description:	<Description>
+        -- Description:	<Description>
 
-This class ....
+        This class ....
 
-*/
- 
-		[Display(Name = "Inbound Order ID")]
+        */
+
+        //Custom Code Start | Added Code Block
+        public InboundOrdersPost()
+        {
+            ixStatus = 5;
+        }
+        //Custom Code End
+
+        [Display(Name = "Inbound Order ID")]
 		public virtual Int64 ixInboundOrder { get; set; }
 		[Display(Name = "Inbound Order")]
 		public virtual String sInboundOrder { get; set; }
@@ -46,6 +59,23 @@ This class ....
 		public virtual Int64 ixStatus { get; set; }
 		public virtual String UserName { get; set; }
     }
+
+    //Custom Code Start | Added Code Block 
+    public class InboundOrdersPostValidator : AbstractValidator<InboundOrdersPost>
+    {
+
+        public InboundOrdersPostValidator()
+        {
+
+            RuleFor(x => x.ixBusinessPartner)
+            .GreaterThan(0)
+            .WithMessage("A business partner is required. Please select one.");
+        }
+
+    }
+    //Custom Code End
+
+
 }
-  
+
 

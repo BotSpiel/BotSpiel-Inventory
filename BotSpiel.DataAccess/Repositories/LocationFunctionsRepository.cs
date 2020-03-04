@@ -45,6 +45,12 @@ This class ....
             var locationfunctions = _context.LocationFunctions.AsNoTracking(); 
             return locationfunctions;
         }
+
+        public IQueryable<LocationFunctions> IndexDb()
+        {
+            var locationfunctions = _context.LocationFunctions.AsNoTracking(); 
+            return locationfunctions;
+        }
         public bool VerifyLocationFunctionUnique(Int64 ixLocationFunction, string sLocationFunction)
         {
             if (_context.LocationFunctions.AsNoTracking().Where(x => x.sLocationFunction == sLocationFunction).Any() && ixLocationFunction == 0L) return false;

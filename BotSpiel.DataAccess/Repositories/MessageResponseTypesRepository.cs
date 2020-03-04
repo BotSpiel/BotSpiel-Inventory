@@ -41,6 +41,12 @@ This class ....
             var messageresponsetypes = _context.MessageResponseTypes.AsNoTracking(); 
             return messageresponsetypes;
         }
+
+        public IQueryable<MessageResponseTypes> IndexDb()
+        {
+            var messageresponsetypes = _context.MessageResponseTypes.AsNoTracking(); 
+            return messageresponsetypes;
+        }
         public bool VerifyMessageResponseTypeUnique(Int64 ixMessageResponseType, string sMessageResponseType)
         {
             if (_context.MessageResponseTypes.AsNoTracking().Where(x => x.sMessageResponseType == sMessageResponseType).Any() && ixMessageResponseType == 0L) return false;

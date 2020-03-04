@@ -7,6 +7,8 @@
 @{
 	List<SelectListItem> queryCarriers = new List<SelectListItem>();
 	queryCarriers.AddRange(_outboundcarriermanifestsService.selectCarriers().ToList().OrderBy(de => de.sCarrier).Select(de => new SelectListItem() { Text = de.sCarrier, Value = de.sCarrier.ToString()}));
+	List<SelectListItem> queryFacilities = new List<SelectListItem>();
+	queryFacilities.AddRange(_outboundcarriermanifestsService.selectFacilities().ToList().OrderBy(de => de.sFacility).Select(de => new SelectListItem() { Text = de.sFacility, Value = de.sFacility.ToString()}));
 	List<SelectListItem> queryInventoryLocations = new List<SelectListItem>();
 	queryInventoryLocations.AddRange(_outboundcarriermanifestsService.selectInventoryLocations().ToList().OrderBy(de => de.sInventoryLocation).Select(de => new SelectListItem() { Text = de.sInventoryLocation, Value = de.sInventoryLocation.ToString()}));
 	List<SelectListItem> queryStatuses = new List<SelectListItem>();
@@ -23,6 +25,7 @@
 				columns.Add(model => model.ixOutboundCarrierManifest).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixOutboundCarrierManifest }, new { @class = "modal-link" }));
 				columns.Add(model => model.ixOutboundCarrierManifestEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixOutboundCarrierManifest }, new { @class = "modal-link" }));
 				columns.Add(model => model.sOutboundCarrierManifest).Titled("Outbound Carrier Manifest").Sortable(true).Filterable(true);
+				columns.Add(model => model.Facilities.sFacility).Titled("Facility").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilities);
 				columns.Add(model => model.Carriers.sCarrier).Titled("Carrier").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCarriers);
 				columns.Add(model => model.dtScheduledPickupAt).Titled("Scheduled Pickup At").Sortable(true).Filterable(true);
 				columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);

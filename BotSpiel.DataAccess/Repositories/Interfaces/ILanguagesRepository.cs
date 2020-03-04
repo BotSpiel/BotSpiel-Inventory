@@ -22,6 +22,7 @@ This interface ....
         LanguagesPost GetPost(Int64 ixLanguage);        
 		Languages Get(Int64 ixLanguage);
         IQueryable<Languages> Index();
+        IQueryable<Languages> IndexDb();
         bool VerifyLanguageUnique(Int64 ixLanguage, string sLanguage);
         List<string> VerifyLanguageDeleteOK(Int64 ixLanguage, string sLanguage);
         void RegisterCreate(LanguagesPost languagesPost);

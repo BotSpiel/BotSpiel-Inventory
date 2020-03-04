@@ -58,6 +58,12 @@ This class ....
             var unitsofmeasurement = _context.UnitsOfMeasurement.Include(a => a.MeasurementUnitsOf).Include(a => a.MeasurementSystems).AsNoTracking(); 
             return unitsofmeasurement;
         }
+
+        public IQueryable<UnitsOfMeasurement> IndexDb()
+        {
+            var unitsofmeasurement = _context.UnitsOfMeasurement.Include(a => a.MeasurementUnitsOf).Include(a => a.MeasurementSystems).AsNoTracking(); 
+            return unitsofmeasurement;
+        }
        public IQueryable<MeasurementSystems> selectMeasurementSystems()
         {
             List<MeasurementSystems> measurementsystems = new List<MeasurementSystems>();
@@ -67,6 +73,22 @@ This class ....
             return measurementsystems.AsQueryable();
         }
         public IQueryable<MeasurementUnitsOf> selectMeasurementUnitsOf()
+        {
+            List<MeasurementUnitsOf> measurementunitsof = new List<MeasurementUnitsOf>();
+            _context.MeasurementUnitsOf.AsNoTracking()
+                .ToList()
+                .ForEach(x => measurementunitsof.Add(x));
+            return measurementunitsof.AsQueryable();
+        }
+       public IQueryable<MeasurementSystems> MeasurementSystemsDb()
+        {
+            List<MeasurementSystems> measurementsystems = new List<MeasurementSystems>();
+            _context.MeasurementSystems.AsNoTracking()
+                .ToList()
+                .ForEach(x => measurementsystems.Add(x));
+            return measurementsystems.AsQueryable();
+        }
+        public IQueryable<MeasurementUnitsOf> MeasurementUnitsOfDb()
         {
             List<MeasurementUnitsOf> measurementunitsof = new List<MeasurementUnitsOf>();
             _context.MeasurementUnitsOf.AsNoTracking()

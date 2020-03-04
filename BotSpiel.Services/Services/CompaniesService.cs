@@ -32,6 +32,7 @@ This class ....
         public CompaniesPost GetPost(Int64 ixCompany) => _companiesRepository.GetPost(ixCompany);
         public Companies Get(Int64 ixCompany) => _companiesRepository.Get(ixCompany);
         public IQueryable<Companies> Index() => _companiesRepository.Index();
+        public IQueryable<Companies> IndexDb() => _companiesRepository.IndexDb();
         public bool VerifyCompanyUnique(Int64 ixCompany, string sCompany) => _companiesRepository.VerifyCompanyUnique(ixCompany, sCompany);
         public List<string> VerifyCompanyDeleteOK(Int64 ixCompany, string sCompany) => _companiesRepository.VerifyCompanyDeleteOK(ixCompany, sCompany);
 

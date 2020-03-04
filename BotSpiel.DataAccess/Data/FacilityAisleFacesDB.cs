@@ -30,6 +30,22 @@ This class ....
 
 */
 
+		public DbSet<Universes> Universes { get; set; }
+		public DbSet<UniversesPost> UniversesPost { get; set; }
+		public DbSet<Galaxies> Galaxies { get; set; }
+		public DbSet<GalaxiesPost> GalaxiesPost { get; set; }
+		public DbSet<PlanetarySystems> PlanetarySystems { get; set; }
+		public DbSet<PlanetarySystemsPost> PlanetarySystemsPost { get; set; }
+		public DbSet<Planets> Planets { get; set; }
+		public DbSet<PlanetsPost> PlanetsPost { get; set; }
+		public DbSet<PlanetRegions> PlanetRegions { get; set; }
+		public DbSet<PlanetRegionsPost> PlanetRegionsPost { get; set; }
+		public DbSet<PlanetSubRegions> PlanetSubRegions { get; set; }
+		public DbSet<PlanetSubRegionsPost> PlanetSubRegionsPost { get; set; }
+		public DbSet<Countries> Countries { get; set; }
+		public DbSet<CountriesPost> CountriesPost { get; set; }
+		public DbSet<CountrySubDivisions> CountrySubDivisions { get; set; }
+		public DbSet<CountrySubDivisionsPost> CountrySubDivisionsPost { get; set; }
 		public DbSet<LocationFunctions> LocationFunctions { get; set; }
 		public DbSet<LocationFunctionsPost> LocationFunctionsPost { get; set; }
 		public DbSet<MeasurementSystems> MeasurementSystems { get; set; }
@@ -38,6 +54,10 @@ This class ....
 		public DbSet<MeasurementUnitsOfPost> MeasurementUnitsOfPost { get; set; }
 		public DbSet<UnitsOfMeasurement> UnitsOfMeasurement { get; set; }
 		public DbSet<UnitsOfMeasurementPost> UnitsOfMeasurementPost { get; set; }
+		public DbSet<Addresses> Addresses { get; set; }
+		public DbSet<AddressesPost> AddressesPost { get; set; }
+		public DbSet<Facilities> Facilities { get; set; }
+		public DbSet<FacilitiesPost> FacilitiesPost { get; set; }
 		public DbSet<FacilityZones> FacilityZones { get; set; }
 		public DbSet<FacilityZonesPost> FacilityZonesPost { get; set; }
 		public DbSet<FacilityFloors> FacilityFloors { get; set; }
@@ -54,6 +74,54 @@ This class ....
 		public DbSet<InventoryLocationSizesPost> InventoryLocationSizesPost { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Universes>()
+                .ToTable("md_vw_Universes")
+                .HasKey(c => new { c.ixUniverse });
+            modelBuilder.Entity<UniversesPost>()
+                .ToTable("md_vw_UniversesPost")
+                .HasKey(c => new { c.ixUniverse });
+            modelBuilder.Entity<Galaxies>()
+                .ToTable("md_vw_Galaxies")
+                .HasKey(c => new { c.ixGalaxy });
+            modelBuilder.Entity<GalaxiesPost>()
+                .ToTable("md_vw_GalaxiesPost")
+                .HasKey(c => new { c.ixGalaxy });
+            modelBuilder.Entity<PlanetarySystems>()
+                .ToTable("md_vw_PlanetarySystems")
+                .HasKey(c => new { c.ixPlanetarySystem });
+            modelBuilder.Entity<PlanetarySystemsPost>()
+                .ToTable("md_vw_PlanetarySystemsPost")
+                .HasKey(c => new { c.ixPlanetarySystem });
+            modelBuilder.Entity<Planets>()
+                .ToTable("md_vw_Planets")
+                .HasKey(c => new { c.ixPlanet });
+            modelBuilder.Entity<PlanetsPost>()
+                .ToTable("md_vw_PlanetsPost")
+                .HasKey(c => new { c.ixPlanet });
+            modelBuilder.Entity<PlanetRegions>()
+                .ToTable("md_vw_PlanetRegions")
+                .HasKey(c => new { c.ixPlanetRegion });
+            modelBuilder.Entity<PlanetRegionsPost>()
+                .ToTable("md_vw_PlanetRegionsPost")
+                .HasKey(c => new { c.ixPlanetRegion });
+            modelBuilder.Entity<PlanetSubRegions>()
+                .ToTable("md_vw_PlanetSubRegions")
+                .HasKey(c => new { c.ixPlanetSubRegion });
+            modelBuilder.Entity<PlanetSubRegionsPost>()
+                .ToTable("md_vw_PlanetSubRegionsPost")
+                .HasKey(c => new { c.ixPlanetSubRegion });
+            modelBuilder.Entity<Countries>()
+                .ToTable("md_vw_Countries")
+                .HasKey(c => new { c.ixCountry });
+            modelBuilder.Entity<CountriesPost>()
+                .ToTable("md_vw_CountriesPost")
+                .HasKey(c => new { c.ixCountry });
+            modelBuilder.Entity<CountrySubDivisions>()
+                .ToTable("md_vw_CountrySubDivisions")
+                .HasKey(c => new { c.ixCountrySubDivision });
+            modelBuilder.Entity<CountrySubDivisionsPost>()
+                .ToTable("md_vw_CountrySubDivisionsPost")
+                .HasKey(c => new { c.ixCountrySubDivision });
             modelBuilder.Entity<LocationFunctions>()
                 .ToTable("config_vw_LocationFunctions")
                 .HasKey(c => new { c.ixLocationFunction });
@@ -78,6 +146,18 @@ This class ....
             modelBuilder.Entity<UnitsOfMeasurementPost>()
                 .ToTable("config_vw_UnitsOfMeasurementPost")
                 .HasKey(c => new { c.ixUnitOfMeasurement });
+            modelBuilder.Entity<Addresses>()
+                .ToTable("md_vw_Addresses")
+                .HasKey(c => new { c.ixAddress });
+            modelBuilder.Entity<AddressesPost>()
+                .ToTable("md_vw_AddressesPost")
+                .HasKey(c => new { c.ixAddress });
+            modelBuilder.Entity<Facilities>()
+                .ToTable("md_vw_Facilities")
+                .HasKey(c => new { c.ixFacility });
+            modelBuilder.Entity<FacilitiesPost>()
+                .ToTable("md_vw_FacilitiesPost")
+                .HasKey(c => new { c.ixFacility });
             modelBuilder.Entity<FacilityZones>()
                 .ToTable("md_vw_FacilityZones")
                 .HasKey(c => new { c.ixFacilityZone });
@@ -125,7 +205,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is FacilityAisleFacesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is FacilityAisleFacesPost)).ToList())
             {
                 var md_vw_facilityaislefacespost = e.Entity as FacilityAisleFacesPost;
                 switch (e.State)
@@ -138,87 +218,92 @@ This class ....
                             var sFacilityAisleFace = cmd.CreateParameter();
                             sFacilityAisleFace.ParameterName = "p0";
                             sFacilityAisleFace.Value = md_vw_facilityaislefacespost.sFacilityAisleFace;
+                            var ixFacility = cmd.CreateParameter();
+                            ixFacility.ParameterName = "p1";
+                            ixFacility.Value = md_vw_facilityaislefacespost.ixFacility;
                             var ixFacilityFloor = cmd.CreateParameter();
-                            ixFacilityFloor.ParameterName = "p1";
+                            ixFacilityFloor.ParameterName = "p2";
                             ixFacilityFloor.Value = md_vw_facilityaislefacespost.ixFacilityFloor;
                             var nSequence = cmd.CreateParameter();
-                            nSequence.ParameterName = "p2";
+                            nSequence.ParameterName = "p3";
                             nSequence.Value = md_vw_facilityaislefacespost.nSequence;
                             var ixBaySequenceType = cmd.CreateParameter();
-                            ixBaySequenceType.ParameterName = "p3";
+                            ixBaySequenceType.ParameterName = "p4";
                             ixBaySequenceType.Value = md_vw_facilityaislefacespost.ixBaySequenceType;
                             var ixPairedAisleFace = cmd.CreateParameter();
-                            ixPairedAisleFace.ParameterName = "p4";
+                            ixPairedAisleFace.ParameterName = "p5";
                             ixPairedAisleFace.Value = md_vw_facilityaislefacespost.ixPairedAisleFace;
                             var ixLogicalOrientation = cmd.CreateParameter();
-                            ixLogicalOrientation.ParameterName = "p5";
+                            ixLogicalOrientation.ParameterName = "p6";
                             ixLogicalOrientation.Value = md_vw_facilityaislefacespost.ixLogicalOrientation;
                             var ixAisleFaceStorageType = cmd.CreateParameter();
-                            ixAisleFaceStorageType.ParameterName = "p6";
+                            ixAisleFaceStorageType.ParameterName = "p7";
                             ixAisleFaceStorageType.Value = md_vw_facilityaislefacespost.ixAisleFaceStorageType;
                             var nXOffset = cmd.CreateParameter();
-                            nXOffset.ParameterName = "p7";
+                            nXOffset.ParameterName = "p8";
                             nXOffset.Value = md_vw_facilityaislefacespost.nXOffset;
                             var ixXOffsetUnit = cmd.CreateParameter();
-                            ixXOffsetUnit.ParameterName = "p8";
+                            ixXOffsetUnit.ParameterName = "p9";
                             ixXOffsetUnit.Value = md_vw_facilityaislefacespost.ixXOffsetUnit;
                             var nYOffset = cmd.CreateParameter();
-                            nYOffset.ParameterName = "p9";
+                            nYOffset.ParameterName = "p10";
                             nYOffset.Value = md_vw_facilityaislefacespost.nYOffset;
                             var ixYOffsetUnit = cmd.CreateParameter();
-                            ixYOffsetUnit.ParameterName = "p10";
+                            ixYOffsetUnit.ParameterName = "p11";
                             ixYOffsetUnit.Value = md_vw_facilityaislefacespost.ixYOffsetUnit;
                             var nLevels = cmd.CreateParameter();
-                            nLevels.ParameterName = "p11";
+                            nLevels.ParameterName = "p12";
                             nLevels.Value = md_vw_facilityaislefacespost.nLevels;
                             var nDefaultNumberOfBays = cmd.CreateParameter();
-                            nDefaultNumberOfBays.ParameterName = "p12";
+                            nDefaultNumberOfBays.ParameterName = "p13";
                             nDefaultNumberOfBays.Value = md_vw_facilityaislefacespost.nDefaultNumberOfBays;
                             var nDefaultNumberOfSlotsInBay = cmd.CreateParameter();
-                            nDefaultNumberOfSlotsInBay.ParameterName = "p13";
+                            nDefaultNumberOfSlotsInBay.ParameterName = "p14";
                             nDefaultNumberOfSlotsInBay.Value = md_vw_facilityaislefacespost.nDefaultNumberOfSlotsInBay;
                             var ixDefaultFacilityZone = cmd.CreateParameter();
-                            ixDefaultFacilityZone.ParameterName = "p14";
+                            ixDefaultFacilityZone.ParameterName = "p15";
                             ixDefaultFacilityZone.Value = md_vw_facilityaislefacespost.ixDefaultFacilityZone;
                             var ixDefaultLocationFunction = cmd.CreateParameter();
-                            ixDefaultLocationFunction.ParameterName = "p15";
+                            ixDefaultLocationFunction.ParameterName = "p16";
                             ixDefaultLocationFunction.Value = md_vw_facilityaislefacespost.ixDefaultLocationFunction;
                             var ixDefaultInventoryLocationSize = cmd.CreateParameter();
-                            ixDefaultInventoryLocationSize.ParameterName = "p16";
+                            ixDefaultInventoryLocationSize.ParameterName = "p17";
                             ixDefaultInventoryLocationSize.Value = md_vw_facilityaislefacespost.ixDefaultInventoryLocationSize;
                             var UserName = cmd.CreateParameter();
-                            UserName.ParameterName = "p17";
+                            UserName.ParameterName = "p18";
                             UserName.Value = md_vw_facilityaislefacespost.UserName;
 
                             var ixFacilityAisleFace = cmd.CreateParameter();
-                            ixFacilityAisleFace.ParameterName = "p18";
+                            ixFacilityAisleFace.ParameterName = "p19";
                             ixFacilityAisleFace.DbType = DbType.Int64;
                             ixFacilityAisleFace.Direction = ParameterDirection.Output;
 
                             var sql = new StringBuilder();
                             sql.Append(@"exec dbo.md_sp_CreateFacilityAisleFaces ");
                             sql.Append("@sFacilityAisleFace = @p0, ");
-                            sql.Append("@ixFacilityFloor = @p1, ");
-                            sql.Append("@nSequence = @p2, ");
-                            sql.Append("@ixBaySequenceType = @p3, ");
-                            if (md_vw_facilityaislefacespost.ixPairedAisleFace != null) { sql.Append("@ixPairedAisleFace = @p4, "); }  
-                            sql.Append("@ixLogicalOrientation = @p5, ");
-                            sql.Append("@ixAisleFaceStorageType = @p6, ");
-                            if (md_vw_facilityaislefacespost.nXOffset != null) { sql.Append("@nXOffset = @p7, "); }  
-                            if (md_vw_facilityaislefacespost.ixXOffsetUnit != null) { sql.Append("@ixXOffsetUnit = @p8, "); }  
-                            if (md_vw_facilityaislefacespost.nYOffset != null) { sql.Append("@nYOffset = @p9, "); }  
-                            if (md_vw_facilityaislefacespost.ixYOffsetUnit != null) { sql.Append("@ixYOffsetUnit = @p10, "); }  
-                            sql.Append("@nLevels = @p11, ");
-                            if (md_vw_facilityaislefacespost.nDefaultNumberOfBays != null) { sql.Append("@nDefaultNumberOfBays = @p12, "); }  
-                            if (md_vw_facilityaislefacespost.nDefaultNumberOfSlotsInBay != null) { sql.Append("@nDefaultNumberOfSlotsInBay = @p13, "); }  
-                            if (md_vw_facilityaislefacespost.ixDefaultFacilityZone != null) { sql.Append("@ixDefaultFacilityZone = @p14, "); }  
-                            if (md_vw_facilityaislefacespost.ixDefaultLocationFunction != null) { sql.Append("@ixDefaultLocationFunction = @p15, "); }  
-                            sql.Append("@ixDefaultInventoryLocationSize = @p16, ");
-                            if (md_vw_facilityaislefacespost.UserName != null) { sql.Append("@UserName = @p17, "); }  
-                            sql.Append("@ixFacilityAisleFace = @p18 output "); 
+                            sql.Append("@ixFacility = @p1, ");
+                            sql.Append("@ixFacilityFloor = @p2, ");
+                            sql.Append("@nSequence = @p3, ");
+                            sql.Append("@ixBaySequenceType = @p4, ");
+                            if (md_vw_facilityaislefacespost.ixPairedAisleFace != null) { sql.Append("@ixPairedAisleFace = @p5, "); }  
+                            sql.Append("@ixLogicalOrientation = @p6, ");
+                            sql.Append("@ixAisleFaceStorageType = @p7, ");
+                            if (md_vw_facilityaislefacespost.nXOffset != null) { sql.Append("@nXOffset = @p8, "); }  
+                            if (md_vw_facilityaislefacespost.ixXOffsetUnit != null) { sql.Append("@ixXOffsetUnit = @p9, "); }  
+                            if (md_vw_facilityaislefacespost.nYOffset != null) { sql.Append("@nYOffset = @p10, "); }  
+                            if (md_vw_facilityaislefacespost.ixYOffsetUnit != null) { sql.Append("@ixYOffsetUnit = @p11, "); }  
+                            sql.Append("@nLevels = @p12, ");
+                            if (md_vw_facilityaislefacespost.nDefaultNumberOfBays != null) { sql.Append("@nDefaultNumberOfBays = @p13, "); }  
+                            if (md_vw_facilityaislefacespost.nDefaultNumberOfSlotsInBay != null) { sql.Append("@nDefaultNumberOfSlotsInBay = @p14, "); }  
+                            if (md_vw_facilityaislefacespost.ixDefaultFacilityZone != null) { sql.Append("@ixDefaultFacilityZone = @p15, "); }  
+                            if (md_vw_facilityaislefacespost.ixDefaultLocationFunction != null) { sql.Append("@ixDefaultLocationFunction = @p16, "); }  
+                            sql.Append("@ixDefaultInventoryLocationSize = @p17, ");
+                            if (md_vw_facilityaislefacespost.UserName != null) { sql.Append("@UserName = @p18, "); }  
+                            sql.Append("@ixFacilityAisleFace = @p19 output "); 
                             cmd.CommandText = sql.ToString();
 
                             cmd.Parameters.Add(sFacilityAisleFace);
+                            cmd.Parameters.Add(ixFacility);
                             cmd.Parameters.Add(ixFacilityFloor);
                             cmd.Parameters.Add(nSequence);
                             cmd.Parameters.Add(ixBaySequenceType);
@@ -243,16 +328,16 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixFacilityAisleFace"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
-                        Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeFacilityAisleFaces @ixFacilityAisleFace = @p0, @sFacilityAisleFace = @p1, @ixFacilityFloor = @p2, @nSequence = @p3, @ixBaySequenceType = @p4, @ixPairedAisleFace = @p5, @ixLogicalOrientation = @p6, @ixAisleFaceStorageType = @p7, @nXOffset = @p8, @ixXOffsetUnit = @p9, @nYOffset = @p10, @ixYOffsetUnit = @p11, @nLevels = @p12, @nDefaultNumberOfBays = @p13, @nDefaultNumberOfSlotsInBay = @p14, @ixDefaultFacilityZone = @p15, @ixDefaultLocationFunction = @p16, @ixDefaultInventoryLocationSize = @p17, @UserName = @p18", md_vw_facilityaislefacespost.ixFacilityAisleFace, md_vw_facilityaislefacespost.sFacilityAisleFace, md_vw_facilityaislefacespost.ixFacilityFloor, md_vw_facilityaislefacespost.nSequence, md_vw_facilityaislefacespost.ixBaySequenceType, md_vw_facilityaislefacespost.ixPairedAisleFace, md_vw_facilityaislefacespost.ixLogicalOrientation, md_vw_facilityaislefacespost.ixAisleFaceStorageType, md_vw_facilityaislefacespost.nXOffset, md_vw_facilityaislefacespost.ixXOffsetUnit, md_vw_facilityaislefacespost.nYOffset, md_vw_facilityaislefacespost.ixYOffsetUnit, md_vw_facilityaislefacespost.nLevels, md_vw_facilityaislefacespost.nDefaultNumberOfBays, md_vw_facilityaislefacespost.nDefaultNumberOfSlotsInBay, md_vw_facilityaislefacespost.ixDefaultFacilityZone, md_vw_facilityaislefacespost.ixDefaultLocationFunction, md_vw_facilityaislefacespost.ixDefaultInventoryLocationSize, md_vw_facilityaislefacespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeFacilityAisleFaces @ixFacilityAisleFace = @p0, @sFacilityAisleFace = @p1, @ixFacility = @p2, @ixFacilityFloor = @p3, @nSequence = @p4, @ixBaySequenceType = @p5, @ixPairedAisleFace = @p6, @ixLogicalOrientation = @p7, @ixAisleFaceStorageType = @p8, @nXOffset = @p9, @ixXOffsetUnit = @p10, @nYOffset = @p11, @ixYOffsetUnit = @p12, @nLevels = @p13, @nDefaultNumberOfBays = @p14, @nDefaultNumberOfSlotsInBay = @p15, @ixDefaultFacilityZone = @p16, @ixDefaultLocationFunction = @p17, @ixDefaultInventoryLocationSize = @p18, @UserName = @p19", md_vw_facilityaislefacespost.ixFacilityAisleFace, md_vw_facilityaislefacespost.sFacilityAisleFace, md_vw_facilityaislefacespost.ixFacility, md_vw_facilityaislefacespost.ixFacilityFloor, md_vw_facilityaislefacespost.nSequence, md_vw_facilityaislefacespost.ixBaySequenceType, md_vw_facilityaislefacespost.ixPairedAisleFace, md_vw_facilityaislefacespost.ixLogicalOrientation, md_vw_facilityaislefacespost.ixAisleFaceStorageType, md_vw_facilityaislefacespost.nXOffset, md_vw_facilityaislefacespost.ixXOffsetUnit, md_vw_facilityaislefacespost.nYOffset, md_vw_facilityaislefacespost.ixYOffsetUnit, md_vw_facilityaislefacespost.nLevels, md_vw_facilityaislefacespost.nDefaultNumberOfBays, md_vw_facilityaislefacespost.nDefaultNumberOfSlotsInBay, md_vw_facilityaislefacespost.ixDefaultFacilityZone, md_vw_facilityaislefacespost.ixDefaultLocationFunction, md_vw_facilityaislefacespost.ixDefaultInventoryLocationSize, md_vw_facilityaislefacespost.UserName);
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:
-                        Database.ExecuteSqlCommand("exec dbo.md_sp_DeleteFacilityAisleFaces @ixFacilityAisleFace = @p0, @sFacilityAisleFace = @p1, @ixFacilityFloor = @p2, @nSequence = @p3, @ixBaySequenceType = @p4, @ixPairedAisleFace = @p5, @ixLogicalOrientation = @p6, @ixAisleFaceStorageType = @p7, @nXOffset = @p8, @ixXOffsetUnit = @p9, @nYOffset = @p10, @ixYOffsetUnit = @p11, @nLevels = @p12, @nDefaultNumberOfBays = @p13, @nDefaultNumberOfSlotsInBay = @p14, @ixDefaultFacilityZone = @p15, @ixDefaultLocationFunction = @p16, @ixDefaultInventoryLocationSize = @p17, @UserName = @p18", md_vw_facilityaislefacespost.ixFacilityAisleFace, md_vw_facilityaislefacespost.sFacilityAisleFace, md_vw_facilityaislefacespost.ixFacilityFloor, md_vw_facilityaislefacespost.nSequence, md_vw_facilityaislefacespost.ixBaySequenceType, md_vw_facilityaislefacespost.ixPairedAisleFace, md_vw_facilityaislefacespost.ixLogicalOrientation, md_vw_facilityaislefacespost.ixAisleFaceStorageType, md_vw_facilityaislefacespost.nXOffset, md_vw_facilityaislefacespost.ixXOffsetUnit, md_vw_facilityaislefacespost.nYOffset, md_vw_facilityaislefacespost.ixYOffsetUnit, md_vw_facilityaislefacespost.nLevels, md_vw_facilityaislefacespost.nDefaultNumberOfBays, md_vw_facilityaislefacespost.nDefaultNumberOfSlotsInBay, md_vw_facilityaislefacespost.ixDefaultFacilityZone, md_vw_facilityaislefacespost.ixDefaultLocationFunction, md_vw_facilityaislefacespost.ixDefaultInventoryLocationSize, md_vw_facilityaislefacespost.UserName);
+                        Database.ExecuteSqlCommand("exec dbo.md_sp_DeleteFacilityAisleFaces @ixFacilityAisleFace = @p0, @sFacilityAisleFace = @p1, @ixFacility = @p2, @ixFacilityFloor = @p3, @nSequence = @p4, @ixBaySequenceType = @p5, @ixPairedAisleFace = @p6, @ixLogicalOrientation = @p7, @ixAisleFaceStorageType = @p8, @nXOffset = @p9, @ixXOffsetUnit = @p10, @nYOffset = @p11, @ixYOffsetUnit = @p12, @nLevels = @p13, @nDefaultNumberOfBays = @p14, @nDefaultNumberOfSlotsInBay = @p15, @ixDefaultFacilityZone = @p16, @ixDefaultLocationFunction = @p17, @ixDefaultInventoryLocationSize = @p18, @UserName = @p19", md_vw_facilityaislefacespost.ixFacilityAisleFace, md_vw_facilityaislefacespost.sFacilityAisleFace, md_vw_facilityaislefacespost.ixFacility, md_vw_facilityaislefacespost.ixFacilityFloor, md_vw_facilityaislefacespost.nSequence, md_vw_facilityaislefacespost.ixBaySequenceType, md_vw_facilityaislefacespost.ixPairedAisleFace, md_vw_facilityaislefacespost.ixLogicalOrientation, md_vw_facilityaislefacespost.ixAisleFaceStorageType, md_vw_facilityaislefacespost.nXOffset, md_vw_facilityaislefacespost.ixXOffsetUnit, md_vw_facilityaislefacespost.nYOffset, md_vw_facilityaislefacespost.ixYOffsetUnit, md_vw_facilityaislefacespost.nLevels, md_vw_facilityaislefacespost.nDefaultNumberOfBays, md_vw_facilityaislefacespost.nDefaultNumberOfSlotsInBay, md_vw_facilityaislefacespost.ixDefaultFacilityZone, md_vw_facilityaislefacespost.ixDefaultLocationFunction, md_vw_facilityaislefacespost.ixDefaultInventoryLocationSize, md_vw_facilityaislefacespost.UserName);
                         e.State = EntityState.Detached;                           
 						break;
                 }

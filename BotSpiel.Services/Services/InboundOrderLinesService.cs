@@ -32,11 +32,17 @@ This class ....
         public InboundOrderLinesPost GetPost(Int64 ixInboundOrderLine) => _inboundorderlinesRepository.GetPost(ixInboundOrderLine);
         public InboundOrderLines Get(Int64 ixInboundOrderLine) => _inboundorderlinesRepository.Get(ixInboundOrderLine);
         public IQueryable<InboundOrderLines> Index() => _inboundorderlinesRepository.Index();
+        public IQueryable<InboundOrderLines> IndexDb() => _inboundorderlinesRepository.IndexDb();
        public IQueryable<Statuses> selectStatuses() => _inboundorderlinesRepository.selectStatuses();
         public IQueryable<Materials> selectMaterials() => _inboundorderlinesRepository.selectMaterials();
         public IQueryable<HandlingUnitTypes> selectHandlingUnitTypes() => _inboundorderlinesRepository.selectHandlingUnitTypes();
         public IQueryable<MaterialHandlingUnitConfigurations> selectMaterialHandlingUnitConfigurations() => _inboundorderlinesRepository.selectMaterialHandlingUnitConfigurations();
         public IQueryable<InboundOrders> selectInboundOrders() => _inboundorderlinesRepository.selectInboundOrders();
+       public IQueryable<Statuses> StatusesDb() => _inboundorderlinesRepository.StatusesDb();
+        public IQueryable<Materials> MaterialsDb() => _inboundorderlinesRepository.MaterialsDb();
+        public IQueryable<HandlingUnitTypes> HandlingUnitTypesDb() => _inboundorderlinesRepository.HandlingUnitTypesDb();
+        public IQueryable<MaterialHandlingUnitConfigurations> MaterialHandlingUnitConfigurationsDb() => _inboundorderlinesRepository.MaterialHandlingUnitConfigurationsDb();
+        public IQueryable<InboundOrders> InboundOrdersDb() => _inboundorderlinesRepository.InboundOrdersDb();
        public List<KeyValuePair<Int64?, string>> selectHandlingUnitTypesNullable() => _inboundorderlinesRepository.selectHandlingUnitTypesNullable();
         public List<KeyValuePair<Int64?, string>> selectMaterialHandlingUnitConfigurationsNullable() => _inboundorderlinesRepository.selectMaterialHandlingUnitConfigurationsNullable();
         public bool VerifyInboundOrderLineUnique(Int64 ixInboundOrderLine, string sInboundOrderLine) => _inboundorderlinesRepository.VerifyInboundOrderLineUnique(ixInboundOrderLine, sInboundOrderLine);
@@ -71,6 +77,12 @@ This class ....
             // Additional validations
 
             // Pre-process
+
+            //Custom Code Start | Added Code Block 
+            var inboundorderline = GetPost(inboundorderlinesPost.ixInboundOrderLine);
+            inboundorderlinesPost.nBaseUnitQuantityReceived += inboundorderline.nBaseUnitQuantityReceived;
+            //inboundorderlinesPost.ixStatus = inboundorderline.ixStatus;
+            //Custom Code End
 
             // Process
             this._inboundorderlinesRepository.RegisterEdit(inboundorderlinesPost);

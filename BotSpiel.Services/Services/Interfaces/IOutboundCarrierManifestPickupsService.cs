@@ -23,8 +23,11 @@ This interface ....
         OutboundCarrierManifestPickupsPost GetPost(Int64 ixOutboundCarrierManifestPickup);        
 		OutboundCarrierManifestPickups Get(Int64 ixOutboundCarrierManifestPickup);
         IQueryable<OutboundCarrierManifestPickups> Index();
+        IQueryable<OutboundCarrierManifestPickups> IndexDb();
        IQueryable<Statuses> selectStatuses();
         IQueryable<OutboundCarrierManifests> selectOutboundCarrierManifests();
+       IQueryable<Statuses> StatusesDb();
+        IQueryable<OutboundCarrierManifests> OutboundCarrierManifestsDb();
         bool VerifyOutboundCarrierManifestPickupUnique(Int64 ixOutboundCarrierManifestPickup, string sOutboundCarrierManifestPickup);
         List<string> VerifyOutboundCarrierManifestPickupDeleteOK(Int64 ixOutboundCarrierManifestPickup, string sOutboundCarrierManifestPickup);
 

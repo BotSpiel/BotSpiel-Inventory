@@ -43,6 +43,12 @@ This class ....
             var universes = _context.Universes.AsNoTracking(); 
             return universes;
         }
+
+        public IQueryable<Universes> IndexDb()
+        {
+            var universes = _context.Universes.AsNoTracking(); 
+            return universes;
+        }
         public bool VerifyUniverseUnique(Int64 ixUniverse, string sUniverse)
         {
             if (_context.Universes.AsNoTracking().Where(x => x.sUniverse == sUniverse).Any() && ixUniverse == 0L) return false;

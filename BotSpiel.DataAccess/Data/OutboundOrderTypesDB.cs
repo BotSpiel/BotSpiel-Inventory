@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is OutboundOrderTypesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is OutboundOrderTypesPost)).ToList())
             {
                 var config_vw_outboundordertypespost = e.Entity as OutboundOrderTypesPost;
                 switch (e.State)
@@ -83,12 +83,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixOutboundOrderType"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeOutboundOrderTypes @ixOutboundOrderType = @p0, @sOutboundOrderType = @p1, @UserName = @p2", config_vw_outboundordertypespost.ixOutboundOrderType, config_vw_outboundordertypespost.sOutboundOrderType, config_vw_outboundordertypespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

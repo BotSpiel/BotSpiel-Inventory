@@ -41,6 +41,12 @@ This class ....
             var datetimeperiodfunctions = _context.DateTimePeriodFunctions.AsNoTracking(); 
             return datetimeperiodfunctions;
         }
+
+        public IQueryable<DateTimePeriodFunctions> IndexDb()
+        {
+            var datetimeperiodfunctions = _context.DateTimePeriodFunctions.AsNoTracking(); 
+            return datetimeperiodfunctions;
+        }
         public bool VerifyDateTimePeriodFunctionUnique(Int64 ixDateTimePeriodFunction, string sDateTimePeriodFunction)
         {
             if (_context.DateTimePeriodFunctions.AsNoTracking().Where(x => x.sDateTimePeriodFunction == sDateTimePeriodFunction).Any() && ixDateTimePeriodFunction == 0L) return false;

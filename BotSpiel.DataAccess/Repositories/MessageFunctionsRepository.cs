@@ -41,6 +41,12 @@ This class ....
             var messagefunctions = _context.MessageFunctions.AsNoTracking(); 
             return messagefunctions;
         }
+
+        public IQueryable<MessageFunctions> IndexDb()
+        {
+            var messagefunctions = _context.MessageFunctions.AsNoTracking(); 
+            return messagefunctions;
+        }
         public bool VerifyMessageFunctionUnique(Int64 ixMessageFunction, string sMessageFunction)
         {
             if (_context.MessageFunctions.AsNoTracking().Where(x => x.sMessageFunction == sMessageFunction).Any() && ixMessageFunction == 0L) return false;

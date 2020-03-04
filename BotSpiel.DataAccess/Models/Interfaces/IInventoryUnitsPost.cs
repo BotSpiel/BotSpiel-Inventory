@@ -29,6 +29,7 @@ This interface ....
 		String sSerialNumber { get; set; }
 		String sBatchNumber { get; set; }
 		DateTime? dtExpireAt { get; set; }
+		Double nBaseUnitQuantityQueued { get; set; }
 		Int64 ixStatus { get; set; }
 		String UserName { get; set; }
     }

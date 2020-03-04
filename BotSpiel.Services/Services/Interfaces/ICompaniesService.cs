@@ -23,6 +23,7 @@ This interface ....
         CompaniesPost GetPost(Int64 ixCompany);        
 		Companies Get(Int64 ixCompany);
         IQueryable<Companies> Index();
+        IQueryable<Companies> IndexDb();
         bool VerifyCompanyUnique(Int64 ixCompany, string sCompany);
         List<string> VerifyCompanyDeleteOK(Int64 ixCompany, string sCompany);
 

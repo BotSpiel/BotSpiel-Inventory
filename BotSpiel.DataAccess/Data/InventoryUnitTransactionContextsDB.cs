@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is InventoryUnitTransactionContextsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is InventoryUnitTransactionContextsPost)).ToList())
             {
                 var config_vw_inventoryunittransactioncontextspost = e.Entity as InventoryUnitTransactionContextsPost;
                 switch (e.State)
@@ -83,12 +83,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixInventoryUnitTransactionContext"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeInventoryUnitTransactionContexts @ixInventoryUnitTransactionContext = @p0, @sInventoryUnitTransactionContext = @p1, @UserName = @p2", config_vw_inventoryunittransactioncontextspost.ixInventoryUnitTransactionContext, config_vw_inventoryunittransactioncontextspost.sInventoryUnitTransactionContext, config_vw_inventoryunittransactioncontextspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

@@ -32,6 +32,7 @@ This class ....
         public MoveQueueContextsPost GetPost(Int64 ixMoveQueueContext) => _movequeuecontextsRepository.GetPost(ixMoveQueueContext);
         public MoveQueueContexts Get(Int64 ixMoveQueueContext) => _movequeuecontextsRepository.Get(ixMoveQueueContext);
         public IQueryable<MoveQueueContexts> Index() => _movequeuecontextsRepository.Index();
+        public IQueryable<MoveQueueContexts> IndexDb() => _movequeuecontextsRepository.IndexDb();
         public bool VerifyMoveQueueContextUnique(Int64 ixMoveQueueContext, string sMoveQueueContext) => _movequeuecontextsRepository.VerifyMoveQueueContextUnique(ixMoveQueueContext, sMoveQueueContext);
         public List<string> VerifyMoveQueueContextDeleteOK(Int64 ixMoveQueueContext, string sMoveQueueContext) => _movequeuecontextsRepository.VerifyMoveQueueContextDeleteOK(ixMoveQueueContext, sMoveQueueContext);
 

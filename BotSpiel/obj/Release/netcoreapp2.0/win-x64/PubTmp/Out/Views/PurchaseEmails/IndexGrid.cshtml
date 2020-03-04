@@ -1,0 +1,45 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IPurchaseEmailsService _purchaseemailsService
+@model IEnumerable<BotSpiel.DataAccess.Models.PurchaseEmails>
+
+@{
+	List<SelectListItem> queryPurchases = new List<SelectListItem>();
+	queryPurchases.AddRange(_purchaseemailsService.selectPurchases().ToList().OrderBy(de => de.sPurchase).Select(de => new SelectListItem() { Text = de.sPurchase, Value = de.sPurchase.ToString()}));
+	List<SelectListItem> querySendEmails = new List<SelectListItem>();
+	querySendEmails.AddRange(_purchaseemailsService.selectSendEmails().ToList().OrderBy(de => de.sSendEmail).Select(de => new SelectListItem() { Text = de.sSendEmail, Value = de.sSendEmail.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixPurchaseEmail, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixPurchaseEmail).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixPurchaseEmail }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixPurchaseEmailEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixPurchaseEmail }, new { @class = "modal-link" }));
+				columns.Add(model => model.sPurchaseEmail).Titled("Purchase Email").Sortable(true).Filterable(true);
+				columns.Add(model => model.Purchases.sPurchase).Titled("Purchase").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryPurchases);
+				columns.Add(model => model.SendEmails.sSendEmail).Titled("Send Email").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(querySendEmails);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("purchaseemails-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

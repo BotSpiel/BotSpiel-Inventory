@@ -23,6 +23,7 @@ This interface ....
         MonetaryAmountTypesPost GetPost(Int64 ixMonetaryAmountType);        
 		MonetaryAmountTypes Get(Int64 ixMonetaryAmountType);
         IQueryable<MonetaryAmountTypes> Index();
+        IQueryable<MonetaryAmountTypes> IndexDb();
         bool VerifyMonetaryAmountTypeUnique(Int64 ixMonetaryAmountType, string sMonetaryAmountType);
         List<string> VerifyMonetaryAmountTypeDeleteOK(Int64 ixMonetaryAmountType, string sMonetaryAmountType);
 

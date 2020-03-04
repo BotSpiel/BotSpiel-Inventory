@@ -41,6 +41,12 @@ This class ....
             var monetaryamounttypes = _context.MonetaryAmountTypes.AsNoTracking(); 
             return monetaryamounttypes;
         }
+
+        public IQueryable<MonetaryAmountTypes> IndexDb()
+        {
+            var monetaryamounttypes = _context.MonetaryAmountTypes.AsNoTracking(); 
+            return monetaryamounttypes;
+        }
         public bool VerifyMonetaryAmountTypeUnique(Int64 ixMonetaryAmountType, string sMonetaryAmountType)
         {
             if (_context.MonetaryAmountTypes.AsNoTracking().Where(x => x.sMonetaryAmountType == sMonetaryAmountType).Any() && ixMonetaryAmountType == 0L) return false;

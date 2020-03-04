@@ -23,7 +23,9 @@ This interface ....
         UnitOfMeasurementConversionsPost GetPost(Int64 ixUnitOfMeasurementConversion);        
 		UnitOfMeasurementConversions Get(Int64 ixUnitOfMeasurementConversion);
         IQueryable<UnitOfMeasurementConversions> Index();
+        IQueryable<UnitOfMeasurementConversions> IndexDb();
        IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement();
+       IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb();
         bool VerifyUnitOfMeasurementConversionUnique(Int64 ixUnitOfMeasurementConversion, string sUnitOfMeasurementConversion);
         List<string> VerifyUnitOfMeasurementConversionDeleteOK(Int64 ixUnitOfMeasurementConversion, string sUnitOfMeasurementConversion);
 

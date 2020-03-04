@@ -22,6 +22,7 @@ This interface ....
         MeasurementUnitsOfPost GetPost(Int64 ixMeasurementUnitOf);        
 		MeasurementUnitsOf Get(Int64 ixMeasurementUnitOf);
         IQueryable<MeasurementUnitsOf> Index();
+        IQueryable<MeasurementUnitsOf> IndexDb();
         bool VerifyMeasurementUnitOfUnique(Int64 ixMeasurementUnitOf, string sMeasurementUnitOf);
         List<string> VerifyMeasurementUnitOfDeleteOK(Int64 ixMeasurementUnitOf, string sMeasurementUnitOf);
         void RegisterCreate(MeasurementUnitsOfPost measurementunitsofPost);

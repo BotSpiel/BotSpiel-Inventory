@@ -1,0 +1,72 @@
+
+@model BotSpiel.DataAccess.Models.Accusations
+
+@{
+    ViewBag.Title = "Details Accusations";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Accusations</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixAccusation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixAccusation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sAccusation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sAccusation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Languages.sLanguage)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Languages.sLanguage, "Details", "Languages", new { id = Model.ixLanguage }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.LanguageStyles.sLanguageStyle)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.LanguageStyles.sLanguageStyle, "Details", "LanguageStyles", new { id = Model.ixLanguageStyle }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sAccusationMade)
+		</dt>
+		<dd>
+			@Html.TextAreaFor(model => model.sAccusationMade, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;" ,  @readonly = true })
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sAdmissionDenial)
+		</dt>
+		<dd>
+			@Html.TextAreaFor(model => model.sAdmissionDenial, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;" ,  @readonly = true })
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ResponseTypes.sResponseType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.ResponseTypes.sResponseType, "Details", "ResponseTypes", new { id = Model.ixResponseType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.bActive)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.bActive)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixAccusation }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixAccusation }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

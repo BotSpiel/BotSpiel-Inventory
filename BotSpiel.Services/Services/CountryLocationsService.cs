@@ -32,7 +32,9 @@ This class ....
         public CountryLocationsPost GetPost(Int64 ixCountryLocation) => _countrylocationsRepository.GetPost(ixCountryLocation);
         public CountryLocations Get(Int64 ixCountryLocation) => _countrylocationsRepository.Get(ixCountryLocation);
         public IQueryable<CountryLocations> Index() => _countrylocationsRepository.Index();
+        public IQueryable<CountryLocations> IndexDb() => _countrylocationsRepository.IndexDb();
        public IQueryable<CountrySubDivisions> selectCountrySubDivisions() => _countrylocationsRepository.selectCountrySubDivisions();
+       public IQueryable<CountrySubDivisions> CountrySubDivisionsDb() => _countrylocationsRepository.CountrySubDivisionsDb();
         public bool VerifyCountryLocationUnique(Int64 ixCountryLocation, string sCountryLocation) => _countrylocationsRepository.VerifyCountryLocationUnique(ixCountryLocation, sCountryLocation);
         public List<string> VerifyCountryLocationDeleteOK(Int64 ixCountryLocation, string sCountryLocation) => _countrylocationsRepository.VerifyCountryLocationDeleteOK(ixCountryLocation, sCountryLocation);
 

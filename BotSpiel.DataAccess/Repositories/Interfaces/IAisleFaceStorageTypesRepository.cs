@@ -22,6 +22,7 @@ This interface ....
         AisleFaceStorageTypesPost GetPost(Int64 ixAisleFaceStorageType);        
 		AisleFaceStorageTypes Get(Int64 ixAisleFaceStorageType);
         IQueryable<AisleFaceStorageTypes> Index();
+        IQueryable<AisleFaceStorageTypes> IndexDb();
         bool VerifyAisleFaceStorageTypeUnique(Int64 ixAisleFaceStorageType, string sAisleFaceStorageType);
         List<string> VerifyAisleFaceStorageTypeDeleteOK(Int64 ixAisleFaceStorageType, string sAisleFaceStorageType);
         void RegisterCreate(AisleFaceStorageTypesPost aislefacestoragetypesPost);

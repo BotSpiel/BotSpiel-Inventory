@@ -41,6 +41,12 @@ This class ....
             var foundationmodulegrids = _context.FoundationModuleGrids.AsNoTracking(); 
             return foundationmodulegrids;
         }
+
+        public IQueryable<FoundationModuleGrids> IndexDb()
+        {
+            var foundationmodulegrids = _context.FoundationModuleGrids.AsNoTracking(); 
+            return foundationmodulegrids;
+        }
 		public IQueryable<FoundationModuleGridsconfig> Indexconfig() => _context.FoundationModuleGridsconfig;
 		public IQueryable<FoundationModuleGridsmd> Indexmd() => _context.FoundationModuleGridsmd;
 		public IQueryable<FoundationModuleGridstx> Indextx() => _context.FoundationModuleGridstx;

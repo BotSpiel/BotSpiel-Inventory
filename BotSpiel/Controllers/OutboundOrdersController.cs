@@ -156,8 +156,14 @@ This class ....
             if (ModelState.IsValid)
             {
                 outboundorders.UserName = User.Identity.Name;
-                _outboundordersService.Create(outboundorders);
-                return RedirectToAction("Index");
+                //Custom Code Start | Replaced Code Block
+                //Replaced Code Block Start
+                //_outboundordersService.Create(outboundorders);
+                //return RedirectToAction("Index");
+                //Replaced Code Block End
+                var ixOutboundOrder = _outboundordersService.Create(outboundorders).Result;
+                return RedirectToAction("Edit", new { id = ixOutboundOrder });
+                //Custom Code End
             }
 			ViewBag.ixBusinessPartner = new SelectList(_outboundordersService.selectBusinessPartners().Select( x => new { x.ixBusinessPartner, x.sBusinessPartner }), "ixBusinessPartner", "sBusinessPartner");
 			ViewBag.ixCarrierService = new SelectList(_outboundordersService.selectCarrierServices().Select( x => new { x.ixCarrierService, x.sCarrierService }), "ixCarrierService", "sCarrierService");

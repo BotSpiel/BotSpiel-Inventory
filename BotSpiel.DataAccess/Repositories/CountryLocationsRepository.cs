@@ -43,7 +43,21 @@ This class ....
             var countrylocations = _context.CountryLocations.Include(a => a.CountrySubDivisions).AsNoTracking(); 
             return countrylocations;
         }
+
+        public IQueryable<CountryLocations> IndexDb()
+        {
+            var countrylocations = _context.CountryLocations.Include(a => a.CountrySubDivisions).AsNoTracking(); 
+            return countrylocations;
+        }
        public IQueryable<CountrySubDivisions> selectCountrySubDivisions()
+        {
+            List<CountrySubDivisions> countrysubdivisions = new List<CountrySubDivisions>();
+            _context.CountrySubDivisions.Include(a => a.Countries).AsNoTracking()
+                .ToList()
+                .ForEach(x => countrysubdivisions.Add(x));
+            return countrysubdivisions.AsQueryable();
+        }
+       public IQueryable<CountrySubDivisions> CountrySubDivisionsDb()
         {
             List<CountrySubDivisions> countrysubdivisions = new List<CountrySubDivisions>();
             _context.CountrySubDivisions.Include(a => a.Countries).AsNoTracking()

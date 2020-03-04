@@ -32,6 +32,8 @@ This class ....
 		MaterialHandlingUnitConfigurations = _MaterialHandlingUnitConfigurations;
 		HandlingUnitTypes _HandlingUnitTypes = new HandlingUnitTypes();
 		HandlingUnitTypes = _HandlingUnitTypes;
+		InventoryStates _InventoryStates = new InventoryStates();
+		InventoryStates = _InventoryStates;
 		Statuses _Statuses = new Statuses();
 		Statuses = _Statuses;
 
@@ -61,14 +63,19 @@ This class ....
 		[Display(Name = "Handling Unit Quantity")]
 		public virtual Double? nHandlingUnitQuantity { get; set; }
 		[StringLength(100)]
-		[Display(Name = "Batch Number")]
-		public virtual String sBatchNumber { get; set; }
-		[StringLength(100)]
 		[Display(Name = "Serial Number")]
 		public virtual String sSerialNumber { get; set; }
+		[StringLength(100)]
+		[Display(Name = "Batch Number")]
+		public virtual String sBatchNumber { get; set; }
+		[Display(Name = "Expire At")]
+		public virtual DateTime? dtExpireAt { get; set; }
 		[Required]
 		[Display(Name = "Base Unit Quantity Received")]
 		public virtual Double nBaseUnitQuantityReceived { get; set; }
+		[Required]
+		[Display(Name = "Inventory State ID")]
+		public virtual Int64 ixInventoryState { get; set; }
 		[Required]
 		[Display(Name = "Status ID")]
 		public virtual Int64 ixStatus { get; set; }
@@ -98,6 +105,8 @@ This class ....
 		public virtual MaterialHandlingUnitConfigurations MaterialHandlingUnitConfigurations { get; set; }
 		[ForeignKey("ixHandlingUnitType")]
 		public virtual HandlingUnitTypes HandlingUnitTypes { get; set; }
+		[ForeignKey("ixInventoryState")]
+		public virtual InventoryStates InventoryStates { get; set; }
 		[ForeignKey("ixStatus")]
 		public virtual Statuses Statuses { get; set; }
     }

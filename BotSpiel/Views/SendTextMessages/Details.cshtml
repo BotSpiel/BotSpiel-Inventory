@@ -1,0 +1,48 @@
+
+@model BotSpiel.DataAccess.Models.SendTextMessages
+
+@{
+    ViewBag.Title = "Details Send Text Messages";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Send Text Messages</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixSendTextMessage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixSendTextMessage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sSendTextMessage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sSendTextMessage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.People.sPerson)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.People.sPerson, "Details", "People", new { id = Model.ixPerson }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sContent)
+		</dt>
+		<dd>
+			@Html.TextAreaFor(model => model.sContent, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;" ,  @readonly = true })
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixSendTextMessage }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixSendTextMessage }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

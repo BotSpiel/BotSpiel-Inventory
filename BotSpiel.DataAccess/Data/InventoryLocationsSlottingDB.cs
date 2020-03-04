@@ -38,10 +38,30 @@ This class ....
 		public DbSet<InventoryLocationsPost> InventoryLocationsPost { get; set; }
 		public DbSet<Companies> Companies { get; set; }
 		public DbSet<CompaniesPost> CompaniesPost { get; set; }
+		public DbSet<Facilities> Facilities { get; set; }
+		public DbSet<FacilitiesPost> FacilitiesPost { get; set; }
 		public DbSet<FacilityWorkAreas> FacilityWorkAreas { get; set; }
 		public DbSet<FacilityWorkAreasPost> FacilityWorkAreasPost { get; set; }
 		public DbSet<MaterialTypes> MaterialTypes { get; set; }
 		public DbSet<MaterialTypesPost> MaterialTypesPost { get; set; }
+		public DbSet<Addresses> Addresses { get; set; }
+		public DbSet<AddressesPost> AddressesPost { get; set; }
+		public DbSet<CountrySubDivisions> CountrySubDivisions { get; set; }
+		public DbSet<CountrySubDivisionsPost> CountrySubDivisionsPost { get; set; }
+		public DbSet<Countries> Countries { get; set; }
+		public DbSet<CountriesPost> CountriesPost { get; set; }
+		public DbSet<PlanetSubRegions> PlanetSubRegions { get; set; }
+		public DbSet<PlanetSubRegionsPost> PlanetSubRegionsPost { get; set; }
+		public DbSet<PlanetRegions> PlanetRegions { get; set; }
+		public DbSet<PlanetRegionsPost> PlanetRegionsPost { get; set; }
+		public DbSet<Planets> Planets { get; set; }
+		public DbSet<PlanetsPost> PlanetsPost { get; set; }
+		public DbSet<PlanetarySystems> PlanetarySystems { get; set; }
+		public DbSet<PlanetarySystemsPost> PlanetarySystemsPost { get; set; }
+		public DbSet<Galaxies> Galaxies { get; set; }
+		public DbSet<GalaxiesPost> GalaxiesPost { get; set; }
+		public DbSet<Universes> Universes { get; set; }
+		public DbSet<UniversesPost> UniversesPost { get; set; }
 		public DbSet<LocationFunctions> LocationFunctions { get; set; }
 		public DbSet<LocationFunctionsPost> LocationFunctionsPost { get; set; }
 		public DbSet<MeasurementSystems> MeasurementSystems { get; set; }
@@ -90,6 +110,12 @@ This class ....
             modelBuilder.Entity<CompaniesPost>()
                 .ToTable("md_vw_CompaniesPost")
                 .HasKey(c => new { c.ixCompany });
+            modelBuilder.Entity<Facilities>()
+                .ToTable("md_vw_Facilities")
+                .HasKey(c => new { c.ixFacility });
+            modelBuilder.Entity<FacilitiesPost>()
+                .ToTable("md_vw_FacilitiesPost")
+                .HasKey(c => new { c.ixFacility });
             modelBuilder.Entity<FacilityWorkAreas>()
                 .ToTable("md_vw_FacilityWorkAreas")
                 .HasKey(c => new { c.ixFacilityWorkArea });
@@ -102,6 +128,60 @@ This class ....
             modelBuilder.Entity<MaterialTypesPost>()
                 .ToTable("config_vw_MaterialTypesPost")
                 .HasKey(c => new { c.ixMaterialType });
+            modelBuilder.Entity<Addresses>()
+                .ToTable("md_vw_Addresses")
+                .HasKey(c => new { c.ixAddress });
+            modelBuilder.Entity<AddressesPost>()
+                .ToTable("md_vw_AddressesPost")
+                .HasKey(c => new { c.ixAddress });
+            modelBuilder.Entity<CountrySubDivisions>()
+                .ToTable("md_vw_CountrySubDivisions")
+                .HasKey(c => new { c.ixCountrySubDivision });
+            modelBuilder.Entity<CountrySubDivisionsPost>()
+                .ToTable("md_vw_CountrySubDivisionsPost")
+                .HasKey(c => new { c.ixCountrySubDivision });
+            modelBuilder.Entity<Countries>()
+                .ToTable("md_vw_Countries")
+                .HasKey(c => new { c.ixCountry });
+            modelBuilder.Entity<CountriesPost>()
+                .ToTable("md_vw_CountriesPost")
+                .HasKey(c => new { c.ixCountry });
+            modelBuilder.Entity<PlanetSubRegions>()
+                .ToTable("md_vw_PlanetSubRegions")
+                .HasKey(c => new { c.ixPlanetSubRegion });
+            modelBuilder.Entity<PlanetSubRegionsPost>()
+                .ToTable("md_vw_PlanetSubRegionsPost")
+                .HasKey(c => new { c.ixPlanetSubRegion });
+            modelBuilder.Entity<PlanetRegions>()
+                .ToTable("md_vw_PlanetRegions")
+                .HasKey(c => new { c.ixPlanetRegion });
+            modelBuilder.Entity<PlanetRegionsPost>()
+                .ToTable("md_vw_PlanetRegionsPost")
+                .HasKey(c => new { c.ixPlanetRegion });
+            modelBuilder.Entity<Planets>()
+                .ToTable("md_vw_Planets")
+                .HasKey(c => new { c.ixPlanet });
+            modelBuilder.Entity<PlanetsPost>()
+                .ToTable("md_vw_PlanetsPost")
+                .HasKey(c => new { c.ixPlanet });
+            modelBuilder.Entity<PlanetarySystems>()
+                .ToTable("md_vw_PlanetarySystems")
+                .HasKey(c => new { c.ixPlanetarySystem });
+            modelBuilder.Entity<PlanetarySystemsPost>()
+                .ToTable("md_vw_PlanetarySystemsPost")
+                .HasKey(c => new { c.ixPlanetarySystem });
+            modelBuilder.Entity<Galaxies>()
+                .ToTable("md_vw_Galaxies")
+                .HasKey(c => new { c.ixGalaxy });
+            modelBuilder.Entity<GalaxiesPost>()
+                .ToTable("md_vw_GalaxiesPost")
+                .HasKey(c => new { c.ixGalaxy });
+            modelBuilder.Entity<Universes>()
+                .ToTable("md_vw_Universes")
+                .HasKey(c => new { c.ixUniverse });
+            modelBuilder.Entity<UniversesPost>()
+                .ToTable("md_vw_UniversesPost")
+                .HasKey(c => new { c.ixUniverse });
             modelBuilder.Entity<LocationFunctions>()
                 .ToTable("config_vw_LocationFunctions")
                 .HasKey(c => new { c.ixLocationFunction });
@@ -173,7 +253,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is InventoryLocationsSlottingPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is InventoryLocationsSlottingPost)).ToList())
             {
                 var md_vw_inventorylocationsslottingpost = e.Entity as InventoryLocationsSlottingPost;
                 switch (e.State)
@@ -226,12 +306,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixInventoryLocationSlotting"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeInventoryLocationsSlotting @ixInventoryLocationSlotting = @p0, @ixInventoryLocation = @p1, @ixMaterial = @p2, @nMinimumBaseUnitQuantity = @p3, @nMaximumBaseUnitQuantity = @p4, @UserName = @p5", md_vw_inventorylocationsslottingpost.ixInventoryLocationSlotting, md_vw_inventorylocationsslottingpost.ixInventoryLocation, md_vw_inventorylocationsslottingpost.ixMaterial, md_vw_inventorylocationsslottingpost.nMinimumBaseUnitQuantity, md_vw_inventorylocationsslottingpost.nMaximumBaseUnitQuantity, md_vw_inventorylocationsslottingpost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

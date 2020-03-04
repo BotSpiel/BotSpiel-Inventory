@@ -85,7 +85,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is PlanetSubRegionsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is PlanetSubRegionsPost)).ToList())
             {
                 var md_vw_planetsubregionspost = e.Entity as PlanetSubRegionsPost;
                 switch (e.State)
@@ -128,12 +128,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixPlanetSubRegion"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangePlanetSubRegions @ixPlanetSubRegion = @p0, @sPlanetSubRegion = @p1, @ixPlanetRegion = @p2, @UserName = @p3", md_vw_planetsubregionspost.ixPlanetSubRegion, md_vw_planetsubregionspost.sPlanetSubRegion, md_vw_planetsubregionspost.ixPlanetRegion, md_vw_planetsubregionspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

@@ -53,7 +53,7 @@
         <div class="form-group">
 			@Html.ActionLink("Company Before ID", "Index", "Companies", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ixCompanyBefore", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("ixCompanyBefore", null, "None", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixCompanyBefore, "", new { @class = "text-danger" })
             </div>
         </div>

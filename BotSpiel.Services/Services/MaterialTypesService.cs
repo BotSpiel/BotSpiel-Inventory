@@ -32,6 +32,7 @@ This class ....
         public MaterialTypesPost GetPost(Int64 ixMaterialType) => _materialtypesRepository.GetPost(ixMaterialType);
         public MaterialTypes Get(Int64 ixMaterialType) => _materialtypesRepository.Get(ixMaterialType);
         public IQueryable<MaterialTypes> Index() => _materialtypesRepository.Index();
+        public IQueryable<MaterialTypes> IndexDb() => _materialtypesRepository.IndexDb();
         public bool VerifyMaterialTypeUnique(Int64 ixMaterialType, string sMaterialType) => _materialtypesRepository.VerifyMaterialTypeUnique(ixMaterialType, sMaterialType);
         public List<string> VerifyMaterialTypeDeleteOK(Int64 ixMaterialType, string sMaterialType) => _materialtypesRepository.VerifyMaterialTypeDeleteOK(ixMaterialType, sMaterialType);
 

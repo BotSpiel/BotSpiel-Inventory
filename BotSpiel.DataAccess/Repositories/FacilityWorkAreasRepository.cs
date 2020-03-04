@@ -43,6 +43,12 @@ This class ....
             var facilityworkareas = _context.FacilityWorkAreas.AsNoTracking(); 
             return facilityworkareas;
         }
+
+        public IQueryable<FacilityWorkAreas> IndexDb()
+        {
+            var facilityworkareas = _context.FacilityWorkAreas.AsNoTracking(); 
+            return facilityworkareas;
+        }
         public bool VerifyFacilityWorkAreaUnique(Int64 ixFacilityWorkArea, string sFacilityWorkArea)
         {
             if (_context.FacilityWorkAreas.AsNoTracking().Where(x => x.sFacilityWorkArea == sFacilityWorkArea).Any() && ixFacilityWorkArea == 0L) return false;

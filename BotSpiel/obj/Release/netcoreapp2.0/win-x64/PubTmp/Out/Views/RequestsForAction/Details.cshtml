@@ -1,0 +1,72 @@
+
+@model BotSpiel.DataAccess.Models.RequestsForAction
+
+@{
+    ViewBag.Title = "Details Requests For Action";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Requests For Action</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixRequestForAction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixRequestForAction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sRequestForAction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sRequestForAction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Languages.sLanguage)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Languages.sLanguage, "Details", "Languages", new { id = Model.ixLanguage }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.LanguageStyles.sLanguageStyle)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.LanguageStyles.sLanguageStyle, "Details", "LanguageStyles", new { id = Model.ixLanguageStyle }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sActionRequest)
+		</dt>
+		<dd>
+			@Html.TextAreaFor(model => model.sActionRequest, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;" ,  @readonly = true })
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sModule)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sModule)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sEntity)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sEntity)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sEntityIntent)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sEntityIntent)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixRequestForAction }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixRequestForAction }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

@@ -32,6 +32,7 @@ This class ....
         public MessageResponseTypesPost GetPost(Int64 ixMessageResponseType) => _messageresponsetypesRepository.GetPost(ixMessageResponseType);
         public MessageResponseTypes Get(Int64 ixMessageResponseType) => _messageresponsetypesRepository.Get(ixMessageResponseType);
         public IQueryable<MessageResponseTypes> Index() => _messageresponsetypesRepository.Index();
+        public IQueryable<MessageResponseTypes> IndexDb() => _messageresponsetypesRepository.IndexDb();
         public bool VerifyMessageResponseTypeUnique(Int64 ixMessageResponseType, string sMessageResponseType) => _messageresponsetypesRepository.VerifyMessageResponseTypeUnique(ixMessageResponseType, sMessageResponseType);
         public List<string> VerifyMessageResponseTypeDeleteOK(Int64 ixMessageResponseType, string sMessageResponseType) => _messageresponsetypesRepository.VerifyMessageResponseTypeDeleteOK(ixMessageResponseType, sMessageResponseType);
 

@@ -22,6 +22,7 @@ This interface ....
         OutboundModuleGridsPost GetPost(Int64 ixOutboundModuleGrid);        
 		OutboundModuleGrids Get(Int64 ixOutboundModuleGrid);
         IQueryable<OutboundModuleGrids> Index();
+        IQueryable<OutboundModuleGrids> IndexDb();
 		IQueryable<OutboundModuleGridsconfig> Indexconfig();
 		IQueryable<OutboundModuleGridsmd> Indexmd();
 		IQueryable<OutboundModuleGridstx> Indextx();

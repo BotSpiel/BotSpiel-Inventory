@@ -23,7 +23,9 @@ This interface ....
         CountrySubDivisionsPost GetPost(Int64 ixCountrySubDivision);        
 		CountrySubDivisions Get(Int64 ixCountrySubDivision);
         IQueryable<CountrySubDivisions> Index();
+        IQueryable<CountrySubDivisions> IndexDb();
        IQueryable<Countries> selectCountries();
+       IQueryable<Countries> CountriesDb();
         bool VerifyCountrySubDivisionUnique(Int64 ixCountrySubDivision, string sCountrySubDivision);
         List<string> VerifyCountrySubDivisionDeleteOK(Int64 ixCountrySubDivision, string sCountrySubDivision);
 

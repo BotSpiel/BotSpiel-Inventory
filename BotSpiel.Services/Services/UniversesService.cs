@@ -32,6 +32,7 @@ This class ....
         public UniversesPost GetPost(Int64 ixUniverse) => _universesRepository.GetPost(ixUniverse);
         public Universes Get(Int64 ixUniverse) => _universesRepository.Get(ixUniverse);
         public IQueryable<Universes> Index() => _universesRepository.Index();
+        public IQueryable<Universes> IndexDb() => _universesRepository.IndexDb();
         public bool VerifyUniverseUnique(Int64 ixUniverse, string sUniverse) => _universesRepository.VerifyUniverseUnique(ixUniverse, sUniverse);
         public List<string> VerifyUniverseDeleteOK(Int64 ixUniverse, string sUniverse) => _universesRepository.VerifyUniverseDeleteOK(ixUniverse, sUniverse);
 

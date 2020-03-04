@@ -49,6 +49,12 @@ This class ....
             var businesspartners = _context.BusinessPartners.Include(a => a.BusinessPartnerTypes).Include(a => a.Companies).Include(a => a.Addresses).AsNoTracking(); 
             return businesspartners;
         }
+
+        public IQueryable<BusinessPartners> IndexDb()
+        {
+            var businesspartners = _context.BusinessPartners.Include(a => a.BusinessPartnerTypes).Include(a => a.Companies).Include(a => a.Addresses).AsNoTracking(); 
+            return businesspartners;
+        }
        public IQueryable<Addresses> selectAddresses()
         {
             List<Addresses> addresses = new List<Addresses>();
@@ -66,6 +72,30 @@ This class ....
             return businesspartnertypes.AsQueryable();
         }
         public IQueryable<Companies> selectCompanies()
+        {
+            List<Companies> companies = new List<Companies>();
+            _context.Companies.AsNoTracking()
+                .ToList()
+                .ForEach(x => companies.Add(x));
+            return companies.AsQueryable();
+        }
+       public IQueryable<Addresses> AddressesDb()
+        {
+            List<Addresses> addresses = new List<Addresses>();
+            _context.Addresses.Include(a => a.Countries).Include(a => a.CountrySubDivisionsFKDiffStateOrProvince).AsNoTracking()
+                .ToList()
+                .ForEach(x => addresses.Add(x));
+            return addresses.AsQueryable();
+        }
+        public IQueryable<BusinessPartnerTypes> BusinessPartnerTypesDb()
+        {
+            List<BusinessPartnerTypes> businesspartnertypes = new List<BusinessPartnerTypes>();
+            _context.BusinessPartnerTypes.AsNoTracking()
+                .ToList()
+                .ForEach(x => businesspartnertypes.Add(x));
+            return businesspartnertypes.AsQueryable();
+        }
+        public IQueryable<Companies> CompaniesDb()
         {
             List<Companies> companies = new List<Companies>();
             _context.Companies.AsNoTracking()

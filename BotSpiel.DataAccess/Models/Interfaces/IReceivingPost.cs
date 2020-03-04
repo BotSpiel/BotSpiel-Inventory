@@ -26,9 +26,11 @@ This interface ....
 		Int64? ixMaterialHandlingUnitConfiguration { get; set; }
 		Int64? ixHandlingUnitType { get; set; }
 		Double? nHandlingUnitQuantity { get; set; }
-		String sBatchNumber { get; set; }
 		String sSerialNumber { get; set; }
+		String sBatchNumber { get; set; }
+		DateTime? dtExpireAt { get; set; }
 		Double nBaseUnitQuantityReceived { get; set; }
+		Int64 ixInventoryState { get; set; }
 		Int64 ixStatus { get; set; }
 		String UserName { get; set; }
     }

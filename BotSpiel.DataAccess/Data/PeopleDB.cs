@@ -53,7 +53,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is PeoplePost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is PeoplePost)).ToList())
             {
                 var md_vw_peoplepost = e.Entity as PeoplePost;
                 switch (e.State)
@@ -106,12 +106,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixPerson"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangePeople @ixPerson = @p0, @sPerson = @p1, @sFirstName = @p2, @sLastName = @p3, @ixLanguage = @p4, @UserName = @p5", md_vw_peoplepost.ixPerson, md_vw_peoplepost.sPerson, md_vw_peoplepost.sFirstName, md_vw_peoplepost.sLastName, md_vw_peoplepost.ixLanguage, md_vw_peoplepost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

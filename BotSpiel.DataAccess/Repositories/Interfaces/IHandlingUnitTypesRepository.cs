@@ -22,6 +22,7 @@ This interface ....
         HandlingUnitTypesPost GetPost(Int64 ixHandlingUnitType);        
 		HandlingUnitTypes Get(Int64 ixHandlingUnitType);
         IQueryable<HandlingUnitTypes> Index();
+        IQueryable<HandlingUnitTypes> IndexDb();
         bool VerifyHandlingUnitTypeUnique(Int64 ixHandlingUnitType, string sHandlingUnitType);
         List<string> VerifyHandlingUnitTypeDeleteOK(Int64 ixHandlingUnitType, string sHandlingUnitType);
         void RegisterCreate(HandlingUnitTypesPost handlingunittypesPost);

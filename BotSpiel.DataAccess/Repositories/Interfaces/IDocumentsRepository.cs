@@ -22,8 +22,11 @@ This interface ....
         DocumentsPost GetPost(Int64 ixDocument);        
 		Documents Get(Int64 ixDocument);
         IQueryable<Documents> Index();
+        IQueryable<Documents> IndexDb();
        IQueryable<Statuses> selectStatuses();
         IQueryable<DocumentMessageTypes> selectDocumentMessageTypes();
+       IQueryable<Statuses> StatusesDb();
+        IQueryable<DocumentMessageTypes> DocumentMessageTypesDb();
         bool VerifyDocumentUnique(Int64 ixDocument, string sDocument);
         List<string> VerifyDocumentDeleteOK(Int64 ixDocument, string sDocument);
         void RegisterCreate(DocumentsPost documentsPost);

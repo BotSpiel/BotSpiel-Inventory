@@ -37,8 +37,15 @@ This class ....
 		[Display(Name = "Inbound Order ID")]
 		public virtual Int64 ixInboundOrderEdit { get; set; }
 		[Display(Name = "Inbound Order")]
-		public virtual String sInboundOrder { get; set; }
-		[StringLength(300)]
+        //Custom Code Start | Replaced Code Block
+        //Replaced Code Block Start
+        //public virtual String sInboundOrder { get; set; }
+        //Replaced Code Block End
+        //public virtual String sInboundOrder { get { return this.sInboundOrder + $"({this.sOrderReference})"; } set { } }
+        public virtual String sInboundOrder { get { return $"{this.sOrderReference}"; } set { } }
+        //Custom Code End
+
+        [StringLength(300)]
 		[Required]
 		[Display(Name = "Order Reference")]
 		public virtual String sOrderReference { get; set; }

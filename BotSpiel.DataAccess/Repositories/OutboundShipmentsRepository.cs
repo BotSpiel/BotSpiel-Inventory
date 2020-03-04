@@ -50,6 +50,17 @@ This class ....
 
         public IQueryable<OutboundShipments> Index()
         {
+            //Custom Code Start | Replaced Code Block
+            //Replaced Code Block Start
+            //var outboundshipments = _context.OutboundShipments.Include(a => a.Carriers).Include(a => a.Statuses).Include(a => a.Addresses).Include(a => a.Facilities).Include(a => a.Companies).AsNoTracking();
+            //Replaced Code Block End
+            var outboundshipments = _context.OutboundShipments.OrderByDescending(a => a.ixOutboundShipment).Include(a => a.Carriers).Include(a => a.Statuses).Include(a => a.Addresses).Include(a => a.Facilities).Include(a => a.Companies).AsNoTracking();
+            //Custom Code End
+            return outboundshipments;
+        }
+
+        public IQueryable<OutboundShipments> IndexDb()
+        {
             var outboundshipments = _context.OutboundShipments.Include(a => a.Carriers).Include(a => a.Statuses).Include(a => a.Addresses).Include(a => a.Facilities).Include(a => a.Companies).AsNoTracking(); 
             return outboundshipments;
         }
@@ -94,6 +105,54 @@ This class ....
             return outboundcarriermanifests.AsQueryable();
         }
         public IQueryable<Statuses> selectStatuses()
+        {
+            List<Statuses> statuses = new List<Statuses>();
+            _context.Statuses.AsNoTracking()
+                .ToList()
+                .ForEach(x => statuses.Add(x));
+            return statuses.AsQueryable();
+        }
+       public IQueryable<Addresses> AddressesDb()
+        {
+            List<Addresses> addresses = new List<Addresses>();
+            _context.Addresses.Include(a => a.Countries).Include(a => a.CountrySubDivisionsFKDiffStateOrProvince).AsNoTracking()
+                .ToList()
+                .ForEach(x => addresses.Add(x));
+            return addresses.AsQueryable();
+        }
+        public IQueryable<Carriers> CarriersDb()
+        {
+            List<Carriers> carriers = new List<Carriers>();
+            _context.Carriers.Include(a => a.CarrierTypes).AsNoTracking()
+                .ToList()
+                .ForEach(x => carriers.Add(x));
+            return carriers.AsQueryable();
+        }
+        public IQueryable<Companies> CompaniesDb()
+        {
+            List<Companies> companies = new List<Companies>();
+            _context.Companies.AsNoTracking()
+                .ToList()
+                .ForEach(x => companies.Add(x));
+            return companies.AsQueryable();
+        }
+        public IQueryable<Facilities> FacilitiesDb()
+        {
+            List<Facilities> facilities = new List<Facilities>();
+            _context.Facilities.Include(a => a.Addresses).AsNoTracking()
+                .ToList()
+                .ForEach(x => facilities.Add(x));
+            return facilities.AsQueryable();
+        }
+        public IQueryable<OutboundCarrierManifests> OutboundCarrierManifestsDb()
+        {
+            List<OutboundCarrierManifests> outboundcarriermanifests = new List<OutboundCarrierManifests>();
+            _context.OutboundCarrierManifests.Include(a => a.Carriers).Include(a => a.InventoryLocationsFKDiffPickupInventoryLocation).Include(a => a.Statuses).AsNoTracking()
+                .ToList()
+                .ForEach(x => outboundcarriermanifests.Add(x));
+            return outboundcarriermanifests.AsQueryable();
+        }
+        public IQueryable<Statuses> StatusesDb()
         {
             List<Statuses> statuses = new List<Statuses>();
             _context.Statuses.AsNoTracking()

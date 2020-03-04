@@ -1,0 +1,12 @@
+﻿{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "sourceMap": true,
+    "target": "es5"
+  },
+  "files": [
+    "./wwwroot/js/BotSpiel/botspiel-actions.ts"
+  ],
+  "compileOnSave": true
+}

@@ -20,6 +20,8 @@ This class ....
  
         public FacilityAisleFaces()
         {
+		Facilities _Facilities = new Facilities();
+		Facilities = _Facilities;
 		FacilityFloors _FacilityFloors = new FacilityFloors();
 		FacilityFloors = _FacilityFloors;
 		BaySequenceTypes _BaySequenceTypes = new BaySequenceTypes();
@@ -48,6 +50,9 @@ This class ....
 		[StringLength(300)]
 		[Display(Name = "Facility Aisle Face")]
 		public virtual String sFacilityAisleFace { get; set; }
+		[Required]
+		[Display(Name = "Facility ID")]
+		public virtual Int64 ixFacility { get; set; }
 		[Required]
 		[Display(Name = "Facility Floor ID")]
 		public virtual Int64 ixFacilityFloor { get; set; }
@@ -101,6 +106,8 @@ This class ....
 		[Required]
 		[Display(Name = "Changed By")]
 		public virtual String sChangedBy { get; set; }
+		[ForeignKey("ixFacility")]
+		public virtual Facilities Facilities { get; set; }
 		[ForeignKey("ixFacilityFloor")]
 		public virtual FacilityFloors FacilityFloors { get; set; }
 		[ForeignKey("ixBaySequenceType")]

@@ -1,0 +1,72 @@
+
+@model BotSpiel.DataAccess.Models.PaymentCreditCards
+
+@{
+    ViewBag.Title = "Details Payment Credit Cards";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Payment Credit Cards</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixPaymentCreditCard)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixPaymentCreditCard)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPaymentCreditCard)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPaymentCreditCard)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCreditCardType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCreditCardType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sFirstName)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sFirstName)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLastName)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLastName)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nExpireMonth)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nExpireMonth)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nExpireYear)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nExpireYear)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCvvTwo)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCvvTwo)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixPaymentCreditCard }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixPaymentCreditCard }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

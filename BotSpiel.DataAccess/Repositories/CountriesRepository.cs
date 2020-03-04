@@ -23,12 +23,14 @@ This class ....
         private readonly CountriesDB _context;
        private readonly AddressesDB _contextAddresses;
         private readonly CountrySubDivisionsDB _contextCountrySubDivisions;
+        private readonly TaxesDB _contextTaxes;
   
-        public CountriesRepository(CountriesDB context, AddressesDB contextAddresses, CountrySubDivisionsDB contextCountrySubDivisions)
+        public CountriesRepository(CountriesDB context, AddressesDB contextAddresses, CountrySubDivisionsDB contextCountrySubDivisions, TaxesDB contextTaxes)
         {
             _context = context;
            _contextAddresses = contextAddresses;
             _contextCountrySubDivisions = contextCountrySubDivisions;
+            _contextTaxes = contextTaxes;
   
         }
 
@@ -47,7 +49,21 @@ This class ....
             var countries = _context.Countries.Include(a => a.PlanetSubRegions).AsNoTracking(); 
             return countries;
         }
+
+        public IQueryable<Countries> IndexDb()
+        {
+            var countries = _context.Countries.Include(a => a.PlanetSubRegions).AsNoTracking(); 
+            return countries;
+        }
        public IQueryable<PlanetSubRegions> selectPlanetSubRegions()
+        {
+            List<PlanetSubRegions> planetsubregions = new List<PlanetSubRegions>();
+            _context.PlanetSubRegions.Include(a => a.PlanetRegions).AsNoTracking()
+                .ToList()
+                .ForEach(x => planetsubregions.Add(x));
+            return planetsubregions.AsQueryable();
+        }
+       public IQueryable<PlanetSubRegions> PlanetSubRegionsDb()
         {
             List<PlanetSubRegions> planetsubregions = new List<PlanetSubRegions>();
             _context.PlanetSubRegions.Include(a => a.PlanetRegions).AsNoTracking()
@@ -67,6 +83,7 @@ This class ....
             List<string> existInEntities = new List<string>();
            if (_contextAddresses.Addresses.AsNoTracking().Where(x => x.ixCountry == ixCountry).Any()) existInEntities.Add("Addresses");
             if (_contextCountrySubDivisions.CountrySubDivisions.AsNoTracking().Where(x => x.ixCountry == ixCountry).Any()) existInEntities.Add("CountrySubDivisions");
+            if (_contextTaxes.Taxes.AsNoTracking().Where(x => x.ixCountry == ixCountry).Any()) existInEntities.Add("Taxes");
 
             return existInEntities;
         }

@@ -31,10 +31,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area=" asp-controller="BotspielBotMessages" asp-action="Create" class="navbar-brand">BotSpiel Inventory</a>
+                <a asp-area="" asp-controller="BotspielBotMessages" asp-action="Create" class="navbar-brand">BotSpiel Inventory</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @*<li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Purchases", "Index", "Purchases")</li>
+                            <li>@Html.ActionLink("Purchase Lines", "Index", "PurchaseLines")</li>
+                            <li>@Html.ActionLink("Invoices", "Index", "Invoices")</li>
+                            <li>@Html.ActionLink("Invoice Purchase Line Amounts", "Index", "InvoicePurchaseLineAmounts")</li>
+                            <li>@Html.ActionLink("Invoice Purchase Line Tax Amounts", "Index", "InvoicePurchaseLineTaxAmounts")</li>
+                            <li>@Html.ActionLink("Payments", "Index", "Payments")</li>
+                        </ul>
+                    </li>*@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Inbound Operations<span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -58,6 +69,7 @@
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Outbound Orders", "Index", "OutboundOrders")</li>
                             <li>@Html.ActionLink("Outbound Order Lines", "Index", "OutboundOrderLines")</li>
+                            <li>@Html.ActionLink("Outbound Order Line Allocation", "Index", "OutboundOrderLinesInventoryAllocation")</li>
                             <li>@Html.ActionLink("Pick Batches", "Index", "PickBatches")</li>
                             <li>@Html.ActionLink("Outbound Shipments", "Index", "OutboundShipments")</li>
                             <li>@Html.ActionLink("Outbound Carrier Manifests", "Index", "OutboundCarrierManifests")</li>
@@ -95,16 +107,19 @@
                             <li>@Html.ActionLink("Inventory (TD)", "Indextx", "InventoryModuleGrids")</li>
                             <li>@Html.ActionLink("Outbound (TD)", "Indextx", "OutboundModuleGrids")</li>
                             <li>@Html.ActionLink("Execution (TD)", "Indextx", "ExecutionModuleGrids")</li>
+                            @*<li>@Html.ActionLink("Shop (TD)", "Indextx", "ShopModuleGrids")</li>*@
                             <li>@Html.ActionLink("Foundation (MD)", "Indexmd", "FoundationModuleGrids")</li>
                             <li>@Html.ActionLink("Network (MD)", "Indexmd", "NetworkModuleGrids")</li>
                             <li>@Html.ActionLink("Inbound (MD)", "Indexmd", "InboundModuleGrids")</li>
                             <li>@Html.ActionLink("Inventory (MD)", "Indexmd", "InventoryModuleGrids")</li>
+                            @*<li>@Html.ActionLink("Shop (MD)", "Indexmd", "ShopModuleGrids")</li>*@
                             <li>@Html.ActionLink("Foundation (C)", "Indexconfig", "FoundationModuleGrids")</li>
                             <li>@Html.ActionLink("Network (C)", "Indexconfig", "NetworkModuleGrids")</li>
                             <li>@Html.ActionLink("Inbound (C)", "Indexconfig", "InboundModuleGrids")</li>
                             <li>@Html.ActionLink("Inventory (C)", "Indexconfig", "InventoryModuleGrids")</li>
                             <li>@Html.ActionLink("Outbound (C)", "Indexconfig", "OutboundModuleGrids")</li>
                             <li>@Html.ActionLink("Execution (C)", "Indexconfig", "ExecutionModuleGrids")</li>
+                            <li>@Html.ActionLink("Bot (C)", "Indexconfig", "BotModuleGrids")</li>
                         </ul>
                     </li>
                 </ul>

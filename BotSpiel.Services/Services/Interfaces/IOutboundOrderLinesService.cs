@@ -23,8 +23,13 @@ This interface ....
         OutboundOrderLinesPost GetPost(Int64 ixOutboundOrderLine);        
 		OutboundOrderLines Get(Int64 ixOutboundOrderLine);
         IQueryable<OutboundOrderLines> Index();
+        IQueryable<OutboundOrderLines> IndexDb();
        IQueryable<Statuses> selectStatuses();
         IQueryable<Materials> selectMaterials();
+        IQueryable<OutboundOrders> selectOutboundOrders();
+       IQueryable<Statuses> StatusesDb();
+        IQueryable<Materials> MaterialsDb();
+        IQueryable<OutboundOrders> OutboundOrdersDb();
         bool VerifyOutboundOrderLineUnique(Int64 ixOutboundOrderLine, string sOutboundOrderLine);
         List<string> VerifyOutboundOrderLineDeleteOK(Int64 ixOutboundOrderLine, string sOutboundOrderLine);
 

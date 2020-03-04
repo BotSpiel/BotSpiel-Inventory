@@ -32,6 +32,7 @@ This class ....
         public FacilityWorkAreasPost GetPost(Int64 ixFacilityWorkArea) => _facilityworkareasRepository.GetPost(ixFacilityWorkArea);
         public FacilityWorkAreas Get(Int64 ixFacilityWorkArea) => _facilityworkareasRepository.Get(ixFacilityWorkArea);
         public IQueryable<FacilityWorkAreas> Index() => _facilityworkareasRepository.Index();
+        public IQueryable<FacilityWorkAreas> IndexDb() => _facilityworkareasRepository.IndexDb();
         public bool VerifyFacilityWorkAreaUnique(Int64 ixFacilityWorkArea, string sFacilityWorkArea) => _facilityworkareasRepository.VerifyFacilityWorkAreaUnique(ixFacilityWorkArea, sFacilityWorkArea);
         public List<string> VerifyFacilityWorkAreaDeleteOK(Int64 ixFacilityWorkArea, string sFacilityWorkArea) => _facilityworkareasRepository.VerifyFacilityWorkAreaDeleteOK(ixFacilityWorkArea, sFacilityWorkArea);
 

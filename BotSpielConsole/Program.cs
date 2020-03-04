@@ -9,6 +9,17 @@ using BotSpiel;
 using BotSpiel.DataAccess.Data;
 using BotSpiel.DataAccess.Models;
 using BotSpiel.Services;
+//Custom Code Start | Added Code Block 
+using BotSpiel.Services.Utilities;
+using BotSpiel.Models;
+using BotSpiel.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Bot.Builder.Dialogs.Choices;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+//Custom Code End
 
 namespace BotSpielConsole
 {
@@ -22,11 +33,23 @@ namespace BotSpielConsole
                 .AddLogging();
 
             IConfiguration Configuration = new ConfigurationBuilder()
-                      .AddJsonFile(@"C:\xInventory\xInventoryDev26\WebCore\BotSpiel\BotSpiel\appsettings.json", true, true)
+                      //Custom Code Start | Replaced Code Block
+                      //Replaced Code Block Start
+                      //.AddJsonFile(@"C:\xInventory\xInventoryDev75\WebCore\BotSpiel\BotSpiel\appsettings.json", true, true)
+                      //Replaced Code Block End
+                      .AddJsonFile(@"C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel\appsettings.json", true, true)
+                      //Custom Code End
                       .Build();
 
             BotSpielModule.LoadModule(services, Configuration);
             services.AddTransient<BotUserData>();
+            services.AddSingleton(new ApplicationDbContext(
+                new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).Options)
+                );
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                 .AddDefaultTokenProviders();
 
             var serviceProvider = services.BuildServiceProvider();
             var ILoggerService = serviceProvider.GetService<ILoggerFactory>();
@@ -42,72 +65,61 @@ namespace BotSpielConsole
                 BotUserDataAccessor = userState.CreateProperty<BotUserData>(BotSpielUserStateAccessors.BotUserDataAccessorName),
             };
 
-            var consoleBot = new BotSpielBot(serviceProvider.GetRequiredService<ILoggerFactory>(), accessors, serviceProvider.GetRequiredService<BotUserData>(), serviceProvider.GetRequiredService<BotUserEntityContext>(), serviceProvider.GetRequiredService<NavigationEntityData>() 
-               ,serviceProvider.GetRequiredService<AddressesPost>()
-                ,serviceProvider.GetRequiredService<BusinessPartnersPost>()
-                ,serviceProvider.GetRequiredService<CarriersPost>()
-                ,serviceProvider.GetRequiredService<CarrierServicesPost>()
-                ,serviceProvider.GetRequiredService<CompaniesPost>()
-                ,serviceProvider.GetRequiredService<FacilitiesPost>()
-                ,serviceProvider.GetRequiredService<FacilityAisleFacesPost>()
-                ,serviceProvider.GetRequiredService<FacilityFloorsPost>()
-                ,serviceProvider.GetRequiredService<FacilityWorkAreasPost>()
-                ,serviceProvider.GetRequiredService<FacilityZonesPost>()
-                ,serviceProvider.GetRequiredService<HandlingUnitsPost>()
-                ,serviceProvider.GetRequiredService<InboundOrderLinesPost>()
-                ,serviceProvider.GetRequiredService<InboundOrdersPost>()
-                ,serviceProvider.GetRequiredService<InventoryLocationsPost>()
-                ,serviceProvider.GetRequiredService<InventoryLocationSizesPost>()
-                ,serviceProvider.GetRequiredService<InventoryLocationsSlottingPost>()
-                ,serviceProvider.GetRequiredService<InventoryUnitsPost>()
-                ,serviceProvider.GetRequiredService<MaterialHandlingUnitConfigurationsPost>()
-                ,serviceProvider.GetRequiredService<MaterialsPost>()
-                ,serviceProvider.GetRequiredService<MoveQueuesPost>()
-                ,serviceProvider.GetRequiredService<OutboundCarrierManifestPickupsPost>()
-                ,serviceProvider.GetRequiredService<OutboundCarrierManifestsPost>()
-                ,serviceProvider.GetRequiredService<OutboundOrderLinesPost>()
-                ,serviceProvider.GetRequiredService<OutboundOrdersPost>()
-                ,serviceProvider.GetRequiredService<OutboundShipmentsPost>()
-                ,serviceProvider.GetRequiredService<PeoplePost>()
-                ,serviceProvider.GetRequiredService<PickBatchesPost>()
-                ,serviceProvider.GetRequiredService<ReceivingPost>()
-               ,serviceProvider.GetRequiredService<IAddressesService>()
-                ,serviceProvider.GetRequiredService<IBusinessPartnersService>()
-                ,serviceProvider.GetRequiredService<ICarriersService>()
-                ,serviceProvider.GetRequiredService<ICarrierServicesService>()
-                ,serviceProvider.GetRequiredService<ICompaniesService>()
-                ,serviceProvider.GetRequiredService<IFacilitiesService>()
-                ,serviceProvider.GetRequiredService<IFacilityAisleFacesService>()
-                ,serviceProvider.GetRequiredService<IFacilityFloorsService>()
-                ,serviceProvider.GetRequiredService<IFacilityWorkAreasService>()
-                ,serviceProvider.GetRequiredService<IFacilityZonesService>()
-                ,serviceProvider.GetRequiredService<IHandlingUnitsService>()
-                ,serviceProvider.GetRequiredService<IInboundOrderLinesService>()
-                ,serviceProvider.GetRequiredService<IInboundOrdersService>()
-                ,serviceProvider.GetRequiredService<IInventoryLocationsService>()
-                ,serviceProvider.GetRequiredService<IInventoryLocationSizesService>()
-                ,serviceProvider.GetRequiredService<IInventoryLocationsSlottingService>()
-                ,serviceProvider.GetRequiredService<IInventoryUnitsService>()
-                ,serviceProvider.GetRequiredService<IMaterialHandlingUnitConfigurationsService>()
-                ,serviceProvider.GetRequiredService<IMaterialsService>()
-                ,serviceProvider.GetRequiredService<IMoveQueuesService>()
-                ,serviceProvider.GetRequiredService<IOutboundCarrierManifestPickupsService>()
-                ,serviceProvider.GetRequiredService<IOutboundCarrierManifestsService>()
-                ,serviceProvider.GetRequiredService<IOutboundOrderLinesService>()
-                ,serviceProvider.GetRequiredService<IOutboundOrdersService>()
-                ,serviceProvider.GetRequiredService<IOutboundShipmentsService>()
-                ,serviceProvider.GetRequiredService<IPeopleService>()
-                ,serviceProvider.GetRequiredService<IPickBatchesService>()
-                ,serviceProvider.GetRequiredService<IReceivingService>()
+
+            //Custom Code Start | Added Code Block 
+            var _userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
+            //Custom Code End
+
+            var consoleBot = new BotSpielBot(serviceProvider.GetRequiredService<ILoggerFactory>(), accessors, serviceProvider.GetRequiredService<BotUserData>(), serviceProvider.GetRequiredService<BotUserEntityContext>(), serviceProvider.GetRequiredService<NavigationEntityData>()
+                , serviceProvider.GetRequiredService<DropInventoryUnitsPost>()
+                , serviceProvider.GetRequiredService<PickBatchPickingPost>()
+                , serviceProvider.GetRequiredService<PutAwayHandlingUnitsPost>()
+                , serviceProvider.GetRequiredService<SetUpExecutionParametersPost>()
+                , serviceProvider.GetRequiredService<IPutAwayHandlingUnitsService>()
+                , serviceProvider.GetRequiredService<ISetUpExecutionParametersService>()
+                , serviceProvider.GetRequiredService<IHandlingUnitsService>()
+                , _userManager
+                , serviceProvider.GetRequiredService<IFacilitiesService>()
+                , serviceProvider.GetRequiredService<PutAway>()
+                , serviceProvider.GetRequiredService<IInventoryLocationsService>()
+                , serviceProvider.GetRequiredService<ILocationFunctionsService>()
+                , serviceProvider.GetRequiredService<IMoveQueueTypesService>()
+                , serviceProvider.GetRequiredService<IMoveQueueContextsService>()
+                , serviceProvider.GetRequiredService<IInventoryUnitsService>()
+                , serviceProvider.GetRequiredService<IStatusesService>()
+                , serviceProvider.GetRequiredService<IMoveQueuesService>()
+                , serviceProvider.GetRequiredService<IPickBatchesService>()
+                , serviceProvider.GetRequiredService<CommonLookUps>()
+                , serviceProvider.GetRequiredService<Picking>()
+                , serviceProvider.GetRequiredService<Shipping>()
+                , serviceProvider.GetRequiredService<IPickBatchPickingService>()
+                , serviceProvider.GetRequiredService<IOutboundOrderLinesInventoryAllocationService>()
+                , serviceProvider.GetRequiredService<IOutboundOrderLinePackingService>()
 
                 );
 
-            Console.WriteLine("Hello. Please type something to get us started.");
+            //Custom Code Start | Removed Block 
+            //Console.WriteLine("Hello. Please type something to get us started.");
+            //Custom Code End			
+
+            //Custom Code Start | Added Code Block 
+            Console.WriteLine(@"Hi. Enter your 
+username/email.");
+            //Custom Code End
+
+            var UserName = Console.ReadLine();
+
+            //var user = _userManager.FindByEmailAsync(UserName);
+            //var debuf = _userManager.Users.Where(x => x.UserName == UserName).Count();
+            //Console.WriteLine(user.Result.Email);
 
             adapter.ProcessActivityAsync(
                 async (turnContext, cancellationToken) => await consoleBot.OnTurnAsync(turnContext)).Wait();
 
         }
+
+
+
 
     }
 }

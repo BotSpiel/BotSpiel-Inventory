@@ -1,0 +1,39 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IBotModuleGridsService _botmodulegridsService
+@model IEnumerable<BotSpiel.DataAccess.Models.BotModuleGrids>
+
+@{
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixBotModuleGrid, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixBotModuleGrid).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixBotModuleGrid }, new { @class = "modal-link" }));
+				columns.Add(model => model.sBotModuleGrid).Titled("Bot Module Grid").Sortable(true).Filterable(true);
+				columns.Add(model => model.sShortDescription).Titled("Short Description").Sortable(true).Filterable(true);
+				columns.Add(model => model.sDataEntityType).Titled("Data Entity Type").Sortable(true).Filterable(true);
+				columns.Add(model => model.bCanCreate).Titled("Can Create").Sortable(true).Filterable(true);
+				columns.Add(model => model.bCanEdit).Titled("Can Edit").Sortable(true).Filterable(true);
+				columns.Add(model => model.bCanDelete).Titled("Can Delete").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("botmodulegrids-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

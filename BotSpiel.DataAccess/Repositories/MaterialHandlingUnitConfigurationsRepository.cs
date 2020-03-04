@@ -62,6 +62,12 @@ This class ....
             var materialhandlingunitconfigurations = _context.MaterialHandlingUnitConfigurations.Include(a => a.Materials).Include(a => a.HandlingUnitTypes).AsNoTracking(); 
             return materialhandlingunitconfigurations;
         }
+
+        public IQueryable<MaterialHandlingUnitConfigurations> IndexDb()
+        {
+            var materialhandlingunitconfigurations = _context.MaterialHandlingUnitConfigurations.Include(a => a.Materials).Include(a => a.HandlingUnitTypes).AsNoTracking(); 
+            return materialhandlingunitconfigurations;
+        }
        public IQueryable<HandlingUnitTypes> selectHandlingUnitTypes()
         {
             List<HandlingUnitTypes> handlingunittypes = new List<HandlingUnitTypes>();
@@ -79,6 +85,30 @@ This class ....
             return materials.AsQueryable();
         }
         public IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement()
+        {
+            List<UnitsOfMeasurement> unitsofmeasurement = new List<UnitsOfMeasurement>();
+            _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()
+                .ToList()
+                .ForEach(x => unitsofmeasurement.Add(x));
+            return unitsofmeasurement.AsQueryable();
+        }
+       public IQueryable<HandlingUnitTypes> HandlingUnitTypesDb()
+        {
+            List<HandlingUnitTypes> handlingunittypes = new List<HandlingUnitTypes>();
+            _context.HandlingUnitTypes.AsNoTracking()
+                .ToList()
+                .ForEach(x => handlingunittypes.Add(x));
+            return handlingunittypes.AsQueryable();
+        }
+        public IQueryable<Materials> MaterialsDb()
+        {
+            List<Materials> materials = new List<Materials>();
+            _context.Materials.Include(a => a.MaterialTypes).Include(a => a.UnitsOfMeasurementFKDiffBaseUnit).Include(a => a.UnitsOfMeasurementFKDiffDensityUnit).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffShelflifeUnit).Include(a => a.UnitsOfMeasurementFKDiffWeightUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => materials.Add(x));
+            return materials.AsQueryable();
+        }
+        public IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb()
         {
             List<UnitsOfMeasurement> unitsofmeasurement = new List<UnitsOfMeasurement>();
             _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()

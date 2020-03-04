@@ -21,10 +21,16 @@ This class ....
 
 */
         private readonly PeopleDB _context;
+       private readonly PurchasesDB _contextPurchases;
+        private readonly SendEmailsDB _contextSendEmails;
+        private readonly SendTextMessagesDB _contextSendTextMessages;
   
-        public PeopleRepository(PeopleDB context)
+        public PeopleRepository(PeopleDB context, PurchasesDB contextPurchases, SendEmailsDB contextSendEmails, SendTextMessagesDB contextSendTextMessages)
         {
             _context = context;
+           _contextPurchases = contextPurchases;
+            _contextSendEmails = contextSendEmails;
+            _contextSendTextMessages = contextSendTextMessages;
   
         }
 
@@ -43,7 +49,21 @@ This class ....
             var people = _context.People.Include(a => a.Languages).AsNoTracking(); 
             return people;
         }
+
+        public IQueryable<People> IndexDb()
+        {
+            var people = _context.People.Include(a => a.Languages).AsNoTracking(); 
+            return people;
+        }
        public IQueryable<Languages> selectLanguages()
+        {
+            List<Languages> languages = new List<Languages>();
+            _context.Languages.AsNoTracking()
+                .ToList()
+                .ForEach(x => languages.Add(x));
+            return languages.AsQueryable();
+        }
+       public IQueryable<Languages> LanguagesDb()
         {
             List<Languages> languages = new List<Languages>();
             _context.Languages.AsNoTracking()
@@ -61,6 +81,9 @@ This class ....
         public List<string> VerifyPersonDeleteOK(Int64 ixPerson, string sPerson)
         {
             List<string> existInEntities = new List<string>();
+           if (_contextPurchases.Purchases.AsNoTracking().Where(x => x.ixPerson == ixPerson).Any()) existInEntities.Add("Purchases");
+            if (_contextSendEmails.SendEmails.AsNoTracking().Where(x => x.ixPerson == ixPerson).Any()) existInEntities.Add("SendEmails");
+            if (_contextSendTextMessages.SendTextMessages.AsNoTracking().Where(x => x.ixPerson == ixPerson).Any()) existInEntities.Add("SendTextMessages");
 
             return existInEntities;
         }

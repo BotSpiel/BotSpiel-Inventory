@@ -32,9 +32,13 @@ This class ....
         public MaterialHandlingUnitConfigurationsPost GetPost(Int64 ixMaterialHandlingUnitConfiguration) => _materialhandlingunitconfigurationsRepository.GetPost(ixMaterialHandlingUnitConfiguration);
         public MaterialHandlingUnitConfigurations Get(Int64 ixMaterialHandlingUnitConfiguration) => _materialhandlingunitconfigurationsRepository.Get(ixMaterialHandlingUnitConfiguration);
         public IQueryable<MaterialHandlingUnitConfigurations> Index() => _materialhandlingunitconfigurationsRepository.Index();
+        public IQueryable<MaterialHandlingUnitConfigurations> IndexDb() => _materialhandlingunitconfigurationsRepository.IndexDb();
        public IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement() => _materialhandlingunitconfigurationsRepository.selectUnitsOfMeasurement();
         public IQueryable<Materials> selectMaterials() => _materialhandlingunitconfigurationsRepository.selectMaterials();
         public IQueryable<HandlingUnitTypes> selectHandlingUnitTypes() => _materialhandlingunitconfigurationsRepository.selectHandlingUnitTypes();
+       public IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb() => _materialhandlingunitconfigurationsRepository.UnitsOfMeasurementDb();
+        public IQueryable<Materials> MaterialsDb() => _materialhandlingunitconfigurationsRepository.MaterialsDb();
+        public IQueryable<HandlingUnitTypes> HandlingUnitTypesDb() => _materialhandlingunitconfigurationsRepository.HandlingUnitTypesDb();
        public List<KeyValuePair<Int64?, string>> selectUnitsOfMeasurementNullable() => _materialhandlingunitconfigurationsRepository.selectUnitsOfMeasurementNullable();
         public bool VerifyMaterialHandlingUnitConfigurationUnique(Int64 ixMaterialHandlingUnitConfiguration, string sMaterialHandlingUnitConfiguration) => _materialhandlingunitconfigurationsRepository.VerifyMaterialHandlingUnitConfigurationUnique(ixMaterialHandlingUnitConfiguration, sMaterialHandlingUnitConfiguration);
         public List<string> VerifyMaterialHandlingUnitConfigurationDeleteOK(Int64 ixMaterialHandlingUnitConfiguration, string sMaterialHandlingUnitConfiguration) => _materialhandlingunitconfigurationsRepository.VerifyMaterialHandlingUnitConfigurationDeleteOK(ixMaterialHandlingUnitConfiguration, sMaterialHandlingUnitConfiguration);

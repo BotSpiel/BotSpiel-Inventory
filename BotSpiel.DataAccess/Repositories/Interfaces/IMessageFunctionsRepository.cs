@@ -22,6 +22,7 @@ This interface ....
         MessageFunctionsPost GetPost(Int64 ixMessageFunction);        
 		MessageFunctions Get(Int64 ixMessageFunction);
         IQueryable<MessageFunctions> Index();
+        IQueryable<MessageFunctions> IndexDb();
         bool VerifyMessageFunctionUnique(Int64 ixMessageFunction, string sMessageFunction);
         List<string> VerifyMessageFunctionDeleteOK(Int64 ixMessageFunction, string sMessageFunction);
         void RegisterCreate(MessageFunctionsPost messagefunctionsPost);

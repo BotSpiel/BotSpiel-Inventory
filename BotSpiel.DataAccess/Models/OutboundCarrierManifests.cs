@@ -20,6 +20,8 @@ This class ....
  
         public OutboundCarrierManifests()
         {
+		Facilities _Facilities = new Facilities();
+		Facilities = _Facilities;
 		Carriers _Carriers = new Carriers();
 		Carriers = _Carriers;
 		InventoryLocations _InventoryLocationsFKDiffPickupInventoryLocation = new InventoryLocations();
@@ -34,6 +36,9 @@ This class ....
 		public virtual Int64 ixOutboundCarrierManifestEdit { get; set; }
 		[Display(Name = "Outbound Carrier Manifest")]
 		public virtual String sOutboundCarrierManifest { get; set; }
+		[Required]
+		[Display(Name = "Facility ID")]
+		public virtual Int64 ixFacility { get; set; }
 		[Required]
 		[Display(Name = "Carrier ID")]
 		public virtual Int64 ixCarrier { get; set; }
@@ -58,6 +63,8 @@ This class ....
 		[Required]
 		[Display(Name = "Changed By")]
 		public virtual String sChangedBy { get; set; }
+		[ForeignKey("ixFacility")]
+		public virtual Facilities Facilities { get; set; }
 		[ForeignKey("ixCarrier")]
 		public virtual Carriers Carriers { get; set; }
 		[ForeignKey("ixPickupInventoryLocation")]

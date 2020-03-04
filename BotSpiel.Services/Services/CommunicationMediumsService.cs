@@ -32,6 +32,7 @@ This class ....
         public CommunicationMediumsPost GetPost(Int64 ixCommunicationMedium) => _communicationmediumsRepository.GetPost(ixCommunicationMedium);
         public CommunicationMediums Get(Int64 ixCommunicationMedium) => _communicationmediumsRepository.Get(ixCommunicationMedium);
         public IQueryable<CommunicationMediums> Index() => _communicationmediumsRepository.Index();
+        public IQueryable<CommunicationMediums> IndexDb() => _communicationmediumsRepository.IndexDb();
         public bool VerifyCommunicationMediumUnique(Int64 ixCommunicationMedium, string sCommunicationMedium) => _communicationmediumsRepository.VerifyCommunicationMediumUnique(ixCommunicationMedium, sCommunicationMedium);
         public List<string> VerifyCommunicationMediumDeleteOK(Int64 ixCommunicationMedium, string sCommunicationMedium) => _communicationmediumsRepository.VerifyCommunicationMediumDeleteOK(ixCommunicationMedium, sCommunicationMedium);
 

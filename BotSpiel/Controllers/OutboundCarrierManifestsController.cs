@@ -99,6 +99,7 @@ This class ....
             grid.ViewContext = new ViewContext { HttpContext = HttpContext };
             grid.Query = Request.Query;
 				grid.Columns.Add(model => model.sOutboundCarrierManifest).Titled("Outbound Carrier Manifest").Sortable(true).Filterable(true).MultiFilterable(true);
+				grid.Columns.Add(model => model.Facilities.sFacility).Titled("Facility").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.Carriers.sCarrier).Titled("Carrier").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.dtScheduledPickupAt).Titled("Scheduled Pickup At").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true);
@@ -131,6 +132,7 @@ This class ....
         public ActionResult Create()
         {
 			ViewBag.ixCarrier = new SelectList(_outboundcarriermanifestsService.selectCarriers().Select( x => new { x.ixCarrier, x.sCarrier }), "ixCarrier", "sCarrier");
+			ViewBag.ixFacility = new SelectList(_outboundcarriermanifestsService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility");
 			ViewBag.ixPickupInventoryLocation = new SelectList(_outboundcarriermanifestsService.selectInventoryLocations().Select( x => new { x.ixInventoryLocation, x.sInventoryLocation }), "ixInventoryLocation", "sInventoryLocation");
 			ViewBag.ixStatus = new SelectList(_outboundcarriermanifestsService.selectStatuses().Select( x => new { x.ixStatus, x.sStatus }), "ixStatus", "sStatus");
 
@@ -140,7 +142,7 @@ This class ....
         // POST: OutboundCarrierManifests/Create 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("ixOutboundCarrierManifest,sOutboundCarrierManifest,ixCarrier,ixPickupInventoryLocation,dtScheduledPickupAt,ixStatus")] OutboundCarrierManifestsPost outboundcarriermanifests)
+        public ActionResult Create([Bind("ixOutboundCarrierManifest,sOutboundCarrierManifest,ixFacility,ixCarrier,ixPickupInventoryLocation,dtScheduledPickupAt,ixStatus")] OutboundCarrierManifestsPost outboundcarriermanifests)
         {
             if (ModelState.IsValid)
             {
@@ -149,6 +151,7 @@ This class ....
                 return RedirectToAction("Index");
             }
 			ViewBag.ixCarrier = new SelectList(_outboundcarriermanifestsService.selectCarriers().Select( x => new { x.ixCarrier, x.sCarrier }), "ixCarrier", "sCarrier");
+			ViewBag.ixFacility = new SelectList(_outboundcarriermanifestsService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility");
 			ViewBag.ixPickupInventoryLocation = new SelectList(_outboundcarriermanifestsService.selectInventoryLocations().Select( x => new { x.ixInventoryLocation, x.sInventoryLocation }), "ixInventoryLocation", "sInventoryLocation");
 			ViewBag.ixStatus = new SelectList(_outboundcarriermanifestsService.selectStatuses().Select( x => new { x.ixStatus, x.sStatus }), "ixStatus", "sStatus");
 
@@ -166,6 +169,7 @@ This class ....
                 return NotFound();
             }
 			ViewBag.ixCarrier = new SelectList(_outboundcarriermanifestsService.selectCarriers().Select( x => new { x.ixCarrier, x.sCarrier }), "ixCarrier", "sCarrier", outboundcarriermanifests.ixCarrier);
+			ViewBag.ixFacility = new SelectList(_outboundcarriermanifestsService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility", outboundcarriermanifests.ixFacility);
 			ViewBag.ixPickupInventoryLocation = new SelectList(_outboundcarriermanifestsService.selectInventoryLocationsNullable().Select( x => new { ixInventoryLocation = x.Key, sInventoryLocation = x.Value }), "ixInventoryLocation", "sInventoryLocation", outboundcarriermanifests.ixPickupInventoryLocation);
 			ViewBag.ixStatus = new SelectList(_outboundcarriermanifestsService.selectStatuses().Select( x => new { x.ixStatus, x.sStatus }), "ixStatus", "sStatus", outboundcarriermanifests.ixStatus);
 
@@ -175,7 +179,7 @@ This class ....
         // POST: OutboundCarrierManifests/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("ixOutboundCarrierManifest,sOutboundCarrierManifest,ixCarrier,ixPickupInventoryLocation,dtScheduledPickupAt,ixStatus")] OutboundCarrierManifestsPost outboundcarriermanifests)
+        public ActionResult Edit([Bind("ixOutboundCarrierManifest,sOutboundCarrierManifest,ixFacility,ixCarrier,ixPickupInventoryLocation,dtScheduledPickupAt,ixStatus")] OutboundCarrierManifestsPost outboundcarriermanifests)
         {
             if (ModelState.IsValid)
             {
@@ -184,6 +188,7 @@ This class ....
                 return RedirectToAction("Index");
             }
 			ViewBag.ixCarrier = new SelectList(_outboundcarriermanifestsService.selectCarriers().Select( x => new { x.ixCarrier, x.sCarrier }), "ixCarrier", "sCarrier", outboundcarriermanifests.ixCarrier);
+			ViewBag.ixFacility = new SelectList(_outboundcarriermanifestsService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility", outboundcarriermanifests.ixFacility);
 			ViewBag.ixPickupInventoryLocation = new SelectList(_outboundcarriermanifestsService.selectInventoryLocationsNullable().Select( x => new { ixInventoryLocation = x.Key, sInventoryLocation = x.Value }), "ixInventoryLocation", "sInventoryLocation", outboundcarriermanifests.ixPickupInventoryLocation);
 			ViewBag.ixStatus = new SelectList(_outboundcarriermanifestsService.selectStatuses().Select( x => new { x.ixStatus, x.sStatus }), "ixStatus", "sStatus", outboundcarriermanifests.ixStatus);
 

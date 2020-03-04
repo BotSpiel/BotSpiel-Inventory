@@ -32,8 +32,11 @@ This class ....
         public InventoryLocationsSlottingPost GetPost(Int64 ixInventoryLocationSlotting) => _inventorylocationsslottingRepository.GetPost(ixInventoryLocationSlotting);
         public InventoryLocationsSlotting Get(Int64 ixInventoryLocationSlotting) => _inventorylocationsslottingRepository.Get(ixInventoryLocationSlotting);
         public IQueryable<InventoryLocationsSlotting> Index() => _inventorylocationsslottingRepository.Index();
+        public IQueryable<InventoryLocationsSlotting> IndexDb() => _inventorylocationsslottingRepository.IndexDb();
        public IQueryable<Materials> selectMaterials() => _inventorylocationsslottingRepository.selectMaterials();
         public IQueryable<InventoryLocations> selectInventoryLocations() => _inventorylocationsslottingRepository.selectInventoryLocations();
+       public IQueryable<Materials> MaterialsDb() => _inventorylocationsslottingRepository.MaterialsDb();
+        public IQueryable<InventoryLocations> InventoryLocationsDb() => _inventorylocationsslottingRepository.InventoryLocationsDb();
         public bool VerifyInventoryLocationSlottingUnique(Int64 ixInventoryLocationSlotting, string sInventoryLocationSlotting) => _inventorylocationsslottingRepository.VerifyInventoryLocationSlottingUnique(ixInventoryLocationSlotting, sInventoryLocationSlotting);
         public List<string> VerifyInventoryLocationSlottingDeleteOK(Int64 ixInventoryLocationSlotting, string sInventoryLocationSlotting) => _inventorylocationsslottingRepository.VerifyInventoryLocationSlottingDeleteOK(ixInventoryLocationSlotting, sInventoryLocationSlotting);
 

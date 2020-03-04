@@ -42,30 +42,44 @@ This class ....
 		public DbSet<InboundOrderLinesPost> InboundOrderLinesPost { get; set; }
 		public DbSet<OutboundOrderLines> OutboundOrderLines { get; set; }
 		public DbSet<OutboundOrderLinesPost> OutboundOrderLinesPost { get; set; }
-		public DbSet<PickBatches> PickBatches { get; set; }
-		public DbSet<PickBatchesPost> PickBatchesPost { get; set; }
 		public DbSet<InventoryStates> InventoryStates { get; set; }
 		public DbSet<InventoryStatesPost> InventoryStatesPost { get; set; }
-		public DbSet<InventoryLocations> InventoryLocations { get; set; }
-		public DbSet<InventoryLocationsPost> InventoryLocationsPost { get; set; }
 		public DbSet<InboundOrders> InboundOrders { get; set; }
 		public DbSet<InboundOrdersPost> InboundOrdersPost { get; set; }
-		public DbSet<PickBatchTypes> PickBatchTypes { get; set; }
-		public DbSet<PickBatchTypesPost> PickBatchTypesPost { get; set; }
-		public DbSet<Facilities> Facilities { get; set; }
-		public DbSet<FacilitiesPost> FacilitiesPost { get; set; }
-		public DbSet<FacilityWorkAreas> FacilityWorkAreas { get; set; }
-		public DbSet<FacilityWorkAreasPost> FacilityWorkAreasPost { get; set; }
+		public DbSet<OutboundOrders> OutboundOrders { get; set; }
+		public DbSet<OutboundOrdersPost> OutboundOrdersPost { get; set; }
 		public DbSet<BusinessPartners> BusinessPartners { get; set; }
 		public DbSet<BusinessPartnersPost> BusinessPartnersPost { get; set; }
 		public DbSet<InboundOrderTypes> InboundOrderTypes { get; set; }
 		public DbSet<InboundOrderTypesPost> InboundOrderTypesPost { get; set; }
-		public DbSet<Addresses> Addresses { get; set; }
-		public DbSet<AddressesPost> AddressesPost { get; set; }
-		public DbSet<Companies> Companies { get; set; }
-		public DbSet<CompaniesPost> CompaniesPost { get; set; }
+		public DbSet<OutboundOrderTypes> OutboundOrderTypes { get; set; }
+		public DbSet<OutboundOrderTypesPost> OutboundOrderTypesPost { get; set; }
+		public DbSet<CarrierServices> CarrierServices { get; set; }
+		public DbSet<CarrierServicesPost> CarrierServicesPost { get; set; }
+		public DbSet<OutboundShipments> OutboundShipments { get; set; }
+		public DbSet<OutboundShipmentsPost> OutboundShipmentsPost { get; set; }
+		public DbSet<PickBatches> PickBatches { get; set; }
+		public DbSet<PickBatchesPost> PickBatchesPost { get; set; }
 		public DbSet<BusinessPartnerTypes> BusinessPartnerTypes { get; set; }
 		public DbSet<BusinessPartnerTypesPost> BusinessPartnerTypesPost { get; set; }
+		public DbSet<OutboundCarrierManifests> OutboundCarrierManifests { get; set; }
+		public DbSet<OutboundCarrierManifestsPost> OutboundCarrierManifestsPost { get; set; }
+		public DbSet<PickBatchTypes> PickBatchTypes { get; set; }
+		public DbSet<PickBatchTypesPost> PickBatchTypesPost { get; set; }
+		public DbSet<InventoryLocations> InventoryLocations { get; set; }
+		public DbSet<InventoryLocationsPost> InventoryLocationsPost { get; set; }
+		public DbSet<Carriers> Carriers { get; set; }
+		public DbSet<CarriersPost> CarriersPost { get; set; }
+		public DbSet<Companies> Companies { get; set; }
+		public DbSet<CompaniesPost> CompaniesPost { get; set; }
+		public DbSet<Facilities> Facilities { get; set; }
+		public DbSet<FacilitiesPost> FacilitiesPost { get; set; }
+		public DbSet<FacilityWorkAreas> FacilityWorkAreas { get; set; }
+		public DbSet<FacilityWorkAreasPost> FacilityWorkAreasPost { get; set; }
+		public DbSet<CarrierTypes> CarrierTypes { get; set; }
+		public DbSet<CarrierTypesPost> CarrierTypesPost { get; set; }
+		public DbSet<Addresses> Addresses { get; set; }
+		public DbSet<AddressesPost> AddressesPost { get; set; }
 		public DbSet<CountrySubDivisions> CountrySubDivisions { get; set; }
 		public DbSet<CountrySubDivisionsPost> CountrySubDivisionsPost { get; set; }
 		public DbSet<Countries> Countries { get; set; }
@@ -154,48 +168,24 @@ This class ....
             modelBuilder.Entity<OutboundOrderLinesPost>()
                 .ToTable("tx_vw_OutboundOrderLinesPost")
                 .HasKey(c => new { c.ixOutboundOrderLine });
-            modelBuilder.Entity<PickBatches>()
-                .ToTable("tx_vw_PickBatches")
-                .HasKey(c => new { c.ixPickBatch });
-            modelBuilder.Entity<PickBatchesPost>()
-                .ToTable("tx_vw_PickBatchesPost")
-                .HasKey(c => new { c.ixPickBatch });
             modelBuilder.Entity<InventoryStates>()
                 .ToTable("config_vw_InventoryStates")
                 .HasKey(c => new { c.ixInventoryState });
             modelBuilder.Entity<InventoryStatesPost>()
                 .ToTable("config_vw_InventoryStatesPost")
                 .HasKey(c => new { c.ixInventoryState });
-            modelBuilder.Entity<InventoryLocations>()
-                .ToTable("md_vw_InventoryLocations")
-                .HasKey(c => new { c.ixInventoryLocation });
-            modelBuilder.Entity<InventoryLocationsPost>()
-                .ToTable("md_vw_InventoryLocationsPost")
-                .HasKey(c => new { c.ixInventoryLocation });
             modelBuilder.Entity<InboundOrders>()
                 .ToTable("tx_vw_InboundOrders")
                 .HasKey(c => new { c.ixInboundOrder });
             modelBuilder.Entity<InboundOrdersPost>()
                 .ToTable("tx_vw_InboundOrdersPost")
                 .HasKey(c => new { c.ixInboundOrder });
-            modelBuilder.Entity<PickBatchTypes>()
-                .ToTable("config_vw_PickBatchTypes")
-                .HasKey(c => new { c.ixPickBatchType });
-            modelBuilder.Entity<PickBatchTypesPost>()
-                .ToTable("config_vw_PickBatchTypesPost")
-                .HasKey(c => new { c.ixPickBatchType });
-            modelBuilder.Entity<Facilities>()
-                .ToTable("md_vw_Facilities")
-                .HasKey(c => new { c.ixFacility });
-            modelBuilder.Entity<FacilitiesPost>()
-                .ToTable("md_vw_FacilitiesPost")
-                .HasKey(c => new { c.ixFacility });
-            modelBuilder.Entity<FacilityWorkAreas>()
-                .ToTable("md_vw_FacilityWorkAreas")
-                .HasKey(c => new { c.ixFacilityWorkArea });
-            modelBuilder.Entity<FacilityWorkAreasPost>()
-                .ToTable("md_vw_FacilityWorkAreasPost")
-                .HasKey(c => new { c.ixFacilityWorkArea });
+            modelBuilder.Entity<OutboundOrders>()
+                .ToTable("tx_vw_OutboundOrders")
+                .HasKey(c => new { c.ixOutboundOrder });
+            modelBuilder.Entity<OutboundOrdersPost>()
+                .ToTable("tx_vw_OutboundOrdersPost")
+                .HasKey(c => new { c.ixOutboundOrder });
             modelBuilder.Entity<BusinessPartners>()
                 .ToTable("md_vw_BusinessPartners")
                 .HasKey(c => new { c.ixBusinessPartner });
@@ -208,24 +198,90 @@ This class ....
             modelBuilder.Entity<InboundOrderTypesPost>()
                 .ToTable("config_vw_InboundOrderTypesPost")
                 .HasKey(c => new { c.ixInboundOrderType });
-            modelBuilder.Entity<Addresses>()
-                .ToTable("md_vw_Addresses")
-                .HasKey(c => new { c.ixAddress });
-            modelBuilder.Entity<AddressesPost>()
-                .ToTable("md_vw_AddressesPost")
-                .HasKey(c => new { c.ixAddress });
-            modelBuilder.Entity<Companies>()
-                .ToTable("md_vw_Companies")
-                .HasKey(c => new { c.ixCompany });
-            modelBuilder.Entity<CompaniesPost>()
-                .ToTable("md_vw_CompaniesPost")
-                .HasKey(c => new { c.ixCompany });
+            modelBuilder.Entity<OutboundOrderTypes>()
+                .ToTable("config_vw_OutboundOrderTypes")
+                .HasKey(c => new { c.ixOutboundOrderType });
+            modelBuilder.Entity<OutboundOrderTypesPost>()
+                .ToTable("config_vw_OutboundOrderTypesPost")
+                .HasKey(c => new { c.ixOutboundOrderType });
+            modelBuilder.Entity<CarrierServices>()
+                .ToTable("md_vw_CarrierServices")
+                .HasKey(c => new { c.ixCarrierService });
+            modelBuilder.Entity<CarrierServicesPost>()
+                .ToTable("md_vw_CarrierServicesPost")
+                .HasKey(c => new { c.ixCarrierService });
+            modelBuilder.Entity<OutboundShipments>()
+                .ToTable("tx_vw_OutboundShipments")
+                .HasKey(c => new { c.ixOutboundShipment });
+            modelBuilder.Entity<OutboundShipmentsPost>()
+                .ToTable("tx_vw_OutboundShipmentsPost")
+                .HasKey(c => new { c.ixOutboundShipment });
+            modelBuilder.Entity<PickBatches>()
+                .ToTable("tx_vw_PickBatches")
+                .HasKey(c => new { c.ixPickBatch });
+            modelBuilder.Entity<PickBatchesPost>()
+                .ToTable("tx_vw_PickBatchesPost")
+                .HasKey(c => new { c.ixPickBatch });
             modelBuilder.Entity<BusinessPartnerTypes>()
                 .ToTable("config_vw_BusinessPartnerTypes")
                 .HasKey(c => new { c.ixBusinessPartnerType });
             modelBuilder.Entity<BusinessPartnerTypesPost>()
                 .ToTable("config_vw_BusinessPartnerTypesPost")
                 .HasKey(c => new { c.ixBusinessPartnerType });
+            modelBuilder.Entity<OutboundCarrierManifests>()
+                .ToTable("tx_vw_OutboundCarrierManifests")
+                .HasKey(c => new { c.ixOutboundCarrierManifest });
+            modelBuilder.Entity<OutboundCarrierManifestsPost>()
+                .ToTable("tx_vw_OutboundCarrierManifestsPost")
+                .HasKey(c => new { c.ixOutboundCarrierManifest });
+            modelBuilder.Entity<PickBatchTypes>()
+                .ToTable("config_vw_PickBatchTypes")
+                .HasKey(c => new { c.ixPickBatchType });
+            modelBuilder.Entity<PickBatchTypesPost>()
+                .ToTable("config_vw_PickBatchTypesPost")
+                .HasKey(c => new { c.ixPickBatchType });
+            modelBuilder.Entity<InventoryLocations>()
+                .ToTable("md_vw_InventoryLocations")
+                .HasKey(c => new { c.ixInventoryLocation });
+            modelBuilder.Entity<InventoryLocationsPost>()
+                .ToTable("md_vw_InventoryLocationsPost")
+                .HasKey(c => new { c.ixInventoryLocation });
+            modelBuilder.Entity<Carriers>()
+                .ToTable("md_vw_Carriers")
+                .HasKey(c => new { c.ixCarrier });
+            modelBuilder.Entity<CarriersPost>()
+                .ToTable("md_vw_CarriersPost")
+                .HasKey(c => new { c.ixCarrier });
+            modelBuilder.Entity<Companies>()
+                .ToTable("md_vw_Companies")
+                .HasKey(c => new { c.ixCompany });
+            modelBuilder.Entity<CompaniesPost>()
+                .ToTable("md_vw_CompaniesPost")
+                .HasKey(c => new { c.ixCompany });
+            modelBuilder.Entity<Facilities>()
+                .ToTable("md_vw_Facilities")
+                .HasKey(c => new { c.ixFacility });
+            modelBuilder.Entity<FacilitiesPost>()
+                .ToTable("md_vw_FacilitiesPost")
+                .HasKey(c => new { c.ixFacility });
+            modelBuilder.Entity<FacilityWorkAreas>()
+                .ToTable("md_vw_FacilityWorkAreas")
+                .HasKey(c => new { c.ixFacilityWorkArea });
+            modelBuilder.Entity<FacilityWorkAreasPost>()
+                .ToTable("md_vw_FacilityWorkAreasPost")
+                .HasKey(c => new { c.ixFacilityWorkArea });
+            modelBuilder.Entity<CarrierTypes>()
+                .ToTable("config_vw_CarrierTypes")
+                .HasKey(c => new { c.ixCarrierType });
+            modelBuilder.Entity<CarrierTypesPost>()
+                .ToTable("config_vw_CarrierTypesPost")
+                .HasKey(c => new { c.ixCarrierType });
+            modelBuilder.Entity<Addresses>()
+                .ToTable("md_vw_Addresses")
+                .HasKey(c => new { c.ixAddress });
+            modelBuilder.Entity<AddressesPost>()
+                .ToTable("md_vw_AddressesPost")
+                .HasKey(c => new { c.ixAddress });
             modelBuilder.Entity<CountrySubDivisions>()
                 .ToTable("md_vw_CountrySubDivisions")
                 .HasKey(c => new { c.ixCountrySubDivision });
@@ -381,7 +437,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is MoveQueuesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is MoveQueuesPost)).ToList())
             {
                 var tx_vw_movequeuespost = e.Entity as MoveQueuesPost;
                 switch (e.State)
@@ -504,12 +560,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixMoveQueue"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeMoveQueues @ixMoveQueue = @p0, @ixMoveQueueType = @p1, @ixMoveQueueContext = @p2, @ixSourceInventoryUnit = @p3, @ixTargetInventoryUnit = @p4, @ixSourceInventoryLocation = @p5, @ixTargetInventoryLocation = @p6, @ixSourceHandlingUnit = @p7, @ixTargetHandlingUnit = @p8, @sPreferredResource = @p9, @nBaseUnitQuantity = @p10, @dtStartBy = @p11, @dtCompleteBy = @p12, @dtStartedAt = @p13, @dtCompletedAt = @p14, @ixInboundOrderLine = @p15, @ixOutboundOrderLine = @p16, @ixPickBatch = @p17, @ixStatus = @p18, @UserName = @p19", tx_vw_movequeuespost.ixMoveQueue, tx_vw_movequeuespost.ixMoveQueueType, tx_vw_movequeuespost.ixMoveQueueContext, tx_vw_movequeuespost.ixSourceInventoryUnit, tx_vw_movequeuespost.ixTargetInventoryUnit, tx_vw_movequeuespost.ixSourceInventoryLocation, tx_vw_movequeuespost.ixTargetInventoryLocation, tx_vw_movequeuespost.ixSourceHandlingUnit, tx_vw_movequeuespost.ixTargetHandlingUnit, tx_vw_movequeuespost.sPreferredResource, tx_vw_movequeuespost.nBaseUnitQuantity, tx_vw_movequeuespost.dtStartBy, tx_vw_movequeuespost.dtCompleteBy, tx_vw_movequeuespost.dtStartedAt, tx_vw_movequeuespost.dtCompletedAt, tx_vw_movequeuespost.ixInboundOrderLine, tx_vw_movequeuespost.ixOutboundOrderLine, tx_vw_movequeuespost.ixPickBatch, tx_vw_movequeuespost.ixStatus, tx_vw_movequeuespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

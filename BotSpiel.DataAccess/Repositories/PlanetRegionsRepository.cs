@@ -45,7 +45,21 @@ This class ....
             var planetregions = _context.PlanetRegions.Include(a => a.Planets).AsNoTracking(); 
             return planetregions;
         }
+
+        public IQueryable<PlanetRegions> IndexDb()
+        {
+            var planetregions = _context.PlanetRegions.Include(a => a.Planets).AsNoTracking(); 
+            return planetregions;
+        }
        public IQueryable<Planets> selectPlanets()
+        {
+            List<Planets> planets = new List<Planets>();
+            _context.Planets.Include(a => a.PlanetarySystems).AsNoTracking()
+                .ToList()
+                .ForEach(x => planets.Add(x));
+            return planets.AsQueryable();
+        }
+       public IQueryable<Planets> PlanetsDb()
         {
             List<Planets> planets = new List<Planets>();
             _context.Planets.Include(a => a.PlanetarySystems).AsNoTracking()

@@ -22,6 +22,7 @@ This interface ....
         UniversesPost GetPost(Int64 ixUniverse);        
 		Universes Get(Int64 ixUniverse);
         IQueryable<Universes> Index();
+        IQueryable<Universes> IndexDb();
         bool VerifyUniverseUnique(Int64 ixUniverse, string sUniverse);
         List<string> VerifyUniverseDeleteOK(Int64 ixUniverse, string sUniverse);
         void RegisterCreate(UniversesPost universesPost);

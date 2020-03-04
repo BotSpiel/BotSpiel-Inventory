@@ -23,8 +23,13 @@ This interface ....
         StatusesPost GetPost(Int64 ixStatus);        
 		Statuses Get(Int64 ixStatus);
         IQueryable<Statuses> Index();
+        IQueryable<Statuses> IndexDb();
         bool VerifyStatusUnique(Int64 ixStatus, string sStatus);
         List<string> VerifyStatusDeleteOK(Int64 ixStatus, string sStatus);
+
+        //Custom Code Start | Added Code Block 
+        string getStatus(Int64 ixStatus);
+        //Custom Code End
 
         Task<Int64> Create(StatusesPost statusesPost);
         Task Edit(StatusesPost statusesPost);

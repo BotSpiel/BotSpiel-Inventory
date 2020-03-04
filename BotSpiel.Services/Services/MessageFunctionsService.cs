@@ -32,6 +32,7 @@ This class ....
         public MessageFunctionsPost GetPost(Int64 ixMessageFunction) => _messagefunctionsRepository.GetPost(ixMessageFunction);
         public MessageFunctions Get(Int64 ixMessageFunction) => _messagefunctionsRepository.Get(ixMessageFunction);
         public IQueryable<MessageFunctions> Index() => _messagefunctionsRepository.Index();
+        public IQueryable<MessageFunctions> IndexDb() => _messagefunctionsRepository.IndexDb();
         public bool VerifyMessageFunctionUnique(Int64 ixMessageFunction, string sMessageFunction) => _messagefunctionsRepository.VerifyMessageFunctionUnique(ixMessageFunction, sMessageFunction);
         public List<string> VerifyMessageFunctionDeleteOK(Int64 ixMessageFunction, string sMessageFunction) => _messagefunctionsRepository.VerifyMessageFunctionDeleteOK(ixMessageFunction, sMessageFunction);
 

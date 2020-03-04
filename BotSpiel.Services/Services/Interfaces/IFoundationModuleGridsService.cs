@@ -23,6 +23,7 @@ This interface ....
         FoundationModuleGridsPost GetPost(Int64 ixFoundationModuleGrid);        
 		FoundationModuleGrids Get(Int64 ixFoundationModuleGrid);
         IQueryable<FoundationModuleGrids> Index();
+        IQueryable<FoundationModuleGrids> IndexDb();
 		IQueryable<FoundationModuleGridsconfig> Indexconfig();
 		IQueryable<FoundationModuleGridsmd> Indexmd();
 		IQueryable<FoundationModuleGridstx> Indextx();

@@ -28,8 +28,9 @@ This class ....
         private readonly InventoryUnitTransactionsDB _contextInventoryUnitTransactions;
         private readonly OutboundOrdersDB _contextOutboundOrders;
         private readonly OutboundShipmentsDB _contextOutboundShipments;
+        private readonly PurchasesDB _contextPurchases;
   
-        public CompaniesRepository(CompaniesDB context, BusinessPartnersDB contextBusinessPartners, InboundOrdersDB contextInboundOrders, InventoryLocationsDB contextInventoryLocations, InventoryUnitsDB contextInventoryUnits, InventoryUnitTransactionsDB contextInventoryUnitTransactions, OutboundOrdersDB contextOutboundOrders, OutboundShipmentsDB contextOutboundShipments)
+        public CompaniesRepository(CompaniesDB context, BusinessPartnersDB contextBusinessPartners, InboundOrdersDB contextInboundOrders, InventoryLocationsDB contextInventoryLocations, InventoryUnitsDB contextInventoryUnits, InventoryUnitTransactionsDB contextInventoryUnitTransactions, OutboundOrdersDB contextOutboundOrders, OutboundShipmentsDB contextOutboundShipments, PurchasesDB contextPurchases)
         {
             _context = context;
            _contextBusinessPartners = contextBusinessPartners;
@@ -39,6 +40,7 @@ This class ....
             _contextInventoryUnitTransactions = contextInventoryUnitTransactions;
             _contextOutboundOrders = contextOutboundOrders;
             _contextOutboundShipments = contextOutboundShipments;
+            _contextPurchases = contextPurchases;
   
         }
 
@@ -51,6 +53,12 @@ This class ....
         }
 
         public IQueryable<Companies> Index()
+        {
+            var companies = _context.Companies.AsNoTracking(); 
+            return companies;
+        }
+
+        public IQueryable<Companies> IndexDb()
         {
             var companies = _context.Companies.AsNoTracking(); 
             return companies;
@@ -73,6 +81,7 @@ This class ....
             if (_contextInventoryUnitTransactions.InventoryUnitTransactions.AsNoTracking().Where(x => x.ixCompanyBefore == ixCompany).Any()) existInEntities.Add("InventoryUnitTransactions");
             if (_contextOutboundOrders.OutboundOrders.AsNoTracking().Where(x => x.ixCompany == ixCompany).Any()) existInEntities.Add("OutboundOrders");
             if (_contextOutboundShipments.OutboundShipments.AsNoTracking().Where(x => x.ixCompany == ixCompany).Any()) existInEntities.Add("OutboundShipments");
+            if (_contextPurchases.Purchases.AsNoTracking().Where(x => x.ixCompany == ixCompany).Any()) existInEntities.Add("Purchases");
 
             return existInEntities;
         }

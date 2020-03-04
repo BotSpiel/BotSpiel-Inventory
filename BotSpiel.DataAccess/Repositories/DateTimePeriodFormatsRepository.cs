@@ -41,6 +41,12 @@ This class ....
             var datetimeperiodformats = _context.DateTimePeriodFormats.AsNoTracking(); 
             return datetimeperiodformats;
         }
+
+        public IQueryable<DateTimePeriodFormats> IndexDb()
+        {
+            var datetimeperiodformats = _context.DateTimePeriodFormats.AsNoTracking(); 
+            return datetimeperiodformats;
+        }
         public bool VerifyDateTimePeriodFormatUnique(Int64 ixDateTimePeriodFormat, string sDateTimePeriodFormat)
         {
             if (_context.DateTimePeriodFormats.AsNoTracking().Where(x => x.sDateTimePeriodFormat == sDateTimePeriodFormat).Any() && ixDateTimePeriodFormat == 0L) return false;

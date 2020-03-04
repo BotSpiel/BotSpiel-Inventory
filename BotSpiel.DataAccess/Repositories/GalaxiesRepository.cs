@@ -45,7 +45,21 @@ This class ....
             var galaxies = _context.Galaxies.Include(a => a.Universes).AsNoTracking(); 
             return galaxies;
         }
+
+        public IQueryable<Galaxies> IndexDb()
+        {
+            var galaxies = _context.Galaxies.Include(a => a.Universes).AsNoTracking(); 
+            return galaxies;
+        }
        public IQueryable<Universes> selectUniverses()
+        {
+            List<Universes> universes = new List<Universes>();
+            _context.Universes.AsNoTracking()
+                .ToList()
+                .ForEach(x => universes.Add(x));
+            return universes.AsQueryable();
+        }
+       public IQueryable<Universes> UniversesDb()
         {
             List<Universes> universes = new List<Universes>();
             _context.Universes.AsNoTracking()

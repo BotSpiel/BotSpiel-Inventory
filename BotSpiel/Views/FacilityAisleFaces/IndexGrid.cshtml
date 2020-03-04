@@ -9,6 +9,8 @@
 	queryAisleFaceStorageTypes.AddRange(_facilityaislefacesService.selectAisleFaceStorageTypes().ToList().OrderBy(de => de.sAisleFaceStorageType).Select(de => new SelectListItem() { Text = de.sAisleFaceStorageType, Value = de.sAisleFaceStorageType.ToString()}));
 	List<SelectListItem> queryBaySequenceTypes = new List<SelectListItem>();
 	queryBaySequenceTypes.AddRange(_facilityaislefacesService.selectBaySequenceTypes().ToList().OrderBy(de => de.sBaySequenceType).Select(de => new SelectListItem() { Text = de.sBaySequenceType, Value = de.sBaySequenceType.ToString()}));
+	List<SelectListItem> queryFacilities = new List<SelectListItem>();
+	queryFacilities.AddRange(_facilityaislefacesService.selectFacilities().ToList().OrderBy(de => de.sFacility).Select(de => new SelectListItem() { Text = de.sFacility, Value = de.sFacility.ToString()}));
 	List<SelectListItem> queryFacilityAisleFaces = new List<SelectListItem>();
 	queryFacilityAisleFaces.AddRange(_facilityaislefacesService.selectFacilityAisleFaces().ToList().OrderBy(de => de.sFacilityAisleFace).Select(de => new SelectListItem() { Text = de.sFacilityAisleFace, Value = de.sFacilityAisleFace.ToString()}));
 	List<SelectListItem> queryFacilityFloors = new List<SelectListItem>();
@@ -35,6 +37,7 @@
 				columns.Add(model => model.ixFacilityAisleFace).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixFacilityAisleFace }, new { @class = "modal-link" }));
 				columns.Add(model => model.ixFacilityAisleFaceEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixFacilityAisleFace }, new { @class = "modal-link" }));
 				columns.Add(model => model.sFacilityAisleFace).Titled("Facility Aisle Face").Sortable(true).Filterable(true);
+				columns.Add(model => model.Facilities.sFacility).Titled("Facility").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilities);
 				columns.Add(model => model.FacilityFloors.sFacilityFloor).Titled("Facility Floor").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilityFloors);
 				columns.Add(model => model.nSequence).Titled("Sequence").Sortable(true).Filterable(true);
 				columns.Add(model => model.BaySequenceTypes.sBaySequenceType).Titled("Bay Sequence Type").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryBaySequenceTypes);

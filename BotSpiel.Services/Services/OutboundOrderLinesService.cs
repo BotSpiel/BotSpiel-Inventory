@@ -32,8 +32,13 @@ This class ....
         public OutboundOrderLinesPost GetPost(Int64 ixOutboundOrderLine) => _outboundorderlinesRepository.GetPost(ixOutboundOrderLine);
         public OutboundOrderLines Get(Int64 ixOutboundOrderLine) => _outboundorderlinesRepository.Get(ixOutboundOrderLine);
         public IQueryable<OutboundOrderLines> Index() => _outboundorderlinesRepository.Index();
+        public IQueryable<OutboundOrderLines> IndexDb() => _outboundorderlinesRepository.IndexDb();
        public IQueryable<Statuses> selectStatuses() => _outboundorderlinesRepository.selectStatuses();
         public IQueryable<Materials> selectMaterials() => _outboundorderlinesRepository.selectMaterials();
+        public IQueryable<OutboundOrders> selectOutboundOrders() => _outboundorderlinesRepository.selectOutboundOrders();
+       public IQueryable<Statuses> StatusesDb() => _outboundorderlinesRepository.StatusesDb();
+        public IQueryable<Materials> MaterialsDb() => _outboundorderlinesRepository.MaterialsDb();
+        public IQueryable<OutboundOrders> OutboundOrdersDb() => _outboundorderlinesRepository.OutboundOrdersDb();
         public bool VerifyOutboundOrderLineUnique(Int64 ixOutboundOrderLine, string sOutboundOrderLine) => _outboundorderlinesRepository.VerifyOutboundOrderLineUnique(ixOutboundOrderLine, sOutboundOrderLine);
         public List<string> VerifyOutboundOrderLineDeleteOK(Int64 ixOutboundOrderLine, string sOutboundOrderLine) => _outboundorderlinesRepository.VerifyOutboundOrderLineDeleteOK(ixOutboundOrderLine, sOutboundOrderLine);
 

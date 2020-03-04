@@ -93,7 +93,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is CountriesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is CountriesPost)).ToList())
             {
                 var md_vw_countriespost = e.Entity as CountriesPost;
                 switch (e.State)
@@ -141,12 +141,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixCountry"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeCountries @ixCountry = @p0, @sCountry = @p1, @ixPlanetSubRegion = @p2, @sCountryCode = @p3, @UserName = @p4", md_vw_countriespost.ixCountry, md_vw_countriespost.sCountry, md_vw_countriespost.ixPlanetSubRegion, md_vw_countriespost.sCountryCode, md_vw_countriespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

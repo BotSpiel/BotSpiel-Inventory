@@ -1,0 +1,36 @@
+
+@model BotSpiel.DataAccess.Models.LanguageStyles
+
+@{
+    ViewBag.Title = "Details Language Styles";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Language Styles</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixLanguageStyle)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixLanguageStyle)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLanguageStyle)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLanguageStyle)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixLanguageStyle }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixLanguageStyle }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

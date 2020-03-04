@@ -32,6 +32,7 @@ This class ....
         public HandlingUnitTypesPost GetPost(Int64 ixHandlingUnitType) => _handlingunittypesRepository.GetPost(ixHandlingUnitType);
         public HandlingUnitTypes Get(Int64 ixHandlingUnitType) => _handlingunittypesRepository.Get(ixHandlingUnitType);
         public IQueryable<HandlingUnitTypes> Index() => _handlingunittypesRepository.Index();
+        public IQueryable<HandlingUnitTypes> IndexDb() => _handlingunittypesRepository.IndexDb();
         public bool VerifyHandlingUnitTypeUnique(Int64 ixHandlingUnitType, string sHandlingUnitType) => _handlingunittypesRepository.VerifyHandlingUnitTypeUnique(ixHandlingUnitType, sHandlingUnitType);
         public List<string> VerifyHandlingUnitTypeDeleteOK(Int64 ixHandlingUnitType, string sHandlingUnitType) => _handlingunittypesRepository.VerifyHandlingUnitTypeDeleteOK(ixHandlingUnitType, sHandlingUnitType);
 

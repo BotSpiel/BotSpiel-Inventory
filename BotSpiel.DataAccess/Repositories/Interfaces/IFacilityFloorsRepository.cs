@@ -22,6 +22,7 @@ This interface ....
         FacilityFloorsPost GetPost(Int64 ixFacilityFloor);        
 		FacilityFloors Get(Int64 ixFacilityFloor);
         IQueryable<FacilityFloors> Index();
+        IQueryable<FacilityFloors> IndexDb();
         bool VerifyFacilityFloorUnique(Int64 ixFacilityFloor, string sFacilityFloor);
         List<string> VerifyFacilityFloorDeleteOK(Int64 ixFacilityFloor, string sFacilityFloor);
         void RegisterCreate(FacilityFloorsPost facilityfloorsPost);

@@ -50,7 +50,21 @@ This class ....
             var inventorylocationsizes = _context.InventoryLocationSizes.Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffUsableVolumeUnit).AsNoTracking(); 
             return inventorylocationsizes;
         }
+
+        public IQueryable<InventoryLocationSizes> IndexDb()
+        {
+            var inventorylocationsizes = _context.InventoryLocationSizes.Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffUsableVolumeUnit).AsNoTracking(); 
+            return inventorylocationsizes;
+        }
        public IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement()
+        {
+            List<UnitsOfMeasurement> unitsofmeasurement = new List<UnitsOfMeasurement>();
+            _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()
+                .ToList()
+                .ForEach(x => unitsofmeasurement.Add(x));
+            return unitsofmeasurement.AsQueryable();
+        }
+       public IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb()
         {
             List<UnitsOfMeasurement> unitsofmeasurement = new List<UnitsOfMeasurement>();
             _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()

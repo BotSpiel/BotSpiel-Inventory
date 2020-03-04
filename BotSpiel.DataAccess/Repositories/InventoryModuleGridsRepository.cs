@@ -41,6 +41,12 @@ This class ....
             var inventorymodulegrids = _context.InventoryModuleGrids.AsNoTracking(); 
             return inventorymodulegrids;
         }
+
+        public IQueryable<InventoryModuleGrids> IndexDb()
+        {
+            var inventorymodulegrids = _context.InventoryModuleGrids.AsNoTracking(); 
+            return inventorymodulegrids;
+        }
 		public IQueryable<InventoryModuleGridsconfig> Indexconfig() => _context.InventoryModuleGridsconfig;
 		public IQueryable<InventoryModuleGridsmd> Indexmd() => _context.InventoryModuleGridsmd;
 		public IQueryable<InventoryModuleGridstx> Indextx() => _context.InventoryModuleGridstx;

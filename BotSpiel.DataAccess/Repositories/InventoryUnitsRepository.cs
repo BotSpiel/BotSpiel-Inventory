@@ -23,12 +23,14 @@ This class ....
         private readonly InventoryUnitsDB _context;
        private readonly InventoryUnitTransactionsDB _contextInventoryUnitTransactions;
         private readonly MoveQueuesDB _contextMoveQueues;
+        private readonly PickBatchPickingDB _contextPickBatchPicking;
   
-        public InventoryUnitsRepository(InventoryUnitsDB context, InventoryUnitTransactionsDB contextInventoryUnitTransactions, MoveQueuesDB contextMoveQueues)
+        public InventoryUnitsRepository(InventoryUnitsDB context, InventoryUnitTransactionsDB contextInventoryUnitTransactions, MoveQueuesDB contextMoveQueues, PickBatchPickingDB contextPickBatchPicking)
         {
             _context = context;
            _contextInventoryUnitTransactions = contextInventoryUnitTransactions;
             _contextMoveQueues = contextMoveQueues;
+            _contextPickBatchPicking = contextPickBatchPicking;
   
         }
 
@@ -53,10 +55,30 @@ This class ....
 
         public IQueryable<InventoryUnits> Index()
         {
+            //Custom Code Start | Replaced Code Block
+            //Replaced Code Block Start
+            //var inventoryunits = _context.InventoryUnits.Include(a => a.Facilities).Include(a => a.Companies).Include(a => a.Materials).Include(a => a.InventoryStates).Include(a => a.InventoryLocations).Include(a => a.Statuses).AsNoTracking();
+            //Replaced Code Block End
+            var inventoryunits = _context.InventoryUnits.Where(a => a.nBaseUnitQuantity > 0).Include(a => a.Facilities).Include(a => a.Companies).Include(a => a.Materials).Include(a => a.InventoryStates).Include(a => a.InventoryLocations).Include(a => a.Statuses).Include(a => a.HandlingUnits).AsNoTracking();
+            //Custom Code End
+            return inventoryunits;
+        }
+
+        public IQueryable<InventoryUnits> IndexDb()
+        {
             var inventoryunits = _context.InventoryUnits.Include(a => a.Facilities).Include(a => a.Companies).Include(a => a.Materials).Include(a => a.InventoryStates).Include(a => a.InventoryLocations).Include(a => a.Statuses).AsNoTracking(); 
             return inventoryunits;
         }
-       public IQueryable<Companies> selectCompanies()
+
+        //Custom Code Start | Added Code Block 
+        public IQueryable<InventoryUnitsPost> IndexDbPost()
+        {
+            var inventoryunits = _context.InventoryUnitsPost.AsNoTracking();
+            return inventoryunits;
+        }
+        //Custom Code End
+
+        public IQueryable<Companies> selectCompanies()
         {
             List<Companies> companies = new List<Companies>();
             _context.Companies.AsNoTracking()
@@ -112,6 +134,62 @@ This class ....
                 .ForEach(x => statuses.Add(x));
             return statuses.AsQueryable();
         }
+       public IQueryable<Companies> CompaniesDb()
+        {
+            List<Companies> companies = new List<Companies>();
+            _context.Companies.AsNoTracking()
+                .ToList()
+                .ForEach(x => companies.Add(x));
+            return companies.AsQueryable();
+        }
+        public IQueryable<Facilities> FacilitiesDb()
+        {
+            List<Facilities> facilities = new List<Facilities>();
+            _context.Facilities.Include(a => a.Addresses).AsNoTracking()
+                .ToList()
+                .ForEach(x => facilities.Add(x));
+            return facilities.AsQueryable();
+        }
+        public IQueryable<HandlingUnits> HandlingUnitsDb()
+        {
+            List<HandlingUnits> handlingunits = new List<HandlingUnits>();
+            _context.HandlingUnits.Include(a => a.HandlingUnitsFKDiffParentHandlingUnit).Include(a => a.HandlingUnitTypes).Include(a => a.MaterialHandlingUnitConfigurations).Include(a => a.MaterialsFKDiffPackingMaterial).Include(a => a.Statuses).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffWeightUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => handlingunits.Add(x));
+            return handlingunits.AsQueryable();
+        }
+        public IQueryable<InventoryLocations> InventoryLocationsDb()
+        {
+            List<InventoryLocations> inventorylocations = new List<InventoryLocations>();
+            _context.InventoryLocations.Include(a => a.Companies).Include(a => a.FacilityAisleFaces).Include(a => a.FacilityFloors).Include(a => a.FacilityWorkAreas).Include(a => a.FacilityZones).Include(a => a.InventoryLocationSizes).Include(a => a.LocationFunctions).Include(a => a.UnitsOfMeasurementFKDiffXOffsetUnit).Include(a => a.UnitsOfMeasurementFKDiffYOffsetUnit).Include(a => a.UnitsOfMeasurementFKDiffZOffsetUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => inventorylocations.Add(x));
+            return inventorylocations.AsQueryable();
+        }
+        public IQueryable<InventoryStates> InventoryStatesDb()
+        {
+            List<InventoryStates> inventorystates = new List<InventoryStates>();
+            _context.InventoryStates.AsNoTracking()
+                .ToList()
+                .ForEach(x => inventorystates.Add(x));
+            return inventorystates.AsQueryable();
+        }
+        public IQueryable<Materials> MaterialsDb()
+        {
+            List<Materials> materials = new List<Materials>();
+            _context.Materials.Include(a => a.MaterialTypes).Include(a => a.UnitsOfMeasurementFKDiffBaseUnit).Include(a => a.UnitsOfMeasurementFKDiffDensityUnit).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffShelflifeUnit).Include(a => a.UnitsOfMeasurementFKDiffWeightUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => materials.Add(x));
+            return materials.AsQueryable();
+        }
+        public IQueryable<Statuses> StatusesDb()
+        {
+            List<Statuses> statuses = new List<Statuses>();
+            _context.Statuses.AsNoTracking()
+                .ToList()
+                .ForEach(x => statuses.Add(x));
+            return statuses.AsQueryable();
+        }
        public List<KeyValuePair<Int64?, string>> selectHandlingUnitsNullable()
         {
             List<KeyValuePair<Int64?, string>> handlingunitsNullable = new List<KeyValuePair<Int64?, string>>();
@@ -135,6 +213,7 @@ This class ....
            if (_contextInventoryUnitTransactions.InventoryUnitTransactions.AsNoTracking().Where(x => x.ixInventoryUnit == ixInventoryUnit).Any()) existInEntities.Add("InventoryUnitTransactions");
             if (_contextMoveQueues.MoveQueues.AsNoTracking().Where(x => x.ixSourceInventoryUnit == ixInventoryUnit).Any()) existInEntities.Add("MoveQueues");
             if (_contextMoveQueues.MoveQueues.AsNoTracking().Where(x => x.ixTargetInventoryUnit == ixInventoryUnit).Any()) existInEntities.Add("MoveQueues");
+            if (_contextPickBatchPicking.PickBatchPicking.AsNoTracking().Where(x => x.ixInventoryUnit == ixInventoryUnit).Any()) existInEntities.Add("PickBatchPicking");
 
             return existInEntities;
         }

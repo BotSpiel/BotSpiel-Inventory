@@ -22,7 +22,9 @@ This interface ....
         CarriersPost GetPost(Int64 ixCarrier);        
 		Carriers Get(Int64 ixCarrier);
         IQueryable<Carriers> Index();
+        IQueryable<Carriers> IndexDb();
        IQueryable<CarrierTypes> selectCarrierTypes();
+       IQueryable<CarrierTypes> CarrierTypesDb();
         bool VerifyCarrierUnique(Int64 ixCarrier, string sCarrier);
         List<string> VerifyCarrierDeleteOK(Int64 ixCarrier, string sCarrier);
         void RegisterCreate(CarriersPost carriersPost);

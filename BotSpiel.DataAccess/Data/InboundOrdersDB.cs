@@ -165,7 +165,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is InboundOrdersPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is InboundOrdersPost)).ToList())
             {
                 var tx_vw_inboundorderspost = e.Entity as InboundOrdersPost;
                 switch (e.State)
@@ -233,12 +233,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixInboundOrder"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeInboundOrders @ixInboundOrder = @p0, @sOrderReference = @p1, @ixInboundOrderType = @p2, @ixFacility = @p3, @ixCompany = @p4, @ixBusinessPartner = @p5, @dtExpectedAt = @p6, @ixStatus = @p7, @UserName = @p8", tx_vw_inboundorderspost.ixInboundOrder, tx_vw_inboundorderspost.sOrderReference, tx_vw_inboundorderspost.ixInboundOrderType, tx_vw_inboundorderspost.ixFacility, tx_vw_inboundorderspost.ixCompany, tx_vw_inboundorderspost.ixBusinessPartner, tx_vw_inboundorderspost.dtExpectedAt, tx_vw_inboundorderspost.ixStatus, tx_vw_inboundorderspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

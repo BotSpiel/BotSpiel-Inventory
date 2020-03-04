@@ -1,0 +1,48 @@
+
+@model BotSpiel.DataAccess.Models.PurchaseLines
+
+@{
+    ViewBag.Title = "Details Purchase Lines";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Purchase Lines</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixPurchaseLine)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixPurchaseLine)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPurchaseLine)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPurchaseLine)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Purchases.sPurchase)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Purchases.sPurchase, "Details", "Purchases", new { id = Model.ixPurchase }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Materials.sMaterial)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Materials.sMaterial, "Details", "Materials", new { id = Model.ixMaterial }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixPurchaseLine }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixPurchaseLine }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

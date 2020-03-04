@@ -1,0 +1,42 @@
+
+@model BotSpiel.DataAccess.Models.Payments
+
+@{
+    ViewBag.Title = "Details Payments";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Payments</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixPayment)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixPayment)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPayment)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPayment)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Invoices.sInvoice)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Invoices.sInvoice, "Details", "Invoices", new { id = Model.ixInvoice }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixPayment }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixPayment }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

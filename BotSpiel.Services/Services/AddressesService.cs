@@ -32,8 +32,11 @@ This class ....
         public AddressesPost GetPost(Int64 ixAddress) => _addressesRepository.GetPost(ixAddress);
         public Addresses Get(Int64 ixAddress) => _addressesRepository.Get(ixAddress);
         public IQueryable<Addresses> Index() => _addressesRepository.Index();
+        public IQueryable<Addresses> IndexDb() => _addressesRepository.IndexDb();
        public IQueryable<Countries> selectCountries() => _addressesRepository.selectCountries();
         public IQueryable<CountrySubDivisions> selectCountrySubDivisions() => _addressesRepository.selectCountrySubDivisions();
+       public IQueryable<Countries> CountriesDb() => _addressesRepository.CountriesDb();
+        public IQueryable<CountrySubDivisions> CountrySubDivisionsDb() => _addressesRepository.CountrySubDivisionsDb();
         public bool VerifyAddressUnique(Int64 ixAddress, string sAddress) => _addressesRepository.VerifyAddressUnique(ixAddress, sAddress);
         public List<string> VerifyAddressDeleteOK(Int64 ixAddress, string sAddress) => _addressesRepository.VerifyAddressDeleteOK(ixAddress, sAddress);
 
@@ -115,3 +118,4 @@ This class ....
     }
 }
   
+

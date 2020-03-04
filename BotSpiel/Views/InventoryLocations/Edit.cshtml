@@ -1,5 +1,12 @@
-
-@model BotSpiel.DataAccess.Models.InventoryLocationsPost 
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IInventoryLocationsSlottingService _inventoryLocationsSlottingService
+@inject IInventoryLocationsService _inventoryLocationsService
+@*//Custom Code End*@
+@model BotSpiel.DataAccess.Models.InventoryLocationsPost
 
 @{
     ViewBag.Title = "Edit Inventory Locations";
@@ -11,204 +18,239 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>Inventory Locations</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.ixInventoryLocation)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.sInventoryLocation, "Inventory Location", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.sInventoryLocation, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.sInventoryLocation, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    <div class="form-horizontal">
+        <h4>Inventory Locations</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ixInventoryLocation)
 
-    <div class="form-group">
-        @Html.ActionLink("Location Function ID", "Index", "LocationFunctions", "", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ixLocationFunction", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ixLocationFunction, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.ActionLink("Company ID", "Index", "Companies", "", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ixCompany", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ixCompany, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.ActionLink("Facility Floor ID", "Index", "FacilityFloors", "", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ixFacilityFloor", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ixFacilityFloor, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.ActionLink("Facility Zone ID", "Index", "FacilityZones", "", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ixFacilityZone", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ixFacilityZone, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.ActionLink("Facility Work Area ID", "Index", "FacilityWorkAreas", "", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ixFacilityWorkArea", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ixFacilityWorkArea, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.ActionLink("Facility Aisle Face ID", "Index", "FacilityAisleFaces", "", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ixFacilityAisleFace", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ixFacilityAisleFace, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.sLevel, "Level", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.sLevel, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.sLevel, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.sBay, "Bay", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.sBay, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.sBay, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.sSlot, "Slot", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.sSlot, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.sSlot, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.ActionLink("Inventory Location Size ID", "Index", "InventoryLocationSizes", "", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ixInventoryLocationSize", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ixInventoryLocationSize, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.nSequence, "Sequence", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.nSequence, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.nSequence, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.nXOffset, "X Offset", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.nXOffset, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.nXOffset, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.ActionLink("X Offset Unit ID", "Index", "UnitsOfMeasurement", "", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ixXOffsetUnit", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ixXOffsetUnit, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.nYOffset, "Y Offset", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.nYOffset, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.nYOffset, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.ActionLink("Y Offset Unit ID", "Index", "UnitsOfMeasurement", "", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ixYOffsetUnit", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ixYOffsetUnit, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.nZOffset, "Z Offset", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.nZOffset, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.nZOffset, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.ActionLink("Z Offset Unit ID", "Index", "UnitsOfMeasurement", "", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("ixZOffsetUnit", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ixZOffsetUnit, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.sLatitude, "Latitude", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.sLatitude, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.sLatitude, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.sLongitude, "Longitude", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.sLongitude, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.sLongitude, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.bTrackUtilisation, "Track Utilisation", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.bTrackUtilisation, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.bTrackUtilisation, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    @*//Custom Code Start | Removed Code Block*@
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.nUtilisationPercent, "Utilisation Percent", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.sInventoryLocation, "Inventory Location", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.nUtilisationPercent, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.nUtilisationPercent, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.sInventoryLocation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sInventoryLocation, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.nQueuedUtilisationPercent, "Queued Utilisation Percent", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Location Function ID", "Index", "LocationFunctions", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.nQueuedUtilisationPercent, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.nQueuedUtilisationPercent, "", new { @class = "text-danger" })
+                @Html.DropDownList("ixLocationFunction", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixLocationFunction, "", new { @class = "text-danger" })
             </div>
-        </div>*@
-    @*//Custom Code End*@
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Edit" class="btn btn-default" />
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Facility ID", "Index", "Facilities", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixFacility", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixFacility, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Company ID", "Index", "Companies", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixCompany", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixCompany, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Facility Floor ID", "Index", "FacilityFloors", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixFacilityFloor", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixFacilityFloor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Facility Zone ID", "Index", "FacilityZones", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixFacilityZone", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixFacilityZone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Facility Work Area ID", "Index", "FacilityWorkAreas", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixFacilityWorkArea", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixFacilityWorkArea, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Facility Aisle Face ID", "Index", "FacilityAisleFaces", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixFacilityAisleFace", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixFacilityAisleFace, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sLevel, "Level", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sLevel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sLevel, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sBay, "Bay", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sBay, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sBay, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sSlot, "Slot", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sSlot, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sSlot, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Inventory Location Size ID", "Index", "InventoryLocationSizes", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixInventoryLocationSize", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixInventoryLocationSize, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nSequence, "Sequence", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nSequence, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nSequence, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nXOffset, "X Offset", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nXOffset, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nXOffset, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("X Offset Unit ID", "Index", "UnitsOfMeasurement", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixXOffsetUnit", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixXOffsetUnit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nYOffset, "Y Offset", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nYOffset, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nYOffset, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Y Offset Unit ID", "Index", "UnitsOfMeasurement", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixYOffsetUnit", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixYOffsetUnit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nZOffset, "Z Offset", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nZOffset, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nZOffset, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Z Offset Unit ID", "Index", "UnitsOfMeasurement", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixZOffsetUnit", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixZOffsetUnit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sLatitude, "Latitude", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sLatitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sLatitude, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sLongitude, "Longitude", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sLongitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sLongitude, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.bTrackUtilisation, "Track Utilisation", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bTrackUtilisation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.bTrackUtilisation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*//Custom Code Start | Removed Block*@
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.nUtilisationPercent, "Utilisation Percent", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.nUtilisationPercent, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nUtilisationPercent, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.nQueuedUtilisationPercent, "Queued Utilisation Percent", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.nQueuedUtilisationPercent, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nQueuedUtilisationPercent, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        @*//Custom Code End*@
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Edit" class="btn btn-default" />
+            </div>
         </div>
     </div>
-</div>
 }
+
+@*//Custom Code Start | Added Code Block*@
+<div>
+    @{
+        List<BotSpiel.DataAccess.Models.InventoryLocationsSlotting> inventorylocationsslotting = new List<InventoryLocationsSlotting>();
+        //Add empty record
+        InventoryLocationsSlotting inventorylocationsSlot = new InventoryLocationsSlotting();
+        inventorylocationsSlot.ixInventoryLocation = Model.ixInventoryLocation;
+        inventorylocationsSlot.InventoryLocations.ixInventoryLocation = Model.ixInventoryLocation;
+        inventorylocationsslotting.Add(inventorylocationsSlot);
+        _inventoryLocationsSlottingService.IndexDb().Where(x => x.ixInventoryLocation == Model.ixInventoryLocation).ToList().ForEach(x =>
+        {
+            inventorylocationsslotting.Add(x);
+        }
+            );
+    }
+    @{
+        var inventoryLocation = _inventoryLocationsService.Get(Model.ixInventoryLocation);
+        if (@inventoryLocation.LocationFunctions.sLocationFunctionCode == "FP")
+        {
+            @await Html.PartialAsync("IndexInventoryLocationsSlotting", inventorylocationsslotting);
+        }
+    }
+</div>
+@*//Custom Code End*@
+
+
 <div>
     @Html.ActionLink("Grid", "Index")
 </div>
@@ -217,5 +259,5 @@
 }
 
 
- 
+
 

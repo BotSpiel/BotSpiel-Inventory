@@ -23,6 +23,7 @@ This interface ....
         CommunicationMediumsPost GetPost(Int64 ixCommunicationMedium);        
 		CommunicationMediums Get(Int64 ixCommunicationMedium);
         IQueryable<CommunicationMediums> Index();
+        IQueryable<CommunicationMediums> IndexDb();
         bool VerifyCommunicationMediumUnique(Int64 ixCommunicationMedium, string sCommunicationMedium);
         List<string> VerifyCommunicationMediumDeleteOK(Int64 ixCommunicationMedium, string sCommunicationMedium);
 

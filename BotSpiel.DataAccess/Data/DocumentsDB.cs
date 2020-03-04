@@ -61,7 +61,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is DocumentsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is DocumentsPost)).ToList())
             {
                 var tx_vw_documentspost = e.Entity as DocumentsPost;
                 switch (e.State)
@@ -119,12 +119,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixDocument"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeDocuments @ixDocument = @p0, @sDocument = @p1, @ixDocumentMessageType = @p2, @sVersion = @p3, @sRevision = @p4, @ixStatus = @p5, @UserName = @p6", tx_vw_documentspost.ixDocument, tx_vw_documentspost.sDocument, tx_vw_documentspost.ixDocumentMessageType, tx_vw_documentspost.sVersion, tx_vw_documentspost.sRevision, tx_vw_documentspost.ixStatus, tx_vw_documentspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

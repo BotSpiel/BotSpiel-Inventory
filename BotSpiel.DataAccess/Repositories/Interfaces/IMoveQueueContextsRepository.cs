@@ -22,6 +22,7 @@ This interface ....
         MoveQueueContextsPost GetPost(Int64 ixMoveQueueContext);        
 		MoveQueueContexts Get(Int64 ixMoveQueueContext);
         IQueryable<MoveQueueContexts> Index();
+        IQueryable<MoveQueueContexts> IndexDb();
         bool VerifyMoveQueueContextUnique(Int64 ixMoveQueueContext, string sMoveQueueContext);
         List<string> VerifyMoveQueueContextDeleteOK(Int64 ixMoveQueueContext, string sMoveQueueContext);
         void RegisterCreate(MoveQueueContextsPost movequeuecontextsPost);

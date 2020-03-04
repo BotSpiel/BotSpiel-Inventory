@@ -35,6 +35,9 @@ This class ....
 		[Required]
 		[Display(Name = "Location Function ID")]
 		public virtual Int64 ixLocationFunction { get; set; }
+		[Required]
+		[Display(Name = "Facility ID")]
+		public virtual Int64 ixFacility { get; set; }
 		[Display(Name = "Company ID")]
 		public virtual Int64? ixCompany { get; set; }
 		[Required]
@@ -112,5 +115,5 @@ This class ....
     //Custom Code End
 
 }
-
+  
 

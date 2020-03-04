@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is DateTimePeriodFormatsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is DateTimePeriodFormatsPost)).ToList())
             {
                 var config_vw_datetimeperiodformatspost = e.Entity as DateTimePeriodFormatsPost;
                 switch (e.State)
@@ -88,12 +88,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixDateTimePeriodFormat"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeDateTimePeriodFormats @ixDateTimePeriodFormat = @p0, @sDateTimePeriodFormat = @p1, @sDateTimePeriodFormatCode = @p2, @UserName = @p3", config_vw_datetimeperiodformatspost.ixDateTimePeriodFormat, config_vw_datetimeperiodformatspost.sDateTimePeriodFormat, config_vw_datetimeperiodformatspost.sDateTimePeriodFormatCode, config_vw_datetimeperiodformatspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

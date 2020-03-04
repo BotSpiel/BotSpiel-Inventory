@@ -51,6 +51,12 @@ This class ....
             var inboundorders = _context.InboundOrders.Include(a => a.InboundOrderTypes).Include(a => a.Facilities).Include(a => a.Companies).Include(a => a.BusinessPartners).Include(a => a.Statuses).AsNoTracking(); 
             return inboundorders;
         }
+
+        public IQueryable<InboundOrders> IndexDb()
+        {
+            var inboundorders = _context.InboundOrders.Include(a => a.InboundOrderTypes).Include(a => a.Facilities).Include(a => a.Companies).Include(a => a.BusinessPartners).Include(a => a.Statuses).AsNoTracking(); 
+            return inboundorders;
+        }
        public IQueryable<BusinessPartners> selectBusinessPartners()
         {
             List<BusinessPartners> businesspartners = new List<BusinessPartners>();
@@ -84,6 +90,46 @@ This class ....
             return inboundordertypes.AsQueryable();
         }
         public IQueryable<Statuses> selectStatuses()
+        {
+            List<Statuses> statuses = new List<Statuses>();
+            _context.Statuses.AsNoTracking()
+                .ToList()
+                .ForEach(x => statuses.Add(x));
+            return statuses.AsQueryable();
+        }
+       public IQueryable<BusinessPartners> BusinessPartnersDb()
+        {
+            List<BusinessPartners> businesspartners = new List<BusinessPartners>();
+            _context.BusinessPartners.Include(a => a.Addresses).Include(a => a.BusinessPartnerTypes).Include(a => a.Companies).AsNoTracking()
+                .ToList()
+                .ForEach(x => businesspartners.Add(x));
+            return businesspartners.AsQueryable();
+        }
+        public IQueryable<Companies> CompaniesDb()
+        {
+            List<Companies> companies = new List<Companies>();
+            _context.Companies.AsNoTracking()
+                .ToList()
+                .ForEach(x => companies.Add(x));
+            return companies.AsQueryable();
+        }
+        public IQueryable<Facilities> FacilitiesDb()
+        {
+            List<Facilities> facilities = new List<Facilities>();
+            _context.Facilities.Include(a => a.Addresses).AsNoTracking()
+                .ToList()
+                .ForEach(x => facilities.Add(x));
+            return facilities.AsQueryable();
+        }
+        public IQueryable<InboundOrderTypes> InboundOrderTypesDb()
+        {
+            List<InboundOrderTypes> inboundordertypes = new List<InboundOrderTypes>();
+            _context.InboundOrderTypes.AsNoTracking()
+                .ToList()
+                .ForEach(x => inboundordertypes.Add(x));
+            return inboundordertypes.AsQueryable();
+        }
+        public IQueryable<Statuses> StatusesDb()
         {
             List<Statuses> statuses = new List<Statuses>();
             _context.Statuses.AsNoTracking()

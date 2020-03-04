@@ -39,6 +39,7 @@ This class ....
             FacilityAisleFaces facilityaislefaces = _context.FacilityAisleFaces.AsNoTracking().Where(x => x.ixFacilityAisleFace == ixFacilityAisleFace).First();
             facilityaislefaces.AisleFaceStorageTypes = _context.AisleFaceStorageTypes.Find(facilityaislefaces.ixAisleFaceStorageType);
             facilityaislefaces.BaySequenceTypes = _context.BaySequenceTypes.Find(facilityaislefaces.ixBaySequenceType);
+            facilityaislefaces.Facilities = _context.Facilities.Find(facilityaislefaces.ixFacility);
             if (facilityaislefaces.ixPairedAisleFace != null)
         {
             facilityaislefaces.FacilityAisleFacesFKDiffPairedAisleFace = _context.FacilityAisleFaces.Find(facilityaislefaces.ixPairedAisleFace);
@@ -68,7 +69,13 @@ This class ....
 
         public IQueryable<FacilityAisleFaces> Index()
         {
-            var facilityaislefaces = _context.FacilityAisleFaces.Include(a => a.FacilityFloors).Include(a => a.BaySequenceTypes).Include(a => a.LogicalOrientations).Include(a => a.AisleFaceStorageTypes).Include(a => a.InventoryLocationSizesFKDiffDefaultInventoryLocationSize).AsNoTracking(); 
+            var facilityaislefaces = _context.FacilityAisleFaces.Include(a => a.FacilityFloors).Include(a => a.BaySequenceTypes).Include(a => a.LogicalOrientations).Include(a => a.AisleFaceStorageTypes).Include(a => a.InventoryLocationSizesFKDiffDefaultInventoryLocationSize).Include(a => a.Facilities).AsNoTracking(); 
+            return facilityaislefaces;
+        }
+
+        public IQueryable<FacilityAisleFaces> IndexDb()
+        {
+            var facilityaislefaces = _context.FacilityAisleFaces.Include(a => a.FacilityFloors).Include(a => a.BaySequenceTypes).Include(a => a.LogicalOrientations).Include(a => a.AisleFaceStorageTypes).Include(a => a.InventoryLocationSizesFKDiffDefaultInventoryLocationSize).Include(a => a.Facilities).AsNoTracking(); 
             return facilityaislefaces;
         }
        public IQueryable<AisleFaceStorageTypes> selectAisleFaceStorageTypes()
@@ -87,10 +94,18 @@ This class ....
                 .ForEach(x => baysequencetypes.Add(x));
             return baysequencetypes.AsQueryable();
         }
+        public IQueryable<Facilities> selectFacilities()
+        {
+            List<Facilities> facilities = new List<Facilities>();
+            _context.Facilities.Include(a => a.Addresses).AsNoTracking()
+                .ToList()
+                .ForEach(x => facilities.Add(x));
+            return facilities.AsQueryable();
+        }
         public IQueryable<FacilityAisleFaces> selectFacilityAisleFaces()
         {
             List<FacilityAisleFaces> facilityaislefaces = new List<FacilityAisleFaces>();
-            _context.FacilityAisleFaces.Include(a => a.AisleFaceStorageTypes).Include(a => a.BaySequenceTypes).Include(a => a.FacilityAisleFacesFKDiffPairedAisleFace).Include(a => a.FacilityFloors).Include(a => a.FacilityZonesFKDiffDefaultFacilityZone).Include(a => a.InventoryLocationSizesFKDiffDefaultInventoryLocationSize).Include(a => a.LocationFunctionsFKDiffDefaultLocationFunction).Include(a => a.LogicalOrientations).Include(a => a.UnitsOfMeasurementFKDiffXOffsetUnit).Include(a => a.UnitsOfMeasurementFKDiffYOffsetUnit).AsNoTracking()
+            _context.FacilityAisleFaces.Include(a => a.AisleFaceStorageTypes).Include(a => a.BaySequenceTypes).Include(a => a.Facilities).Include(a => a.FacilityAisleFacesFKDiffPairedAisleFace).Include(a => a.FacilityFloors).Include(a => a.FacilityZonesFKDiffDefaultFacilityZone).Include(a => a.InventoryLocationSizesFKDiffDefaultInventoryLocationSize).Include(a => a.LocationFunctionsFKDiffDefaultLocationFunction).Include(a => a.LogicalOrientations).Include(a => a.UnitsOfMeasurementFKDiffXOffsetUnit).Include(a => a.UnitsOfMeasurementFKDiffYOffsetUnit).AsNoTracking()
                 .ToList()
                 .ForEach(x => facilityaislefaces.Add(x));
             return facilityaislefaces.AsQueryable();
@@ -143,7 +158,87 @@ This class ....
             //_context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()
             //Replaced Code Block End
             _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking().Where(x => x.MeasurementUnitsOf.sMeasurementUnitOf == "Length").OrderBy(x => x.MeasurementSystems.ixMeasurementSystem).ThenBy(x => x.sUnitOfMeasurement)
-            //Custom Code End
+            //Custom Code End                
+                .ToList()
+                .ForEach(x => unitsofmeasurement.Add(x));
+            return unitsofmeasurement.AsQueryable();
+        }
+       public IQueryable<AisleFaceStorageTypes> AisleFaceStorageTypesDb()
+        {
+            List<AisleFaceStorageTypes> aislefacestoragetypes = new List<AisleFaceStorageTypes>();
+            _context.AisleFaceStorageTypes.AsNoTracking()
+                .ToList()
+                .ForEach(x => aislefacestoragetypes.Add(x));
+            return aislefacestoragetypes.AsQueryable();
+        }
+        public IQueryable<BaySequenceTypes> BaySequenceTypesDb()
+        {
+            List<BaySequenceTypes> baysequencetypes = new List<BaySequenceTypes>();
+            _context.BaySequenceTypes.AsNoTracking()
+                .ToList()
+                .ForEach(x => baysequencetypes.Add(x));
+            return baysequencetypes.AsQueryable();
+        }
+        public IQueryable<Facilities> FacilitiesDb()
+        {
+            List<Facilities> facilities = new List<Facilities>();
+            _context.Facilities.Include(a => a.Addresses).AsNoTracking()
+                .ToList()
+                .ForEach(x => facilities.Add(x));
+            return facilities.AsQueryable();
+        }
+        public IQueryable<FacilityAisleFaces> FacilityAisleFacesDb()
+        {
+            List<FacilityAisleFaces> facilityaislefaces = new List<FacilityAisleFaces>();
+            _context.FacilityAisleFaces.Include(a => a.AisleFaceStorageTypes).Include(a => a.BaySequenceTypes).Include(a => a.Facilities).Include(a => a.FacilityAisleFacesFKDiffPairedAisleFace).Include(a => a.FacilityFloors).Include(a => a.FacilityZonesFKDiffDefaultFacilityZone).Include(a => a.InventoryLocationSizesFKDiffDefaultInventoryLocationSize).Include(a => a.LocationFunctionsFKDiffDefaultLocationFunction).Include(a => a.LogicalOrientations).Include(a => a.UnitsOfMeasurementFKDiffXOffsetUnit).Include(a => a.UnitsOfMeasurementFKDiffYOffsetUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => facilityaislefaces.Add(x));
+            return facilityaislefaces.AsQueryable();
+        }
+        public IQueryable<FacilityFloors> FacilityFloorsDb()
+        {
+            List<FacilityFloors> facilityfloors = new List<FacilityFloors>();
+            _context.FacilityFloors.AsNoTracking()
+                .ToList()
+                .ForEach(x => facilityfloors.Add(x));
+            return facilityfloors.AsQueryable();
+        }
+        public IQueryable<FacilityZones> FacilityZonesDb()
+        {
+            List<FacilityZones> facilityzones = new List<FacilityZones>();
+            _context.FacilityZones.AsNoTracking()
+                .ToList()
+                .ForEach(x => facilityzones.Add(x));
+            return facilityzones.AsQueryable();
+        }
+        public IQueryable<InventoryLocationSizes> InventoryLocationSizesDb()
+        {
+            List<InventoryLocationSizes> inventorylocationsizes = new List<InventoryLocationSizes>();
+            _context.InventoryLocationSizes.Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffUsableVolumeUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => inventorylocationsizes.Add(x));
+            return inventorylocationsizes.AsQueryable();
+        }
+        public IQueryable<LocationFunctions> LocationFunctionsDb()
+        {
+            List<LocationFunctions> locationfunctions = new List<LocationFunctions>();
+            _context.LocationFunctions.AsNoTracking()
+                .ToList()
+                .ForEach(x => locationfunctions.Add(x));
+            return locationfunctions.AsQueryable();
+        }
+        public IQueryable<LogicalOrientations> LogicalOrientationsDb()
+        {
+            List<LogicalOrientations> logicalorientations = new List<LogicalOrientations>();
+            _context.LogicalOrientations.AsNoTracking()
+                .ToList()
+                .ForEach(x => logicalorientations.Add(x));
+            return logicalorientations.AsQueryable();
+        }
+        public IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb()
+        {
+            List<UnitsOfMeasurement> unitsofmeasurement = new List<UnitsOfMeasurement>();
+            _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()
                 .ToList()
                 .ForEach(x => unitsofmeasurement.Add(x));
             return unitsofmeasurement.AsQueryable();

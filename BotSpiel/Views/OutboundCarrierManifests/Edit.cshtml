@@ -1,5 +1,11 @@
-
-@model BotSpiel.DataAccess.Models.OutboundCarrierManifestsPost 
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IOutboundShipmentsService _outboundShipmentsService
+@*//Custom Code End*@
+@model BotSpiel.DataAccess.Models.OutboundCarrierManifestsPost
 
 @{
     ViewBag.Title = "Edit Outbound Carrier Manifests";
@@ -11,7 +17,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Outbound Carrier Manifests</h4>
         <hr />
@@ -19,7 +25,15 @@
         @Html.HiddenFor(model => model.ixOutboundCarrierManifest)
 
         <div class="form-group">
-			@Html.ActionLink("Carrier ID", "Index", "Carriers", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Facility ID", "Index", "Facilities", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixFacility", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixFacility, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Carrier ID", "Index", "Carriers", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixCarrier", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixCarrier, "", new { @class = "text-danger" })
@@ -27,7 +41,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Pickup Inventory Location ID", "Index", "InventoryLocations", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Pickup Inventory Location ID", "Index", "InventoryLocations", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixPickupInventoryLocation", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixPickupInventoryLocation, "", new { @class = "text-danger" })
@@ -42,13 +56,15 @@
             </div>
         </div>
 
-        <div class="form-group">
-			@Html.ActionLink("Status ID", "Index", "Statuses", "", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ixStatus", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ixStatus, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @*//Custom Code Start | Removed Block*@
+        @*<div class="form-group">
+                @Html.ActionLink("Status ID", "Index", "Statuses", "", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ixStatus", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ixStatus, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        @*//Custom Code End*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -57,6 +73,27 @@
         </div>
     </div>
 }
+
+@*//Custom Code Start | Added Code Block*@
+<div>
+    @{
+        List<BotSpiel.DataAccess.Models.OutboundShipments> outboundShipments = new List<OutboundShipments>();
+        //Add empty record
+        OutboundShipments outboundShipment = new OutboundShipments();
+        outboundShipment.ixOutboundCarrierManifest = Model.ixOutboundCarrierManifest;
+        outboundShipment.OutboundCarrierManifests.ixOutboundCarrierManifest = Model.ixOutboundCarrierManifest;
+        outboundShipments.Add(outboundShipment);
+        _outboundShipmentsService.IndexDb().Where(x => x.ixOutboundCarrierManifest == Model.ixOutboundCarrierManifest).ToList().ForEach(x =>
+            {
+                outboundShipments.Add(x);
+            }
+            );
+    }
+    @await Html.PartialAsync("IndexOutboundShipments", outboundShipments)
+</div>
+@*//Custom Code End*@
+
+
 <div>
     @Html.ActionLink("Grid", "Index")
 </div>
@@ -65,5 +102,5 @@
 }
 
 
- 
+
 

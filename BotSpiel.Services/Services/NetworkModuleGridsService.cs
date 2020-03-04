@@ -32,6 +32,7 @@ This class ....
         public NetworkModuleGridsPost GetPost(Int64 ixNetworkModuleGrid) => _networkmodulegridsRepository.GetPost(ixNetworkModuleGrid);
         public NetworkModuleGrids Get(Int64 ixNetworkModuleGrid) => _networkmodulegridsRepository.Get(ixNetworkModuleGrid);
         public IQueryable<NetworkModuleGrids> Index() => _networkmodulegridsRepository.Index();
+        public IQueryable<NetworkModuleGrids> IndexDb() => _networkmodulegridsRepository.IndexDb();
 		public IQueryable<NetworkModuleGridsconfig> Indexconfig() => _networkmodulegridsRepository.Indexconfig();
 		public IQueryable<NetworkModuleGridsmd> Indexmd() => _networkmodulegridsRepository.Indexmd();
 		public IQueryable<NetworkModuleGridstx> Indextx() => _networkmodulegridsRepository.Indextx();

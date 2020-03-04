@@ -50,7 +50,14 @@ This class ....
             var addresses = _context.Addresses.Include(a => a.CountrySubDivisionsFKDiffStateOrProvince).Include(a => a.Countries).AsNoTracking(); 
             return addresses;
         }
-       public IQueryable<Countries> selectCountries()
+
+        public IQueryable<Addresses> IndexDb()
+        {
+            var addresses = _context.Addresses.Include(a => a.CountrySubDivisionsFKDiffStateOrProvince).Include(a => a.Countries).AsNoTracking();
+            return addresses;
+        }
+
+        public IQueryable<Countries> selectCountries()
         {
             List<Countries> countries = new List<Countries>();
             //Custom Code Start | Replaced Code Block
@@ -72,6 +79,23 @@ This class ....
             //Replaced Code Block End
             _context.CountrySubDivisions.OrderBy(cs => cs.sCountrySubDivisionCode).Include(a => a.Countries).AsNoTracking()
             //Custom Code End
+
+                .ToList()
+                .ForEach(x => countrysubdivisions.Add(x));
+            return countrysubdivisions.AsQueryable();
+        }
+       public IQueryable<Countries> CountriesDb()
+        {
+            List<Countries> countries = new List<Countries>();
+            _context.Countries.Include(a => a.PlanetSubRegions).AsNoTracking()
+                .ToList()
+                .ForEach(x => countries.Add(x));
+            return countries.AsQueryable();
+        }
+        public IQueryable<CountrySubDivisions> CountrySubDivisionsDb()
+        {
+            List<CountrySubDivisions> countrysubdivisions = new List<CountrySubDivisions>();
+            _context.CountrySubDivisions.Include(a => a.Countries).AsNoTracking()
                 .ToList()
                 .ForEach(x => countrysubdivisions.Add(x));
             return countrysubdivisions.AsQueryable();
@@ -130,3 +154,4 @@ This class ....
     }
 }
   
+

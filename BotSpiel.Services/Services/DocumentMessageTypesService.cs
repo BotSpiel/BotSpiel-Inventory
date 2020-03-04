@@ -32,6 +32,7 @@ This class ....
         public DocumentMessageTypesPost GetPost(Int64 ixDocumentMessageType) => _documentmessagetypesRepository.GetPost(ixDocumentMessageType);
         public DocumentMessageTypes Get(Int64 ixDocumentMessageType) => _documentmessagetypesRepository.Get(ixDocumentMessageType);
         public IQueryable<DocumentMessageTypes> Index() => _documentmessagetypesRepository.Index();
+        public IQueryable<DocumentMessageTypes> IndexDb() => _documentmessagetypesRepository.IndexDb();
         public bool VerifyDocumentMessageTypeUnique(Int64 ixDocumentMessageType, string sDocumentMessageType) => _documentmessagetypesRepository.VerifyDocumentMessageTypeUnique(ixDocumentMessageType, sDocumentMessageType);
         public List<string> VerifyDocumentMessageTypeDeleteOK(Int64 ixDocumentMessageType, string sDocumentMessageType) => _documentmessagetypesRepository.VerifyDocumentMessageTypeDeleteOK(ixDocumentMessageType, sDocumentMessageType);
 

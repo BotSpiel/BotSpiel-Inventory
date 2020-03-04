@@ -1,0 +1,120 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
+@inject IPaymentCreditCardsService _paymentcreditcardsService
+@model BotSpiel.DataAccess.Models.PaymentCreditCards
+
+@{
+    ViewBag.Title = "Delete Payment Credit Cards";
+}
+
+@{
+    string conCat = "";
+    List<string> existInEntities = new List<string>();
+    bool DeleteOK = true;
+    existInEntities = _paymentcreditcardsService.VerifyPaymentCreditCardDeleteOK(Model.ixPaymentCreditCard, Model.sPaymentCreditCard);
+    if (existInEntities.Any()) { DeleteOK = false; }
+}
+
+
+@if (DeleteOK)
+{
+
+<br>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Payment Credit Cards</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixPaymentCreditCard)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixPaymentCreditCard)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPaymentCreditCard)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPaymentCreditCard)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCreditCardType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCreditCardType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sFirstName)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sFirstName)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sLastName)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sLastName)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nExpireMonth)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nExpireMonth)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nExpireYear)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nExpireYear)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sCvvTwo)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sCvvTwo)
+		</dd>
+ 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+</div>
+}
+else
+{
+    <br>
+    <h2>Delete</h2>
+
+    <h3>The PaymentCreditCard @Model.sPaymentCreditCard cannot be deleted. It is referenced by the following entities:</h3>
+    <hr />
+    @foreach (var entity in existInEntities)
+    {
+        conCat = String.Join(" ", StringSplitters.SplitCamelCase(@entity.ToString()));
+        <h4>@Html.ActionLink(@conCat.ToString(), "Index", @entity.ToString())</h4>
+        <hr />
+    }
+
+    <h3>If you want to delete the PaymentCreditCard, delete the dependent references first.</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+
+}
+ 
+

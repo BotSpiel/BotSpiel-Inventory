@@ -32,6 +32,7 @@ This class ....
         public LocationFunctionsPost GetPost(Int64 ixLocationFunction) => _locationfunctionsRepository.GetPost(ixLocationFunction);
         public LocationFunctions Get(Int64 ixLocationFunction) => _locationfunctionsRepository.Get(ixLocationFunction);
         public IQueryable<LocationFunctions> Index() => _locationfunctionsRepository.Index();
+        public IQueryable<LocationFunctions> IndexDb() => _locationfunctionsRepository.IndexDb();
         public bool VerifyLocationFunctionUnique(Int64 ixLocationFunction, string sLocationFunction) => _locationfunctionsRepository.VerifyLocationFunctionUnique(ixLocationFunction, sLocationFunction);
         public List<string> VerifyLocationFunctionDeleteOK(Int64 ixLocationFunction, string sLocationFunction) => _locationfunctionsRepository.VerifyLocationFunctionDeleteOK(ixLocationFunction, sLocationFunction);
 

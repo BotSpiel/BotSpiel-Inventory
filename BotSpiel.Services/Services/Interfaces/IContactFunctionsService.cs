@@ -23,6 +23,7 @@ This interface ....
         ContactFunctionsPost GetPost(Int64 ixContactFunction);        
 		ContactFunctions Get(Int64 ixContactFunction);
         IQueryable<ContactFunctions> Index();
+        IQueryable<ContactFunctions> IndexDb();
         bool VerifyContactFunctionUnique(Int64 ixContactFunction, string sContactFunction);
         List<string> VerifyContactFunctionDeleteOK(Int64 ixContactFunction, string sContactFunction);
 

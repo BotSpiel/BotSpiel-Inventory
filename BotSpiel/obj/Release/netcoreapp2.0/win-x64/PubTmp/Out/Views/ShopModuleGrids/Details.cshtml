@@ -1,0 +1,64 @@
+
+@model BotSpiel.DataAccess.Models.ShopModuleGrids
+
+@{
+    ViewBag.Title = "Details Shop Module Grids";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Shop Module Grids</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixShopModuleGrid)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixShopModuleGrid)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sShopModuleGrid)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sShopModuleGrid)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sShortDescription)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sShortDescription)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sDataEntityType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sDataEntityType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.bCanCreate)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.bCanCreate)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.bCanEdit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.bCanEdit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.bCanDelete)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.bCanDelete)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

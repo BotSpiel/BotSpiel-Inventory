@@ -27,6 +27,9 @@ This class ....
 		[Display(Name = "Facility Aisle Face")]
 		public virtual String sFacilityAisleFace { get; set; }
 		[Required]
+		[Display(Name = "Facility ID")]
+		public virtual Int64 ixFacility { get; set; }
+		[Required]
 		[Display(Name = "Facility Floor ID")]
 		public virtual Int64 ixFacilityFloor { get; set; }
 		[Required]

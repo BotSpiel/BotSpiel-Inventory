@@ -1,0 +1,36 @@
+
+@model BotSpiel.DataAccess.Models.Topics
+
+@{
+    ViewBag.Title = "Details Topics";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Topics</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixTopic)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixTopic)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sTopic)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sTopic)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixTopic }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixTopic }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

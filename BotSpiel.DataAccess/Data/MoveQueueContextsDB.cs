@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is MoveQueueContextsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is MoveQueueContextsPost)).ToList())
             {
                 var config_vw_movequeuecontextspost = e.Entity as MoveQueueContextsPost;
                 switch (e.State)
@@ -83,12 +83,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixMoveQueueContext"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeMoveQueueContexts @ixMoveQueueContext = @p0, @sMoveQueueContext = @p1, @UserName = @p2", config_vw_movequeuecontextspost.ixMoveQueueContext, config_vw_movequeuecontextspost.sMoveQueueContext, config_vw_movequeuecontextspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

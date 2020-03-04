@@ -22,6 +22,7 @@ This interface ....
         AssemblyModuleGridsPost GetPost(Int64 ixAssemblyModuleGrid);        
 		AssemblyModuleGrids Get(Int64 ixAssemblyModuleGrid);
         IQueryable<AssemblyModuleGrids> Index();
+        IQueryable<AssemblyModuleGrids> IndexDb();
 		IQueryable<AssemblyModuleGridsconfig> Indexconfig();
 		IQueryable<AssemblyModuleGridsmd> Indexmd();
 		IQueryable<AssemblyModuleGridstx> Indextx();

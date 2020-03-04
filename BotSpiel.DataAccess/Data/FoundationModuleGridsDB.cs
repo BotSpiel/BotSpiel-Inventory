@@ -61,7 +61,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is FoundationModuleGridsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is FoundationModuleGridsPost)).ToList())
             {
                 var config_vw_foundationmodulegridspost = e.Entity as FoundationModuleGridsPost;
                 switch (e.State)
@@ -124,12 +124,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixFoundationModuleGrid"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeFoundationModuleGrids @ixFoundationModuleGrid = @p0, @sFoundationModuleGrid = @p1, @sShortDescription = @p2, @sDataEntityType = @p3, @bCanCreate = @p4, @bCanEdit = @p5, @bCanDelete = @p6, @UserName = @p7", config_vw_foundationmodulegridspost.ixFoundationModuleGrid, config_vw_foundationmodulegridspost.sFoundationModuleGrid, config_vw_foundationmodulegridspost.sShortDescription, config_vw_foundationmodulegridspost.sDataEntityType, config_vw_foundationmodulegridspost.bCanCreate, config_vw_foundationmodulegridspost.bCanEdit, config_vw_foundationmodulegridspost.bCanDelete, config_vw_foundationmodulegridspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

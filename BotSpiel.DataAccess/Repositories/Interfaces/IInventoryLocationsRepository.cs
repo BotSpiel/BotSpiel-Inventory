@@ -22,14 +22,28 @@ This interface ....
         InventoryLocationsPost GetPost(Int64 ixInventoryLocation);        
 		InventoryLocations Get(Int64 ixInventoryLocation);
         IQueryable<InventoryLocations> Index();
-       IQueryable<LocationFunctions> selectLocationFunctions();
+        IQueryable<InventoryLocations> IndexDb();
+        //Custom Code Start | Added Code Block 
+        IQueryable<InventoryLocationsPost> IndexDbPost();
+        //Custom Code End
+        IQueryable<LocationFunctions> selectLocationFunctions();
         IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement();
         IQueryable<Companies> selectCompanies();
+        IQueryable<Facilities> selectFacilities();
         IQueryable<FacilityZones> selectFacilityZones();
         IQueryable<FacilityWorkAreas> selectFacilityWorkAreas();
         IQueryable<FacilityFloors> selectFacilityFloors();
         IQueryable<FacilityAisleFaces> selectFacilityAisleFaces();
         IQueryable<InventoryLocationSizes> selectInventoryLocationSizes();
+       IQueryable<LocationFunctions> LocationFunctionsDb();
+        IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb();
+        IQueryable<Companies> CompaniesDb();
+        IQueryable<Facilities> FacilitiesDb();
+        IQueryable<FacilityZones> FacilityZonesDb();
+        IQueryable<FacilityWorkAreas> FacilityWorkAreasDb();
+        IQueryable<FacilityFloors> FacilityFloorsDb();
+        IQueryable<FacilityAisleFaces> FacilityAisleFacesDb();
+        IQueryable<InventoryLocationSizes> InventoryLocationSizesDb();
        List<KeyValuePair<Int64?, string>> selectUnitsOfMeasurementNullable();
         List<KeyValuePair<Int64?, string>> selectCompaniesNullable();
         List<KeyValuePair<Int64?, string>> selectInventoryLocationSizesNullable();

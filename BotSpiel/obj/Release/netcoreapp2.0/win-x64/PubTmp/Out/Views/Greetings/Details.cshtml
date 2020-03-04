@@ -1,0 +1,72 @@
+
+@model BotSpiel.DataAccess.Models.Greetings
+
+@{
+    ViewBag.Title = "Details Greetings";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Greetings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixGreeting)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixGreeting)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sGreeting)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sGreeting)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Languages.sLanguage)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Languages.sLanguage, "Details", "Languages", new { id = Model.ixLanguage }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.LanguageStyles.sLanguageStyle)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.LanguageStyles.sLanguageStyle, "Details", "LanguageStyles", new { id = Model.ixLanguageStyle }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sGreetingOffered)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sGreetingOffered)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sGreetingResponse)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sGreetingResponse)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ResponseTypes.sResponseType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.ResponseTypes.sResponseType, "Details", "ResponseTypes", new { id = Model.ixResponseType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.bActive)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.bActive)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixGreeting }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixGreeting }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

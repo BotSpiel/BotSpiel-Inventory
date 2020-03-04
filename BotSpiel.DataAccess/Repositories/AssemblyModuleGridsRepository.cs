@@ -41,6 +41,12 @@ This class ....
             var assemblymodulegrids = _context.AssemblyModuleGrids.AsNoTracking(); 
             return assemblymodulegrids;
         }
+
+        public IQueryable<AssemblyModuleGrids> IndexDb()
+        {
+            var assemblymodulegrids = _context.AssemblyModuleGrids.AsNoTracking(); 
+            return assemblymodulegrids;
+        }
 		public IQueryable<AssemblyModuleGridsconfig> Indexconfig() => _context.AssemblyModuleGridsconfig;
 		public IQueryable<AssemblyModuleGridsmd> Indexmd() => _context.AssemblyModuleGridsmd;
 		public IQueryable<AssemblyModuleGridstx> Indextx() => _context.AssemblyModuleGridstx;

@@ -32,18 +32,18 @@ This class ....
 
 		public DbSet<InventoryUnits> InventoryUnits { get; set; }
 		public DbSet<InventoryUnitsPost> InventoryUnitsPost { get; set; }
-		public DbSet<Facilities> Facilities { get; set; }
-		public DbSet<FacilitiesPost> FacilitiesPost { get; set; }
 		public DbSet<InventoryStates> InventoryStates { get; set; }
 		public DbSet<InventoryStatesPost> InventoryStatesPost { get; set; }
 		public DbSet<InventoryLocations> InventoryLocations { get; set; }
 		public DbSet<InventoryLocationsPost> InventoryLocationsPost { get; set; }
-		public DbSet<Addresses> Addresses { get; set; }
-		public DbSet<AddressesPost> AddressesPost { get; set; }
 		public DbSet<Companies> Companies { get; set; }
 		public DbSet<CompaniesPost> CompaniesPost { get; set; }
+		public DbSet<Facilities> Facilities { get; set; }
+		public DbSet<FacilitiesPost> FacilitiesPost { get; set; }
 		public DbSet<FacilityWorkAreas> FacilityWorkAreas { get; set; }
 		public DbSet<FacilityWorkAreasPost> FacilityWorkAreasPost { get; set; }
+		public DbSet<Addresses> Addresses { get; set; }
+		public DbSet<AddressesPost> AddressesPost { get; set; }
 		public DbSet<CountrySubDivisions> CountrySubDivisions { get; set; }
 		public DbSet<CountrySubDivisionsPost> CountrySubDivisionsPost { get; set; }
 		public DbSet<Countries> Countries { get; set; }
@@ -102,12 +102,6 @@ This class ....
             modelBuilder.Entity<InventoryUnitsPost>()
                 .ToTable("tx_vw_InventoryUnitsPost")
                 .HasKey(c => new { c.ixInventoryUnit });
-            modelBuilder.Entity<Facilities>()
-                .ToTable("md_vw_Facilities")
-                .HasKey(c => new { c.ixFacility });
-            modelBuilder.Entity<FacilitiesPost>()
-                .ToTable("md_vw_FacilitiesPost")
-                .HasKey(c => new { c.ixFacility });
             modelBuilder.Entity<InventoryStates>()
                 .ToTable("config_vw_InventoryStates")
                 .HasKey(c => new { c.ixInventoryState });
@@ -120,24 +114,30 @@ This class ....
             modelBuilder.Entity<InventoryLocationsPost>()
                 .ToTable("md_vw_InventoryLocationsPost")
                 .HasKey(c => new { c.ixInventoryLocation });
-            modelBuilder.Entity<Addresses>()
-                .ToTable("md_vw_Addresses")
-                .HasKey(c => new { c.ixAddress });
-            modelBuilder.Entity<AddressesPost>()
-                .ToTable("md_vw_AddressesPost")
-                .HasKey(c => new { c.ixAddress });
             modelBuilder.Entity<Companies>()
                 .ToTable("md_vw_Companies")
                 .HasKey(c => new { c.ixCompany });
             modelBuilder.Entity<CompaniesPost>()
                 .ToTable("md_vw_CompaniesPost")
                 .HasKey(c => new { c.ixCompany });
+            modelBuilder.Entity<Facilities>()
+                .ToTable("md_vw_Facilities")
+                .HasKey(c => new { c.ixFacility });
+            modelBuilder.Entity<FacilitiesPost>()
+                .ToTable("md_vw_FacilitiesPost")
+                .HasKey(c => new { c.ixFacility });
             modelBuilder.Entity<FacilityWorkAreas>()
                 .ToTable("md_vw_FacilityWorkAreas")
                 .HasKey(c => new { c.ixFacilityWorkArea });
             modelBuilder.Entity<FacilityWorkAreasPost>()
                 .ToTable("md_vw_FacilityWorkAreasPost")
                 .HasKey(c => new { c.ixFacilityWorkArea });
+            modelBuilder.Entity<Addresses>()
+                .ToTable("md_vw_Addresses")
+                .HasKey(c => new { c.ixAddress });
+            modelBuilder.Entity<AddressesPost>()
+                .ToTable("md_vw_AddressesPost")
+                .HasKey(c => new { c.ixAddress });
             modelBuilder.Entity<CountrySubDivisions>()
                 .ToTable("md_vw_CountrySubDivisions")
                 .HasKey(c => new { c.ixCountrySubDivision });
@@ -293,7 +293,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is InventoryUnitsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is InventoryUnitsPost)).ToList())
             {
                 var tx_vw_inventoryunitspost = e.Entity as InventoryUnitsPost;
                 switch (e.State)
@@ -333,15 +333,18 @@ This class ....
                             var dtExpireAt = cmd.CreateParameter();
                             dtExpireAt.ParameterName = "p9";
                             dtExpireAt.Value = tx_vw_inventoryunitspost.dtExpireAt;
+                            var nBaseUnitQuantityQueued = cmd.CreateParameter();
+                            nBaseUnitQuantityQueued.ParameterName = "p10";
+                            nBaseUnitQuantityQueued.Value = tx_vw_inventoryunitspost.nBaseUnitQuantityQueued;
                             var ixStatus = cmd.CreateParameter();
-                            ixStatus.ParameterName = "p10";
+                            ixStatus.ParameterName = "p11";
                             ixStatus.Value = tx_vw_inventoryunitspost.ixStatus;
                             var UserName = cmd.CreateParameter();
-                            UserName.ParameterName = "p11";
+                            UserName.ParameterName = "p12";
                             UserName.Value = tx_vw_inventoryunitspost.UserName;
 
                             var ixInventoryUnit = cmd.CreateParameter();
-                            ixInventoryUnit.ParameterName = "p12";
+                            ixInventoryUnit.ParameterName = "p13";
                             ixInventoryUnit.DbType = DbType.Int64;
                             ixInventoryUnit.Direction = ParameterDirection.Output;
 
@@ -357,9 +360,10 @@ This class ....
                             if (tx_vw_inventoryunitspost.sSerialNumber != null) { sql.Append("@sSerialNumber = @p7, "); }  
                             if (tx_vw_inventoryunitspost.sBatchNumber != null) { sql.Append("@sBatchNumber = @p8, "); }  
                             if (tx_vw_inventoryunitspost.dtExpireAt != null) { sql.Append("@dtExpireAt = @p9, "); }  
-                            sql.Append("@ixStatus = @p10, ");
-                            if (tx_vw_inventoryunitspost.UserName != null) { sql.Append("@UserName = @p11, "); }  
-                            sql.Append("@ixInventoryUnit = @p12 output "); 
+                            sql.Append("@nBaseUnitQuantityQueued = @p10, ");
+                            sql.Append("@ixStatus = @p11, ");
+                            if (tx_vw_inventoryunitspost.UserName != null) { sql.Append("@UserName = @p12, "); }  
+                            sql.Append("@ixInventoryUnit = @p13 output "); 
                             cmd.CommandText = sql.ToString();
 
                             cmd.Parameters.Add(ixFacility);
@@ -372,6 +376,7 @@ This class ....
                             if (tx_vw_inventoryunitspost.sSerialNumber != null) { cmd.Parameters.Add(sSerialNumber); }
                             if (tx_vw_inventoryunitspost.sBatchNumber != null) { cmd.Parameters.Add(sBatchNumber); }
                             if (tx_vw_inventoryunitspost.dtExpireAt != null) { cmd.Parameters.Add(dtExpireAt); }
+                            cmd.Parameters.Add(nBaseUnitQuantityQueued);
                             cmd.Parameters.Add(ixStatus);
                             if (tx_vw_inventoryunitspost.UserName != null) { cmd.Parameters.Add(UserName); }
 
@@ -381,16 +386,16 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixInventoryUnit"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
-                        Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeInventoryUnits @ixInventoryUnit = @p0, @ixFacility = @p1, @ixCompany = @p2, @ixMaterial = @p3, @ixInventoryState = @p4, @ixHandlingUnit = @p5, @ixInventoryLocation = @p6, @nBaseUnitQuantity = @p7, @sSerialNumber = @p8, @sBatchNumber = @p9, @dtExpireAt = @p10, @ixStatus = @p11, @UserName = @p12", tx_vw_inventoryunitspost.ixInventoryUnit, tx_vw_inventoryunitspost.ixFacility, tx_vw_inventoryunitspost.ixCompany, tx_vw_inventoryunitspost.ixMaterial, tx_vw_inventoryunitspost.ixInventoryState, tx_vw_inventoryunitspost.ixHandlingUnit, tx_vw_inventoryunitspost.ixInventoryLocation, tx_vw_inventoryunitspost.nBaseUnitQuantity, tx_vw_inventoryunitspost.sSerialNumber, tx_vw_inventoryunitspost.sBatchNumber, tx_vw_inventoryunitspost.dtExpireAt, tx_vw_inventoryunitspost.ixStatus, tx_vw_inventoryunitspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeInventoryUnits @ixInventoryUnit = @p0, @ixFacility = @p1, @ixCompany = @p2, @ixMaterial = @p3, @ixInventoryState = @p4, @ixHandlingUnit = @p5, @ixInventoryLocation = @p6, @nBaseUnitQuantity = @p7, @sSerialNumber = @p8, @sBatchNumber = @p9, @dtExpireAt = @p10, @nBaseUnitQuantityQueued = @p11, @ixStatus = @p12, @UserName = @p13", tx_vw_inventoryunitspost.ixInventoryUnit, tx_vw_inventoryunitspost.ixFacility, tx_vw_inventoryunitspost.ixCompany, tx_vw_inventoryunitspost.ixMaterial, tx_vw_inventoryunitspost.ixInventoryState, tx_vw_inventoryunitspost.ixHandlingUnit, tx_vw_inventoryunitspost.ixInventoryLocation, tx_vw_inventoryunitspost.nBaseUnitQuantity, tx_vw_inventoryunitspost.sSerialNumber, tx_vw_inventoryunitspost.sBatchNumber, tx_vw_inventoryunitspost.dtExpireAt, tx_vw_inventoryunitspost.nBaseUnitQuantityQueued, tx_vw_inventoryunitspost.ixStatus, tx_vw_inventoryunitspost.UserName);
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:
-                        Database.ExecuteSqlCommand("exec dbo.tx_sp_DeleteInventoryUnits @ixInventoryUnit = @p0, @ixFacility = @p1, @ixCompany = @p2, @ixMaterial = @p3, @ixInventoryState = @p4, @ixHandlingUnit = @p5, @ixInventoryLocation = @p6, @nBaseUnitQuantity = @p7, @sSerialNumber = @p8, @sBatchNumber = @p9, @dtExpireAt = @p10, @ixStatus = @p11, @UserName = @p12", tx_vw_inventoryunitspost.ixInventoryUnit, tx_vw_inventoryunitspost.ixFacility, tx_vw_inventoryunitspost.ixCompany, tx_vw_inventoryunitspost.ixMaterial, tx_vw_inventoryunitspost.ixInventoryState, tx_vw_inventoryunitspost.ixHandlingUnit, tx_vw_inventoryunitspost.ixInventoryLocation, tx_vw_inventoryunitspost.nBaseUnitQuantity, tx_vw_inventoryunitspost.sSerialNumber, tx_vw_inventoryunitspost.sBatchNumber, tx_vw_inventoryunitspost.dtExpireAt, tx_vw_inventoryunitspost.ixStatus, tx_vw_inventoryunitspost.UserName);
+                        Database.ExecuteSqlCommand("exec dbo.tx_sp_DeleteInventoryUnits @ixInventoryUnit = @p0, @ixFacility = @p1, @ixCompany = @p2, @ixMaterial = @p3, @ixInventoryState = @p4, @ixHandlingUnit = @p5, @ixInventoryLocation = @p6, @nBaseUnitQuantity = @p7, @sSerialNumber = @p8, @sBatchNumber = @p9, @dtExpireAt = @p10, @nBaseUnitQuantityQueued = @p11, @ixStatus = @p12, @UserName = @p13", tx_vw_inventoryunitspost.ixInventoryUnit, tx_vw_inventoryunitspost.ixFacility, tx_vw_inventoryunitspost.ixCompany, tx_vw_inventoryunitspost.ixMaterial, tx_vw_inventoryunitspost.ixInventoryState, tx_vw_inventoryunitspost.ixHandlingUnit, tx_vw_inventoryunitspost.ixInventoryLocation, tx_vw_inventoryunitspost.nBaseUnitQuantity, tx_vw_inventoryunitspost.sSerialNumber, tx_vw_inventoryunitspost.sBatchNumber, tx_vw_inventoryunitspost.dtExpireAt, tx_vw_inventoryunitspost.nBaseUnitQuantityQueued, tx_vw_inventoryunitspost.ixStatus, tx_vw_inventoryunitspost.UserName);
                         e.State = EntityState.Detached;                           
 						break;
                 }

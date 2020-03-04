@@ -51,7 +51,7 @@
 			@Html.DisplayNameFor(model => model.ixCompanyBefore)
 		</dt>
 		<dd>
-			@Html.ActionLink(Model.CompaniesFKDiffCompanyBefore.sCompany, "Details", "Companies", new { id = Model.ixCompanyBefore }, null)
+			@Html.DisplayFor(model => model.CompaniesFKDiffCompanyBefore.sCompany)
 		</dd>
 		<dt>
 			@Html.DisplayNameFor(model => model.ixCompanyAfter)

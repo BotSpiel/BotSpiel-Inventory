@@ -66,22 +66,34 @@
 			@Html.DisplayFor(model => model.nHandlingUnitQuantity)
 		</dd>
 		<dt>
-			@Html.DisplayNameFor(model => model.sBatchNumber)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.sBatchNumber)
-		</dd>
-		<dt>
 			@Html.DisplayNameFor(model => model.sSerialNumber)
 		</dt>
 		<dd>
 			@Html.DisplayFor(model => model.sSerialNumber)
 		</dd>
 		<dt>
+			@Html.DisplayNameFor(model => model.sBatchNumber)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBatchNumber)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.dtExpireAt)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.dtExpireAt)
+		</dd>
+		<dt>
 			@Html.DisplayNameFor(model => model.nBaseUnitQuantityReceived)
 		</dt>
 		<dd>
 			@Html.DisplayFor(model => model.nBaseUnitQuantityReceived)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InventoryStates.sInventoryState)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InventoryStates.sInventoryState, "Details", "InventoryStates", new { id = Model.ixInventoryState }, null)
 		</dd>
 		<dt>
 			@Html.DisplayNameFor(model => model.Statuses.sStatus)

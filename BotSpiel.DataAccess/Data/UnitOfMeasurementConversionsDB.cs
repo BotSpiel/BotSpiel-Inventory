@@ -69,7 +69,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is UnitOfMeasurementConversionsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is UnitOfMeasurementConversionsPost)).ToList())
             {
                 var config_vw_unitofmeasurementconversionspost = e.Entity as UnitOfMeasurementConversionsPost;
                 switch (e.State)
@@ -117,12 +117,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixUnitOfMeasurementConversion"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeUnitOfMeasurementConversions @ixUnitOfMeasurementConversion = @p0, @ixUnitOfMeasurementFrom = @p1, @ixUnitOfMeasurementTo = @p2, @nMultiplier = @p3, @UserName = @p4", config_vw_unitofmeasurementconversionspost.ixUnitOfMeasurementConversion, config_vw_unitofmeasurementconversionspost.ixUnitOfMeasurementFrom, config_vw_unitofmeasurementconversionspost.ixUnitOfMeasurementTo, config_vw_unitofmeasurementconversionspost.nMultiplier, config_vw_unitofmeasurementconversionspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

@@ -42,10 +42,29 @@ This class ....
 
         public IQueryable<CarrierServices> Index()
         {
+            //Custom Code Start | Replaced Code Block
+            //Replaced Code Block Start
+            //var carrierservices = _context.CarrierServices.Include(a => a.Carriers).AsNoTracking();
+            //Replaced Code Block End
+            var carrierservices = _context.CarrierServices.Where(a => a.ixCarrierService > 0).Include(a => a.Carriers).AsNoTracking();
+            //Custom Code End
+            return carrierservices;
+        }
+
+        public IQueryable<CarrierServices> IndexDb()
+        {
             var carrierservices = _context.CarrierServices.Include(a => a.Carriers).AsNoTracking(); 
             return carrierservices;
         }
        public IQueryable<Carriers> selectCarriers()
+        {
+            List<Carriers> carriers = new List<Carriers>();
+            _context.Carriers.Include(a => a.CarrierTypes).AsNoTracking()
+                .ToList()
+                .ForEach(x => carriers.Add(x));
+            return carriers.AsQueryable();
+        }
+       public IQueryable<Carriers> CarriersDb()
         {
             List<Carriers> carriers = new List<Carriers>();
             _context.Carriers.Include(a => a.CarrierTypes).AsNoTracking()

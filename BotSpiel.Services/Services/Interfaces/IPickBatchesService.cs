@@ -23,8 +23,14 @@ This interface ....
         PickBatchesPost GetPost(Int64 ixPickBatch);        
 		PickBatches Get(Int64 ixPickBatch);
         IQueryable<PickBatches> Index();
-       IQueryable<Statuses> selectStatuses();
+        IQueryable<PickBatches> IndexDb();
+        //Custom Code Start | Added Code Block 
+        IQueryable<PickBatchesPost> IndexDbPost();
+        //Custom Code End
+        IQueryable<Statuses> selectStatuses();
         IQueryable<PickBatchTypes> selectPickBatchTypes();
+       IQueryable<Statuses> StatusesDb();
+        IQueryable<PickBatchTypes> PickBatchTypesDb();
         bool VerifyPickBatchUnique(Int64 ixPickBatch, string sPickBatch);
         List<string> VerifyPickBatchDeleteOK(Int64 ixPickBatch, string sPickBatch);
 

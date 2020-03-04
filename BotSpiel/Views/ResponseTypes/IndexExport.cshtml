@@ -1,0 +1,16 @@
+@model IGrid<BotSpiel.DataAccess.Models.ResponseTypes>
+
+@{
+    ViewBag.Title = "Index Response Types Export";
+}
+<br>
+<h2>Response Types Export</h2>
+
+<p>
+    <a href="@(Url.Action("ExportIndex") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+    @Html.ActionLink(" | Grid", "Index")
+</p>
+
+@(new HtmlGrid<BotSpiel.DataAccess.Models.ResponseTypes>(Html, Model))
+ 
+

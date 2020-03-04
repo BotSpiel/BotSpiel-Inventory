@@ -1,0 +1,44 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IPurchasesService _purchasesService
+@model IEnumerable<BotSpiel.DataAccess.Models.Purchases>
+
+@{
+	List<SelectListItem> queryCompanies = new List<SelectListItem>();
+	queryCompanies.AddRange(_purchasesService.selectCompanies().ToList().OrderBy(de => de.sCompany).Select(de => new SelectListItem() { Text = de.sCompany, Value = de.sCompany.ToString()}));
+	List<SelectListItem> queryPeople = new List<SelectListItem>();
+	queryPeople.AddRange(_purchasesService.selectPeople().ToList().OrderBy(de => de.sPerson).Select(de => new SelectListItem() { Text = de.sPerson, Value = de.sPerson.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixPurchase, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixPurchase).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixPurchase }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixPurchaseEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixPurchase }, new { @class = "modal-link" }));
+				columns.Add(model => model.sPurchase).Titled("Purchase").Sortable(true).Filterable(true);
+				columns.Add(model => model.People.sPerson).Titled("Person").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryPeople);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("purchases-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

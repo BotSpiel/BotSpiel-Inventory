@@ -22,6 +22,7 @@ This interface ....
         MoveQueueTypesPost GetPost(Int64 ixMoveQueueType);        
 		MoveQueueTypes Get(Int64 ixMoveQueueType);
         IQueryable<MoveQueueTypes> Index();
+        IQueryable<MoveQueueTypes> IndexDb();
         bool VerifyMoveQueueTypeUnique(Int64 ixMoveQueueType, string sMoveQueueType);
         List<string> VerifyMoveQueueTypeDeleteOK(Int64 ixMoveQueueType, string sMoveQueueType);
         void RegisterCreate(MoveQueueTypesPost movequeuetypesPost);

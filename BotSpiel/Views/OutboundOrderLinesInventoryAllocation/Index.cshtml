@@ -1,0 +1,21 @@
+
+
+@model IEnumerable<BotSpiel.DataAccess.Models.OutboundOrderLinesInventoryAllocation>
+
+@{
+    ViewBag.Title = "Index Outbound Order Lines Inventory Allocation";
+}
+<br>
+<h2>Outbound Order Lines Inventory Allocation</h2>
+
+<p>
+    @Html.ActionLink(" | Grid Export", "IndexExport")
+</p>
+
+<p>    
+    <button type="button" id="refresh-grid" class="btn btn-default content-refresh">Refresh Grid</button>
+</p>
+
+@Html.AjaxGrid(Url.Action("IndexGrid"), new { id = "outboundorderlinesinventoryallocation-ajax-grid" })
+ 
+

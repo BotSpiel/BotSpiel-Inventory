@@ -1,0 +1,58 @@
+
+@model BotSpiel.DataAccess.Models.OutboundOrderLinePacking
+
+@{
+    ViewBag.Title = "Details Outbound Order Line Packing";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Outbound Order Line Packing</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixOutboundOrderLinePack)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixOutboundOrderLinePack)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sOutboundOrderLinePack)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sOutboundOrderLinePack)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.OutboundOrderLines.sOutboundOrderLine)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.OutboundOrderLines.sOutboundOrderLine, "Details", "OutboundOrderLines", new { id = Model.ixOutboundOrderLine }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.HandlingUnits.sHandlingUnit)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.HandlingUnits.sHandlingUnit, "Details", "HandlingUnits", new { id = Model.ixHandlingUnit }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantityPacked)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantityPacked)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Statuses.sStatus)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

@@ -1,0 +1,53 @@
+
+@model BotSpiel.DataAccess.Models.PurchasesPost
+
+@{
+    ViewBag.Title = "Create Purchases";
+}
+<br>
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Purchases</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+			@Html.ActionLink("Person ID", "Index", "People", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixPerson", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixPerson, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Company ID", "Index", "Companies", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixCompany", null, "None", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixCompany, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Grid", "Index")
+</div>
+
+@section Scripts {
+}
+
+ 
+

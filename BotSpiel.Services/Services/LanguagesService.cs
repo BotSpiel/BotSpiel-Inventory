@@ -32,6 +32,7 @@ This class ....
         public LanguagesPost GetPost(Int64 ixLanguage) => _languagesRepository.GetPost(ixLanguage);
         public Languages Get(Int64 ixLanguage) => _languagesRepository.Get(ixLanguage);
         public IQueryable<Languages> Index() => _languagesRepository.Index();
+        public IQueryable<Languages> IndexDb() => _languagesRepository.IndexDb();
         public bool VerifyLanguageUnique(Int64 ixLanguage, string sLanguage) => _languagesRepository.VerifyLanguageUnique(ixLanguage, sLanguage);
         public List<string> VerifyLanguageDeleteOK(Int64 ixLanguage, string sLanguage) => _languagesRepository.VerifyLanguageDeleteOK(ixLanguage, sLanguage);
 

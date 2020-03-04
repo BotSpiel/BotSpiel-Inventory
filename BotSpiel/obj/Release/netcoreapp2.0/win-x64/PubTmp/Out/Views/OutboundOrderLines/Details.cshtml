@@ -24,6 +24,12 @@
 			@Html.DisplayFor(model => model.sOutboundOrderLine)
 		</dd>
 		<dt>
+			@Html.DisplayNameFor(model => model.OutboundOrders.sOutboundOrder)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.OutboundOrders.sOutboundOrder, "Details", "OutboundOrders", new { id = Model.ixOutboundOrder }, null)
+		</dd>
+		<dt>
 			@Html.DisplayNameFor(model => model.sOrderLineReference)
 		</dt>
 		<dd>

@@ -41,6 +41,12 @@ This class ....
             var executionmodulegrids = _context.ExecutionModuleGrids.AsNoTracking(); 
             return executionmodulegrids;
         }
+
+        public IQueryable<ExecutionModuleGrids> IndexDb()
+        {
+            var executionmodulegrids = _context.ExecutionModuleGrids.AsNoTracking(); 
+            return executionmodulegrids;
+        }
 		public IQueryable<ExecutionModuleGridsconfig> Indexconfig() => _context.ExecutionModuleGridsconfig;
 		public IQueryable<ExecutionModuleGridsmd> Indexmd() => _context.ExecutionModuleGridsmd;
 		public IQueryable<ExecutionModuleGridstx> Indextx() => _context.ExecutionModuleGridstx;

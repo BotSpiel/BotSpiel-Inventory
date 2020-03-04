@@ -7,6 +7,8 @@
 @{
 	List<SelectListItem> queryMaterials = new List<SelectListItem>();
 	queryMaterials.AddRange(_outboundorderlinesService.selectMaterials().ToList().OrderBy(de => de.sMaterial).Select(de => new SelectListItem() { Text = de.sMaterial, Value = de.sMaterial.ToString()}));
+	List<SelectListItem> queryOutboundOrders = new List<SelectListItem>();
+	queryOutboundOrders.AddRange(_outboundorderlinesService.selectOutboundOrders().ToList().OrderBy(de => de.sOutboundOrder).Select(de => new SelectListItem() { Text = de.sOutboundOrder, Value = de.sOutboundOrder.ToString()}));
 	List<SelectListItem> queryStatuses = new List<SelectListItem>();
 	queryStatuses.AddRange(_outboundorderlinesService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString()}));
 
@@ -21,6 +23,7 @@
 				columns.Add(model => model.ixOutboundOrderLine).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixOutboundOrderLine }, new { @class = "modal-link" }));
 				columns.Add(model => model.ixOutboundOrderLineEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixOutboundOrderLine }, new { @class = "modal-link" }));
 				columns.Add(model => model.sOutboundOrderLine).Titled("Outbound Order Line").Sortable(true).Filterable(true);
+				columns.Add(model => model.OutboundOrders.sOutboundOrder).Titled("Outbound Order").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryOutboundOrders);
 				columns.Add(model => model.sOrderLineReference).Titled("Order Line Reference").Sortable(true).Filterable(true);
 				columns.Add(model => model.Materials.sMaterial).Titled("Material").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryMaterials);
 				columns.Add(model => model.sBatchNumber).Titled("Batch Number").Sortable(true).Filterable(true);

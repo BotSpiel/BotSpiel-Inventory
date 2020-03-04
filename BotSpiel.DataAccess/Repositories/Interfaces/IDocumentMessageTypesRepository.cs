@@ -22,6 +22,7 @@ This interface ....
         DocumentMessageTypesPost GetPost(Int64 ixDocumentMessageType);        
 		DocumentMessageTypes Get(Int64 ixDocumentMessageType);
         IQueryable<DocumentMessageTypes> Index();
+        IQueryable<DocumentMessageTypes> IndexDb();
         bool VerifyDocumentMessageTypeUnique(Int64 ixDocumentMessageType, string sDocumentMessageType);
         List<string> VerifyDocumentMessageTypeDeleteOK(Int64 ixDocumentMessageType, string sDocumentMessageType);
         void RegisterCreate(DocumentMessageTypesPost documentmessagetypesPost);

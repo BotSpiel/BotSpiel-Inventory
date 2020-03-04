@@ -1,0 +1,49 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IInvoicePurchaseLineTaxAmountsService _invoicepurchaselinetaxamountsService
+@model IEnumerable<BotSpiel.DataAccess.Models.InvoicePurchaseLineTaxAmounts>
+
+@{
+	List<SelectListItem> queryCurrencies = new List<SelectListItem>();
+	queryCurrencies.AddRange(_invoicepurchaselinetaxamountsService.selectCurrencies().ToList().OrderBy(de => de.sCurrency).Select(de => new SelectListItem() { Text = de.sCurrency, Value = de.sCurrency.ToString()}));
+	List<SelectListItem> queryInvoicePurchaseLineAmounts = new List<SelectListItem>();
+	queryInvoicePurchaseLineAmounts.AddRange(_invoicepurchaselinetaxamountsService.selectInvoicePurchaseLineAmounts().ToList().OrderBy(de => de.sInvoicePurchaseLineAmount).Select(de => new SelectListItem() { Text = de.sInvoicePurchaseLineAmount, Value = de.sInvoicePurchaseLineAmount.ToString()}));
+	List<SelectListItem> queryTaxes = new List<SelectListItem>();
+	queryTaxes.AddRange(_invoicepurchaselinetaxamountsService.selectTaxes().ToList().OrderBy(de => de.sTax).Select(de => new SelectListItem() { Text = de.sTax, Value = de.sTax.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixInvoicePurchaseLineTaxAmount, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixInvoicePurchaseLineTaxAmount).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixInvoicePurchaseLineTaxAmount }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixInvoicePurchaseLineTaxAmountEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixInvoicePurchaseLineTaxAmount }, new { @class = "modal-link" }));
+				columns.Add(model => model.sInvoicePurchaseLineTaxAmount).Titled("Invoice Purchase Line Tax Amount").Sortable(true).Filterable(true);
+				columns.Add(model => model.InvoicePurchaseLineAmounts.sInvoicePurchaseLineAmount).Titled("Invoice Purchase Line Amount").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInvoicePurchaseLineAmounts);
+				columns.Add(model => model.Taxes.sTax).Titled("Tax").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryTaxes);
+				columns.Add(model => model.mAmount).Titled("Amount").Sortable(true).Filterable(true);
+				columns.Add(model => model.Currencies.sCurrency).Titled("Currency").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCurrencies);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("invoicepurchaselinetaxamounts-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

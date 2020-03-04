@@ -45,7 +45,21 @@ This class ....
             var planetarysystems = _context.PlanetarySystems.Include(a => a.Galaxies).AsNoTracking(); 
             return planetarysystems;
         }
+
+        public IQueryable<PlanetarySystems> IndexDb()
+        {
+            var planetarysystems = _context.PlanetarySystems.Include(a => a.Galaxies).AsNoTracking(); 
+            return planetarysystems;
+        }
        public IQueryable<Galaxies> selectGalaxies()
+        {
+            List<Galaxies> galaxies = new List<Galaxies>();
+            _context.Galaxies.Include(a => a.Universes).AsNoTracking()
+                .ToList()
+                .ForEach(x => galaxies.Add(x));
+            return galaxies.AsQueryable();
+        }
+       public IQueryable<Galaxies> GalaxiesDb()
         {
             List<Galaxies> galaxies = new List<Galaxies>();
             _context.Galaxies.Include(a => a.Universes).AsNoTracking()

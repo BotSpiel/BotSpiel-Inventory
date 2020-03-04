@@ -1,0 +1,48 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IRequestsForActionService _requestsforactionService
+@model IEnumerable<BotSpiel.DataAccess.Models.RequestsForAction>
+
+@{
+	List<SelectListItem> queryLanguages = new List<SelectListItem>();
+	queryLanguages.AddRange(_requestsforactionService.selectLanguages().ToList().OrderBy(de => de.sLanguage).Select(de => new SelectListItem() { Text = de.sLanguage, Value = de.sLanguage.ToString()}));
+	List<SelectListItem> queryLanguageStyles = new List<SelectListItem>();
+	queryLanguageStyles.AddRange(_requestsforactionService.selectLanguageStyles().ToList().OrderBy(de => de.sLanguageStyle).Select(de => new SelectListItem() { Text = de.sLanguageStyle, Value = de.sLanguageStyle.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixRequestForAction, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixRequestForAction).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixRequestForAction }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixRequestForActionEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixRequestForAction }, new { @class = "modal-link" }));
+				columns.Add(model => model.sRequestForAction).Titled("Request For Action").Sortable(true).Filterable(true);
+				columns.Add(model => model.Languages.sLanguage).Titled("Language").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryLanguages);
+				columns.Add(model => model.LanguageStyles.sLanguageStyle).Titled("Language Style").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryLanguageStyles);
+				columns.Add(model => model.sModule).Titled("Module").Sortable(true).Filterable(true);
+				columns.Add(model => model.sEntity).Titled("Entity").Sortable(true).Filterable(true);
+				columns.Add(model => model.sEntityIntent).Titled("Entity Intent").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("requestsforaction-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

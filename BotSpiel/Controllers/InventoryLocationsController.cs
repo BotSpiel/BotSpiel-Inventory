@@ -100,6 +100,7 @@ This class ....
             grid.Query = Request.Query;
 				grid.Columns.Add(model => model.sInventoryLocation).Titled("Inventory Location").Sortable(true).Filterable(true).MultiFilterable(true);
 				grid.Columns.Add(model => model.LocationFunctions.sLocationFunction).Titled("Location Function").Sortable(true).Filterable(true);
+				grid.Columns.Add(model => model.Facilities.sFacility).Titled("Facility").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.FacilityFloors.sFacilityFloor).Titled("Facility Floor").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.FacilityZones.sFacilityZone).Titled("Facility Zone").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.FacilityWorkAreas.sFacilityWorkArea).Titled("Facility Work Area").Sortable(true).Filterable(true);
@@ -145,6 +146,7 @@ This class ....
         public ActionResult Create()
         {
 			ViewBag.ixCompany = new SelectList(_inventorylocationsService.selectCompanies().Select( x => new { x.ixCompany, x.sCompany }), "ixCompany", "sCompany");
+			ViewBag.ixFacility = new SelectList(_inventorylocationsService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility");
 			ViewBag.ixFacilityAisleFace = new SelectList(_inventorylocationsService.selectFacilityAisleFaces().Select( x => new { x.ixFacilityAisleFace, x.sFacilityAisleFace }), "ixFacilityAisleFace", "sFacilityAisleFace");
 			ViewBag.ixFacilityFloor = new SelectList(_inventorylocationsService.selectFacilityFloors().Select( x => new { x.ixFacilityFloor, x.sFacilityFloor }), "ixFacilityFloor", "sFacilityFloor");
 			ViewBag.ixFacilityWorkArea = new SelectList(_inventorylocationsService.selectFacilityWorkAreas().Select( x => new { x.ixFacilityWorkArea, x.sFacilityWorkArea }), "ixFacilityWorkArea", "sFacilityWorkArea");
@@ -161,15 +163,22 @@ This class ....
         // POST: InventoryLocations/Create 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("ixInventoryLocation,sInventoryLocation,ixLocationFunction,ixCompany,ixFacilityFloor,ixFacilityZone,ixFacilityWorkArea,ixFacilityAisleFace,sLevel,sBay,sSlot,ixInventoryLocationSize,nSequence,nXOffset,ixXOffsetUnit,nYOffset,ixYOffsetUnit,nZOffset,ixZOffsetUnit,sLatitude,sLongitude,bTrackUtilisation,nUtilisationPercent,nQueuedUtilisationPercent")] InventoryLocationsPost inventorylocations)
+        public ActionResult Create([Bind("ixInventoryLocation,sInventoryLocation,ixLocationFunction,ixFacility,ixCompany,ixFacilityFloor,ixFacilityZone,ixFacilityWorkArea,ixFacilityAisleFace,sLevel,sBay,sSlot,ixInventoryLocationSize,nSequence,nXOffset,ixXOffsetUnit,nYOffset,ixYOffsetUnit,nZOffset,ixZOffsetUnit,sLatitude,sLongitude,bTrackUtilisation,nUtilisationPercent,nQueuedUtilisationPercent")] InventoryLocationsPost inventorylocations)
         {
             if (ModelState.IsValid)
             {
                 inventorylocations.UserName = User.Identity.Name;
-                _inventorylocationsService.Create(inventorylocations);
-                return RedirectToAction("Index");
+                //Custom Code Start | Replaced Code Block
+                //Replaced Code Block Start
+                //_inventorylocationsService.Create(inventorylocations);
+                //return RedirectToAction("Index");
+                //Replaced Code Block End
+                var ixInventoryLocation = _inventorylocationsService.Create(inventorylocations).Result;
+                return RedirectToAction("Edit", new { id = ixInventoryLocation });
+                //Custom Code End
             }
-			ViewBag.ixCompany = new SelectList(_inventorylocationsService.selectCompanies().Select( x => new { x.ixCompany, x.sCompany }), "ixCompany", "sCompany");
+            ViewBag.ixCompany = new SelectList(_inventorylocationsService.selectCompanies().Select( x => new { x.ixCompany, x.sCompany }), "ixCompany", "sCompany");
+			ViewBag.ixFacility = new SelectList(_inventorylocationsService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility");
 			ViewBag.ixFacilityAisleFace = new SelectList(_inventorylocationsService.selectFacilityAisleFaces().Select( x => new { x.ixFacilityAisleFace, x.sFacilityAisleFace }), "ixFacilityAisleFace", "sFacilityAisleFace");
 			ViewBag.ixFacilityFloor = new SelectList(_inventorylocationsService.selectFacilityFloors().Select( x => new { x.ixFacilityFloor, x.sFacilityFloor }), "ixFacilityFloor", "sFacilityFloor");
 			ViewBag.ixFacilityWorkArea = new SelectList(_inventorylocationsService.selectFacilityWorkAreas().Select( x => new { x.ixFacilityWorkArea, x.sFacilityWorkArea }), "ixFacilityWorkArea", "sFacilityWorkArea");
@@ -183,6 +192,65 @@ This class ....
             return View(inventorylocations);
         }
 
+        //Custom Code Start | Added Code Block 
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult CreateWithID(long id)
+        {
+            ViewBag.ixCompany = new SelectList(_inventorylocationsService.selectCompanies().Select(x => new { x.ixCompany, x.sCompany }), "ixCompany", "sCompany");
+            ViewBag.ixFacility = new SelectList(_inventorylocationsService.selectFacilities().Select(x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility");
+            ViewBag.ixFacilityAisleFace = new SelectList(_inventorylocationsService.selectFacilityAisleFaces().Where(x => x.ixFacilityAisleFace == id).Select(x => new { x.ixFacilityAisleFace, x.sFacilityAisleFace }), "ixFacilityAisleFace", "sFacilityAisleFace");
+            ViewBag.ixFacilityFloor = new SelectList(_inventorylocationsService.selectFacilityFloors().Select(x => new { x.ixFacilityFloor, x.sFacilityFloor }), "ixFacilityFloor", "sFacilityFloor");
+            ViewBag.ixFacilityWorkArea = new SelectList(_inventorylocationsService.selectFacilityWorkAreas().Select(x => new { x.ixFacilityWorkArea, x.sFacilityWorkArea }), "ixFacilityWorkArea", "sFacilityWorkArea");
+            ViewBag.ixFacilityZone = new SelectList(_inventorylocationsService.selectFacilityZones().Select(x => new { x.ixFacilityZone, x.sFacilityZone }), "ixFacilityZone", "sFacilityZone");
+            ViewBag.ixInventoryLocationSize = new SelectList(_inventorylocationsService.selectInventoryLocationSizes().Select(x => new { x.ixInventoryLocationSize, x.sInventoryLocationSize }), "ixInventoryLocationSize", "sInventoryLocationSize");
+            ViewBag.ixLocationFunction = new SelectList(_inventorylocationsService.selectLocationFunctions().Select(x => new { x.ixLocationFunction, x.sLocationFunction }), "ixLocationFunction", "sLocationFunction");
+            ViewBag.ixXOffsetUnit = new SelectList(_inventorylocationsService.selectUnitsOfMeasurement().Select(x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            ViewBag.ixYOffsetUnit = new SelectList(_inventorylocationsService.selectUnitsOfMeasurement().Select(x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            ViewBag.ixZOffsetUnit = new SelectList(_inventorylocationsService.selectUnitsOfMeasurement().Select(x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+
+            return View();
+        }
+
+        // POST: InventoryLocations/Create 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateWithID([Bind("ixInventoryLocation,sInventoryLocation,ixLocationFunction,ixFacility,ixCompany,ixFacilityFloor,ixFacilityZone,ixFacilityWorkArea,ixFacilityAisleFace,sLevel,sBay,sSlot,ixInventoryLocationSize,nSequence,nXOffset,ixXOffsetUnit,nYOffset,ixYOffsetUnit,nZOffset,ixZOffsetUnit,sLatitude,sLongitude,bTrackUtilisation,nUtilisationPercent,nQueuedUtilisationPercent")] InventoryLocationsPost inventorylocations)
+        {
+            if (ModelState.IsValid)
+            {
+                inventorylocations.UserName = User.Identity.Name;
+                //Custom Code Start | Replaced Code Block
+                //Replaced Code Block Start
+                //_inventorylocationsService.Create(inventorylocations);
+                //return RedirectToAction("Index");
+                //Replaced Code Block End
+                var ixInventoryLocation = _inventorylocationsService.Create(inventorylocations).Result;
+                return RedirectToAction("Edit", "FacilityAisleFaces", new { id = inventorylocations.ixFacilityAisleFace });
+                //Custom Code End
+            }
+            ViewBag.ixCompany = new SelectList(_inventorylocationsService.selectCompanies().Select(x => new { x.ixCompany, x.sCompany }), "ixCompany", "sCompany");
+            ViewBag.ixFacility = new SelectList(_inventorylocationsService.selectFacilities().Select(x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility");
+            ViewBag.ixFacilityAisleFace = new SelectList(_inventorylocationsService.selectFacilityAisleFaces().Where(x => x.ixFacilityAisleFace == inventorylocations.ixFacilityAisleFace).Select(x => new { x.ixFacilityAisleFace, x.sFacilityAisleFace }), "ixFacilityAisleFace", "sFacilityAisleFace");
+            ViewBag.ixFacilityFloor = new SelectList(_inventorylocationsService.selectFacilityFloors().Select(x => new { x.ixFacilityFloor, x.sFacilityFloor }), "ixFacilityFloor", "sFacilityFloor");
+            ViewBag.ixFacilityWorkArea = new SelectList(_inventorylocationsService.selectFacilityWorkAreas().Select(x => new { x.ixFacilityWorkArea, x.sFacilityWorkArea }), "ixFacilityWorkArea", "sFacilityWorkArea");
+            ViewBag.ixFacilityZone = new SelectList(_inventorylocationsService.selectFacilityZones().Select(x => new { x.ixFacilityZone, x.sFacilityZone }), "ixFacilityZone", "sFacilityZone");
+            ViewBag.ixInventoryLocationSize = new SelectList(_inventorylocationsService.selectInventoryLocationSizes().Select(x => new { x.ixInventoryLocationSize, x.sInventoryLocationSize }), "ixInventoryLocationSize", "sInventoryLocationSize");
+            ViewBag.ixLocationFunction = new SelectList(_inventorylocationsService.selectLocationFunctions().Select(x => new { x.ixLocationFunction, x.sLocationFunction }), "ixLocationFunction", "sLocationFunction");
+            ViewBag.ixXOffsetUnit = new SelectList(_inventorylocationsService.selectUnitsOfMeasurement().Select(x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            ViewBag.ixYOffsetUnit = new SelectList(_inventorylocationsService.selectUnitsOfMeasurement().Select(x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            ViewBag.ixZOffsetUnit = new SelectList(_inventorylocationsService.selectUnitsOfMeasurement().Select(x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+
+            return View(inventorylocations);
+        }
+
+
+
+        //Custom Code End
+
+
+
         // GET: InventoryLocations/Edit/1
         [Authorize]
         [HttpGet]
@@ -194,6 +262,7 @@ This class ....
                 return NotFound();
             }
 			ViewBag.ixCompany = new SelectList(_inventorylocationsService.selectCompaniesNullable().Select( x => new { ixCompany = x.Key, sCompany = x.Value }), "ixCompany", "sCompany", inventorylocations.ixCompany);
+			ViewBag.ixFacility = new SelectList(_inventorylocationsService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility", inventorylocations.ixFacility);
 			ViewBag.ixFacilityAisleFace = new SelectList(_inventorylocationsService.selectFacilityAisleFaces().Select( x => new { x.ixFacilityAisleFace, x.sFacilityAisleFace }), "ixFacilityAisleFace", "sFacilityAisleFace", inventorylocations.ixFacilityAisleFace);
 			ViewBag.ixFacilityFloor = new SelectList(_inventorylocationsService.selectFacilityFloors().Select( x => new { x.ixFacilityFloor, x.sFacilityFloor }), "ixFacilityFloor", "sFacilityFloor", inventorylocations.ixFacilityFloor);
 			ViewBag.ixFacilityWorkArea = new SelectList(_inventorylocationsService.selectFacilityWorkAreas().Select( x => new { x.ixFacilityWorkArea, x.sFacilityWorkArea }), "ixFacilityWorkArea", "sFacilityWorkArea", inventorylocations.ixFacilityWorkArea);
@@ -210,7 +279,7 @@ This class ....
         // POST: InventoryLocations/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("ixInventoryLocation,sInventoryLocation,ixLocationFunction,ixCompany,ixFacilityFloor,ixFacilityZone,ixFacilityWorkArea,ixFacilityAisleFace,sLevel,sBay,sSlot,ixInventoryLocationSize,nSequence,nXOffset,ixXOffsetUnit,nYOffset,ixYOffsetUnit,nZOffset,ixZOffsetUnit,sLatitude,sLongitude,bTrackUtilisation,nUtilisationPercent,nQueuedUtilisationPercent")] InventoryLocationsPost inventorylocations)
+        public ActionResult Edit([Bind("ixInventoryLocation,sInventoryLocation,ixLocationFunction,ixFacility,ixCompany,ixFacilityFloor,ixFacilityZone,ixFacilityWorkArea,ixFacilityAisleFace,sLevel,sBay,sSlot,ixInventoryLocationSize,nSequence,nXOffset,ixXOffsetUnit,nYOffset,ixYOffsetUnit,nZOffset,ixZOffsetUnit,sLatitude,sLongitude,bTrackUtilisation,nUtilisationPercent,nQueuedUtilisationPercent")] InventoryLocationsPost inventorylocations)
         {
             if (ModelState.IsValid)
             {
@@ -219,6 +288,7 @@ This class ....
                 return RedirectToAction("Index");
             }
 			ViewBag.ixCompany = new SelectList(_inventorylocationsService.selectCompaniesNullable().Select( x => new { ixCompany = x.Key, sCompany = x.Value }), "ixCompany", "sCompany", inventorylocations.ixCompany);
+			ViewBag.ixFacility = new SelectList(_inventorylocationsService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility", inventorylocations.ixFacility);
 			ViewBag.ixFacilityAisleFace = new SelectList(_inventorylocationsService.selectFacilityAisleFaces().Select( x => new { x.ixFacilityAisleFace, x.sFacilityAisleFace }), "ixFacilityAisleFace", "sFacilityAisleFace", inventorylocations.ixFacilityAisleFace);
 			ViewBag.ixFacilityFloor = new SelectList(_inventorylocationsService.selectFacilityFloors().Select( x => new { x.ixFacilityFloor, x.sFacilityFloor }), "ixFacilityFloor", "sFacilityFloor", inventorylocations.ixFacilityFloor);
 			ViewBag.ixFacilityWorkArea = new SelectList(_inventorylocationsService.selectFacilityWorkAreas().Select( x => new { x.ixFacilityWorkArea, x.sFacilityWorkArea }), "ixFacilityWorkArea", "sFacilityWorkArea", inventorylocations.ixFacilityWorkArea);

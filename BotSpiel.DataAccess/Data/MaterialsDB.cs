@@ -77,7 +77,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is MaterialsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is MaterialsPost)).ToList())
             {
                 var md_vw_materialspost = e.Entity as MaterialsPost;
                 switch (e.State)
@@ -205,12 +205,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixMaterial"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeMaterials @ixMaterial = @p0, @sMaterial = @p1, @sDescription = @p2, @ixMaterialType = @p3, @ixBaseUnit = @p4, @bTrackSerialNumber = @p5, @bTrackBatchNumber = @p6, @bTrackExpiry = @p7, @nDensity = @p8, @ixDensityUnit = @p9, @nShelflife = @p10, @ixShelflifeUnit = @p11, @nLength = @p12, @ixLengthUnit = @p13, @nWidth = @p14, @ixWidthUnit = @p15, @nHeight = @p16, @ixHeightUnit = @p17, @nWeight = @p18, @ixWeightUnit = @p19, @UserName = @p20", md_vw_materialspost.ixMaterial, md_vw_materialspost.sMaterial, md_vw_materialspost.sDescription, md_vw_materialspost.ixMaterialType, md_vw_materialspost.ixBaseUnit, md_vw_materialspost.bTrackSerialNumber, md_vw_materialspost.bTrackBatchNumber, md_vw_materialspost.bTrackExpiry, md_vw_materialspost.nDensity, md_vw_materialspost.ixDensityUnit, md_vw_materialspost.nShelflife, md_vw_materialspost.ixShelflifeUnit, md_vw_materialspost.nLength, md_vw_materialspost.ixLengthUnit, md_vw_materialspost.nWidth, md_vw_materialspost.ixWidthUnit, md_vw_materialspost.nHeight, md_vw_materialspost.ixHeightUnit, md_vw_materialspost.nWeight, md_vw_materialspost.ixWeightUnit, md_vw_materialspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

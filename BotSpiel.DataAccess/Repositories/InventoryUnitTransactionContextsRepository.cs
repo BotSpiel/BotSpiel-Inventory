@@ -43,6 +43,12 @@ This class ....
             var inventoryunittransactioncontexts = _context.InventoryUnitTransactionContexts.AsNoTracking(); 
             return inventoryunittransactioncontexts;
         }
+
+        public IQueryable<InventoryUnitTransactionContexts> IndexDb()
+        {
+            var inventoryunittransactioncontexts = _context.InventoryUnitTransactionContexts.AsNoTracking(); 
+            return inventoryunittransactioncontexts;
+        }
         public bool VerifyInventoryUnitTransactionContextUnique(Int64 ixInventoryUnitTransactionContext, string sInventoryUnitTransactionContext)
         {
             if (_context.InventoryUnitTransactionContexts.AsNoTracking().Where(x => x.sInventoryUnitTransactionContext == sInventoryUnitTransactionContext).Any() && ixInventoryUnitTransactionContext == 0L) return false;

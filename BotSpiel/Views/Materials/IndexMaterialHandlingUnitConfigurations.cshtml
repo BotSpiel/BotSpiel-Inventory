@@ -1,0 +1,63 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IMaterialHandlingUnitConfigurationsService _materialhandlingunitconfigurationsService
+
+@model IEnumerable<BotSpiel.DataAccess.Models.MaterialHandlingUnitConfigurations>
+
+@{
+    ViewBag.Title = "Index Material Handling Unit Configurations";
+}
+<br>
+<h4>Material Handling Unit Configurations</h4>
+
+<p>
+    @Html.ActionLink("Create New", "CreateWithID", "MaterialHandlingUnitConfigurations", new { id = Model.Select(x => x.ixMaterial).FirstOrDefault() })
+</p>
+
+@{
+    List<SelectListItem> queryHandlingUnitTypes = new List<SelectListItem>();
+    queryHandlingUnitTypes.AddRange(_materialhandlingunitconfigurationsService.selectHandlingUnitTypes().ToList().OrderBy(de => de.sHandlingUnitType).Select(de => new SelectListItem() { Text = de.sHandlingUnitType, Value = de.sHandlingUnitType.ToString() }));
+    List<SelectListItem> queryMaterials = new List<SelectListItem>();
+    queryMaterials.AddRange(_materialhandlingunitconfigurationsService.selectMaterials().ToList().OrderBy(de => de.sMaterial).Select(de => new SelectListItem() { Text = de.sMaterial, Value = de.sMaterial.ToString() }));
+    List<SelectListItem> queryUnitsOfMeasurement = new List<SelectListItem>();
+    queryUnitsOfMeasurement.AddRange(_materialhandlingunitconfigurationsService.selectUnitsOfMeasurement().ToList().OrderBy(de => de.sUnitOfMeasurement).Select(de => new SelectListItem() { Text = de.sUnitOfMeasurement, Value = de.sUnitOfMeasurement.ToString() }));
+
+}
+
+
+@(Html
+        .Grid(Model.Where(x => x.ixMaterialHandlingUnitConfiguration > 0))
+        .Build(columns =>
+        {
+                columns.Add(model => Html.CheckBox("Check_" + model.ixMaterialHandlingUnitConfiguration, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+                columns.Add(model => model.ixMaterialHandlingUnitConfiguration).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", "MaterialHandlingUnitConfigurations", new { id = item.ixMaterialHandlingUnitConfiguration }, new { @class = "modal-link" }));
+                columns.Add(model => model.ixMaterialHandlingUnitConfigurationEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", "MaterialHandlingUnitConfigurations", new { id = item.ixMaterialHandlingUnitConfiguration }, new { @class = "modal-link" }));
+                columns.Add(model => model.sMaterialHandlingUnitConfiguration).Titled("Material Handling Unit Configuration").Sortable(true).Filterable(true);
+                columns.Add(model => model.Materials.sMaterial).Titled("Material").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryMaterials);
+                columns.Add(model => model.nNestingLevel).Titled("Nesting Level").Sortable(true).Filterable(true);
+                columns.Add(model => model.HandlingUnitTypes.sHandlingUnitType).Titled("Handling Unit Type").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryHandlingUnitTypes);
+                columns.Add(model => model.nQuantity).Titled("Quantity").Sortable(true).Filterable(true);
+                columns.Add(model => model.nLength).Titled("Length").Sortable(true).Filterable(true);
+                columns.Add(model => model.nWidth).Titled("Width").Sortable(true).Filterable(true);
+                columns.Add(model => model.nHeight).Titled("Height").Sortable(true).Filterable(true);
+                columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+                columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+                columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+                columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("materialhandlingunitconfigurations-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+)
+
+
+
+

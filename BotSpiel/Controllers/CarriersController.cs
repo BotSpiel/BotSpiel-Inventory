@@ -146,10 +146,16 @@ This class ....
             if (ModelState.IsValid)
             {
                 carriers.UserName = User.Identity.Name;
-                _carriersService.Create(carriers);
-                return RedirectToAction("Index");
+                //Custom Code Start | Replaced Code Block
+                //Replaced Code Block Start
+                //_carriersService.Create(carriers);
+                //return RedirectToAction("Index");
+                //Replaced Code Block End
+                var ixCarrier = _carriersService.Create(carriers).Result;
+                return RedirectToAction("Edit", new { id = ixCarrier });
+                //Custom Code End
             }
-			ViewBag.ixCarrierType = new SelectList(_carriersService.selectCarrierTypes().Select( x => new { x.ixCarrierType, x.sCarrierType }), "ixCarrierType", "sCarrierType");
+            ViewBag.ixCarrierType = new SelectList(_carriersService.selectCarrierTypes().Select( x => new { x.ixCarrierType, x.sCarrierType }), "ixCarrierType", "sCarrierType");
 
             return View(carriers);
         }

@@ -62,6 +62,7 @@ This class ....
         {
             inventorylocations.Companies = _context.Companies.Find(inventorylocations.ixCompany);
         }
+            inventorylocations.Facilities = _context.Facilities.Find(inventorylocations.ixFacility);
             inventorylocations.FacilityAisleFaces = _context.FacilityAisleFaces.Find(inventorylocations.ixFacilityAisleFace);
             inventorylocations.FacilityFloors = _context.FacilityFloors.Find(inventorylocations.ixFacilityFloor);
             inventorylocations.FacilityWorkAreas = _context.FacilityWorkAreas.Find(inventorylocations.ixFacilityWorkArea);
@@ -89,16 +90,38 @@ This class ....
 
         public IQueryable<InventoryLocations> Index()
         {
-            var inventorylocations = _context.InventoryLocations.Include(a => a.LocationFunctions).Include(a => a.FacilityFloors).Include(a => a.FacilityZones).Include(a => a.FacilityWorkAreas).Include(a => a.FacilityAisleFaces).AsNoTracking(); 
+            var inventorylocations = _context.InventoryLocations.Include(a => a.LocationFunctions).Include(a => a.FacilityFloors).Include(a => a.FacilityZones).Include(a => a.FacilityWorkAreas).Include(a => a.FacilityAisleFaces).Include(a => a.Facilities).AsNoTracking(); 
             return inventorylocations;
         }
-       public IQueryable<Companies> selectCompanies()
+
+        public IQueryable<InventoryLocations> IndexDb()
+        {
+            var inventorylocations = _context.InventoryLocations.Include(a => a.LocationFunctions).Include(a => a.FacilityFloors).Include(a => a.FacilityZones).Include(a => a.FacilityWorkAreas).Include(a => a.FacilityAisleFaces).Include(a => a.Facilities).AsNoTracking(); 
+            return inventorylocations;
+        }
+        //Custom Code Start | Added Code Block 
+        public IQueryable<InventoryLocationsPost> IndexDbPost()
+        {
+            var inventorylocations = _context.InventoryLocationsPost.AsNoTracking();
+            return inventorylocations;
+        }
+        //Custom Code End
+
+        public IQueryable<Companies> selectCompanies()
         {
             List<Companies> companies = new List<Companies>();
             _context.Companies.AsNoTracking()
                 .ToList()
                 .ForEach(x => companies.Add(x));
             return companies.AsQueryable();
+        }
+        public IQueryable<Facilities> selectFacilities()
+        {
+            List<Facilities> facilities = new List<Facilities>();
+            _context.Facilities.Include(a => a.Addresses).AsNoTracking()
+                .ToList()
+                .ForEach(x => facilities.Add(x));
+            return facilities.AsQueryable();
         }
         public IQueryable<FacilityAisleFaces> selectFacilityAisleFaces()
         {
@@ -158,6 +181,7 @@ This class ....
         }
         public IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement()
         {
+
             //Custom Code End
             //Custom Code Start | Replaced Code Block
             //Replaced Code Block Start
@@ -169,6 +193,78 @@ This class ....
             //Replaced Code Block End
             return _commonlyUsedSelects.selectUnitsOfMeasurementLength();
             //Custom Code End
+        }
+       public IQueryable<Companies> CompaniesDb()
+        {
+            List<Companies> companies = new List<Companies>();
+            _context.Companies.AsNoTracking()
+                .ToList()
+                .ForEach(x => companies.Add(x));
+            return companies.AsQueryable();
+        }
+        public IQueryable<Facilities> FacilitiesDb()
+        {
+            List<Facilities> facilities = new List<Facilities>();
+            _context.Facilities.Include(a => a.Addresses).AsNoTracking()
+                .ToList()
+                .ForEach(x => facilities.Add(x));
+            return facilities.AsQueryable();
+        }
+        public IQueryable<FacilityAisleFaces> FacilityAisleFacesDb()
+        {
+            List<FacilityAisleFaces> facilityaislefaces = new List<FacilityAisleFaces>();
+            _context.FacilityAisleFaces.Include(a => a.AisleFaceStorageTypes).Include(a => a.BaySequenceTypes).Include(a => a.FacilityAisleFacesFKDiffPairedAisleFace).Include(a => a.FacilityFloors).Include(a => a.FacilityZonesFKDiffDefaultFacilityZone).Include(a => a.InventoryLocationSizesFKDiffDefaultInventoryLocationSize).Include(a => a.LocationFunctionsFKDiffDefaultLocationFunction).Include(a => a.LogicalOrientations).Include(a => a.UnitsOfMeasurementFKDiffXOffsetUnit).Include(a => a.UnitsOfMeasurementFKDiffYOffsetUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => facilityaislefaces.Add(x));
+            return facilityaislefaces.AsQueryable();
+        }
+        public IQueryable<FacilityFloors> FacilityFloorsDb()
+        {
+            List<FacilityFloors> facilityfloors = new List<FacilityFloors>();
+            _context.FacilityFloors.AsNoTracking()
+                .ToList()
+                .ForEach(x => facilityfloors.Add(x));
+            return facilityfloors.AsQueryable();
+        }
+        public IQueryable<FacilityWorkAreas> FacilityWorkAreasDb()
+        {
+            List<FacilityWorkAreas> facilityworkareas = new List<FacilityWorkAreas>();
+            _context.FacilityWorkAreas.AsNoTracking()
+                .ToList()
+                .ForEach(x => facilityworkareas.Add(x));
+            return facilityworkareas.AsQueryable();
+        }
+        public IQueryable<FacilityZones> FacilityZonesDb()
+        {
+            List<FacilityZones> facilityzones = new List<FacilityZones>();
+            _context.FacilityZones.AsNoTracking()
+                .ToList()
+                .ForEach(x => facilityzones.Add(x));
+            return facilityzones.AsQueryable();
+        }
+        public IQueryable<InventoryLocationSizes> InventoryLocationSizesDb()
+        {
+            List<InventoryLocationSizes> inventorylocationsizes = new List<InventoryLocationSizes>();
+            _context.InventoryLocationSizes.Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffUsableVolumeUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => inventorylocationsizes.Add(x));
+            return inventorylocationsizes.AsQueryable();
+        }
+        public IQueryable<LocationFunctions> LocationFunctionsDb()
+        {
+            List<LocationFunctions> locationfunctions = new List<LocationFunctions>();
+            _context.LocationFunctions.AsNoTracking()
+                .ToList()
+                .ForEach(x => locationfunctions.Add(x));
+            return locationfunctions.AsQueryable();
+        }
+        public IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb()
+        {
+            List<UnitsOfMeasurement> unitsofmeasurement = new List<UnitsOfMeasurement>();
+            _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()
+                .ToList()
+                .ForEach(x => unitsofmeasurement.Add(x));
+            return unitsofmeasurement.AsQueryable();
         }
        public List<KeyValuePair<Int64?, string>> selectCompaniesNullable()
         {

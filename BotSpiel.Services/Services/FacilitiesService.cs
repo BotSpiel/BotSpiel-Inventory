@@ -32,7 +32,9 @@ This class ....
         public FacilitiesPost GetPost(Int64 ixFacility) => _facilitiesRepository.GetPost(ixFacility);
         public Facilities Get(Int64 ixFacility) => _facilitiesRepository.Get(ixFacility);
         public IQueryable<Facilities> Index() => _facilitiesRepository.Index();
+        public IQueryable<Facilities> IndexDb() => _facilitiesRepository.IndexDb();
        public IQueryable<Addresses> selectAddresses() => _facilitiesRepository.selectAddresses();
+       public IQueryable<Addresses> AddressesDb() => _facilitiesRepository.AddressesDb();
         public bool VerifyFacilityUnique(Int64 ixFacility, string sFacility) => _facilitiesRepository.VerifyFacilityUnique(ixFacility, sFacility);
         public List<string> VerifyFacilityDeleteOK(Int64 ixFacility, string sFacility) => _facilitiesRepository.VerifyFacilityDeleteOK(ixFacility, sFacility);
 

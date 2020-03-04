@@ -32,6 +32,7 @@ This class ....
         public InventoryModuleGridsPost GetPost(Int64 ixInventoryModuleGrid) => _inventorymodulegridsRepository.GetPost(ixInventoryModuleGrid);
         public InventoryModuleGrids Get(Int64 ixInventoryModuleGrid) => _inventorymodulegridsRepository.Get(ixInventoryModuleGrid);
         public IQueryable<InventoryModuleGrids> Index() => _inventorymodulegridsRepository.Index();
+        public IQueryable<InventoryModuleGrids> IndexDb() => _inventorymodulegridsRepository.IndexDb();
 		public IQueryable<InventoryModuleGridsconfig> Indexconfig() => _inventorymodulegridsRepository.Indexconfig();
 		public IQueryable<InventoryModuleGridsmd> Indexmd() => _inventorymodulegridsRepository.Indexmd();
 		public IQueryable<InventoryModuleGridstx> Indextx() => _inventorymodulegridsRepository.Indextx();

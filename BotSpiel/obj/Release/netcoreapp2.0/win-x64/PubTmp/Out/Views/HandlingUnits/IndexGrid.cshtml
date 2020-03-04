@@ -11,6 +11,8 @@
 	queryHandlingUnitTypes.AddRange(_handlingunitsService.selectHandlingUnitTypes().ToList().OrderBy(de => de.sHandlingUnitType).Select(de => new SelectListItem() { Text = de.sHandlingUnitType, Value = de.sHandlingUnitType.ToString()}));
 	List<SelectListItem> queryMaterialHandlingUnitConfigurations = new List<SelectListItem>();
 	queryMaterialHandlingUnitConfigurations.AddRange(_handlingunitsService.selectMaterialHandlingUnitConfigurations().ToList().OrderBy(de => de.sMaterialHandlingUnitConfiguration).Select(de => new SelectListItem() { Text = de.sMaterialHandlingUnitConfiguration, Value = de.sMaterialHandlingUnitConfiguration.ToString()}));
+	List<SelectListItem> queryMaterials = new List<SelectListItem>();
+	queryMaterials.AddRange(_handlingunitsService.selectMaterials().ToList().OrderBy(de => de.sMaterial).Select(de => new SelectListItem() { Text = de.sMaterial, Value = de.sMaterial.ToString()}));
 	List<SelectListItem> queryStatuses = new List<SelectListItem>();
 	queryStatuses.AddRange(_handlingunitsService.selectStatuses().ToList().OrderBy(de => de.sStatus).Select(de => new SelectListItem() { Text = de.sStatus, Value = de.sStatus.ToString()}));
 	List<SelectListItem> queryUnitsOfMeasurement = new List<SelectListItem>();
@@ -29,12 +31,9 @@
 				columns.Add(model => model.sHandlingUnit).Titled("Handling Unit").Sortable(true).Filterable(true);
 				columns.Add(model => model.HandlingUnitTypes.sHandlingUnitType).Titled("Handling Unit Type").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryHandlingUnitTypes);
 				columns.Add(model => model.nLength).Titled("Length").Sortable(true).Filterable(true);
-				columns.Add(model => model.UnitsOfMeasurementFKDiffLengthUnit.sUnitOfMeasurement).Titled("Length Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryUnitsOfMeasurement);
+				columns.Add(model => model.nWidth).Titled("Width").Sortable(true).Filterable(true);
 				columns.Add(model => model.nHeight).Titled("Height").Sortable(true).Filterable(true);
-				columns.Add(model => model.UnitsOfMeasurementFKDiffHeightUnit.sUnitOfMeasurement).Titled("Height Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryUnitsOfMeasurement);
 				columns.Add(model => model.nWeight).Titled("Weight").Sortable(true).Filterable(true);
-				columns.Add(model => model.UnitsOfMeasurementFKDiffWeightUnit.sUnitOfMeasurement).Titled("Weight Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryUnitsOfMeasurement);
-				columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryStatuses);
 				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
 				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
 				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);

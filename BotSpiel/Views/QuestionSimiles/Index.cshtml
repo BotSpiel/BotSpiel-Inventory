@@ -1,0 +1,23 @@
+
+
+@model IEnumerable<BotSpiel.DataAccess.Models.QuestionSimiles>
+
+@{
+    ViewBag.Title = "Index Question Similes";
+}
+<br>
+<h2>Question Similes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink(" | Grid Export", "IndexExport")
+</p>
+
+<p>    
+    <button type="button" id="refresh-grid" class="btn btn-default content-refresh">Refresh Grid</button>
+    <button type="button" class="btn btn-default delete-rows" onclick="deleteRows('QuestionSimiles')">Delete Selected Rows</button>
+</p>
+
+@Html.AjaxGrid(Url.Action("IndexGrid"), new { id = "questionsimiles-ajax-grid" })
+ 
+

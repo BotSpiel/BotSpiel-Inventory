@@ -32,9 +32,15 @@ This class ....
         public OutboundCarrierManifestsPost GetPost(Int64 ixOutboundCarrierManifest) => _outboundcarriermanifestsRepository.GetPost(ixOutboundCarrierManifest);
         public OutboundCarrierManifests Get(Int64 ixOutboundCarrierManifest) => _outboundcarriermanifestsRepository.Get(ixOutboundCarrierManifest);
         public IQueryable<OutboundCarrierManifests> Index() => _outboundcarriermanifestsRepository.Index();
+        public IQueryable<OutboundCarrierManifests> IndexDb() => _outboundcarriermanifestsRepository.IndexDb();
        public IQueryable<Statuses> selectStatuses() => _outboundcarriermanifestsRepository.selectStatuses();
+        public IQueryable<Facilities> selectFacilities() => _outboundcarriermanifestsRepository.selectFacilities();
         public IQueryable<InventoryLocations> selectInventoryLocations() => _outboundcarriermanifestsRepository.selectInventoryLocations();
         public IQueryable<Carriers> selectCarriers() => _outboundcarriermanifestsRepository.selectCarriers();
+       public IQueryable<Statuses> StatusesDb() => _outboundcarriermanifestsRepository.StatusesDb();
+        public IQueryable<Facilities> FacilitiesDb() => _outboundcarriermanifestsRepository.FacilitiesDb();
+        public IQueryable<InventoryLocations> InventoryLocationsDb() => _outboundcarriermanifestsRepository.InventoryLocationsDb();
+        public IQueryable<Carriers> CarriersDb() => _outboundcarriermanifestsRepository.CarriersDb();
        public List<KeyValuePair<Int64?, string>> selectInventoryLocationsNullable() => _outboundcarriermanifestsRepository.selectInventoryLocationsNullable();
         public bool VerifyOutboundCarrierManifestUnique(Int64 ixOutboundCarrierManifest, string sOutboundCarrierManifest) => _outboundcarriermanifestsRepository.VerifyOutboundCarrierManifestUnique(ixOutboundCarrierManifest, sOutboundCarrierManifest);
         public List<string> VerifyOutboundCarrierManifestDeleteOK(Int64 ixOutboundCarrierManifest, string sOutboundCarrierManifest) => _outboundcarriermanifestsRepository.VerifyOutboundCarrierManifestDeleteOK(ixOutboundCarrierManifest, sOutboundCarrierManifest);

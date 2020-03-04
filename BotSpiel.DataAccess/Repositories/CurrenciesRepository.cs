@@ -21,10 +21,14 @@ This class ....
 
 */
         private readonly CurrenciesDB _context;
+       private readonly InvoicePurchaseLineAmountsDB _contextInvoicePurchaseLineAmounts;
+        private readonly InvoicePurchaseLineTaxAmountsDB _contextInvoicePurchaseLineTaxAmounts;
   
-        public CurrenciesRepository(CurrenciesDB context)
+        public CurrenciesRepository(CurrenciesDB context, InvoicePurchaseLineAmountsDB contextInvoicePurchaseLineAmounts, InvoicePurchaseLineTaxAmountsDB contextInvoicePurchaseLineTaxAmounts)
         {
             _context = context;
+           _contextInvoicePurchaseLineAmounts = contextInvoicePurchaseLineAmounts;
+            _contextInvoicePurchaseLineTaxAmounts = contextInvoicePurchaseLineTaxAmounts;
   
         }
 
@@ -41,6 +45,12 @@ This class ....
             var currencies = _context.Currencies.AsNoTracking(); 
             return currencies;
         }
+
+        public IQueryable<Currencies> IndexDb()
+        {
+            var currencies = _context.Currencies.AsNoTracking(); 
+            return currencies;
+        }
         public bool VerifyCurrencyUnique(Int64 ixCurrency, string sCurrency)
         {
             if (_context.Currencies.AsNoTracking().Where(x => x.sCurrency == sCurrency).Any() && ixCurrency == 0L) return false;
@@ -51,6 +61,8 @@ This class ....
         public List<string> VerifyCurrencyDeleteOK(Int64 ixCurrency, string sCurrency)
         {
             List<string> existInEntities = new List<string>();
+           if (_contextInvoicePurchaseLineAmounts.InvoicePurchaseLineAmounts.AsNoTracking().Where(x => x.ixCurrency == ixCurrency).Any()) existInEntities.Add("InvoicePurchaseLineAmounts");
+            if (_contextInvoicePurchaseLineTaxAmounts.InvoicePurchaseLineTaxAmounts.AsNoTracking().Where(x => x.ixCurrency == ixCurrency).Any()) existInEntities.Add("InvoicePurchaseLineTaxAmounts");
 
             return existInEntities;
         }

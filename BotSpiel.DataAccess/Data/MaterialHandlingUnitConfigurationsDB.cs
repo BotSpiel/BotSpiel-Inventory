@@ -93,7 +93,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is MaterialHandlingUnitConfigurationsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is MaterialHandlingUnitConfigurationsPost)).ToList())
             {
                 var md_vw_materialhandlingunitconfigurationspost = e.Entity as MaterialHandlingUnitConfigurationsPost;
                 switch (e.State)
@@ -176,12 +176,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixMaterialHandlingUnitConfiguration"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeMaterialHandlingUnitConfigurations @ixMaterialHandlingUnitConfiguration = @p0, @ixMaterial = @p1, @nNestingLevel = @p2, @ixHandlingUnitType = @p3, @nQuantity = @p4, @nLength = @p5, @ixLengthUnit = @p6, @nWidth = @p7, @ixWidthUnit = @p8, @nHeight = @p9, @ixHeightUnit = @p10, @UserName = @p11", md_vw_materialhandlingunitconfigurationspost.ixMaterialHandlingUnitConfiguration, md_vw_materialhandlingunitconfigurationspost.ixMaterial, md_vw_materialhandlingunitconfigurationspost.nNestingLevel, md_vw_materialhandlingunitconfigurationspost.ixHandlingUnitType, md_vw_materialhandlingunitconfigurationspost.nQuantity, md_vw_materialhandlingunitconfigurationspost.nLength, md_vw_materialhandlingunitconfigurationspost.ixLengthUnit, md_vw_materialhandlingunitconfigurationspost.nWidth, md_vw_materialhandlingunitconfigurationspost.ixWidthUnit, md_vw_materialhandlingunitconfigurationspost.nHeight, md_vw_materialhandlingunitconfigurationspost.ixHeightUnit, md_vw_materialhandlingunitconfigurationspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

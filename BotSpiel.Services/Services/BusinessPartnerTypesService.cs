@@ -32,6 +32,7 @@ This class ....
         public BusinessPartnerTypesPost GetPost(Int64 ixBusinessPartnerType) => _businesspartnertypesRepository.GetPost(ixBusinessPartnerType);
         public BusinessPartnerTypes Get(Int64 ixBusinessPartnerType) => _businesspartnertypesRepository.Get(ixBusinessPartnerType);
         public IQueryable<BusinessPartnerTypes> Index() => _businesspartnertypesRepository.Index();
+        public IQueryable<BusinessPartnerTypes> IndexDb() => _businesspartnertypesRepository.IndexDb();
         public bool VerifyBusinessPartnerTypeUnique(Int64 ixBusinessPartnerType, string sBusinessPartnerType) => _businesspartnertypesRepository.VerifyBusinessPartnerTypeUnique(ixBusinessPartnerType, sBusinessPartnerType);
         public List<string> VerifyBusinessPartnerTypeDeleteOK(Int64 ixBusinessPartnerType, string sBusinessPartnerType) => _businesspartnertypesRepository.VerifyBusinessPartnerTypeDeleteOK(ixBusinessPartnerType, sBusinessPartnerType);
 

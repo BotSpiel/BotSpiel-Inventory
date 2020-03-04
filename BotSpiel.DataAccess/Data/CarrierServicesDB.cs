@@ -61,7 +61,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is CarrierServicesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is CarrierServicesPost)).ToList())
             {
                 var md_vw_carrierservicespost = e.Entity as CarrierServicesPost;
                 switch (e.State)
@@ -104,12 +104,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixCarrierService"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeCarrierServices @ixCarrierService = @p0, @sCarrierService = @p1, @ixCarrier = @p2, @UserName = @p3", md_vw_carrierservicespost.ixCarrierService, md_vw_carrierservicespost.sCarrierService, md_vw_carrierservicespost.ixCarrier, md_vw_carrierservicespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

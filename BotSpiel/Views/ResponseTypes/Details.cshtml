@@ -1,0 +1,36 @@
+
+@model BotSpiel.DataAccess.Models.ResponseTypes
+
+@{
+    ViewBag.Title = "Details Response Types";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Response Types</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixResponseType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixResponseType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sResponseType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sResponseType)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixResponseType }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixResponseType }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

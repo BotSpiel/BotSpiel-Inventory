@@ -23,6 +23,7 @@ This interface ....
         MoveQueuesPost GetPost(Int64 ixMoveQueue);        
 		MoveQueues Get(Int64 ixMoveQueue);
         IQueryable<MoveQueues> Index();
+        IQueryable<MoveQueues> IndexDb();
        IQueryable<Statuses> selectStatuses();
         IQueryable<InventoryUnits> selectInventoryUnits();
         IQueryable<HandlingUnits> selectHandlingUnits();
@@ -32,6 +33,15 @@ This interface ....
         IQueryable<InboundOrderLines> selectInboundOrderLines();
         IQueryable<OutboundOrderLines> selectOutboundOrderLines();
         IQueryable<PickBatches> selectPickBatches();
+       IQueryable<Statuses> StatusesDb();
+        IQueryable<InventoryUnits> InventoryUnitsDb();
+        IQueryable<HandlingUnits> HandlingUnitsDb();
+        IQueryable<InventoryLocations> InventoryLocationsDb();
+        IQueryable<MoveQueueContexts> MoveQueueContextsDb();
+        IQueryable<MoveQueueTypes> MoveQueueTypesDb();
+        IQueryable<InboundOrderLines> InboundOrderLinesDb();
+        IQueryable<OutboundOrderLines> OutboundOrderLinesDb();
+        IQueryable<PickBatches> PickBatchesDb();
        List<KeyValuePair<Int64?, string>> selectInventoryUnitsNullable();
         List<KeyValuePair<Int64?, string>> selectHandlingUnitsNullable();
         List<KeyValuePair<Int64?, string>> selectInventoryLocationsNullable();

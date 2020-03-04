@@ -61,11 +61,13 @@ This class ....
 		[Display(Name = "Base Unit Quantity Received")]
 		public virtual Double nBaseUnitQuantityReceived { get; set; }
 		[StringLength(100)]
-		[Display(Name = "Batch Number")]
-		public virtual String sBatchNumber { get; set; }
-		[StringLength(100)]
 		[Display(Name = "Serial Number")]
 		public virtual String sSerialNumber { get; set; }
+		[StringLength(100)]
+		[Display(Name = "Batch Number")]
+		public virtual String sBatchNumber { get; set; }
+		[Display(Name = "Expire At")]
+		public virtual DateTime? dtExpireAt { get; set; }
 		[Required]
 		[Display(Name = "Status ID")]
 		public virtual Int64 ixStatus { get; set; }

@@ -20,6 +20,8 @@ This class ....
  
         public OutboundOrderLines()
         {
+		OutboundOrders _OutboundOrders = new OutboundOrders();
+		OutboundOrders = _OutboundOrders;
 		Materials _Materials = new Materials();
 		Materials = _Materials;
 		Statuses _Statuses = new Statuses();
@@ -32,6 +34,9 @@ This class ....
 		public virtual Int64 ixOutboundOrderLineEdit { get; set; }
 		[Display(Name = "Outbound Order Line")]
 		public virtual String sOutboundOrderLine { get; set; }
+		[Required]
+		[Display(Name = "Outbound Order ID")]
+		public virtual Int64 ixOutboundOrder { get; set; }
 		[StringLength(300)]
 		[Required]
 		[Display(Name = "Order Line Reference")]
@@ -68,6 +73,8 @@ This class ....
 		[Required]
 		[Display(Name = "Changed By")]
 		public virtual String sChangedBy { get; set; }
+		[ForeignKey("ixOutboundOrder")]
+		public virtual OutboundOrders OutboundOrders { get; set; }
 		[ForeignKey("ixMaterial")]
 		public virtual Materials Materials { get; set; }
 		[ForeignKey("ixStatus")]

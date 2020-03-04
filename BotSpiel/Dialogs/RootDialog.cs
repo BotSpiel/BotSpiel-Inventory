@@ -153,18 +153,26 @@ namespace BotSpiel.Dialogs
             {
                 FoundChoice entity = (FoundChoice)step.Result;
                 ((BotUserEntityContext)step.Values[DialogKey]).entity = entity.Value;
-                List<string> entityIntents = _navigationEntityData.CrudActionForEntities(entity.Value.ToString());
-                entityIntents.Add("Find");
+                //Custom Code Start | Removed Block 
+                //List<string> entityIntents = _navigationEntityData.CrudActionForEntities(entity.Value.ToString());
+                //entityIntents.Add("Find");
 
-                returnResult = await step.PromptAsync(
-                    ChoicesPromptId,
-                    new PromptOptions
-                    {
-                        Prompt = MessageFactory.Text($"With the {entity.Value} I can do the following things.Please select one."),
-                        RetryPrompt = MessageFactory.Text("Please choose an option from the list."),
-                        Choices = ChoiceFactory.ToChoices(entityIntents),
-                    },
+                //returnResult = await step.PromptAsync(
+                //    ChoicesPromptId,
+                //    new PromptOptions
+                //    {
+                //        Prompt = MessageFactory.Text($"With the {entity.Value} I can do the following things.Please select one."),
+                //        RetryPrompt = MessageFactory.Text("Please choose an option from the list."),
+                //        Choices = ChoiceFactory.ToChoices(entityIntents),
+                //    },
+                //    cancellationToken);
+                //Custom Code End		
+                //Custom Code Start | Added Code Block 
+                ((BotUserEntityContext)step.Values[DialogKey]).entityIntent = "Create";
+                return await step.EndDialogAsync(
+                    (BotUserEntityContext)step.Values[DialogKey],
                     cancellationToken);
+                //Custom Code End                
             }
             else
             {

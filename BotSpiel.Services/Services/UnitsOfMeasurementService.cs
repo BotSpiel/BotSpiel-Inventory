@@ -32,8 +32,11 @@ This class ....
         public UnitsOfMeasurementPost GetPost(Int64 ixUnitOfMeasurement) => _unitsofmeasurementRepository.GetPost(ixUnitOfMeasurement);
         public UnitsOfMeasurement Get(Int64 ixUnitOfMeasurement) => _unitsofmeasurementRepository.Get(ixUnitOfMeasurement);
         public IQueryable<UnitsOfMeasurement> Index() => _unitsofmeasurementRepository.Index();
+        public IQueryable<UnitsOfMeasurement> IndexDb() => _unitsofmeasurementRepository.IndexDb();
        public IQueryable<MeasurementSystems> selectMeasurementSystems() => _unitsofmeasurementRepository.selectMeasurementSystems();
         public IQueryable<MeasurementUnitsOf> selectMeasurementUnitsOf() => _unitsofmeasurementRepository.selectMeasurementUnitsOf();
+       public IQueryable<MeasurementSystems> MeasurementSystemsDb() => _unitsofmeasurementRepository.MeasurementSystemsDb();
+        public IQueryable<MeasurementUnitsOf> MeasurementUnitsOfDb() => _unitsofmeasurementRepository.MeasurementUnitsOfDb();
         public bool VerifyUnitOfMeasurementUnique(Int64 ixUnitOfMeasurement, string sUnitOfMeasurement) => _unitsofmeasurementRepository.VerifyUnitOfMeasurementUnique(ixUnitOfMeasurement, sUnitOfMeasurement);
         public List<string> VerifyUnitOfMeasurementDeleteOK(Int64 ixUnitOfMeasurement, string sUnitOfMeasurement) => _unitsofmeasurementRepository.VerifyUnitOfMeasurementDeleteOK(ixUnitOfMeasurement, sUnitOfMeasurement);
 

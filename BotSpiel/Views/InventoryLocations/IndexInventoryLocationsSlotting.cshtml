@@ -1,0 +1,61 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IInventoryLocationsSlottingService _inventorylocationsslottingService
+
+@model IEnumerable<BotSpiel.DataAccess.Models.InventoryLocationsSlotting>
+
+@{
+    ViewBag.Title = "Index Inventory Locations Slotting";
+}
+<br>
+<h2>Inventory Locations Slotting</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateWithID", "InventoryLocationsSlotting", new { id = Model.Select(x => x.ixInventoryLocation).FirstOrDefault() })
+</p>
+
+@{
+    List<SelectListItem> queryInventoryLocations = new List<SelectListItem>();
+    queryInventoryLocations.AddRange(_inventorylocationsslottingService.selectInventoryLocations().ToList().OrderBy(de => de.sInventoryLocation).Select(de => new SelectListItem() { Text = de.sInventoryLocation, Value = de.sInventoryLocation.ToString() }));
+    List<SelectListItem> queryMaterials = new List<SelectListItem>();
+    queryMaterials.AddRange(_inventorylocationsslottingService.selectMaterials().ToList().OrderBy(de => de.sMaterial).Select(de => new SelectListItem() { Text = de.sMaterial, Value = de.sMaterial.ToString() }));
+
+}
+
+
+@(Html
+        .Grid(Model.Where(x => x.ixInventoryLocationSlotting > 0))
+        .Build(columns =>
+        {
+                columns.Add(model => Html.CheckBox("Check_" + model.ixInventoryLocationSlotting, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+                columns.Add(model => model.ixInventoryLocationSlotting).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", "InventoryLocationsSlotting", new { id = item.ixInventoryLocationSlotting }, new { @class = "modal-link" }));
+                columns.Add(model => model.ixInventoryLocationSlottingEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", "InventoryLocationsSlotting", new { id = item.ixInventoryLocationSlotting }, new { @class = "modal-link" }));
+                columns.Add(model => model.sInventoryLocationSlotting).Titled("Inventory Location Slotting").Sortable(true).Filterable(true);
+                columns.Add(model => model.InventoryLocations.sInventoryLocation).Titled("Inventory Location").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInventoryLocations);
+                columns.Add(model => model.Materials.sMaterial).Titled("Material").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryMaterials);
+                columns.Add(model => model.nMinimumBaseUnitQuantity).Titled("Minimum Base Unit Quantity").Sortable(true).Filterable(true);
+                columns.Add(model => model.nMaximumBaseUnitQuantity).Titled("Maximum Base Unit Quantity").Sortable(true).Filterable(true);
+                columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+                columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+                columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+                columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("inventorylocationsslotting-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+)
+
+
+
+
+
+
+

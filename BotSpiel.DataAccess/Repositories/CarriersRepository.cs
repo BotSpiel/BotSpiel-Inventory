@@ -49,7 +49,21 @@ This class ....
             var carriers = _context.Carriers.Include(a => a.CarrierTypes).AsNoTracking(); 
             return carriers;
         }
+
+        public IQueryable<Carriers> IndexDb()
+        {
+            var carriers = _context.Carriers.Include(a => a.CarrierTypes).AsNoTracking(); 
+            return carriers;
+        }
        public IQueryable<CarrierTypes> selectCarrierTypes()
+        {
+            List<CarrierTypes> carriertypes = new List<CarrierTypes>();
+            _context.CarrierTypes.AsNoTracking()
+                .ToList()
+                .ForEach(x => carriertypes.Add(x));
+            return carriertypes.AsQueryable();
+        }
+       public IQueryable<CarrierTypes> CarrierTypesDb()
         {
             List<CarrierTypes> carriertypes = new List<CarrierTypes>();
             _context.CarrierTypes.AsNoTracking()

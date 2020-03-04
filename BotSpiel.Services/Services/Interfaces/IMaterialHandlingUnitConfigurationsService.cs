@@ -23,9 +23,13 @@ This interface ....
         MaterialHandlingUnitConfigurationsPost GetPost(Int64 ixMaterialHandlingUnitConfiguration);        
 		MaterialHandlingUnitConfigurations Get(Int64 ixMaterialHandlingUnitConfiguration);
         IQueryable<MaterialHandlingUnitConfigurations> Index();
+        IQueryable<MaterialHandlingUnitConfigurations> IndexDb();
        IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement();
         IQueryable<Materials> selectMaterials();
         IQueryable<HandlingUnitTypes> selectHandlingUnitTypes();
+       IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb();
+        IQueryable<Materials> MaterialsDb();
+        IQueryable<HandlingUnitTypes> HandlingUnitTypesDb();
        List<KeyValuePair<Int64?, string>> selectUnitsOfMeasurementNullable();
         bool VerifyMaterialHandlingUnitConfigurationUnique(Int64 ixMaterialHandlingUnitConfiguration, string sMaterialHandlingUnitConfiguration);
         List<string> VerifyMaterialHandlingUnitConfigurationDeleteOK(Int64 ixMaterialHandlingUnitConfiguration, string sMaterialHandlingUnitConfiguration);

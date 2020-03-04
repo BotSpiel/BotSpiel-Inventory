@@ -1,5 +1,11 @@
-
-@model BotSpiel.DataAccess.Models.OutboundShipmentsPost 
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IOutboundOrdersService _outboundOrdersService
+@*//Custom Code End*@
+@model BotSpiel.DataAccess.Models.OutboundShipmentsPost
 
 @{
     ViewBag.Title = "Edit Outbound Shipments";
@@ -11,7 +17,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Outbound Shipments</h4>
         <hr />
@@ -19,7 +25,7 @@
         @Html.HiddenFor(model => model.ixOutboundShipment)
 
         <div class="form-group">
-			@Html.ActionLink("Facility ID", "Index", "Facilities", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Facility ID", "Index", "Facilities", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixFacility", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixFacility, "", new { @class = "text-danger" })
@@ -27,7 +33,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Company ID", "Index", "Companies", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Company ID", "Index", "Companies", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixCompany", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixCompany, "", new { @class = "text-danger" })
@@ -35,7 +41,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Carrier ID", "Index", "Carriers", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Carrier ID", "Index", "Carriers", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixCarrier", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixCarrier, "", new { @class = "text-danger" })
@@ -51,7 +57,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Status ID", "Index", "Statuses", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Status ID", "Index", "Statuses", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixStatus", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixStatus, "", new { @class = "text-danger" })
@@ -59,7 +65,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Address ID", "Index", "Addresses", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Address ID", "Index", "Addresses", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixAddress", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixAddress, "", new { @class = "text-danger" })
@@ -67,7 +73,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Outbound Carrier Manifest ID", "Index", "OutboundCarrierManifests", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Outbound Carrier Manifest ID", "Index", "OutboundCarrierManifests", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixOutboundCarrierManifest", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixOutboundCarrierManifest, "", new { @class = "text-danger" })
@@ -81,6 +87,26 @@
         </div>
     </div>
 }
+
+@*//Custom Code Start | Added Code Block*@
+<div>
+    @{
+        List<BotSpiel.DataAccess.Models.OutboundOrders> outboundOrders = new List<OutboundOrders>();
+        //Add empty record
+        OutboundOrders outboundOrder = new OutboundOrders();
+        outboundOrder.ixOutboundShipment = Model.ixOutboundShipment;
+        outboundOrder.OutboundShipments.ixOutboundShipment = Model.ixOutboundShipment;
+        outboundOrders.Add(outboundOrder);
+        _outboundOrdersService.IndexDb().Where(x => x.ixOutboundShipment == Model.ixOutboundShipment).ToList().ForEach(x =>
+            {
+                outboundOrders.Add(x);
+            }
+            );
+    }
+    @await Html.PartialAsync("IndexOutboundOrders", outboundOrders)
+</div>
+@*//Custom Code End*@
+
 <div>
     @Html.ActionLink("Grid", "Index")
 </div>
@@ -89,5 +115,5 @@
 }
 
 
- 
+
 

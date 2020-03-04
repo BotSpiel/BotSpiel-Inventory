@@ -1,0 +1,61 @@
+
+@model BotSpiel.DataAccess.Models.RequestsForInformationSimilesPost
+
+@{
+    ViewBag.Title = "Create Requests For Information Similes";
+}
+<br>
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Requests For Information Similes</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sRequestsForInformationSimile, "Requests For Information Simile", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sRequestsForInformationSimile, new { htmlAttributes = new { @class = "form-control", @Value = @Html.Raw(""), @placeholder = "Required" } })
+                @Html.ValidationMessageFor(model => model.sRequestsForInformationSimile, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+			@Html.ActionLink("Request For Information ID", "Index", "RequestsForInformation", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixRequestForInformation", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixRequestForInformation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sRequestsForInformationSimileText, "Requests For Information Simile Text", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.sRequestsForInformationSimileText, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;", placeholder = "Required" })
+                @Html.ValidationMessageFor(model => model.sRequestsForInformationSimileText, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Grid", "Index")
+</div>
+
+@section Scripts {
+}
+
+ 
+

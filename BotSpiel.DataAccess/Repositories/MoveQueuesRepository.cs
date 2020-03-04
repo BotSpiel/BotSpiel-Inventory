@@ -78,6 +78,17 @@ This class ....
 
         public IQueryable<MoveQueues> Index()
         {
+            //Custom Code Start | Replaced Code Block
+            //Replaced Code Block Start
+            //var movequeues = _context.MoveQueues.Include(a => a.MoveQueueTypes).Include(a => a.MoveQueueContexts).Include(a => a.Statuses).AsNoTracking();
+            //Replaced Code Block End
+            var movequeues = _context.MoveQueues.OrderByDescending(a => a.ixMoveQueue).Include(a => a.MoveQueueTypes).Include(a => a.MoveQueueContexts).Include(a => a.Statuses).AsNoTracking();
+            //Custom Code End
+            return movequeues;
+        }
+
+        public IQueryable<MoveQueues> IndexDb()
+        {
             var movequeues = _context.MoveQueues.Include(a => a.MoveQueueTypes).Include(a => a.MoveQueueContexts).Include(a => a.Statuses).AsNoTracking(); 
             return movequeues;
         }
@@ -132,7 +143,7 @@ This class ....
         public IQueryable<OutboundOrderLines> selectOutboundOrderLines()
         {
             List<OutboundOrderLines> outboundorderlines = new List<OutboundOrderLines>();
-            _context.OutboundOrderLines.Include(a => a.Materials).Include(a => a.Statuses).AsNoTracking()
+            _context.OutboundOrderLines.Include(a => a.Materials).Include(a => a.OutboundOrders).Include(a => a.Statuses).AsNoTracking()
                 .ToList()
                 .ForEach(x => outboundorderlines.Add(x));
             return outboundorderlines.AsQueryable();
@@ -146,6 +157,78 @@ This class ....
             return pickbatches.AsQueryable();
         }
         public IQueryable<Statuses> selectStatuses()
+        {
+            List<Statuses> statuses = new List<Statuses>();
+            _context.Statuses.AsNoTracking()
+                .ToList()
+                .ForEach(x => statuses.Add(x));
+            return statuses.AsQueryable();
+        }
+       public IQueryable<HandlingUnits> HandlingUnitsDb()
+        {
+            List<HandlingUnits> handlingunits = new List<HandlingUnits>();
+            _context.HandlingUnits.Include(a => a.HandlingUnitsFKDiffParentHandlingUnit).Include(a => a.HandlingUnitTypes).Include(a => a.MaterialHandlingUnitConfigurations).Include(a => a.MaterialsFKDiffPackingMaterial).Include(a => a.Statuses).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffWeightUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => handlingunits.Add(x));
+            return handlingunits.AsQueryable();
+        }
+        public IQueryable<InboundOrderLines> InboundOrderLinesDb()
+        {
+            List<InboundOrderLines> inboundorderlines = new List<InboundOrderLines>();
+            _context.InboundOrderLines.Include(a => a.HandlingUnitTypes).Include(a => a.InboundOrders).Include(a => a.MaterialHandlingUnitConfigurations).Include(a => a.Materials).Include(a => a.Statuses).AsNoTracking()
+                .ToList()
+                .ForEach(x => inboundorderlines.Add(x));
+            return inboundorderlines.AsQueryable();
+        }
+        public IQueryable<InventoryLocations> InventoryLocationsDb()
+        {
+            List<InventoryLocations> inventorylocations = new List<InventoryLocations>();
+            _context.InventoryLocations.Include(a => a.Companies).Include(a => a.FacilityAisleFaces).Include(a => a.FacilityFloors).Include(a => a.FacilityWorkAreas).Include(a => a.FacilityZones).Include(a => a.InventoryLocationSizes).Include(a => a.LocationFunctions).Include(a => a.UnitsOfMeasurementFKDiffXOffsetUnit).Include(a => a.UnitsOfMeasurementFKDiffYOffsetUnit).Include(a => a.UnitsOfMeasurementFKDiffZOffsetUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => inventorylocations.Add(x));
+            return inventorylocations.AsQueryable();
+        }
+        public IQueryable<InventoryUnits> InventoryUnitsDb()
+        {
+            List<InventoryUnits> inventoryunits = new List<InventoryUnits>();
+            _context.InventoryUnits.Include(a => a.Companies).Include(a => a.Facilities).Include(a => a.HandlingUnits).Include(a => a.InventoryLocations).Include(a => a.InventoryStates).Include(a => a.Materials).Include(a => a.Statuses).AsNoTracking()
+                .ToList()
+                .ForEach(x => inventoryunits.Add(x));
+            return inventoryunits.AsQueryable();
+        }
+        public IQueryable<MoveQueueContexts> MoveQueueContextsDb()
+        {
+            List<MoveQueueContexts> movequeuecontexts = new List<MoveQueueContexts>();
+            _context.MoveQueueContexts.AsNoTracking()
+                .ToList()
+                .ForEach(x => movequeuecontexts.Add(x));
+            return movequeuecontexts.AsQueryable();
+        }
+        public IQueryable<MoveQueueTypes> MoveQueueTypesDb()
+        {
+            List<MoveQueueTypes> movequeuetypes = new List<MoveQueueTypes>();
+            _context.MoveQueueTypes.AsNoTracking()
+                .ToList()
+                .ForEach(x => movequeuetypes.Add(x));
+            return movequeuetypes.AsQueryable();
+        }
+        public IQueryable<OutboundOrderLines> OutboundOrderLinesDb()
+        {
+            List<OutboundOrderLines> outboundorderlines = new List<OutboundOrderLines>();
+            _context.OutboundOrderLines.Include(a => a.Materials).Include(a => a.OutboundOrders).Include(a => a.Statuses).AsNoTracking()
+                .ToList()
+                .ForEach(x => outboundorderlines.Add(x));
+            return outboundorderlines.AsQueryable();
+        }
+        public IQueryable<PickBatches> PickBatchesDb()
+        {
+            List<PickBatches> pickbatches = new List<PickBatches>();
+            _context.PickBatches.Include(a => a.PickBatchTypes).Include(a => a.Statuses).AsNoTracking()
+                .ToList()
+                .ForEach(x => pickbatches.Add(x));
+            return pickbatches.AsQueryable();
+        }
+        public IQueryable<Statuses> StatusesDb()
         {
             List<Statuses> statuses = new List<Statuses>();
             _context.Statuses.AsNoTracking()

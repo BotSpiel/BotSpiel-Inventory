@@ -23,6 +23,7 @@ This interface ....
         InboundOrderTypesPost GetPost(Int64 ixInboundOrderType);        
 		InboundOrderTypes Get(Int64 ixInboundOrderType);
         IQueryable<InboundOrderTypes> Index();
+        IQueryable<InboundOrderTypes> IndexDb();
         bool VerifyInboundOrderTypeUnique(Int64 ixInboundOrderType, string sInboundOrderType);
         List<string> VerifyInboundOrderTypeDeleteOK(Int64 ixInboundOrderType, string sInboundOrderType);
 

@@ -1,0 +1,45 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IPurchaseTextMessagesService _purchasetextmessagesService
+@model IEnumerable<BotSpiel.DataAccess.Models.PurchaseTextMessages>
+
+@{
+	List<SelectListItem> queryPurchases = new List<SelectListItem>();
+	queryPurchases.AddRange(_purchasetextmessagesService.selectPurchases().ToList().OrderBy(de => de.sPurchase).Select(de => new SelectListItem() { Text = de.sPurchase, Value = de.sPurchase.ToString()}));
+	List<SelectListItem> querySendTextMessages = new List<SelectListItem>();
+	querySendTextMessages.AddRange(_purchasetextmessagesService.selectSendTextMessages().ToList().OrderBy(de => de.sSendTextMessage).Select(de => new SelectListItem() { Text = de.sSendTextMessage, Value = de.sSendTextMessage.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixPurchaseTextMessage, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixPurchaseTextMessage).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixPurchaseTextMessage }, new { @class = "modal-link" }));
+				columns.Add(model => model.ixPurchaseTextMessageEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixPurchaseTextMessage }, new { @class = "modal-link" }));
+				columns.Add(model => model.sPurchaseTextMessage).Titled("Purchase Text Message").Sortable(true).Filterable(true);
+				columns.Add(model => model.Purchases.sPurchase).Titled("Purchase").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryPurchases);
+				columns.Add(model => model.SendTextMessages.sSendTextMessage).Titled("Send Text Message").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(querySendTextMessages);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("purchasetextmessages-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

@@ -21,6 +21,7 @@ This interface ....
 		Int64 ixFacilityAisleFace { get; set; }
 		Int64 ixFacilityAisleFaceEdit { get; set; }
 		String sFacilityAisleFace { get; set; }
+		Int64 ixFacility { get; set; }
 		Int64 ixFacilityFloor { get; set; }
 		Int64 nSequence { get; set; }
 		Int64 ixBaySequenceType { get; set; }
@@ -41,6 +42,7 @@ This interface ....
 		DateTime dtChangedAt { get; set; }
 		String sCreatedBy { get; set; }
 		String sChangedBy { get; set; }
+		Facilities Facilities { get; set; }
 		FacilityFloors FacilityFloors { get; set; }
 		BaySequenceTypes BaySequenceTypes { get; set; }
 		FacilityAisleFaces FacilityAisleFacesFKDiffPairedAisleFace { get; set; }

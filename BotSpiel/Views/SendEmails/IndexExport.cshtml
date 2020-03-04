@@ -1,0 +1,16 @@
+@model IGrid<BotSpiel.DataAccess.Models.SendEmails>
+
+@{
+    ViewBag.Title = "Index Send Emails Export";
+}
+<br>
+<h2>Send Emails Export</h2>
+
+<p>
+    <a href="@(Url.Action("ExportIndex") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+    @Html.ActionLink(" | Grid", "Index")
+</p>
+
+@(new HtmlGrid<BotSpiel.DataAccess.Models.SendEmails>(Html, Model))
+ 
+

@@ -22,6 +22,7 @@ This interface ....
         InventoryUnitTransactionContextsPost GetPost(Int64 ixInventoryUnitTransactionContext);        
 		InventoryUnitTransactionContexts Get(Int64 ixInventoryUnitTransactionContext);
         IQueryable<InventoryUnitTransactionContexts> Index();
+        IQueryable<InventoryUnitTransactionContexts> IndexDb();
         bool VerifyInventoryUnitTransactionContextUnique(Int64 ixInventoryUnitTransactionContext, string sInventoryUnitTransactionContext);
         List<string> VerifyInventoryUnitTransactionContextDeleteOK(Int64 ixInventoryUnitTransactionContext, string sInventoryUnitTransactionContext);
         void RegisterCreate(InventoryUnitTransactionContextsPost inventoryunittransactioncontextsPost);

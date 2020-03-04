@@ -105,8 +105,9 @@ This class ....
 				grid.Columns.Add(model => model.nHandlingUnitQuantity).Titled("Handling Unit Quantity").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.nBaseUnitQuantityExpected).Titled("Base Unit Quantity Expected").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.nBaseUnitQuantityReceived).Titled("Base Unit Quantity Received").Sortable(true).Filterable(true);
-				grid.Columns.Add(model => model.sBatchNumber).Titled("Batch Number").Sortable(true).Filterable(true).MultiFilterable(true);
 				grid.Columns.Add(model => model.sSerialNumber).Titled("Serial Number").Sortable(true).Filterable(true).MultiFilterable(true);
+				grid.Columns.Add(model => model.sBatchNumber).Titled("Batch Number").Sortable(true).Filterable(true).MultiFilterable(true);
+				grid.Columns.Add(model => model.dtExpireAt).Titled("Expire At").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.Statuses.sStatus).Titled("Status").Sortable(true).Filterable(true).MultiFilterable(true);
 				grid.Columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
 				grid.Columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
@@ -145,10 +146,45 @@ This class ....
             return View();
         }
 
+        //Custom Code Start | Added Code Block 
+        [Authorize]
+        [HttpGet]
+        public ActionResult CreateWithID(long id)
+        {
+            ViewBag.ixHandlingUnitType = new SelectList(_inboundorderlinesService.selectHandlingUnitTypes().Select(x => new { x.ixHandlingUnitType, x.sHandlingUnitType }), "ixHandlingUnitType", "sHandlingUnitType");
+            ViewBag.ixInboundOrder = new SelectList(_inboundorderlinesService.selectInboundOrders().Where(x => x.ixInboundOrder == id).Select(x => new { x.ixInboundOrder, x.sInboundOrder }), "ixInboundOrder", "sInboundOrder");
+            ViewBag.ixMaterial = new SelectList(_inboundorderlinesService.selectMaterials().Select(x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial");
+            ViewBag.ixMaterialHandlingUnitConfiguration = new SelectList(_inboundorderlinesService.selectMaterialHandlingUnitConfigurations().Select(x => new { x.ixMaterialHandlingUnitConfiguration, x.sMaterialHandlingUnitConfiguration }), "ixMaterialHandlingUnitConfiguration", "sMaterialHandlingUnitConfiguration");
+            ViewBag.ixStatus = new SelectList(_inboundorderlinesService.selectStatuses().Select(x => new { x.ixStatus, x.sStatus }), "ixStatus", "sStatus");
+
+            return View();
+        }
+
         // POST: InboundOrderLines/Create 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("ixInboundOrderLine,sInboundOrderLine,ixInboundOrder,sOrderLineReference,ixMaterial,ixMaterialHandlingUnitConfiguration,ixHandlingUnitType,nHandlingUnitQuantity,nBaseUnitQuantityExpected,nBaseUnitQuantityReceived,sBatchNumber,sSerialNumber,ixStatus")] InboundOrderLinesPost inboundorderlines)
+        public ActionResult CreateWithID([Bind("ixInboundOrderLine,sInboundOrderLine,ixInboundOrder,sOrderLineReference,ixMaterial,ixMaterialHandlingUnitConfiguration,ixHandlingUnitType,nHandlingUnitQuantity,nBaseUnitQuantityExpected,nBaseUnitQuantityReceived,sSerialNumber,sBatchNumber,dtExpireAt,ixStatus")] InboundOrderLinesPost inboundorderlines)
+        {
+            if (ModelState.IsValid)
+            {
+                inboundorderlines.UserName = User.Identity.Name;
+                _inboundorderlinesService.Create(inboundorderlines);
+                return RedirectToAction("Edit", "InboundOrders", new { id = inboundorderlines.ixInboundOrder });
+            }
+            ViewBag.ixHandlingUnitType = new SelectList(_inboundorderlinesService.selectHandlingUnitTypes().Select(x => new { x.ixHandlingUnitType, x.sHandlingUnitType }), "ixHandlingUnitType", "sHandlingUnitType");
+            ViewBag.ixInboundOrder = new SelectList(_inboundorderlinesService.selectInboundOrders().Select(x => new { x.ixInboundOrder, x.sInboundOrder }), "ixInboundOrder", "sInboundOrder");
+            ViewBag.ixMaterial = new SelectList(_inboundorderlinesService.selectMaterials().Select(x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial");
+            ViewBag.ixMaterialHandlingUnitConfiguration = new SelectList(_inboundorderlinesService.selectMaterialHandlingUnitConfigurations().Select(x => new { x.ixMaterialHandlingUnitConfiguration, x.sMaterialHandlingUnitConfiguration }), "ixMaterialHandlingUnitConfiguration", "sMaterialHandlingUnitConfiguration");
+            ViewBag.ixStatus = new SelectList(_inboundorderlinesService.selectStatuses().Select(x => new { x.ixStatus, x.sStatus }), "ixStatus", "sStatus");
+
+            return View(inboundorderlines);
+        }
+        //Custom Code End
+
+        // POST: InboundOrderLines/Create 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind("ixInboundOrderLine,sInboundOrderLine,ixInboundOrder,sOrderLineReference,ixMaterial,ixMaterialHandlingUnitConfiguration,ixHandlingUnitType,nHandlingUnitQuantity,nBaseUnitQuantityExpected,nBaseUnitQuantityReceived,sSerialNumber,sBatchNumber,dtExpireAt,ixStatus")] InboundOrderLinesPost inboundorderlines)
         {
             if (ModelState.IsValid)
             {
@@ -187,7 +223,7 @@ This class ....
         // POST: InboundOrderLines/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("ixInboundOrderLine,sInboundOrderLine,ixInboundOrder,sOrderLineReference,ixMaterial,ixMaterialHandlingUnitConfiguration,ixHandlingUnitType,nHandlingUnitQuantity,nBaseUnitQuantityExpected,nBaseUnitQuantityReceived,sBatchNumber,sSerialNumber,ixStatus")] InboundOrderLinesPost inboundorderlines)
+        public ActionResult Edit([Bind("ixInboundOrderLine,sInboundOrderLine,ixInboundOrder,sOrderLineReference,ixMaterial,ixMaterialHandlingUnitConfiguration,ixHandlingUnitType,nHandlingUnitQuantity,nBaseUnitQuantityExpected,nBaseUnitQuantityReceived,sSerialNumber,sBatchNumber,dtExpireAt,ixStatus")] InboundOrderLinesPost inboundorderlines)
         {
             if (ModelState.IsValid)
             {
@@ -274,7 +310,16 @@ This class ....
             return Json(true);
         }
 
-
+        //Custom Code Start | Added Code Block 
+        [AcceptVerbs("Get", "Post")]
+        [HttpPost]
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+        public ActionResult getBaseUnitQuantityExpectedForMaterialHandlingUnitConfiguration(string Id, string nUnits)
+        {
+            var nBaseUnitQuantity = _inboundorderlinesService.MaterialHandlingUnitConfigurationsDb().Where(x => x.ixMaterialHandlingUnitConfiguration == Convert.ToInt64(Id)).Select(x => new { nBaseUnitQuantityExpected = x.nQuantity * Convert.ToInt64(nUnits) });
+            return Json(nBaseUnitQuantity);
+        }
+        //Custom Code End
 
     }
 }

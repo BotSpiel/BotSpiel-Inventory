@@ -31,10 +31,19 @@ This class ....
 */
  
         private readonly IInboundOrdersService _inboundordersService;
+        //Custom Code Start | Added Code Block 
+        private readonly IInboundOrderLinesService _inboundorderlinesService;
+        //Custom Code End
 
-        public InboundOrdersController(IInboundOrdersService inboundordersService )
+        //Custom Code Start | Replaced Code Block
+        //Replaced Code Block Start
+        //public InboundOrdersController(IInboundOrdersService inboundordersService)
+        //Replaced Code Block End
+        public InboundOrdersController(IInboundOrdersService inboundordersService, IInboundOrderLinesService inboundorderlinesService)
+        //Custom Code End
         {
             _inboundordersService = inboundordersService;
+            _inboundorderlinesService = inboundorderlinesService;
         }
 
         // GET: InboundOrders
@@ -151,10 +160,16 @@ This class ....
             if (ModelState.IsValid)
             {
                 inboundorders.UserName = User.Identity.Name;
-                _inboundordersService.Create(inboundorders);
-                return RedirectToAction("Index");
+                //Custom Code Start | Replaced Code Block
+                //Replaced Code Block Start
+                //_inboundordersService.Create(inboundorders);
+                //return RedirectToAction("Index");
+                //Replaced Code Block End
+                var ixInboundOrder = _inboundordersService.Create(inboundorders).Result;
+                return RedirectToAction("Edit", new { id = ixInboundOrder });
+                //Custom Code End
             }
-			ViewBag.ixBusinessPartner = new SelectList(_inboundordersService.selectBusinessPartners().Select( x => new { x.ixBusinessPartner, x.sBusinessPartner }), "ixBusinessPartner", "sBusinessPartner");
+            ViewBag.ixBusinessPartner = new SelectList(_inboundordersService.selectBusinessPartners().Select( x => new { x.ixBusinessPartner, x.sBusinessPartner }), "ixBusinessPartner", "sBusinessPartner");
 			ViewBag.ixCompany = new SelectList(_inboundordersService.selectCompanies().Select( x => new { x.ixCompany, x.sCompany }), "ixCompany", "sCompany");
 			ViewBag.ixFacility = new SelectList(_inboundordersService.selectFacilities().Select( x => new { x.ixFacility, x.sFacility }), "ixFacility", "sFacility");
 			ViewBag.ixInboundOrderType = new SelectList(_inboundordersService.selectInboundOrderTypes().Select( x => new { x.ixInboundOrderType, x.sInboundOrderType }), "ixInboundOrderType", "sInboundOrderType");

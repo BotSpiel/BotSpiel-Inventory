@@ -32,6 +32,7 @@ This class ....
         public FacilityFloorsPost GetPost(Int64 ixFacilityFloor) => _facilityfloorsRepository.GetPost(ixFacilityFloor);
         public FacilityFloors Get(Int64 ixFacilityFloor) => _facilityfloorsRepository.Get(ixFacilityFloor);
         public IQueryable<FacilityFloors> Index() => _facilityfloorsRepository.Index();
+        public IQueryable<FacilityFloors> IndexDb() => _facilityfloorsRepository.IndexDb();
         public bool VerifyFacilityFloorUnique(Int64 ixFacilityFloor, string sFacilityFloor) => _facilityfloorsRepository.VerifyFacilityFloorUnique(ixFacilityFloor, sFacilityFloor);
         public List<string> VerifyFacilityFloorDeleteOK(Int64 ixFacilityFloor, string sFacilityFloor) => _facilityfloorsRepository.VerifyFacilityFloorDeleteOK(ixFacilityFloor, sFacilityFloor);
 

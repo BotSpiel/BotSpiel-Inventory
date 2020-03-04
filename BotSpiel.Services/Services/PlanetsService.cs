@@ -32,7 +32,9 @@ This class ....
         public PlanetsPost GetPost(Int64 ixPlanet) => _planetsRepository.GetPost(ixPlanet);
         public Planets Get(Int64 ixPlanet) => _planetsRepository.Get(ixPlanet);
         public IQueryable<Planets> Index() => _planetsRepository.Index();
+        public IQueryable<Planets> IndexDb() => _planetsRepository.IndexDb();
        public IQueryable<PlanetarySystems> selectPlanetarySystems() => _planetsRepository.selectPlanetarySystems();
+       public IQueryable<PlanetarySystems> PlanetarySystemsDb() => _planetsRepository.PlanetarySystemsDb();
         public bool VerifyPlanetUnique(Int64 ixPlanet, string sPlanet) => _planetsRepository.VerifyPlanetUnique(ixPlanet, sPlanet);
         public List<string> VerifyPlanetDeleteOK(Int64 ixPlanet, string sPlanet) => _planetsRepository.VerifyPlanetDeleteOK(ixPlanet, sPlanet);
 

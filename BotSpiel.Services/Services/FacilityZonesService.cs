@@ -32,6 +32,7 @@ This class ....
         public FacilityZonesPost GetPost(Int64 ixFacilityZone) => _facilityzonesRepository.GetPost(ixFacilityZone);
         public FacilityZones Get(Int64 ixFacilityZone) => _facilityzonesRepository.Get(ixFacilityZone);
         public IQueryable<FacilityZones> Index() => _facilityzonesRepository.Index();
+        public IQueryable<FacilityZones> IndexDb() => _facilityzonesRepository.IndexDb();
         public bool VerifyFacilityZoneUnique(Int64 ixFacilityZone, string sFacilityZone) => _facilityzonesRepository.VerifyFacilityZoneUnique(ixFacilityZone, sFacilityZone);
         public List<string> VerifyFacilityZoneDeleteOK(Int64 ixFacilityZone, string sFacilityZone) => _facilityzonesRepository.VerifyFacilityZoneDeleteOK(ixFacilityZone, sFacilityZone);
 

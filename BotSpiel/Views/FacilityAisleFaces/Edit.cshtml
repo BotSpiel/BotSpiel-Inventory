@@ -1,5 +1,11 @@
-
-@model BotSpiel.DataAccess.Models.FacilityAisleFacesPost 
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IInventoryLocationsService _inventoryLocationsService
+@*//Custom Code End*@
+@model BotSpiel.DataAccess.Models.FacilityAisleFacesPost
 
 @{
     ViewBag.Title = "Edit Facility Aisle Faces";
@@ -11,7 +17,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Facility Aisle Faces</h4>
         <hr />
@@ -27,7 +33,15 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Facility Floor ID", "Index", "FacilityFloors", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Facility ID", "Index", "Facilities", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixFacility", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixFacility, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Facility Floor ID", "Index", "FacilityFloors", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixFacilityFloor", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixFacilityFloor, "", new { @class = "text-danger" })
@@ -43,7 +57,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Bay Sequence Type ID", "Index", "BaySequenceTypes", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Bay Sequence Type ID", "Index", "BaySequenceTypes", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixBaySequenceType", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixBaySequenceType, "", new { @class = "text-danger" })
@@ -51,7 +65,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Paired Aisle Face ID", "Index", "FacilityAisleFaces", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Paired Aisle Face ID", "Index", "FacilityAisleFaces", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixPairedAisleFace", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixPairedAisleFace, "", new { @class = "text-danger" })
@@ -59,7 +73,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Logical Orientation ID", "Index", "LogicalOrientations", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Logical Orientation ID", "Index", "LogicalOrientations", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixLogicalOrientation", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixLogicalOrientation, "", new { @class = "text-danger" })
@@ -67,7 +81,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Aisle Face Storage Type ID", "Index", "AisleFaceStorageTypes", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Aisle Face Storage Type ID", "Index", "AisleFaceStorageTypes", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixAisleFaceStorageType", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixAisleFaceStorageType, "", new { @class = "text-danger" })
@@ -83,7 +97,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("X Offset Unit ID", "Index", "UnitsOfMeasurement", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("X Offset Unit ID", "Index", "UnitsOfMeasurement", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixXOffsetUnit", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixXOffsetUnit, "", new { @class = "text-danger" })
@@ -99,7 +113,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Y Offset Unit ID", "Index", "UnitsOfMeasurement", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Y Offset Unit ID", "Index", "UnitsOfMeasurement", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixYOffsetUnit", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixYOffsetUnit, "", new { @class = "text-danger" })
@@ -131,7 +145,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Default Facility Zone ID", "Index", "FacilityZones", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Default Facility Zone ID", "Index", "FacilityZones", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixDefaultFacilityZone", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixDefaultFacilityZone, "", new { @class = "text-danger" })
@@ -139,7 +153,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Default Location Function ID", "Index", "LocationFunctions", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Default Location Function ID", "Index", "LocationFunctions", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixDefaultLocationFunction", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixDefaultLocationFunction, "", new { @class = "text-danger" })
@@ -147,7 +161,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Default Inventory Location Size ID", "Index", "InventoryLocationSizes", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Default Inventory Location Size ID", "Index", "InventoryLocationSizes", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixDefaultInventoryLocationSize", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixDefaultInventoryLocationSize, "", new { @class = "text-danger" })
@@ -161,6 +175,27 @@
         </div>
     </div>
 }
+
+@*//Custom Code Start | Added Code Block*@
+<div>
+    @{
+        List<BotSpiel.DataAccess.Models.InventoryLocations> inventoryLocations = new List<InventoryLocations>();
+        //Add empty record
+        InventoryLocations inventoryLocation = new InventoryLocations();
+        inventoryLocation.ixFacilityAisleFace = Model.ixFacilityAisleFace;
+        inventoryLocation.FacilityAisleFaces.ixFacilityAisleFace = Model.ixFacilityAisleFace;
+        inventoryLocations.Add(inventoryLocation);
+        _inventoryLocationsService.IndexDb().Where(x => x.ixFacilityAisleFace == Model.ixFacilityAisleFace).ToList().ForEach(x =>
+            {
+                inventoryLocations.Add(x);
+            }
+            );
+    }
+    @await Html.PartialAsync("IndexInventoryLocations", inventoryLocations)
+</div>
+@*//Custom Code End*@
+
+
 <div>
     @Html.ActionLink("Grid", "Index")
 </div>
@@ -169,5 +204,5 @@
 }
 
 
- 
+
 

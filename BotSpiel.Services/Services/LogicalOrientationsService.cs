@@ -32,6 +32,7 @@ This class ....
         public LogicalOrientationsPost GetPost(Int64 ixLogicalOrientation) => _logicalorientationsRepository.GetPost(ixLogicalOrientation);
         public LogicalOrientations Get(Int64 ixLogicalOrientation) => _logicalorientationsRepository.Get(ixLogicalOrientation);
         public IQueryable<LogicalOrientations> Index() => _logicalorientationsRepository.Index();
+        public IQueryable<LogicalOrientations> IndexDb() => _logicalorientationsRepository.IndexDb();
         public bool VerifyLogicalOrientationUnique(Int64 ixLogicalOrientation, string sLogicalOrientation) => _logicalorientationsRepository.VerifyLogicalOrientationUnique(ixLogicalOrientation, sLogicalOrientation);
         public List<string> VerifyLogicalOrientationDeleteOK(Int64 ixLogicalOrientation, string sLogicalOrientation) => _logicalorientationsRepository.VerifyLogicalOrientationDeleteOK(ixLogicalOrientation, sLogicalOrientation);
 

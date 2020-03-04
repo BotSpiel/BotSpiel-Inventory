@@ -1,0 +1,96 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
+@inject IQuestionSimilesService _questionsimilesService
+@model BotSpiel.DataAccess.Models.QuestionSimiles
+
+@{
+    ViewBag.Title = "Delete Question Similes";
+}
+
+@{
+    string conCat = "";
+    List<string> existInEntities = new List<string>();
+    bool DeleteOK = true;
+    existInEntities = _questionsimilesService.VerifyQuestionSimileDeleteOK(Model.ixQuestionSimile, Model.sQuestionSimile);
+    if (existInEntities.Any()) { DeleteOK = false; }
+}
+
+
+@if (DeleteOK)
+{
+
+<br>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Question Similes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixQuestionSimile)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixQuestionSimile)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sQuestionSimile)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sQuestionSimile)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Questions.sQuestion)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Questions.sQuestion)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sQuestionSimileText)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sQuestionSimileText)
+		</dd>
+ 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+</div>
+}
+else
+{
+    <br>
+    <h2>Delete</h2>
+
+    <h3>The QuestionSimile @Model.sQuestionSimile cannot be deleted. It is referenced by the following entities:</h3>
+    <hr />
+    @foreach (var entity in existInEntities)
+    {
+        conCat = String.Join(" ", StringSplitters.SplitCamelCase(@entity.ToString()));
+        <h4>@Html.ActionLink(@conCat.ToString(), "Index", @entity.ToString())</h4>
+        <hr />
+    }
+
+    <h3>If you want to delete the QuestionSimile, delete the dependent references first.</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+
+}
+ 
+

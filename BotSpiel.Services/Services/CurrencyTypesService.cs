@@ -32,6 +32,7 @@ This class ....
         public CurrencyTypesPost GetPost(Int64 ixCurrencyType) => _currencytypesRepository.GetPost(ixCurrencyType);
         public CurrencyTypes Get(Int64 ixCurrencyType) => _currencytypesRepository.Get(ixCurrencyType);
         public IQueryable<CurrencyTypes> Index() => _currencytypesRepository.Index();
+        public IQueryable<CurrencyTypes> IndexDb() => _currencytypesRepository.IndexDb();
         public bool VerifyCurrencyTypeUnique(Int64 ixCurrencyType, string sCurrencyType) => _currencytypesRepository.VerifyCurrencyTypeUnique(ixCurrencyType, sCurrencyType);
         public List<string> VerifyCurrencyTypeDeleteOK(Int64 ixCurrencyType, string sCurrencyType) => _currencytypesRepository.VerifyCurrencyTypeDeleteOK(ixCurrencyType, sCurrencyType);
 

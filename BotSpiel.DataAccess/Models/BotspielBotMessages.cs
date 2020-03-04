@@ -32,7 +32,10 @@ This class ....
 		[Required]
 		[Display(Name = "Your Reply")]
 		public virtual String sYourReply { get; set; }
-		[Required]
+        [StringLength(4000)]
+        [Display(Name = "My Next Message")]
+        public virtual String sMyNextMessage { get; set; }
+        [Required]
 		[Display(Name = "Created At")]
 		public virtual DateTime dtCreatedAt { get; set; }
 		[Required]

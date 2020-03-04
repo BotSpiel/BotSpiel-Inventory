@@ -49,6 +49,12 @@ This class ....
             var handlingunittypes = _context.HandlingUnitTypes.AsNoTracking(); 
             return handlingunittypes;
         }
+
+        public IQueryable<HandlingUnitTypes> IndexDb()
+        {
+            var handlingunittypes = _context.HandlingUnitTypes.AsNoTracking(); 
+            return handlingunittypes;
+        }
         public bool VerifyHandlingUnitTypeUnique(Int64 ixHandlingUnitType, string sHandlingUnitType)
         {
             if (_context.HandlingUnitTypes.AsNoTracking().Where(x => x.sHandlingUnitType == sHandlingUnitType).Any() && ixHandlingUnitType == 0L) return false;

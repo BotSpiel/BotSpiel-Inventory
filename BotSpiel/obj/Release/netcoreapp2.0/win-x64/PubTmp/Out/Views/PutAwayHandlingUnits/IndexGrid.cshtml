@@ -1,0 +1,45 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@inject IPutAwayHandlingUnitsService _putawayhandlingunitsService
+@model IEnumerable<BotSpiel.DataAccess.Models.PutAwayHandlingUnits>
+
+@{
+	List<SelectListItem> queryHandlingUnits = new List<SelectListItem>();
+	queryHandlingUnits.AddRange(_putawayhandlingunitsService.selectHandlingUnits().ToList().OrderBy(de => de.sHandlingUnit).Select(de => new SelectListItem() { Text = de.sHandlingUnit, Value = de.sHandlingUnit.ToString()}));
+	List<SelectListItem> queryInventoryLocations = new List<SelectListItem>();
+	queryInventoryLocations.AddRange(_putawayhandlingunitsService.selectInventoryLocations().ToList().OrderBy(de => de.sInventoryLocation).Select(de => new SelectListItem() { Text = de.sInventoryLocation, Value = de.sInventoryLocation.ToString()}));
+
+}
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => Html.CheckBox("Check_" + model.ixPutAwayHandlingUnit, new { @class = "rowCheckBox" })).Titled(Html.CheckBox("CheckAll", new { @onclick = "toggleAll()" }));
+				columns.Add(model => model.ixPutAwayHandlingUnit).Titled("Details").Encoded(false).RenderedAs(item => Html.ActionLink("Details", "Details", new { id = item.ixPutAwayHandlingUnit }, new { @class = "modal-link" }));
+				columns.Add(model => model.sPutAwayHandlingUnit).Titled("Put Away Handling Unit").Sortable(true).Filterable(true);
+				columns.Add(model => model.sInventoryDropLocation).Titled("Inventory Drop Location").Sortable(true).Filterable(true);
+				columns.Add(model => model.HandlingUnits.sHandlingUnit).Titled("Handling Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryHandlingUnits);
+				columns.Add(model => model.InventoryLocations.sInventoryLocation).Titled("Inventory Location").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInventoryLocations);
+				columns.Add(model => model.dtCreatedAt).Titled("Created At").Sortable(true).Filterable(true);
+				columns.Add(model => model.dtChangedAt).Titled("Changed At").Sortable(true).Filterable(true);
+				columns.Add(model => model.sCreatedBy).Titled("Created By").Sortable(true).Filterable(true);
+				columns.Add(model => model.sChangedBy).Titled("Changed By").Sortable(true).Filterable(true);
+        })
+        .Empty("No data found")
+        .Id("putawayhandlingunits-ajax-grid")
+        .Pageable(pager =>
+        {
+            pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 5, "5" }, { 10, "10" }, { 15, "15" }, { 20, "20" }, { 40, "40" }, { 100, "100" } };
+            pager.ShowPageSizes = true;
+            pager.RowsPerPage = 20;
+        })
+        .Css("css-classes")
+        .AppendCss("table-hover")
+ )
+
+
+ 
+

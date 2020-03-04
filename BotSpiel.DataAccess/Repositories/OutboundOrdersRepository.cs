@@ -21,10 +21,12 @@ This class ....
 
 */
         private readonly OutboundOrdersDB _context;
+       private readonly OutboundOrderLinesDB _contextOutboundOrderLines;
   
-        public OutboundOrdersRepository(OutboundOrdersDB context)
+        public OutboundOrdersRepository(OutboundOrdersDB context, OutboundOrderLinesDB contextOutboundOrderLines)
         {
             _context = context;
+           _contextOutboundOrderLines = contextOutboundOrderLines;
   
         }
 
@@ -53,10 +55,30 @@ This class ....
 
         public IQueryable<OutboundOrders> Index()
         {
+            //Custom Code Start | Replaced Code Block
+            //Replaced Code Block Start
+            //var outboundorders = _context.OutboundOrders.Include(a => a.OutboundOrderTypes).Include(a => a.Facilities).Include(a => a.Companies).Include(a => a.BusinessPartners).Include(a => a.CarrierServices).Include(a => a.Statuses).AsNoTracking();
+            //Replaced Code Block End
+            var outboundorders = _context.OutboundOrders.OrderByDescending(a => a.ixOutboundOrder).Include(a => a.OutboundOrderTypes).Include(a => a.Facilities).Include(a => a.Companies).Include(a => a.BusinessPartners).Include(a => a.CarrierServices).Include(a => a.Statuses).Include(a => a.OutboundShipments).Include(a => a.PickBatches).AsNoTracking();
+            //Custom Code End
+            return outboundorders;
+        }
+
+        public IQueryable<OutboundOrders> IndexDb()
+        {
             var outboundorders = _context.OutboundOrders.Include(a => a.OutboundOrderTypes).Include(a => a.Facilities).Include(a => a.Companies).Include(a => a.BusinessPartners).Include(a => a.CarrierServices).Include(a => a.Statuses).AsNoTracking(); 
             return outboundorders;
         }
-       public IQueryable<BusinessPartners> selectBusinessPartners()
+
+        //Custom Code Start | Added Code Block 
+        public IQueryable<OutboundOrdersPost> IndexDbPost()
+        {
+            var outboundorders = _context.OutboundOrdersPost.AsNoTracking();
+            return outboundorders;
+        }
+        //Custom Code End
+
+        public IQueryable<BusinessPartners> selectBusinessPartners()
         {
             List<BusinessPartners> businesspartners = new List<BusinessPartners>();
             _context.BusinessPartners.Include(a => a.Addresses).Include(a => a.BusinessPartnerTypes).Include(a => a.Companies).AsNoTracking()
@@ -120,6 +142,70 @@ This class ....
                 .ForEach(x => statuses.Add(x));
             return statuses.AsQueryable();
         }
+       public IQueryable<BusinessPartners> BusinessPartnersDb()
+        {
+            List<BusinessPartners> businesspartners = new List<BusinessPartners>();
+            _context.BusinessPartners.Include(a => a.Addresses).Include(a => a.BusinessPartnerTypes).Include(a => a.Companies).AsNoTracking()
+                .ToList()
+                .ForEach(x => businesspartners.Add(x));
+            return businesspartners.AsQueryable();
+        }
+        public IQueryable<CarrierServices> CarrierServicesDb()
+        {
+            List<CarrierServices> carrierservices = new List<CarrierServices>();
+            _context.CarrierServices.Include(a => a.Carriers).AsNoTracking()
+                .ToList()
+                .ForEach(x => carrierservices.Add(x));
+            return carrierservices.AsQueryable();
+        }
+        public IQueryable<Companies> CompaniesDb()
+        {
+            List<Companies> companies = new List<Companies>();
+            _context.Companies.AsNoTracking()
+                .ToList()
+                .ForEach(x => companies.Add(x));
+            return companies.AsQueryable();
+        }
+        public IQueryable<Facilities> FacilitiesDb()
+        {
+            List<Facilities> facilities = new List<Facilities>();
+            _context.Facilities.Include(a => a.Addresses).AsNoTracking()
+                .ToList()
+                .ForEach(x => facilities.Add(x));
+            return facilities.AsQueryable();
+        }
+        public IQueryable<OutboundOrderTypes> OutboundOrderTypesDb()
+        {
+            List<OutboundOrderTypes> outboundordertypes = new List<OutboundOrderTypes>();
+            _context.OutboundOrderTypes.AsNoTracking()
+                .ToList()
+                .ForEach(x => outboundordertypes.Add(x));
+            return outboundordertypes.AsQueryable();
+        }
+        public IQueryable<OutboundShipments> OutboundShipmentsDb()
+        {
+            List<OutboundShipments> outboundshipments = new List<OutboundShipments>();
+            _context.OutboundShipments.Include(a => a.Addresses).Include(a => a.Carriers).Include(a => a.Companies).Include(a => a.Facilities).Include(a => a.OutboundCarrierManifests).Include(a => a.Statuses).AsNoTracking()
+                .ToList()
+                .ForEach(x => outboundshipments.Add(x));
+            return outboundshipments.AsQueryable();
+        }
+        public IQueryable<PickBatches> PickBatchesDb()
+        {
+            List<PickBatches> pickbatches = new List<PickBatches>();
+            _context.PickBatches.Include(a => a.PickBatchTypes).Include(a => a.Statuses).AsNoTracking()
+                .ToList()
+                .ForEach(x => pickbatches.Add(x));
+            return pickbatches.AsQueryable();
+        }
+        public IQueryable<Statuses> StatusesDb()
+        {
+            List<Statuses> statuses = new List<Statuses>();
+            _context.Statuses.AsNoTracking()
+                .ToList()
+                .ForEach(x => statuses.Add(x));
+            return statuses.AsQueryable();
+        }
        public List<KeyValuePair<Int64?, string>> selectOutboundShipmentsNullable()
         {
             List<KeyValuePair<Int64?, string>> outboundshipmentsNullable = new List<KeyValuePair<Int64?, string>>();
@@ -150,6 +236,7 @@ This class ....
         public List<string> VerifyOutboundOrderDeleteOK(Int64 ixOutboundOrder, string sOutboundOrder)
         {
             List<string> existInEntities = new List<string>();
+           if (_contextOutboundOrderLines.OutboundOrderLines.AsNoTracking().Where(x => x.ixOutboundOrder == ixOutboundOrder).Any()) existInEntities.Add("OutboundOrderLines");
 
             return existInEntities;
         }

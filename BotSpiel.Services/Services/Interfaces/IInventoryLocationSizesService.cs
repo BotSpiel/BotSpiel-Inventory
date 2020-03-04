@@ -23,7 +23,9 @@ This interface ....
         InventoryLocationSizesPost GetPost(Int64 ixInventoryLocationSize);        
 		InventoryLocationSizes Get(Int64 ixInventoryLocationSize);
         IQueryable<InventoryLocationSizes> Index();
+        IQueryable<InventoryLocationSizes> IndexDb();
        IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement();
+       IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb();
         bool VerifyInventoryLocationSizeUnique(Int64 ixInventoryLocationSize, string sInventoryLocationSize);
         List<string> VerifyInventoryLocationSizeDeleteOK(Int64 ixInventoryLocationSize, string sInventoryLocationSize);
 

@@ -32,8 +32,25 @@ This class ....
         public StatusesPost GetPost(Int64 ixStatus) => _statusesRepository.GetPost(ixStatus);
         public Statuses Get(Int64 ixStatus) => _statusesRepository.Get(ixStatus);
         public IQueryable<Statuses> Index() => _statusesRepository.Index();
+        public IQueryable<Statuses> IndexDb() => _statusesRepository.IndexDb();
         public bool VerifyStatusUnique(Int64 ixStatus, string sStatus) => _statusesRepository.VerifyStatusUnique(ixStatus, sStatus);
         public List<string> VerifyStatusDeleteOK(Int64 ixStatus, string sStatus) => _statusesRepository.VerifyStatusDeleteOK(ixStatus, sStatus);
+
+        //Custom Code Start | Added Code Block 
+
+        public string getStatus(Int64 ixStatus)
+        {
+            if (IndexDb().Where(x => x.ixStatus == ixStatus).Select(x => x.sStatus).Any())
+            {
+                return IndexDb().Where(x => x.ixStatus == ixStatus).Select(x => x.sStatus).FirstOrDefault();
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        //Custom Code End
 
         public Task<Int64> Create(StatusesPost statusesPost)
         {

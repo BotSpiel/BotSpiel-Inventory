@@ -1,0 +1,35 @@
+
+
+@model IEnumerable<BotSpiel.DataAccess.Models.ShopModuleGridstx>
+
+@{
+    ViewBag.Title = "Index Shop Module Grids - Transactional Data";
+}
+<br>
+<h2>Shop Module Grids - Transactional Data</h2>
+
+
+
+
+
+
+@(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+				columns.Add(model => model.ixShopModuleGrid).Titled("Grids").Encoded(false).RenderedAs(item => Html.ActionLink("Grid", "Index", item.sShopModuleGrid));
+				columns.Add(model => model.sShopModuleGrid).Titled("Shop Module Grid").Sortable(true).Filterable(true);
+				columns.Add(model => model.sShortDescription).Titled("Short Description").Sortable(true).Filterable(true);
+
+        })
+        .Pageable(pager =>
+        {
+            pager.RowsPerPage = 20;
+        })
+		//.Filterable()
+ )
+
+
+
+ 
+

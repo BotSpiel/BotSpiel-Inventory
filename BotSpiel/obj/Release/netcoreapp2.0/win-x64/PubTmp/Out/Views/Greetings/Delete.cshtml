@@ -1,0 +1,120 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
+@inject IGreetingsService _greetingsService
+@model BotSpiel.DataAccess.Models.Greetings
+
+@{
+    ViewBag.Title = "Delete Greetings";
+}
+
+@{
+    string conCat = "";
+    List<string> existInEntities = new List<string>();
+    bool DeleteOK = true;
+    existInEntities = _greetingsService.VerifyGreetingDeleteOK(Model.ixGreeting, Model.sGreeting);
+    if (existInEntities.Any()) { DeleteOK = false; }
+}
+
+
+@if (DeleteOK)
+{
+
+<br>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Greetings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixGreeting)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixGreeting)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sGreeting)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sGreeting)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Languages.sLanguage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Languages.sLanguage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.LanguageStyles.sLanguageStyle)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.LanguageStyles.sLanguageStyle)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sGreetingOffered)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sGreetingOffered)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sGreetingResponse)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sGreetingResponse)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ResponseTypes.sResponseType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ResponseTypes.sResponseType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.bActive)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.bActive)
+		</dd>
+ 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+</div>
+}
+else
+{
+    <br>
+    <h2>Delete</h2>
+
+    <h3>The Greeting @Model.sGreeting cannot be deleted. It is referenced by the following entities:</h3>
+    <hr />
+    @foreach (var entity in existInEntities)
+    {
+        conCat = String.Join(" ", StringSplitters.SplitCamelCase(@entity.ToString()));
+        <h4>@Html.ActionLink(@conCat.ToString(), "Index", @entity.ToString())</h4>
+        <hr />
+    }
+
+    <h3>If you want to delete the Greeting, delete the dependent references first.</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+
+}
+ 
+

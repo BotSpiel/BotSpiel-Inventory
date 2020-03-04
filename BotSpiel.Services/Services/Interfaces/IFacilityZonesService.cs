@@ -23,6 +23,7 @@ This interface ....
         FacilityZonesPost GetPost(Int64 ixFacilityZone);        
 		FacilityZones Get(Int64 ixFacilityZone);
         IQueryable<FacilityZones> Index();
+        IQueryable<FacilityZones> IndexDb();
         bool VerifyFacilityZoneUnique(Int64 ixFacilityZone, string sFacilityZone);
         List<string> VerifyFacilityZoneDeleteOK(Int64 ixFacilityZone, string sFacilityZone);
 

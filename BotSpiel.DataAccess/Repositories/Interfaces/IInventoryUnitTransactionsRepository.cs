@@ -22,6 +22,7 @@ This interface ....
         InventoryUnitTransactionsPost GetPost(Int64 ixInventoryUnitTransaction);        
 		InventoryUnitTransactions Get(Int64 ixInventoryUnitTransaction);
         IQueryable<InventoryUnitTransactions> Index();
+        IQueryable<InventoryUnitTransactions> IndexDb();
        IQueryable<Statuses> selectStatuses();
         IQueryable<Companies> selectCompanies();
         IQueryable<Facilities> selectFacilities();
@@ -31,6 +32,15 @@ This interface ....
         IQueryable<HandlingUnits> selectHandlingUnits();
         IQueryable<InventoryLocations> selectInventoryLocations();
         IQueryable<InventoryUnitTransactionContexts> selectInventoryUnitTransactionContexts();
+       IQueryable<Statuses> StatusesDb();
+        IQueryable<Companies> CompaniesDb();
+        IQueryable<Facilities> FacilitiesDb();
+        IQueryable<Materials> MaterialsDb();
+        IQueryable<InventoryUnits> InventoryUnitsDb();
+        IQueryable<InventoryStates> InventoryStatesDb();
+        IQueryable<HandlingUnits> HandlingUnitsDb();
+        IQueryable<InventoryLocations> InventoryLocationsDb();
+        IQueryable<InventoryUnitTransactionContexts> InventoryUnitTransactionContextsDb();
        List<KeyValuePair<Int64?, string>> selectStatusesNullable();
         List<KeyValuePair<Int64?, string>> selectCompaniesNullable();
         List<KeyValuePair<Int64?, string>> selectFacilitiesNullable();

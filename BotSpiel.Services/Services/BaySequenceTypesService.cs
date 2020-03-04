@@ -32,6 +32,7 @@ This class ....
         public BaySequenceTypesPost GetPost(Int64 ixBaySequenceType) => _baysequencetypesRepository.GetPost(ixBaySequenceType);
         public BaySequenceTypes Get(Int64 ixBaySequenceType) => _baysequencetypesRepository.Get(ixBaySequenceType);
         public IQueryable<BaySequenceTypes> Index() => _baysequencetypesRepository.Index();
+        public IQueryable<BaySequenceTypes> IndexDb() => _baysequencetypesRepository.IndexDb();
         public bool VerifyBaySequenceTypeUnique(Int64 ixBaySequenceType, string sBaySequenceType) => _baysequencetypesRepository.VerifyBaySequenceTypeUnique(ixBaySequenceType, sBaySequenceType);
         public List<string> VerifyBaySequenceTypeDeleteOK(Int64 ixBaySequenceType, string sBaySequenceType) => _baysequencetypesRepository.VerifyBaySequenceTypeDeleteOK(ixBaySequenceType, sBaySequenceType);
 

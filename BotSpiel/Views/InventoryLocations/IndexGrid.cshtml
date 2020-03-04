@@ -7,6 +7,8 @@
 @{
 	List<SelectListItem> queryCompanies = new List<SelectListItem>();
 	queryCompanies.AddRange(_inventorylocationsService.selectCompanies().ToList().OrderBy(de => de.sCompany).Select(de => new SelectListItem() { Text = de.sCompany, Value = de.sCompany.ToString()}));
+	List<SelectListItem> queryFacilities = new List<SelectListItem>();
+	queryFacilities.AddRange(_inventorylocationsService.selectFacilities().ToList().OrderBy(de => de.sFacility).Select(de => new SelectListItem() { Text = de.sFacility, Value = de.sFacility.ToString()}));
 	List<SelectListItem> queryFacilityAisleFaces = new List<SelectListItem>();
 	queryFacilityAisleFaces.AddRange(_inventorylocationsService.selectFacilityAisleFaces().ToList().OrderBy(de => de.sFacilityAisleFace).Select(de => new SelectListItem() { Text = de.sFacilityAisleFace, Value = de.sFacilityAisleFace.ToString()}));
 	List<SelectListItem> queryFacilityFloors = new List<SelectListItem>();
@@ -34,6 +36,7 @@
 				columns.Add(model => model.ixInventoryLocationEdit).Titled("Edit").Encoded(false).RenderedAs(item => Html.ActionLink("Edit", "Edit", new { id = item.ixInventoryLocation }, new { @class = "modal-link" }));
 				columns.Add(model => model.sInventoryLocation).Titled("Inventory Location").Sortable(true).Filterable(true);
 				columns.Add(model => model.LocationFunctions.sLocationFunction).Titled("Location Function").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryLocationFunctions);
+				columns.Add(model => model.Facilities.sFacility).Titled("Facility").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilities);
 				columns.Add(model => model.FacilityFloors.sFacilityFloor).Titled("Facility Floor").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilityFloors);
 				columns.Add(model => model.FacilityZones.sFacilityZone).Titled("Facility Zone").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilityZones);
 				columns.Add(model => model.FacilityWorkAreas.sFacilityWorkArea).Titled("Facility Work Area").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilityWorkAreas);

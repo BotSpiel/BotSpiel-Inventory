@@ -43,6 +43,12 @@ This class ....
             var logicalorientations = _context.LogicalOrientations.AsNoTracking(); 
             return logicalorientations;
         }
+
+        public IQueryable<LogicalOrientations> IndexDb()
+        {
+            var logicalorientations = _context.LogicalOrientations.AsNoTracking(); 
+            return logicalorientations;
+        }
         public bool VerifyLogicalOrientationUnique(Int64 ixLogicalOrientation, string sLogicalOrientation)
         {
             if (_context.LogicalOrientations.AsNoTracking().Where(x => x.sLogicalOrientation == sLogicalOrientation).Any() && ixLogicalOrientation == 0L) return false;

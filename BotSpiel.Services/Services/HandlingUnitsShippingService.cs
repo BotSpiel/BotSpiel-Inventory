@@ -32,8 +32,11 @@ This class ....
         public HandlingUnitsShippingPost GetPost(Int64 ixHandlingUnitShipping) => _handlingunitsshippingRepository.GetPost(ixHandlingUnitShipping);
         public HandlingUnitsShipping Get(Int64 ixHandlingUnitShipping) => _handlingunitsshippingRepository.Get(ixHandlingUnitShipping);
         public IQueryable<HandlingUnitsShipping> Index() => _handlingunitsshippingRepository.Index();
+        public IQueryable<HandlingUnitsShipping> IndexDb() => _handlingunitsshippingRepository.IndexDb();
        public IQueryable<Statuses> selectStatuses() => _handlingunitsshippingRepository.selectStatuses();
         public IQueryable<HandlingUnits> selectHandlingUnits() => _handlingunitsshippingRepository.selectHandlingUnits();
+       public IQueryable<Statuses> StatusesDb() => _handlingunitsshippingRepository.StatusesDb();
+        public IQueryable<HandlingUnits> HandlingUnitsDb() => _handlingunitsshippingRepository.HandlingUnitsDb();
         public bool VerifyHandlingUnitShippingUnique(Int64 ixHandlingUnitShipping, string sHandlingUnitShipping) => _handlingunitsshippingRepository.VerifyHandlingUnitShippingUnique(ixHandlingUnitShipping, sHandlingUnitShipping);
         public List<string> VerifyHandlingUnitShippingDeleteOK(Int64 ixHandlingUnitShipping, string sHandlingUnitShipping) => _handlingunitsshippingRepository.VerifyHandlingUnitShippingDeleteOK(ixHandlingUnitShipping, sHandlingUnitShipping);
 

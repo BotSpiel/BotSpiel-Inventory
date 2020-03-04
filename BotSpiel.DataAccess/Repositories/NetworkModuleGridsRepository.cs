@@ -41,6 +41,12 @@ This class ....
             var networkmodulegrids = _context.NetworkModuleGrids.AsNoTracking(); 
             return networkmodulegrids;
         }
+
+        public IQueryable<NetworkModuleGrids> IndexDb()
+        {
+            var networkmodulegrids = _context.NetworkModuleGrids.AsNoTracking(); 
+            return networkmodulegrids;
+        }
 		public IQueryable<NetworkModuleGridsconfig> Indexconfig() => _context.NetworkModuleGridsconfig;
 		public IQueryable<NetworkModuleGridsmd> Indexmd() => _context.NetworkModuleGridsmd;
 		public IQueryable<NetworkModuleGridstx> Indextx() => _context.NetworkModuleGridstx;

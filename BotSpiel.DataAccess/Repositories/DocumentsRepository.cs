@@ -44,6 +44,12 @@ This class ....
             var documents = _context.Documents.Include(a => a.DocumentMessageTypes).Include(a => a.Statuses).AsNoTracking(); 
             return documents;
         }
+
+        public IQueryable<Documents> IndexDb()
+        {
+            var documents = _context.Documents.Include(a => a.DocumentMessageTypes).Include(a => a.Statuses).AsNoTracking(); 
+            return documents;
+        }
        public IQueryable<DocumentMessageTypes> selectDocumentMessageTypes()
         {
             List<DocumentMessageTypes> documentmessagetypes = new List<DocumentMessageTypes>();
@@ -53,6 +59,22 @@ This class ....
             return documentmessagetypes.AsQueryable();
         }
         public IQueryable<Statuses> selectStatuses()
+        {
+            List<Statuses> statuses = new List<Statuses>();
+            _context.Statuses.AsNoTracking()
+                .ToList()
+                .ForEach(x => statuses.Add(x));
+            return statuses.AsQueryable();
+        }
+       public IQueryable<DocumentMessageTypes> DocumentMessageTypesDb()
+        {
+            List<DocumentMessageTypes> documentmessagetypes = new List<DocumentMessageTypes>();
+            _context.DocumentMessageTypes.AsNoTracking()
+                .ToList()
+                .ForEach(x => documentmessagetypes.Add(x));
+            return documentmessagetypes.AsQueryable();
+        }
+        public IQueryable<Statuses> StatusesDb()
         {
             List<Statuses> statuses = new List<Statuses>();
             _context.Statuses.AsNoTracking()

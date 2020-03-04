@@ -32,26 +32,26 @@ This class ....
 
 		public DbSet<OutboundShipments> OutboundShipments { get; set; }
 		public DbSet<OutboundShipmentsPost> OutboundShipmentsPost { get; set; }
-		public DbSet<Facilities> Facilities { get; set; }
-		public DbSet<FacilitiesPost> FacilitiesPost { get; set; }
 		public DbSet<OutboundCarrierManifests> OutboundCarrierManifests { get; set; }
 		public DbSet<OutboundCarrierManifestsPost> OutboundCarrierManifestsPost { get; set; }
 		public DbSet<Statuses> Statuses { get; set; }
 		public DbSet<StatusesPost> StatusesPost { get; set; }
-		public DbSet<Addresses> Addresses { get; set; }
-		public DbSet<AddressesPost> AddressesPost { get; set; }
 		public DbSet<InventoryLocations> InventoryLocations { get; set; }
 		public DbSet<InventoryLocationsPost> InventoryLocationsPost { get; set; }
 		public DbSet<Carriers> Carriers { get; set; }
 		public DbSet<CarriersPost> CarriersPost { get; set; }
-		public DbSet<CountrySubDivisions> CountrySubDivisions { get; set; }
-		public DbSet<CountrySubDivisionsPost> CountrySubDivisionsPost { get; set; }
 		public DbSet<Companies> Companies { get; set; }
 		public DbSet<CompaniesPost> CompaniesPost { get; set; }
+		public DbSet<Facilities> Facilities { get; set; }
+		public DbSet<FacilitiesPost> FacilitiesPost { get; set; }
 		public DbSet<FacilityWorkAreas> FacilityWorkAreas { get; set; }
 		public DbSet<FacilityWorkAreasPost> FacilityWorkAreasPost { get; set; }
 		public DbSet<CarrierTypes> CarrierTypes { get; set; }
 		public DbSet<CarrierTypesPost> CarrierTypesPost { get; set; }
+		public DbSet<Addresses> Addresses { get; set; }
+		public DbSet<AddressesPost> AddressesPost { get; set; }
+		public DbSet<CountrySubDivisions> CountrySubDivisions { get; set; }
+		public DbSet<CountrySubDivisionsPost> CountrySubDivisionsPost { get; set; }
 		public DbSet<Countries> Countries { get; set; }
 		public DbSet<CountriesPost> CountriesPost { get; set; }
 		public DbSet<PlanetSubRegions> PlanetSubRegions { get; set; }
@@ -96,12 +96,6 @@ This class ....
             modelBuilder.Entity<OutboundShipmentsPost>()
                 .ToTable("tx_vw_OutboundShipmentsPost")
                 .HasKey(c => new { c.ixOutboundShipment });
-            modelBuilder.Entity<Facilities>()
-                .ToTable("md_vw_Facilities")
-                .HasKey(c => new { c.ixFacility });
-            modelBuilder.Entity<FacilitiesPost>()
-                .ToTable("md_vw_FacilitiesPost")
-                .HasKey(c => new { c.ixFacility });
             modelBuilder.Entity<OutboundCarrierManifests>()
                 .ToTable("tx_vw_OutboundCarrierManifests")
                 .HasKey(c => new { c.ixOutboundCarrierManifest });
@@ -114,12 +108,6 @@ This class ....
             modelBuilder.Entity<StatusesPost>()
                 .ToTable("config_vw_StatusesPost")
                 .HasKey(c => new { c.ixStatus });
-            modelBuilder.Entity<Addresses>()
-                .ToTable("md_vw_Addresses")
-                .HasKey(c => new { c.ixAddress });
-            modelBuilder.Entity<AddressesPost>()
-                .ToTable("md_vw_AddressesPost")
-                .HasKey(c => new { c.ixAddress });
             modelBuilder.Entity<InventoryLocations>()
                 .ToTable("md_vw_InventoryLocations")
                 .HasKey(c => new { c.ixInventoryLocation });
@@ -132,18 +120,18 @@ This class ....
             modelBuilder.Entity<CarriersPost>()
                 .ToTable("md_vw_CarriersPost")
                 .HasKey(c => new { c.ixCarrier });
-            modelBuilder.Entity<CountrySubDivisions>()
-                .ToTable("md_vw_CountrySubDivisions")
-                .HasKey(c => new { c.ixCountrySubDivision });
-            modelBuilder.Entity<CountrySubDivisionsPost>()
-                .ToTable("md_vw_CountrySubDivisionsPost")
-                .HasKey(c => new { c.ixCountrySubDivision });
             modelBuilder.Entity<Companies>()
                 .ToTable("md_vw_Companies")
                 .HasKey(c => new { c.ixCompany });
             modelBuilder.Entity<CompaniesPost>()
                 .ToTable("md_vw_CompaniesPost")
                 .HasKey(c => new { c.ixCompany });
+            modelBuilder.Entity<Facilities>()
+                .ToTable("md_vw_Facilities")
+                .HasKey(c => new { c.ixFacility });
+            modelBuilder.Entity<FacilitiesPost>()
+                .ToTable("md_vw_FacilitiesPost")
+                .HasKey(c => new { c.ixFacility });
             modelBuilder.Entity<FacilityWorkAreas>()
                 .ToTable("md_vw_FacilityWorkAreas")
                 .HasKey(c => new { c.ixFacilityWorkArea });
@@ -156,6 +144,18 @@ This class ....
             modelBuilder.Entity<CarrierTypesPost>()
                 .ToTable("config_vw_CarrierTypesPost")
                 .HasKey(c => new { c.ixCarrierType });
+            modelBuilder.Entity<Addresses>()
+                .ToTable("md_vw_Addresses")
+                .HasKey(c => new { c.ixAddress });
+            modelBuilder.Entity<AddressesPost>()
+                .ToTable("md_vw_AddressesPost")
+                .HasKey(c => new { c.ixAddress });
+            modelBuilder.Entity<CountrySubDivisions>()
+                .ToTable("md_vw_CountrySubDivisions")
+                .HasKey(c => new { c.ixCountrySubDivision });
+            modelBuilder.Entity<CountrySubDivisionsPost>()
+                .ToTable("md_vw_CountrySubDivisionsPost")
+                .HasKey(c => new { c.ixCountrySubDivision });
             modelBuilder.Entity<Countries>()
                 .ToTable("md_vw_Countries")
                 .HasKey(c => new { c.ixCountry });
@@ -269,7 +269,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is OutboundShipmentsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is OutboundShipmentsPost)).ToList())
             {
                 var tx_vw_outboundshipmentspost = e.Entity as OutboundShipmentsPost;
                 switch (e.State)
@@ -337,12 +337,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixOutboundShipment"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeOutboundShipments @ixOutboundShipment = @p0, @ixFacility = @p1, @ixCompany = @p2, @ixCarrier = @p3, @sCarrierConsignmentNumber = @p4, @ixStatus = @p5, @ixAddress = @p6, @ixOutboundCarrierManifest = @p7, @UserName = @p8", tx_vw_outboundshipmentspost.ixOutboundShipment, tx_vw_outboundshipmentspost.ixFacility, tx_vw_outboundshipmentspost.ixCompany, tx_vw_outboundshipmentspost.ixCarrier, tx_vw_outboundshipmentspost.sCarrierConsignmentNumber, tx_vw_outboundshipmentspost.ixStatus, tx_vw_outboundshipmentspost.ixAddress, tx_vw_outboundshipmentspost.ixOutboundCarrierManifest, tx_vw_outboundshipmentspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

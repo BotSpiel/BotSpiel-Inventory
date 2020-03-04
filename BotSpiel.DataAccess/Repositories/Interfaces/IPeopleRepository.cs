@@ -22,7 +22,9 @@ This interface ....
         PeoplePost GetPost(Int64 ixPerson);        
 		People Get(Int64 ixPerson);
         IQueryable<People> Index();
+        IQueryable<People> IndexDb();
        IQueryable<Languages> selectLanguages();
+       IQueryable<Languages> LanguagesDb();
         bool VerifyPersonUnique(Int64 ixPerson, string sPerson);
         List<string> VerifyPersonDeleteOK(Int64 ixPerson, string sPerson);
         void RegisterCreate(PeoplePost peoplePost);

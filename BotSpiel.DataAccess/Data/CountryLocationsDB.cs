@@ -109,7 +109,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is CountryLocationsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is CountryLocationsPost)).ToList())
             {
                 var md_vw_countrylocationspost = e.Entity as CountryLocationsPost;
                 switch (e.State)
@@ -172,12 +172,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixCountryLocation"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeCountryLocations @ixCountryLocation = @p0, @sCountryLocation = @p1, @ixCountrySubDivision = @p2, @sLocationCode = @p3, @sNameWithoutDiacritics = @p4, @sLatitude = @p5, @sLongitude = @p6, @UserName = @p7", md_vw_countrylocationspost.ixCountryLocation, md_vw_countrylocationspost.sCountryLocation, md_vw_countrylocationspost.ixCountrySubDivision, md_vw_countrylocationspost.sLocationCode, md_vw_countrylocationspost.sNameWithoutDiacritics, md_vw_countrylocationspost.sLatitude, md_vw_countrylocationspost.sLongitude, md_vw_countrylocationspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

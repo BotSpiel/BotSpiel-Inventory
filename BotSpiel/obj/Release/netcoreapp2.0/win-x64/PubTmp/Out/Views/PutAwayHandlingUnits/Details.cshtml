@@ -1,0 +1,52 @@
+
+@model BotSpiel.DataAccess.Models.PutAwayHandlingUnits
+
+@{
+    ViewBag.Title = "Details Put Away Handling Units";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Put Away Handling Units</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixPutAwayHandlingUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixPutAwayHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPutAwayHandlingUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPutAwayHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sInventoryDropLocation)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sInventoryDropLocation)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.HandlingUnits.sHandlingUnit)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.HandlingUnits.sHandlingUnit, "Details", "HandlingUnits", new { id = Model.ixHandlingUnit }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InventoryLocations.sInventoryLocation)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InventoryLocations.sInventoryLocation, "Details", "InventoryLocations", new { id = Model.ixInventoryLocation }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

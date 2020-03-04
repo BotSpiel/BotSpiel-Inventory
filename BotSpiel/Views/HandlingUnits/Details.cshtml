@@ -1,16 +1,22 @@
-
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IInventoryUnitsService _inventoryUnitsService
+@*//Custom Code End*@
 @model BotSpiel.DataAccess.Models.HandlingUnits
 
 @{
-    ViewBag.Title = "Details Handling Units";
+	ViewBag.Title = "Details Handling Units";
 }
 <br>
 <h2>Details</h2>
 
 <div>
-    <h4>Handling Units</h4>
-    <hr />
-    <dl class="dl-horizontal">
+	<h4>Handling Units</h4>
+	<hr />
+	<dl class="dl-horizontal">
 		<dt>
 			@Html.DisplayNameFor(model => model.ixHandlingUnit)
 		</dt>
@@ -103,12 +109,33 @@
 		</dd>
 
 
-    </dl>
+	</dl>
 </div>
-<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixHandlingUnit }) |
+
+@*//Custom Code Start | Added Code Block*@
+<div>
+	@{
+		List<BotSpiel.DataAccess.Models.InventoryUnits> inventoryUnits = new List<InventoryUnits>();
+		//Add empty record
+		InventoryUnits inventoryUnit = new InventoryUnits();
+		inventoryUnit.ixHandlingUnit = Model.ixHandlingUnit;
+		inventoryUnit.HandlingUnits.ixHandlingUnit = Model.ixHandlingUnit;
+		inventoryUnits.Add(inventoryUnit);
+		_inventoryUnitsService.IndexDb().Where(x => x.ixHandlingUnit == Model.ixHandlingUnit).ToList().ForEach(x =>
+			{
+				inventoryUnits.Add(x);
+			}
+			);
+	}
+	@await Html.PartialAsync("IndexInventoryUnits", inventoryUnits)
+</div>
+@*//Custom Code End*@
+
+<p>
+	@Html.ActionLink("Edit", "Edit", new { id = Model.ixHandlingUnit }) |
 	@Html.ActionLink("Delete", "Delete", new { id = Model.ixHandlingUnit }) |
-    @Html.ActionLink("Grid", "Index")
+	@Html.ActionLink("Grid", "Index")
 </p>
 
- 
+
 

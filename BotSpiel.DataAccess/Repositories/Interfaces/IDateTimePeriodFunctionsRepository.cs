@@ -22,6 +22,7 @@ This interface ....
         DateTimePeriodFunctionsPost GetPost(Int64 ixDateTimePeriodFunction);        
 		DateTimePeriodFunctions Get(Int64 ixDateTimePeriodFunction);
         IQueryable<DateTimePeriodFunctions> Index();
+        IQueryable<DateTimePeriodFunctions> IndexDb();
         bool VerifyDateTimePeriodFunctionUnique(Int64 ixDateTimePeriodFunction, string sDateTimePeriodFunction);
         List<string> VerifyDateTimePeriodFunctionDeleteOK(Int64 ixDateTimePeriodFunction, string sDateTimePeriodFunction);
         void RegisterCreate(DateTimePeriodFunctionsPost datetimeperiodfunctionsPost);

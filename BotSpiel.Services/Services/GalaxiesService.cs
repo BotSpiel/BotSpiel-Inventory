@@ -32,7 +32,9 @@ This class ....
         public GalaxiesPost GetPost(Int64 ixGalaxy) => _galaxiesRepository.GetPost(ixGalaxy);
         public Galaxies Get(Int64 ixGalaxy) => _galaxiesRepository.Get(ixGalaxy);
         public IQueryable<Galaxies> Index() => _galaxiesRepository.Index();
+        public IQueryable<Galaxies> IndexDb() => _galaxiesRepository.IndexDb();
        public IQueryable<Universes> selectUniverses() => _galaxiesRepository.selectUniverses();
+       public IQueryable<Universes> UniversesDb() => _galaxiesRepository.UniversesDb();
         public bool VerifyGalaxyUnique(Int64 ixGalaxy, string sGalaxy) => _galaxiesRepository.VerifyGalaxyUnique(ixGalaxy, sGalaxy);
         public List<string> VerifyGalaxyDeleteOK(Int64 ixGalaxy, string sGalaxy) => _galaxiesRepository.VerifyGalaxyDeleteOK(ixGalaxy, sGalaxy);
 

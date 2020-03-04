@@ -1,16 +1,22 @@
-
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IOutboundShipmentsService _outboundShipmentsService
+@*//Custom Code End*@
 @model BotSpiel.DataAccess.Models.OutboundCarrierManifests
 
 @{
-    ViewBag.Title = "Details Outbound Carrier Manifests";
+	ViewBag.Title = "Details Outbound Carrier Manifests";
 }
 <br>
 <h2>Details</h2>
 
 <div>
-    <h4>Outbound Carrier Manifests</h4>
-    <hr />
-    <dl class="dl-horizontal">
+	<h4>Outbound Carrier Manifests</h4>
+	<hr />
+	<dl class="dl-horizontal">
 		<dt>
 			@Html.DisplayNameFor(model => model.ixOutboundCarrierManifest)
 		</dt>
@@ -22,6 +28,12 @@
 		</dt>
 		<dd>
 			@Html.DisplayFor(model => model.sOutboundCarrierManifest)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Facilities.sFacility)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Facilities.sFacility, "Details", "Facilities", new { id = Model.ixFacility }, null)
 		</dd>
 		<dt>
 			@Html.DisplayNameFor(model => model.Carriers.sCarrier)
@@ -49,12 +61,33 @@
 		</dd>
 
 
-    </dl>
+	</dl>
 </div>
-<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixOutboundCarrierManifest }) |
+
+@*//Custom Code Start | Added Code Block*@
+<div>
+	@{
+		List<BotSpiel.DataAccess.Models.OutboundShipments> outboundShipments = new List<OutboundShipments>();
+		//Add empty record
+		OutboundShipments outboundShipment = new OutboundShipments();
+		outboundShipment.ixOutboundCarrierManifest = Model.ixOutboundCarrierManifest;
+		outboundShipment.OutboundCarrierManifests.ixOutboundCarrierManifest = Model.ixOutboundCarrierManifest;
+		outboundShipments.Add(outboundShipment);
+		_outboundShipmentsService.IndexDb().Where(x => x.ixOutboundCarrierManifest == Model.ixOutboundCarrierManifest).ToList().ForEach(x =>
+			{
+				outboundShipments.Add(x);
+			}
+			);
+	}
+	@await Html.PartialAsync("IndexOutboundShipments", outboundShipments)
+</div>
+@*//Custom Code End*@
+
+<p>
+	@Html.ActionLink("Edit", "Edit", new { id = Model.ixOutboundCarrierManifest }) |
 	@Html.ActionLink("Delete", "Delete", new { id = Model.ixOutboundCarrierManifest }) |
-    @Html.ActionLink("Grid", "Index")
+	@Html.ActionLink("Grid", "Index")
 </p>
 
- 
+
 

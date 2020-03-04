@@ -42,8 +42,6 @@ This class ....
 		public virtual Int64 ixOutboundOrder { get; set; }
 		[Display(Name = "Outbound Order ID")]
 		public virtual Int64 ixOutboundOrderEdit { get; set; }
-		[Required]
-		[StringLength(300)]
 		[Display(Name = "Outbound Order")]
 		public virtual String sOutboundOrder { get; set; }
 		[StringLength(300)]
@@ -62,12 +60,10 @@ This class ....
 		[Required]
 		[Display(Name = "Business Partner ID")]
 		public virtual Int64 ixBusinessPartner { get; set; }
-		[Required]
 		[Display(Name = "Deliver Earliest")]
-		public virtual DateTime dtDeliverEarliest { get; set; }
-		[Required]
+		public virtual DateTime? dtDeliverEarliest { get; set; }
 		[Display(Name = "Deliver Latest")]
-		public virtual DateTime dtDeliverLatest { get; set; }
+		public virtual DateTime? dtDeliverLatest { get; set; }
 		[Required]
 		[Display(Name = "Carrier Service ID")]
 		public virtual Int64 ixCarrierService { get; set; }

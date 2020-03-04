@@ -49,7 +49,6 @@ C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.Services\bin\Debug
 C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.Services\bin\Debug\netstandard2.0\BotSpiel.DataAccess.dll
 C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.Services\bin\Debug\netstandard2.0\BotSpiel.DataAccess.pdb
 C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.Services\obj\Debug\netstandard2.0\BotSpiel.Services.csprojAssemblyReference.cache
-C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.Services\obj\Debug\netstandard2.0\BotSpiel.Services.csproj.CoreCompileInputs.cache
 C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.Services\obj\Debug\netstandard2.0\BotSpiel.Services.AssemblyInfoInputs.cache
 C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.Services\obj\Debug\netstandard2.0\BotSpiel.Services.AssemblyInfo.cs
 C:\Software\SourceBotSpielInventory\WebCore\BotSpiel\BotSpiel.Services\obj\Debug\netstandard2.0\BotSpiel.Services.csproj.CopyComplete

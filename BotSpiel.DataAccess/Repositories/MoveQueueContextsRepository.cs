@@ -43,6 +43,12 @@ This class ....
             var movequeuecontexts = _context.MoveQueueContexts.AsNoTracking(); 
             return movequeuecontexts;
         }
+
+        public IQueryable<MoveQueueContexts> IndexDb()
+        {
+            var movequeuecontexts = _context.MoveQueueContexts.AsNoTracking(); 
+            return movequeuecontexts;
+        }
         public bool VerifyMoveQueueContextUnique(Int64 ixMoveQueueContext, string sMoveQueueContext)
         {
             if (_context.MoveQueueContexts.AsNoTracking().Where(x => x.sMoveQueueContext == sMoveQueueContext).Any() && ixMoveQueueContext == 0L) return false;

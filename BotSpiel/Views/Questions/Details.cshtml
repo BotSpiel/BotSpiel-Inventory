@@ -1,0 +1,78 @@
+
+@model BotSpiel.DataAccess.Models.Questions
+
+@{
+    ViewBag.Title = "Details Questions";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Questions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixQuestion)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixQuestion)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sQuestion)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sQuestion)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ixLanguage)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.LanguageStylesFKDiffLanguage.sLanguageStyle, "Details", "LanguageStyles", new { id = Model.ixLanguage }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.LanguageStyles.sLanguageStyle)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.LanguageStyles.sLanguageStyle, "Details", "LanguageStyles", new { id = Model.ixLanguageStyle }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Topics.sTopic)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Topics.sTopic, "Details", "Topics", new { id = Model.ixTopic }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sAsk)
+		</dt>
+		<dd>
+			@Html.TextAreaFor(model => model.sAsk, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;" ,  @readonly = true })
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sAnswer)
+		</dt>
+		<dd>
+			@Html.TextAreaFor(model => model.sAnswer, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;" ,  @readonly = true })
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.ResponseTypes.sResponseType)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.ResponseTypes.sResponseType, "Details", "ResponseTypes", new { id = Model.ixResponseType }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.bActive)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.bActive)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixQuestion }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixQuestion }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

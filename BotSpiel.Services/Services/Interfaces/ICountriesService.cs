@@ -23,7 +23,9 @@ This interface ....
         CountriesPost GetPost(Int64 ixCountry);        
 		Countries Get(Int64 ixCountry);
         IQueryable<Countries> Index();
+        IQueryable<Countries> IndexDb();
        IQueryable<PlanetSubRegions> selectPlanetSubRegions();
+       IQueryable<PlanetSubRegions> PlanetSubRegionsDb();
         bool VerifyCountryUnique(Int64 ixCountry, string sCountry);
         List<string> VerifyCountryDeleteOK(Int64 ixCountry, string sCountry);
 

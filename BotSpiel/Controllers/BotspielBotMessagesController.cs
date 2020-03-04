@@ -160,7 +160,11 @@ namespace BotSpiel
 
             if (botspielbotmessages.sMyMessage == null)
             {
-                botspielbotmessages.sMyMessage = "Hello. Please type something to get us started.";
+                botspielbotmessages.sMyMessage = "Hi. Say/type putaway, pick or cancel.";
+            }
+            else
+            {
+                botspielbotmessages.sMyMessage = botspielbotmessages.sMyMessage.Replace($@"{Environment.NewLine}", "<br>");
             }
 
             return View(botspielbotmessages);
@@ -178,6 +182,10 @@ namespace BotSpiel
             {
                 botspielbotmessages.UserName = User.Identity.Name;
                 ixBotspielBotMessage = await _botspielbotmessagesService.Create(botspielbotmessages);
+
+                //Custom Code Start | Added Code Block 
+                _adapter.UpdateConversationUser(User.Identity.Name);
+                //Custom Code End
 
                 _adapter.SendTextToBotAsync(botspielbotmessages.sYourReply, ixBotspielBotMessage.ToString(),
                         async (turnContext, cancellationToken) => await _botSpielBot.OnTurnAsync(turnContext), default(CancellationToken)).Wait();

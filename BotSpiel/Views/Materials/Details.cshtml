@@ -1,16 +1,22 @@
-
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IMaterialHandlingUnitConfigurationsService _materialHandlingUnitConfigurationsService
+@*//Custom Code End*@
 @model BotSpiel.DataAccess.Models.Materials
 
 @{
-    ViewBag.Title = "Details Materials";
+	ViewBag.Title = "Details Materials";
 }
 <br>
 <h2>Details</h2>
 
 <div>
-    <h4>Materials</h4>
-    <hr />
-    <dl class="dl-horizontal">
+	<h4>Materials</h4>
+	<hr />
+	<dl class="dl-horizontal">
 		<dt>
 			@Html.DisplayNameFor(model => model.ixMaterial)
 		</dt>
@@ -133,12 +139,33 @@
 		</dd>
 
 
-    </dl>
+	</dl>
 </div>
-<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixMaterial }) |
+
+@*//Custom Code Start | Added Code Block*@
+<div>
+	@{
+		List<BotSpiel.DataAccess.Models.MaterialHandlingUnitConfigurations> materialHandlingUnitConfigurations = new List<MaterialHandlingUnitConfigurations>();
+		//Add empty record
+		MaterialHandlingUnitConfigurations materialHandlingUnitConfiguration = new MaterialHandlingUnitConfigurations();
+		materialHandlingUnitConfiguration.ixMaterial = Model.ixMaterial;
+		materialHandlingUnitConfiguration.Materials.ixMaterial = Model.ixMaterial;
+		materialHandlingUnitConfigurations.Add(materialHandlingUnitConfiguration);
+		_materialHandlingUnitConfigurationsService.IndexDb().Where(x => x.ixMaterial == Model.ixMaterial).ToList().ForEach(x =>
+			{
+				materialHandlingUnitConfigurations.Add(x);
+			}
+			);
+	}
+	@await Html.PartialAsync("IndexMaterialHandlingUnitConfigurations", materialHandlingUnitConfigurations)
+</div>
+@*//Custom Code End*@
+
+<p>
+	@Html.ActionLink("Edit", "Edit", new { id = Model.ixMaterial }) |
 	@Html.ActionLink("Delete", "Delete", new { id = Model.ixMaterial }) |
-    @Html.ActionLink("Grid", "Index")
+	@Html.ActionLink("Grid", "Index")
 </p>
 
- 
+
 

@@ -32,6 +32,8 @@ This class ....
 
 		public DbSet<Receiving> Receiving { get; set; }
 		public DbSet<ReceivingPost> ReceivingPost { get; set; }
+		public DbSet<InventoryStates> InventoryStates { get; set; }
+		public DbSet<InventoryStatesPost> InventoryStatesPost { get; set; }
 		public DbSet<InventoryLocations> InventoryLocations { get; set; }
 		public DbSet<InventoryLocationsPost> InventoryLocationsPost { get; set; }
 		public DbSet<InboundOrders> InboundOrders { get; set; }
@@ -108,6 +110,12 @@ This class ....
             modelBuilder.Entity<ReceivingPost>()
                 .ToTable("tx_vw_ReceivingPost")
                 .HasKey(c => new { c.ixReceipt });
+            modelBuilder.Entity<InventoryStates>()
+                .ToTable("config_vw_InventoryStates")
+                .HasKey(c => new { c.ixInventoryState });
+            modelBuilder.Entity<InventoryStatesPost>()
+                .ToTable("config_vw_InventoryStatesPost")
+                .HasKey(c => new { c.ixInventoryState });
             modelBuilder.Entity<InventoryLocations>()
                 .ToTable("md_vw_InventoryLocations")
                 .HasKey(c => new { c.ixInventoryLocation });
@@ -317,7 +325,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is ReceivingPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is ReceivingPost)).ToList())
             {
                 var tx_vw_receivingpost = e.Entity as ReceivingPost;
                 switch (e.State)
@@ -348,24 +356,30 @@ This class ....
                             var nHandlingUnitQuantity = cmd.CreateParameter();
                             nHandlingUnitQuantity.ParameterName = "p6";
                             nHandlingUnitQuantity.Value = tx_vw_receivingpost.nHandlingUnitQuantity;
-                            var sBatchNumber = cmd.CreateParameter();
-                            sBatchNumber.ParameterName = "p7";
-                            sBatchNumber.Value = tx_vw_receivingpost.sBatchNumber;
                             var sSerialNumber = cmd.CreateParameter();
-                            sSerialNumber.ParameterName = "p8";
+                            sSerialNumber.ParameterName = "p7";
                             sSerialNumber.Value = tx_vw_receivingpost.sSerialNumber;
+                            var sBatchNumber = cmd.CreateParameter();
+                            sBatchNumber.ParameterName = "p8";
+                            sBatchNumber.Value = tx_vw_receivingpost.sBatchNumber;
+                            var dtExpireAt = cmd.CreateParameter();
+                            dtExpireAt.ParameterName = "p9";
+                            dtExpireAt.Value = tx_vw_receivingpost.dtExpireAt;
                             var nBaseUnitQuantityReceived = cmd.CreateParameter();
-                            nBaseUnitQuantityReceived.ParameterName = "p9";
+                            nBaseUnitQuantityReceived.ParameterName = "p10";
                             nBaseUnitQuantityReceived.Value = tx_vw_receivingpost.nBaseUnitQuantityReceived;
+                            var ixInventoryState = cmd.CreateParameter();
+                            ixInventoryState.ParameterName = "p11";
+                            ixInventoryState.Value = tx_vw_receivingpost.ixInventoryState;
                             var ixStatus = cmd.CreateParameter();
-                            ixStatus.ParameterName = "p10";
+                            ixStatus.ParameterName = "p12";
                             ixStatus.Value = tx_vw_receivingpost.ixStatus;
                             var UserName = cmd.CreateParameter();
-                            UserName.ParameterName = "p11";
+                            UserName.ParameterName = "p13";
                             UserName.Value = tx_vw_receivingpost.UserName;
 
                             var ixReceipt = cmd.CreateParameter();
-                            ixReceipt.ParameterName = "p12";
+                            ixReceipt.ParameterName = "p14";
                             ixReceipt.DbType = DbType.Int64;
                             ixReceipt.Direction = ParameterDirection.Output;
 
@@ -378,12 +392,14 @@ This class ....
                             if (tx_vw_receivingpost.ixMaterialHandlingUnitConfiguration != null) { sql.Append("@ixMaterialHandlingUnitConfiguration = @p4, "); }  
                             if (tx_vw_receivingpost.ixHandlingUnitType != null) { sql.Append("@ixHandlingUnitType = @p5, "); }  
                             if (tx_vw_receivingpost.nHandlingUnitQuantity != null) { sql.Append("@nHandlingUnitQuantity = @p6, "); }  
-                            if (tx_vw_receivingpost.sBatchNumber != null) { sql.Append("@sBatchNumber = @p7, "); }  
-                            if (tx_vw_receivingpost.sSerialNumber != null) { sql.Append("@sSerialNumber = @p8, "); }  
-                            sql.Append("@nBaseUnitQuantityReceived = @p9, ");
-                            sql.Append("@ixStatus = @p10, ");
-                            if (tx_vw_receivingpost.UserName != null) { sql.Append("@UserName = @p11, "); }  
-                            sql.Append("@ixReceipt = @p12 output "); 
+                            if (tx_vw_receivingpost.sSerialNumber != null) { sql.Append("@sSerialNumber = @p7, "); }  
+                            if (tx_vw_receivingpost.sBatchNumber != null) { sql.Append("@sBatchNumber = @p8, "); }  
+                            if (tx_vw_receivingpost.dtExpireAt != null) { sql.Append("@dtExpireAt = @p9, "); }  
+                            sql.Append("@nBaseUnitQuantityReceived = @p10, ");
+                            sql.Append("@ixInventoryState = @p11, ");
+                            sql.Append("@ixStatus = @p12, ");
+                            if (tx_vw_receivingpost.UserName != null) { sql.Append("@UserName = @p13, "); }  
+                            sql.Append("@ixReceipt = @p14 output "); 
                             cmd.CommandText = sql.ToString();
 
                             cmd.Parameters.Add(ixInventoryLocation);
@@ -393,9 +409,11 @@ This class ....
                             if (tx_vw_receivingpost.ixMaterialHandlingUnitConfiguration != null) { cmd.Parameters.Add(ixMaterialHandlingUnitConfiguration); }
                             if (tx_vw_receivingpost.ixHandlingUnitType != null) { cmd.Parameters.Add(ixHandlingUnitType); }
                             if (tx_vw_receivingpost.nHandlingUnitQuantity != null) { cmd.Parameters.Add(nHandlingUnitQuantity); }
-                            if (tx_vw_receivingpost.sBatchNumber != null) { cmd.Parameters.Add(sBatchNumber); }
                             if (tx_vw_receivingpost.sSerialNumber != null) { cmd.Parameters.Add(sSerialNumber); }
+                            if (tx_vw_receivingpost.sBatchNumber != null) { cmd.Parameters.Add(sBatchNumber); }
+                            if (tx_vw_receivingpost.dtExpireAt != null) { cmd.Parameters.Add(dtExpireAt); }
                             cmd.Parameters.Add(nBaseUnitQuantityReceived);
+                            cmd.Parameters.Add(ixInventoryState);
                             cmd.Parameters.Add(ixStatus);
                             if (tx_vw_receivingpost.UserName != null) { cmd.Parameters.Add(UserName); }
 
@@ -405,16 +423,16 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixReceipt"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
-                        Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeReceiving @ixReceipt = @p0, @ixInventoryLocation = @p1, @ixInboundOrder = @p2, @ixHandlingUnit = @p3, @ixMaterial = @p4, @ixMaterialHandlingUnitConfiguration = @p5, @ixHandlingUnitType = @p6, @nHandlingUnitQuantity = @p7, @sBatchNumber = @p8, @sSerialNumber = @p9, @nBaseUnitQuantityReceived = @p10, @ixStatus = @p11, @UserName = @p12", tx_vw_receivingpost.ixReceipt, tx_vw_receivingpost.ixInventoryLocation, tx_vw_receivingpost.ixInboundOrder, tx_vw_receivingpost.ixHandlingUnit, tx_vw_receivingpost.ixMaterial, tx_vw_receivingpost.ixMaterialHandlingUnitConfiguration, tx_vw_receivingpost.ixHandlingUnitType, tx_vw_receivingpost.nHandlingUnitQuantity, tx_vw_receivingpost.sBatchNumber, tx_vw_receivingpost.sSerialNumber, tx_vw_receivingpost.nBaseUnitQuantityReceived, tx_vw_receivingpost.ixStatus, tx_vw_receivingpost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeReceiving @ixReceipt = @p0, @ixInventoryLocation = @p1, @ixInboundOrder = @p2, @ixHandlingUnit = @p3, @ixMaterial = @p4, @ixMaterialHandlingUnitConfiguration = @p5, @ixHandlingUnitType = @p6, @nHandlingUnitQuantity = @p7, @sSerialNumber = @p8, @sBatchNumber = @p9, @dtExpireAt = @p10, @nBaseUnitQuantityReceived = @p11, @ixInventoryState = @p12, @ixStatus = @p13, @UserName = @p14", tx_vw_receivingpost.ixReceipt, tx_vw_receivingpost.ixInventoryLocation, tx_vw_receivingpost.ixInboundOrder, tx_vw_receivingpost.ixHandlingUnit, tx_vw_receivingpost.ixMaterial, tx_vw_receivingpost.ixMaterialHandlingUnitConfiguration, tx_vw_receivingpost.ixHandlingUnitType, tx_vw_receivingpost.nHandlingUnitQuantity, tx_vw_receivingpost.sSerialNumber, tx_vw_receivingpost.sBatchNumber, tx_vw_receivingpost.dtExpireAt, tx_vw_receivingpost.nBaseUnitQuantityReceived, tx_vw_receivingpost.ixInventoryState, tx_vw_receivingpost.ixStatus, tx_vw_receivingpost.UserName);
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:
-                        Database.ExecuteSqlCommand("exec dbo.tx_sp_DeleteReceiving @ixReceipt = @p0, @ixInventoryLocation = @p1, @ixInboundOrder = @p2, @ixHandlingUnit = @p3, @ixMaterial = @p4, @ixMaterialHandlingUnitConfiguration = @p5, @ixHandlingUnitType = @p6, @nHandlingUnitQuantity = @p7, @sBatchNumber = @p8, @sSerialNumber = @p9, @nBaseUnitQuantityReceived = @p10, @ixStatus = @p11, @UserName = @p12", tx_vw_receivingpost.ixReceipt, tx_vw_receivingpost.ixInventoryLocation, tx_vw_receivingpost.ixInboundOrder, tx_vw_receivingpost.ixHandlingUnit, tx_vw_receivingpost.ixMaterial, tx_vw_receivingpost.ixMaterialHandlingUnitConfiguration, tx_vw_receivingpost.ixHandlingUnitType, tx_vw_receivingpost.nHandlingUnitQuantity, tx_vw_receivingpost.sBatchNumber, tx_vw_receivingpost.sSerialNumber, tx_vw_receivingpost.nBaseUnitQuantityReceived, tx_vw_receivingpost.ixStatus, tx_vw_receivingpost.UserName);
+                        Database.ExecuteSqlCommand("exec dbo.tx_sp_DeleteReceiving @ixReceipt = @p0, @ixInventoryLocation = @p1, @ixInboundOrder = @p2, @ixHandlingUnit = @p3, @ixMaterial = @p4, @ixMaterialHandlingUnitConfiguration = @p5, @ixHandlingUnitType = @p6, @nHandlingUnitQuantity = @p7, @sSerialNumber = @p8, @sBatchNumber = @p9, @dtExpireAt = @p10, @nBaseUnitQuantityReceived = @p11, @ixInventoryState = @p12, @ixStatus = @p13, @UserName = @p14", tx_vw_receivingpost.ixReceipt, tx_vw_receivingpost.ixInventoryLocation, tx_vw_receivingpost.ixInboundOrder, tx_vw_receivingpost.ixHandlingUnit, tx_vw_receivingpost.ixMaterial, tx_vw_receivingpost.ixMaterialHandlingUnitConfiguration, tx_vw_receivingpost.ixHandlingUnitType, tx_vw_receivingpost.nHandlingUnitQuantity, tx_vw_receivingpost.sSerialNumber, tx_vw_receivingpost.sBatchNumber, tx_vw_receivingpost.dtExpireAt, tx_vw_receivingpost.nBaseUnitQuantityReceived, tx_vw_receivingpost.ixInventoryState, tx_vw_receivingpost.ixStatus, tx_vw_receivingpost.UserName);
                         e.State = EntityState.Detached;                           
 						break;
                 }

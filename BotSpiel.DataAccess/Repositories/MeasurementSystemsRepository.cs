@@ -43,6 +43,12 @@ This class ....
             var measurementsystems = _context.MeasurementSystems.AsNoTracking(); 
             return measurementsystems;
         }
+
+        public IQueryable<MeasurementSystems> IndexDb()
+        {
+            var measurementsystems = _context.MeasurementSystems.AsNoTracking(); 
+            return measurementsystems;
+        }
         public bool VerifyMeasurementSystemUnique(Int64 ixMeasurementSystem, string sMeasurementSystem)
         {
             if (_context.MeasurementSystems.AsNoTracking().Where(x => x.sMeasurementSystem == sMeasurementSystem).Any() && ixMeasurementSystem == 0L) return false;

@@ -1,5 +1,11 @@
-
-@model BotSpiel.DataAccess.Models.OutboundOrderLinesPost 
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IOutboundOrderLinePackingService _outboundOrderLinePackingService
+@*//Custom Code End*@
+@model BotSpiel.DataAccess.Models.OutboundOrderLinesPost
 
 @{
     ViewBag.Title = "Edit Outbound Order Lines";
@@ -11,12 +17,20 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Outbound Order Lines</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ixOutboundOrderLine)
+
+        <div class="form-group">
+            @Html.ActionLink("Outbound Order ID", "Index", "OutboundOrders", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ixOutboundOrder", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ixOutboundOrder, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.sOrderLineReference, "Order Line Reference", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -27,7 +41,7 @@
         </div>
 
         <div class="form-group">
-			@Html.ActionLink("Material ID", "Index", "Materials", "", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Material ID", "Index", "Materials", "", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ixMaterial", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ixMaterial, "", new { @class = "text-danger" })
@@ -57,23 +71,23 @@
                 @Html.ValidationMessageFor(model => model.nBaseUnitQuantityOrdered, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.nBaseUnitQuantityShipped, "Base Unit Quantity Shipped", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.nBaseUnitQuantityShipped, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.nBaseUnitQuantityShipped, "", new { @class = "text-danger" })
+        @*//Custom Code Start | Removed Block*@
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.nBaseUnitQuantityShipped, "Base Unit Quantity Shipped", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.nBaseUnitQuantityShipped, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nBaseUnitQuantityShipped, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-			@Html.ActionLink("Status ID", "Index", "Statuses", "", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ixStatus", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ixStatus, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
+            <div class="form-group">
+                @Html.ActionLink("Status ID", "Index", "Statuses", "", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ixStatus", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ixStatus, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        @*//Custom Code End*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Edit" class="btn btn-default" />
@@ -81,6 +95,27 @@
         </div>
     </div>
 }
+
+@*//Custom Code Start | Added Code Block*@
+<div>
+    @{
+        List<BotSpiel.DataAccess.Models.OutboundOrderLinePacking> outboundOrderLinePacking = new List<OutboundOrderLinePacking>();
+        //Add empty record
+        OutboundOrderLinePacking outboundOrderLinePack = new OutboundOrderLinePacking();
+        outboundOrderLinePack.ixOutboundOrderLine = Model.ixOutboundOrderLine;
+        outboundOrderLinePack.OutboundOrderLines.ixOutboundOrderLine = Model.ixOutboundOrderLine;
+        outboundOrderLinePacking.Add(outboundOrderLinePack);
+        _outboundOrderLinePackingService.IndexDb().Where(x => x.ixOutboundOrderLine == Model.ixOutboundOrderLine).ToList().ForEach(x =>
+            {
+                outboundOrderLinePacking.Add(x);
+            }
+            );
+    }
+    @await Html.PartialAsync("IndexOutboundOrderLinePacking", outboundOrderLinePacking)
+</div>
+@*//Custom Code End*@
+
+
 <div>
     @Html.ActionLink("Grid", "Index")
 </div>
@@ -89,5 +124,5 @@
 }
 
 
- 
+
 

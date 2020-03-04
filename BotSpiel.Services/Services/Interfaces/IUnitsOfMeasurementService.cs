@@ -23,8 +23,11 @@ This interface ....
         UnitsOfMeasurementPost GetPost(Int64 ixUnitOfMeasurement);        
 		UnitsOfMeasurement Get(Int64 ixUnitOfMeasurement);
         IQueryable<UnitsOfMeasurement> Index();
+        IQueryable<UnitsOfMeasurement> IndexDb();
        IQueryable<MeasurementSystems> selectMeasurementSystems();
         IQueryable<MeasurementUnitsOf> selectMeasurementUnitsOf();
+       IQueryable<MeasurementSystems> MeasurementSystemsDb();
+        IQueryable<MeasurementUnitsOf> MeasurementUnitsOfDb();
         bool VerifyUnitOfMeasurementUnique(Int64 ixUnitOfMeasurement, string sUnitOfMeasurement);
         List<string> VerifyUnitOfMeasurementDeleteOK(Int64 ixUnitOfMeasurement, string sUnitOfMeasurement);
 

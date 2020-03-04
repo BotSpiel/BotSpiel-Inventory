@@ -32,6 +32,7 @@ This class ....
         public InventoryUnitTransactionsPost GetPost(Int64 ixInventoryUnitTransaction) => _inventoryunittransactionsRepository.GetPost(ixInventoryUnitTransaction);
         public InventoryUnitTransactions Get(Int64 ixInventoryUnitTransaction) => _inventoryunittransactionsRepository.Get(ixInventoryUnitTransaction);
         public IQueryable<InventoryUnitTransactions> Index() => _inventoryunittransactionsRepository.Index();
+        public IQueryable<InventoryUnitTransactions> IndexDb() => _inventoryunittransactionsRepository.IndexDb();
        public IQueryable<Statuses> selectStatuses() => _inventoryunittransactionsRepository.selectStatuses();
         public IQueryable<Companies> selectCompanies() => _inventoryunittransactionsRepository.selectCompanies();
         public IQueryable<Facilities> selectFacilities() => _inventoryunittransactionsRepository.selectFacilities();
@@ -41,6 +42,15 @@ This class ....
         public IQueryable<HandlingUnits> selectHandlingUnits() => _inventoryunittransactionsRepository.selectHandlingUnits();
         public IQueryable<InventoryLocations> selectInventoryLocations() => _inventoryunittransactionsRepository.selectInventoryLocations();
         public IQueryable<InventoryUnitTransactionContexts> selectInventoryUnitTransactionContexts() => _inventoryunittransactionsRepository.selectInventoryUnitTransactionContexts();
+       public IQueryable<Statuses> StatusesDb() => _inventoryunittransactionsRepository.StatusesDb();
+        public IQueryable<Companies> CompaniesDb() => _inventoryunittransactionsRepository.CompaniesDb();
+        public IQueryable<Facilities> FacilitiesDb() => _inventoryunittransactionsRepository.FacilitiesDb();
+        public IQueryable<Materials> MaterialsDb() => _inventoryunittransactionsRepository.MaterialsDb();
+        public IQueryable<InventoryUnits> InventoryUnitsDb() => _inventoryunittransactionsRepository.InventoryUnitsDb();
+        public IQueryable<InventoryStates> InventoryStatesDb() => _inventoryunittransactionsRepository.InventoryStatesDb();
+        public IQueryable<HandlingUnits> HandlingUnitsDb() => _inventoryunittransactionsRepository.HandlingUnitsDb();
+        public IQueryable<InventoryLocations> InventoryLocationsDb() => _inventoryunittransactionsRepository.InventoryLocationsDb();
+        public IQueryable<InventoryUnitTransactionContexts> InventoryUnitTransactionContextsDb() => _inventoryunittransactionsRepository.InventoryUnitTransactionContextsDb();
        public List<KeyValuePair<Int64?, string>> selectStatusesNullable() => _inventoryunittransactionsRepository.selectStatusesNullable();
         public List<KeyValuePair<Int64?, string>> selectCompaniesNullable() => _inventoryunittransactionsRepository.selectCompaniesNullable();
         public List<KeyValuePair<Int64?, string>> selectFacilitiesNullable() => _inventoryunittransactionsRepository.selectFacilitiesNullable();

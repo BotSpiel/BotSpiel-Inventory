@@ -1,0 +1,114 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
+@inject IBotModuleGridsService _botmodulegridsService
+@model BotSpiel.DataAccess.Models.BotModuleGrids
+
+@{
+    ViewBag.Title = "Delete Bot Module Grids";
+}
+
+@{
+    string conCat = "";
+    List<string> existInEntities = new List<string>();
+    bool DeleteOK = true;
+    existInEntities = _botmodulegridsService.VerifyBotModuleGridDeleteOK(Model.ixBotModuleGrid, Model.sBotModuleGrid);
+    if (existInEntities.Any()) { DeleteOK = false; }
+}
+
+
+@if (DeleteOK)
+{
+
+<br>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Bot Module Grids</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixBotModuleGrid)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixBotModuleGrid)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sBotModuleGrid)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sBotModuleGrid)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sShortDescription)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sShortDescription)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sDataEntityType)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sDataEntityType)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.bCanCreate)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.bCanCreate)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.bCanEdit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.bCanEdit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.bCanDelete)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.bCanDelete)
+		</dd>
+ 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+</div>
+}
+else
+{
+    <br>
+    <h2>Delete</h2>
+
+    <h3>The BotModuleGrid @Model.sBotModuleGrid cannot be deleted. It is referenced by the following entities:</h3>
+    <hr />
+    @foreach (var entity in existInEntities)
+    {
+        conCat = String.Join(" ", StringSplitters.SplitCamelCase(@entity.ToString()));
+        <h4>@Html.ActionLink(@conCat.ToString(), "Index", @entity.ToString())</h4>
+        <hr />
+    }
+
+    <h3>If you want to delete the BotModuleGrid, delete the dependent references first.</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+
+}
+ 
+

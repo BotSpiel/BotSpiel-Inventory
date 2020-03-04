@@ -61,7 +61,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is InboundModuleGridsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is InboundModuleGridsPost)).ToList())
             {
                 var config_vw_inboundmodulegridspost = e.Entity as InboundModuleGridsPost;
                 switch (e.State)
@@ -124,12 +124,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixInboundModuleGrid"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeInboundModuleGrids @ixInboundModuleGrid = @p0, @sInboundModuleGrid = @p1, @sShortDescription = @p2, @sDataEntityType = @p3, @bCanCreate = @p4, @bCanEdit = @p5, @bCanDelete = @p6, @UserName = @p7", config_vw_inboundmodulegridspost.ixInboundModuleGrid, config_vw_inboundmodulegridspost.sInboundModuleGrid, config_vw_inboundmodulegridspost.sShortDescription, config_vw_inboundmodulegridspost.sDataEntityType, config_vw_inboundmodulegridspost.bCanCreate, config_vw_inboundmodulegridspost.bCanEdit, config_vw_inboundmodulegridspost.bCanDelete, config_vw_inboundmodulegridspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

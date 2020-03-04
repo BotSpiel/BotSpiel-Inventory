@@ -32,6 +32,7 @@ This class ....
         public DateTimePeriodFunctionsPost GetPost(Int64 ixDateTimePeriodFunction) => _datetimeperiodfunctionsRepository.GetPost(ixDateTimePeriodFunction);
         public DateTimePeriodFunctions Get(Int64 ixDateTimePeriodFunction) => _datetimeperiodfunctionsRepository.Get(ixDateTimePeriodFunction);
         public IQueryable<DateTimePeriodFunctions> Index() => _datetimeperiodfunctionsRepository.Index();
+        public IQueryable<DateTimePeriodFunctions> IndexDb() => _datetimeperiodfunctionsRepository.IndexDb();
         public bool VerifyDateTimePeriodFunctionUnique(Int64 ixDateTimePeriodFunction, string sDateTimePeriodFunction) => _datetimeperiodfunctionsRepository.VerifyDateTimePeriodFunctionUnique(ixDateTimePeriodFunction, sDateTimePeriodFunction);
         public List<string> VerifyDateTimePeriodFunctionDeleteOK(Int64 ixDateTimePeriodFunction, string sDateTimePeriodFunction) => _datetimeperiodfunctionsRepository.VerifyDateTimePeriodFunctionDeleteOK(ixDateTimePeriodFunction, sDateTimePeriodFunction);
 

@@ -101,7 +101,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is CountrySubDivisionsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is CountrySubDivisionsPost)).ToList())
             {
                 var md_vw_countrysubdivisionspost = e.Entity as CountrySubDivisionsPost;
                 switch (e.State)
@@ -149,12 +149,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixCountrySubDivision"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeCountrySubDivisions @ixCountrySubDivision = @p0, @sCountrySubDivision = @p1, @ixCountry = @p2, @sCountrySubDivisionCode = @p3, @UserName = @p4", md_vw_countrysubdivisionspost.ixCountrySubDivision, md_vw_countrysubdivisionspost.sCountrySubDivision, md_vw_countrysubdivisionspost.ixCountry, md_vw_countrysubdivisionspost.sCountrySubDivisionCode, md_vw_countrysubdivisionspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

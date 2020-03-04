@@ -22,6 +22,7 @@ This interface ....
         InventoryModuleGridsPost GetPost(Int64 ixInventoryModuleGrid);        
 		InventoryModuleGrids Get(Int64 ixInventoryModuleGrid);
         IQueryable<InventoryModuleGrids> Index();
+        IQueryable<InventoryModuleGrids> IndexDb();
 		IQueryable<InventoryModuleGridsconfig> Indexconfig();
 		IQueryable<InventoryModuleGridsmd> Indexmd();
 		IQueryable<InventoryModuleGridstx> Indextx();

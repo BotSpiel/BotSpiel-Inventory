@@ -1,0 +1,16 @@
+@model IGrid<BotSpiel.DataAccess.Models.PutAwayHandlingUnits>
+
+@{
+    ViewBag.Title = "Index Put Away Handling Units Export";
+}
+<br>
+<h2>Put Away Handling Units Export</h2>
+
+<p>
+    <a href="@(Url.Action("ExportIndex") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+    @Html.ActionLink(" | Grid", "Index")
+</p>
+
+@(new HtmlGrid<BotSpiel.DataAccess.Models.PutAwayHandlingUnits>(Html, Model))
+ 
+

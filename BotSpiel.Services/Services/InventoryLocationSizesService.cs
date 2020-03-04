@@ -32,7 +32,9 @@ This class ....
         public InventoryLocationSizesPost GetPost(Int64 ixInventoryLocationSize) => _inventorylocationsizesRepository.GetPost(ixInventoryLocationSize);
         public InventoryLocationSizes Get(Int64 ixInventoryLocationSize) => _inventorylocationsizesRepository.Get(ixInventoryLocationSize);
         public IQueryable<InventoryLocationSizes> Index() => _inventorylocationsizesRepository.Index();
+        public IQueryable<InventoryLocationSizes> IndexDb() => _inventorylocationsizesRepository.IndexDb();
        public IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement() => _inventorylocationsizesRepository.selectUnitsOfMeasurement();
+       public IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb() => _inventorylocationsizesRepository.UnitsOfMeasurementDb();
         public bool VerifyInventoryLocationSizeUnique(Int64 ixInventoryLocationSize, string sInventoryLocationSize) => _inventorylocationsizesRepository.VerifyInventoryLocationSizeUnique(ixInventoryLocationSize, sInventoryLocationSize);
         public List<string> VerifyInventoryLocationSizeDeleteOK(Int64 ixInventoryLocationSize, string sInventoryLocationSize) => _inventorylocationsizesRepository.VerifyInventoryLocationSizeDeleteOK(ixInventoryLocationSize, sInventoryLocationSize);
 

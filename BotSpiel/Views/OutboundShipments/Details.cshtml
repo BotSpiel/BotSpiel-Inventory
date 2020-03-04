@@ -1,16 +1,22 @@
-
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IOutboundOrdersService _outboundOrdersService
+@*//Custom Code End*@
 @model BotSpiel.DataAccess.Models.OutboundShipments
 
 @{
-    ViewBag.Title = "Details Outbound Shipments";
+	ViewBag.Title = "Details Outbound Shipments";
 }
 <br>
 <h2>Details</h2>
 
 <div>
-    <h4>Outbound Shipments</h4>
-    <hr />
-    <dl class="dl-horizontal">
+	<h4>Outbound Shipments</h4>
+	<hr />
+	<dl class="dl-horizontal">
 		<dt>
 			@Html.DisplayNameFor(model => model.ixOutboundShipment)
 		</dt>
@@ -67,12 +73,33 @@
 		</dd>
 
 
-    </dl>
+	</dl>
 </div>
-<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixOutboundShipment }) |
+
+@*//Custom Code Start | Added Code Block*@
+<div>
+	@{
+		List<BotSpiel.DataAccess.Models.OutboundOrders> outboundOrders = new List<OutboundOrders>();
+		//Add empty record
+		OutboundOrders outboundOrder = new OutboundOrders();
+		outboundOrder.ixOutboundShipment = Model.ixOutboundShipment;
+		outboundOrder.OutboundShipments.ixOutboundShipment = Model.ixOutboundShipment;
+		outboundOrders.Add(outboundOrder);
+		_outboundOrdersService.IndexDb().Where(x => x.ixOutboundShipment == Model.ixOutboundShipment).ToList().ForEach(x =>
+			{
+				outboundOrders.Add(x);
+			}
+			);
+	}
+	@await Html.PartialAsync("IndexOutboundOrders", outboundOrders)
+</div>
+@*//Custom Code End*@
+
+<p>
+	@Html.ActionLink("Edit", "Edit", new { id = Model.ixOutboundShipment }) |
 	@Html.ActionLink("Delete", "Delete", new { id = Model.ixOutboundShipment }) |
-    @Html.ActionLink("Grid", "Index")
+	@Html.ActionLink("Grid", "Index")
 </p>
 
- 
+
 

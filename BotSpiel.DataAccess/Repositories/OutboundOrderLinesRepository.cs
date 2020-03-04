@@ -22,13 +22,15 @@ This class ....
 */
         private readonly OutboundOrderLinesDB _context;
        private readonly MoveQueuesDB _contextMoveQueues;
-        private readonly OutboundOrderPackingDB _contextOutboundOrderPacking;
+        private readonly OutboundOrderLinePackingDB _contextOutboundOrderLinePacking;
+        private readonly OutboundOrderLinesInventoryAllocationDB _contextOutboundOrderLinesInventoryAllocation;
   
-        public OutboundOrderLinesRepository(OutboundOrderLinesDB context, MoveQueuesDB contextMoveQueues, OutboundOrderPackingDB contextOutboundOrderPacking)
+        public OutboundOrderLinesRepository(OutboundOrderLinesDB context, MoveQueuesDB contextMoveQueues, OutboundOrderLinePackingDB contextOutboundOrderLinePacking, OutboundOrderLinesInventoryAllocationDB contextOutboundOrderLinesInventoryAllocation)
         {
             _context = context;
            _contextMoveQueues = contextMoveQueues;
-            _contextOutboundOrderPacking = contextOutboundOrderPacking;
+            _contextOutboundOrderLinePacking = contextOutboundOrderLinePacking;
+            _contextOutboundOrderLinesInventoryAllocation = contextOutboundOrderLinesInventoryAllocation;
   
         }
 
@@ -38,6 +40,7 @@ This class ....
         {
             OutboundOrderLines outboundorderlines = _context.OutboundOrderLines.AsNoTracking().Where(x => x.ixOutboundOrderLine == ixOutboundOrderLine).First();
             outboundorderlines.Materials = _context.Materials.Find(outboundorderlines.ixMaterial);
+            outboundorderlines.OutboundOrders = _context.OutboundOrders.Find(outboundorderlines.ixOutboundOrder);
             outboundorderlines.Statuses = _context.Statuses.Find(outboundorderlines.ixStatus);
 
             return outboundorderlines;
@@ -45,7 +48,18 @@ This class ....
 
         public IQueryable<OutboundOrderLines> Index()
         {
-            var outboundorderlines = _context.OutboundOrderLines.Include(a => a.Materials).Include(a => a.Statuses).AsNoTracking(); 
+            //Custom Code Start | Replaced Code Block
+            //Replaced Code Block Start
+            //var outboundorderlines = _context.OutboundOrderLines.Include(a => a.Materials).Include(a => a.Statuses).Include(a => a.OutboundOrders).AsNoTracking();
+            //Replaced Code Block End
+            var outboundorderlines = _context.OutboundOrderLines.OrderByDescending(a => a.ixOutboundOrderLine).Include(a => a.Materials).Include(a => a.Statuses).Include(a => a.OutboundOrders).AsNoTracking();
+            //Custom Code End
+            return outboundorderlines;
+        }
+
+        public IQueryable<OutboundOrderLines> IndexDb()
+        {
+            var outboundorderlines = _context.OutboundOrderLines.Include(a => a.Materials).Include(a => a.Statuses).Include(a => a.OutboundOrders).AsNoTracking(); 
             return outboundorderlines;
         }
        public IQueryable<Materials> selectMaterials()
@@ -56,7 +70,39 @@ This class ....
                 .ForEach(x => materials.Add(x));
             return materials.AsQueryable();
         }
+        public IQueryable<OutboundOrders> selectOutboundOrders()
+        {
+            List<OutboundOrders> outboundorders = new List<OutboundOrders>();
+            _context.OutboundOrders.Include(a => a.BusinessPartners).Include(a => a.CarrierServices).Include(a => a.Companies).Include(a => a.Facilities).Include(a => a.OutboundOrderTypes).Include(a => a.OutboundShipments).Include(a => a.PickBatches).Include(a => a.Statuses).AsNoTracking()
+                .ToList()
+                .ForEach(x => outboundorders.Add(x));
+            return outboundorders.AsQueryable();
+        }
         public IQueryable<Statuses> selectStatuses()
+        {
+            List<Statuses> statuses = new List<Statuses>();
+            _context.Statuses.AsNoTracking()
+                .ToList()
+                .ForEach(x => statuses.Add(x));
+            return statuses.AsQueryable();
+        }
+       public IQueryable<Materials> MaterialsDb()
+        {
+            List<Materials> materials = new List<Materials>();
+            _context.Materials.Include(a => a.MaterialTypes).Include(a => a.UnitsOfMeasurementFKDiffBaseUnit).Include(a => a.UnitsOfMeasurementFKDiffDensityUnit).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffShelflifeUnit).Include(a => a.UnitsOfMeasurementFKDiffWeightUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => materials.Add(x));
+            return materials.AsQueryable();
+        }
+        public IQueryable<OutboundOrders> OutboundOrdersDb()
+        {
+            List<OutboundOrders> outboundorders = new List<OutboundOrders>();
+            _context.OutboundOrders.Include(a => a.BusinessPartners).Include(a => a.CarrierServices).Include(a => a.Companies).Include(a => a.Facilities).Include(a => a.OutboundOrderTypes).Include(a => a.OutboundShipments).Include(a => a.PickBatches).Include(a => a.Statuses).AsNoTracking()
+                .ToList()
+                .ForEach(x => outboundorders.Add(x));
+            return outboundorders.AsQueryable();
+        }
+        public IQueryable<Statuses> StatusesDb()
         {
             List<Statuses> statuses = new List<Statuses>();
             _context.Statuses.AsNoTracking()
@@ -75,7 +121,8 @@ This class ....
         {
             List<string> existInEntities = new List<string>();
            if (_contextMoveQueues.MoveQueues.AsNoTracking().Where(x => x.ixOutboundOrderLine == ixOutboundOrderLine).Any()) existInEntities.Add("MoveQueues");
-            if (_contextOutboundOrderPacking.OutboundOrderPacking.AsNoTracking().Where(x => x.ixOutboundOrderLine == ixOutboundOrderLine).Any()) existInEntities.Add("OutboundOrderPacking");
+            if (_contextOutboundOrderLinePacking.OutboundOrderLinePacking.AsNoTracking().Where(x => x.ixOutboundOrderLine == ixOutboundOrderLine).Any()) existInEntities.Add("OutboundOrderLinePacking");
+            if (_contextOutboundOrderLinesInventoryAllocation.OutboundOrderLinesInventoryAllocation.AsNoTracking().Where(x => x.ixOutboundOrderLine == ixOutboundOrderLine).Any()) existInEntities.Add("OutboundOrderLinesInventoryAllocation");
 
             return existInEntities;
         }

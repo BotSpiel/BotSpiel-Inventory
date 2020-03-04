@@ -109,7 +109,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is AddressesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is AddressesPost)).ToList())
             {
                 var md_vw_addressespost = e.Entity as AddressesPost;
                 switch (e.State)
@@ -177,12 +177,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixAddress"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeAddresses @ixAddress = @p0, @sStreetAndNumberOrPostOfficeBoxOne = @p1, @sStreetAndNumberOrPostOfficeBoxTwo = @p2, @sStreetAndNumberOrPostOfficeBoxThree = @p3, @sCityOrSuburb = @p4, @sZipOrPostCode = @p5, @ixStateOrProvince = @p6, @ixCountry = @p7, @UserName = @p8", md_vw_addressespost.ixAddress, md_vw_addressespost.sStreetAndNumberOrPostOfficeBoxOne, md_vw_addressespost.sStreetAndNumberOrPostOfficeBoxTwo, md_vw_addressespost.sStreetAndNumberOrPostOfficeBoxThree, md_vw_addressespost.sCityOrSuburb, md_vw_addressespost.sZipOrPostCode, md_vw_addressespost.ixStateOrProvince, md_vw_addressespost.ixCountry, md_vw_addressespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

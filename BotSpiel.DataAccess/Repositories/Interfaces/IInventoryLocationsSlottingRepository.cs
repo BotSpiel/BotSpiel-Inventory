@@ -22,8 +22,11 @@ This interface ....
         InventoryLocationsSlottingPost GetPost(Int64 ixInventoryLocationSlotting);        
 		InventoryLocationsSlotting Get(Int64 ixInventoryLocationSlotting);
         IQueryable<InventoryLocationsSlotting> Index();
+        IQueryable<InventoryLocationsSlotting> IndexDb();
        IQueryable<Materials> selectMaterials();
         IQueryable<InventoryLocations> selectInventoryLocations();
+       IQueryable<Materials> MaterialsDb();
+        IQueryable<InventoryLocations> InventoryLocationsDb();
         bool VerifyInventoryLocationSlottingUnique(Int64 ixInventoryLocationSlotting, string sInventoryLocationSlotting);
         List<string> VerifyInventoryLocationSlottingDeleteOK(Int64 ixInventoryLocationSlotting, string sInventoryLocationSlotting);
         void RegisterCreate(InventoryLocationsSlottingPost inventorylocationsslottingPost);

@@ -20,6 +20,7 @@ This interface ....
 		Int64 ixInventoryLocation { get; set; }
 		String sInventoryLocation { get; set; }
 		Int64 ixLocationFunction { get; set; }
+		Int64 ixFacility { get; set; }
 		Int64? ixCompany { get; set; }
 		Int64 ixFacilityFloor { get; set; }
 		Int64 ixFacilityZone { get; set; }

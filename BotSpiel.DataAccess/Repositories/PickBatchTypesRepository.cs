@@ -43,6 +43,12 @@ This class ....
             var pickbatchtypes = _context.PickBatchTypes.AsNoTracking(); 
             return pickbatchtypes;
         }
+
+        public IQueryable<PickBatchTypes> IndexDb()
+        {
+            var pickbatchtypes = _context.PickBatchTypes.AsNoTracking(); 
+            return pickbatchtypes;
+        }
         public bool VerifyPickBatchTypeUnique(Int64 ixPickBatchType, string sPickBatchType)
         {
             if (_context.PickBatchTypes.AsNoTracking().Where(x => x.sPickBatchType == sPickBatchType).Any() && ixPickBatchType == 0L) return false;

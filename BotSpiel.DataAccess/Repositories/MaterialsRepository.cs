@@ -28,9 +28,10 @@ This class ....
         private readonly InventoryUnitTransactionsDB _contextInventoryUnitTransactions;
         private readonly MaterialHandlingUnitConfigurationsDB _contextMaterialHandlingUnitConfigurations;
         private readonly OutboundOrderLinesDB _contextOutboundOrderLines;
+        private readonly PurchaseLinesDB _contextPurchaseLines;
         private readonly ReceivingDB _contextReceiving;
   
-        public MaterialsRepository(MaterialsDB context, HandlingUnitsDB contextHandlingUnits, InboundOrderLinesDB contextInboundOrderLines, InventoryLocationsSlottingDB contextInventoryLocationsSlotting, InventoryUnitsDB contextInventoryUnits, InventoryUnitTransactionsDB contextInventoryUnitTransactions, MaterialHandlingUnitConfigurationsDB contextMaterialHandlingUnitConfigurations, OutboundOrderLinesDB contextOutboundOrderLines, ReceivingDB contextReceiving)
+        public MaterialsRepository(MaterialsDB context, HandlingUnitsDB contextHandlingUnits, InboundOrderLinesDB contextInboundOrderLines, InventoryLocationsSlottingDB contextInventoryLocationsSlotting, InventoryUnitsDB contextInventoryUnits, InventoryUnitTransactionsDB contextInventoryUnitTransactions, MaterialHandlingUnitConfigurationsDB contextMaterialHandlingUnitConfigurations, OutboundOrderLinesDB contextOutboundOrderLines, PurchaseLinesDB contextPurchaseLines, ReceivingDB contextReceiving)
         {
             _context = context;
            _contextHandlingUnits = contextHandlingUnits;
@@ -40,6 +41,7 @@ This class ....
             _contextInventoryUnitTransactions = contextInventoryUnitTransactions;
             _contextMaterialHandlingUnitConfigurations = contextMaterialHandlingUnitConfigurations;
             _contextOutboundOrderLines = contextOutboundOrderLines;
+            _contextPurchaseLines = contextPurchaseLines;
             _contextReceiving = contextReceiving;
   
         }
@@ -84,6 +86,12 @@ This class ....
             var materials = _context.Materials.Include(a => a.MaterialTypes).Include(a => a.UnitsOfMeasurementFKDiffBaseUnit).AsNoTracking(); 
             return materials;
         }
+
+        public IQueryable<Materials> IndexDb()
+        {
+            var materials = _context.Materials.Include(a => a.MaterialTypes).Include(a => a.UnitsOfMeasurementFKDiffBaseUnit).AsNoTracking(); 
+            return materials;
+        }
        public IQueryable<MaterialTypes> selectMaterialTypes()
         {
             List<MaterialTypes> materialtypes = new List<MaterialTypes>();
@@ -93,6 +101,22 @@ This class ....
             return materialtypes.AsQueryable();
         }
         public IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement()
+        {
+            List<UnitsOfMeasurement> unitsofmeasurement = new List<UnitsOfMeasurement>();
+            _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()
+                .ToList()
+                .ForEach(x => unitsofmeasurement.Add(x));
+            return unitsofmeasurement.AsQueryable();
+        }
+       public IQueryable<MaterialTypes> MaterialTypesDb()
+        {
+            List<MaterialTypes> materialtypes = new List<MaterialTypes>();
+            _context.MaterialTypes.AsNoTracking()
+                .ToList()
+                .ForEach(x => materialtypes.Add(x));
+            return materialtypes.AsQueryable();
+        }
+        public IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb()
         {
             List<UnitsOfMeasurement> unitsofmeasurement = new List<UnitsOfMeasurement>();
             _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()
@@ -128,6 +152,7 @@ This class ....
             if (_contextInventoryUnitTransactions.InventoryUnitTransactions.AsNoTracking().Where(x => x.ixMaterialBefore == ixMaterial).Any()) existInEntities.Add("InventoryUnitTransactions");
             if (_contextMaterialHandlingUnitConfigurations.MaterialHandlingUnitConfigurations.AsNoTracking().Where(x => x.ixMaterial == ixMaterial).Any()) existInEntities.Add("MaterialHandlingUnitConfigurations");
             if (_contextOutboundOrderLines.OutboundOrderLines.AsNoTracking().Where(x => x.ixMaterial == ixMaterial).Any()) existInEntities.Add("OutboundOrderLines");
+            if (_contextPurchaseLines.PurchaseLines.AsNoTracking().Where(x => x.ixMaterial == ixMaterial).Any()) existInEntities.Add("PurchaseLines");
             if (_contextReceiving.Receiving.AsNoTracking().Where(x => x.ixMaterial == ixMaterial).Any()) existInEntities.Add("Receiving");
 
             return existInEntities;

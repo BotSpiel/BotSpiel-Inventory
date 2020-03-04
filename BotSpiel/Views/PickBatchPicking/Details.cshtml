@@ -1,0 +1,64 @@
+
+@model BotSpiel.DataAccess.Models.PickBatchPicking
+
+@{
+    ViewBag.Title = "Details Pick Batch Picking";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Pick Batch Picking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixPickBatchPick)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixPickBatchPick)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPickBatchPick)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPickBatchPick)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.PickBatches.sPickBatch)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.PickBatches.sPickBatch, "Details", "PickBatches", new { id = Model.ixPickBatch }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InventoryUnits.sInventoryUnit)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InventoryUnits.sInventoryUnit, "Details", "InventoryUnits", new { id = Model.ixInventoryUnit }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nBaseUnitQuantityPicked)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nBaseUnitQuantityPicked)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPackToHandlingUnit)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPackToHandlingUnit)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.HandlingUnits.sHandlingUnit)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.HandlingUnits.sHandlingUnit, "Details", "HandlingUnits", new { id = Model.ixHandlingUnit }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

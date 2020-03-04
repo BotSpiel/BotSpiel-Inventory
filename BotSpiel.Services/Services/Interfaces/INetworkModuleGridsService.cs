@@ -23,6 +23,7 @@ This interface ....
         NetworkModuleGridsPost GetPost(Int64 ixNetworkModuleGrid);        
 		NetworkModuleGrids Get(Int64 ixNetworkModuleGrid);
         IQueryable<NetworkModuleGrids> Index();
+        IQueryable<NetworkModuleGrids> IndexDb();
 		IQueryable<NetworkModuleGridsconfig> Indexconfig();
 		IQueryable<NetworkModuleGridsmd> Indexmd();
 		IQueryable<NetworkModuleGridstx> Indextx();

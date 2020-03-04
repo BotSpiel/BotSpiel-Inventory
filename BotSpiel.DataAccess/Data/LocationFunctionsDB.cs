@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is LocationFunctionsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is LocationFunctionsPost)).ToList())
             {
                 var config_vw_locationfunctionspost = e.Entity as LocationFunctionsPost;
                 switch (e.State)
@@ -88,12 +88,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixLocationFunction"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeLocationFunctions @ixLocationFunction = @p0, @sLocationFunction = @p1, @sLocationFunctionCode = @p2, @UserName = @p3", config_vw_locationfunctionspost.ixLocationFunction, config_vw_locationfunctionspost.sLocationFunction, config_vw_locationfunctionspost.sLocationFunctionCode, config_vw_locationfunctionspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

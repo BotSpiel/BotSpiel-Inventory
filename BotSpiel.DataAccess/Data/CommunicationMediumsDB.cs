@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is CommunicationMediumsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is CommunicationMediumsPost)).ToList())
             {
                 var config_vw_communicationmediumspost = e.Entity as CommunicationMediumsPost;
                 switch (e.State)
@@ -88,12 +88,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixCommunicationMedium"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeCommunicationMediums @ixCommunicationMedium = @p0, @sCommunicationMedium = @p1, @sCommunicationMediumCode = @p2, @UserName = @p3", config_vw_communicationmediumspost.ixCommunicationMedium, config_vw_communicationmediumspost.sCommunicationMedium, config_vw_communicationmediumspost.sCommunicationMediumCode, config_vw_communicationmediumspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

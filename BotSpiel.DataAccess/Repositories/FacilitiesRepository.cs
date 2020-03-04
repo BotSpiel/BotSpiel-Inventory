@@ -53,7 +53,21 @@ This class ....
             var facilities = _context.Facilities.Include(a => a.Addresses).AsNoTracking(); 
             return facilities;
         }
+
+        public IQueryable<Facilities> IndexDb()
+        {
+            var facilities = _context.Facilities.Include(a => a.Addresses).AsNoTracking(); 
+            return facilities;
+        }
        public IQueryable<Addresses> selectAddresses()
+        {
+            List<Addresses> addresses = new List<Addresses>();
+            _context.Addresses.Include(a => a.Countries).Include(a => a.CountrySubDivisionsFKDiffStateOrProvince).AsNoTracking()
+                .ToList()
+                .ForEach(x => addresses.Add(x));
+            return addresses.AsQueryable();
+        }
+       public IQueryable<Addresses> AddressesDb()
         {
             List<Addresses> addresses = new List<Addresses>();
             _context.Addresses.Include(a => a.Countries).Include(a => a.CountrySubDivisionsFKDiffStateOrProvince).AsNoTracking()

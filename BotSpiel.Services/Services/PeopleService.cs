@@ -32,7 +32,9 @@ This class ....
         public PeoplePost GetPost(Int64 ixPerson) => _peopleRepository.GetPost(ixPerson);
         public People Get(Int64 ixPerson) => _peopleRepository.Get(ixPerson);
         public IQueryable<People> Index() => _peopleRepository.Index();
+        public IQueryable<People> IndexDb() => _peopleRepository.IndexDb();
        public IQueryable<Languages> selectLanguages() => _peopleRepository.selectLanguages();
+       public IQueryable<Languages> LanguagesDb() => _peopleRepository.LanguagesDb();
         public bool VerifyPersonUnique(Int64 ixPerson, string sPerson) => _peopleRepository.VerifyPersonUnique(ixPerson, sPerson);
         public List<string> VerifyPersonDeleteOK(Int64 ixPerson, string sPerson) => _peopleRepository.VerifyPersonDeleteOK(ixPerson, sPerson);
 

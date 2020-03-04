@@ -32,6 +32,7 @@ This class ....
         public MonetaryAmountTypesPost GetPost(Int64 ixMonetaryAmountType) => _monetaryamounttypesRepository.GetPost(ixMonetaryAmountType);
         public MonetaryAmountTypes Get(Int64 ixMonetaryAmountType) => _monetaryamounttypesRepository.Get(ixMonetaryAmountType);
         public IQueryable<MonetaryAmountTypes> Index() => _monetaryamounttypesRepository.Index();
+        public IQueryable<MonetaryAmountTypes> IndexDb() => _monetaryamounttypesRepository.IndexDb();
         public bool VerifyMonetaryAmountTypeUnique(Int64 ixMonetaryAmountType, string sMonetaryAmountType) => _monetaryamounttypesRepository.VerifyMonetaryAmountTypeUnique(ixMonetaryAmountType, sMonetaryAmountType);
         public List<string> VerifyMonetaryAmountTypeDeleteOK(Int64 ixMonetaryAmountType, string sMonetaryAmountType) => _monetaryamounttypesRepository.VerifyMonetaryAmountTypeDeleteOK(ixMonetaryAmountType, sMonetaryAmountType);
 

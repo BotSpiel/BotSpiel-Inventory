@@ -22,6 +22,7 @@ This interface ....
         LogicalOrientationsPost GetPost(Int64 ixLogicalOrientation);        
 		LogicalOrientations Get(Int64 ixLogicalOrientation);
         IQueryable<LogicalOrientations> Index();
+        IQueryable<LogicalOrientations> IndexDb();
         bool VerifyLogicalOrientationUnique(Int64 ixLogicalOrientation, string sLogicalOrientation);
         List<string> VerifyLogicalOrientationDeleteOK(Int64 ixLogicalOrientation, string sLogicalOrientation);
         void RegisterCreate(LogicalOrientationsPost logicalorientationsPost);

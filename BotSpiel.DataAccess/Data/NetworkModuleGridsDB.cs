@@ -61,7 +61,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is NetworkModuleGridsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is NetworkModuleGridsPost)).ToList())
             {
                 var config_vw_networkmodulegridspost = e.Entity as NetworkModuleGridsPost;
                 switch (e.State)
@@ -124,12 +124,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixNetworkModuleGrid"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeNetworkModuleGrids @ixNetworkModuleGrid = @p0, @sNetworkModuleGrid = @p1, @sShortDescription = @p2, @sDataEntityType = @p3, @bCanCreate = @p4, @bCanEdit = @p5, @bCanDelete = @p6, @UserName = @p7", config_vw_networkmodulegridspost.ixNetworkModuleGrid, config_vw_networkmodulegridspost.sNetworkModuleGrid, config_vw_networkmodulegridspost.sShortDescription, config_vw_networkmodulegridspost.sDataEntityType, config_vw_networkmodulegridspost.bCanCreate, config_vw_networkmodulegridspost.bCanEdit, config_vw_networkmodulegridspost.bCanDelete, config_vw_networkmodulegridspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

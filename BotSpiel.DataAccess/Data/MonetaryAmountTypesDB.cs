@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is MonetaryAmountTypesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is MonetaryAmountTypesPost)).ToList())
             {
                 var config_vw_monetaryamounttypespost = e.Entity as MonetaryAmountTypesPost;
                 switch (e.State)
@@ -88,12 +88,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixMonetaryAmountType"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeMonetaryAmountTypes @ixMonetaryAmountType = @p0, @sMonetaryAmountType = @p1, @sMonetaryAmountTypeCode = @p2, @UserName = @p3", config_vw_monetaryamounttypespost.ixMonetaryAmountType, config_vw_monetaryamounttypespost.sMonetaryAmountType, config_vw_monetaryamounttypespost.sMonetaryAmountTypeCode, config_vw_monetaryamounttypespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

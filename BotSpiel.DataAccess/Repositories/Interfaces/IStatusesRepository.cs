@@ -22,6 +22,7 @@ This interface ....
         StatusesPost GetPost(Int64 ixStatus);        
 		Statuses Get(Int64 ixStatus);
         IQueryable<Statuses> Index();
+        IQueryable<Statuses> IndexDb();
         bool VerifyStatusUnique(Int64 ixStatus, string sStatus);
         List<string> VerifyStatusDeleteOK(Int64 ixStatus, string sStatus);
         void RegisterCreate(StatusesPost statusesPost);

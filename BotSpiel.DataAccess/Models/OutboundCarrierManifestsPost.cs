@@ -17,12 +17,23 @@ namespace BotSpiel.DataAccess.Models
 
 This class ....
 
-*/
- 
-		[Display(Name = "Outbound Carrier Manifest ID")]
+        */
+
+        //Custom Code Start | Added Code Block
+        public OutboundCarrierManifestsPost()
+        {
+            ixStatus = 5;
+        }
+        //Custom Code End
+
+
+        [Display(Name = "Outbound Carrier Manifest ID")]
 		public virtual Int64 ixOutboundCarrierManifest { get; set; }
 		[Display(Name = "Outbound Carrier Manifest")]
 		public virtual String sOutboundCarrierManifest { get; set; }
+		[Required]
+		[Display(Name = "Facility ID")]
+		public virtual Int64 ixFacility { get; set; }
 		[Required]
 		[Display(Name = "Carrier ID")]
 		public virtual Int64 ixCarrier { get; set; }

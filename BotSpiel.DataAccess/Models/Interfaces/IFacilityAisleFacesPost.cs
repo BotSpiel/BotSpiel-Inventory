@@ -19,6 +19,7 @@ This interface ....
 */
 		Int64 ixFacilityAisleFace { get; set; }
 		String sFacilityAisleFace { get; set; }
+		Int64 ixFacility { get; set; }
 		Int64 ixFacilityFloor { get; set; }
 		Int64 nSequence { get; set; }
 		Int64 ixBaySequenceType { get; set; }

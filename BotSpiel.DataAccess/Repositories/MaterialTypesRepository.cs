@@ -43,6 +43,12 @@ This class ....
             var materialtypes = _context.MaterialTypes.AsNoTracking(); 
             return materialtypes;
         }
+
+        public IQueryable<MaterialTypes> IndexDb()
+        {
+            var materialtypes = _context.MaterialTypes.AsNoTracking(); 
+            return materialtypes;
+        }
         public bool VerifyMaterialTypeUnique(Int64 ixMaterialType, string sMaterialType)
         {
             if (_context.MaterialTypes.AsNoTracking().Where(x => x.sMaterialType == sMaterialType).Any() && ixMaterialType == 0L) return false;

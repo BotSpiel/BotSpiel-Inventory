@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is FacilityWorkAreasPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is FacilityWorkAreasPost)).ToList())
             {
                 var md_vw_facilityworkareaspost = e.Entity as FacilityWorkAreasPost;
                 switch (e.State)
@@ -83,12 +83,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixFacilityWorkArea"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.md_sp_ChangeFacilityWorkAreas @ixFacilityWorkArea = @p0, @sFacilityWorkArea = @p1, @UserName = @p2", md_vw_facilityworkareaspost.ixFacilityWorkArea, md_vw_facilityworkareaspost.sFacilityWorkArea, md_vw_facilityworkareaspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

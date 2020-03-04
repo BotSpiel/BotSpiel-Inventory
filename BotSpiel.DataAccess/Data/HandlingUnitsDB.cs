@@ -109,7 +109,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is HandlingUnitsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is HandlingUnitsPost)).ToList())
             {
                 var tx_vw_handlingunitspost = e.Entity as HandlingUnitsPost;
                 switch (e.State)
@@ -212,12 +212,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixHandlingUnit"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeHandlingUnits @ixHandlingUnit = @p0, @sHandlingUnit = @p1, @ixHandlingUnitType = @p2, @ixParentHandlingUnit = @p3, @ixPackingMaterial = @p4, @ixMaterialHandlingUnitConfiguration = @p5, @nLength = @p6, @ixLengthUnit = @p7, @nWidth = @p8, @ixWidthUnit = @p9, @nHeight = @p10, @ixHeightUnit = @p11, @nWeight = @p12, @ixWeightUnit = @p13, @ixStatus = @p14, @UserName = @p15", tx_vw_handlingunitspost.ixHandlingUnit, tx_vw_handlingunitspost.sHandlingUnit, tx_vw_handlingunitspost.ixHandlingUnitType, tx_vw_handlingunitspost.ixParentHandlingUnit, tx_vw_handlingunitspost.ixPackingMaterial, tx_vw_handlingunitspost.ixMaterialHandlingUnitConfiguration, tx_vw_handlingunitspost.nLength, tx_vw_handlingunitspost.ixLengthUnit, tx_vw_handlingunitspost.nWidth, tx_vw_handlingunitspost.ixWidthUnit, tx_vw_handlingunitspost.nHeight, tx_vw_handlingunitspost.ixHeightUnit, tx_vw_handlingunitspost.nWeight, tx_vw_handlingunitspost.ixWeightUnit, tx_vw_handlingunitspost.ixStatus, tx_vw_handlingunitspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

@@ -32,6 +32,7 @@ This class ....
         public ContactFunctionsPost GetPost(Int64 ixContactFunction) => _contactfunctionsRepository.GetPost(ixContactFunction);
         public ContactFunctions Get(Int64 ixContactFunction) => _contactfunctionsRepository.Get(ixContactFunction);
         public IQueryable<ContactFunctions> Index() => _contactfunctionsRepository.Index();
+        public IQueryable<ContactFunctions> IndexDb() => _contactfunctionsRepository.IndexDb();
         public bool VerifyContactFunctionUnique(Int64 ixContactFunction, string sContactFunction) => _contactfunctionsRepository.VerifyContactFunctionUnique(ixContactFunction, sContactFunction);
         public List<string> VerifyContactFunctionDeleteOK(Int64 ixContactFunction, string sContactFunction) => _contactfunctionsRepository.VerifyContactFunctionDeleteOK(ixContactFunction, sContactFunction);
 

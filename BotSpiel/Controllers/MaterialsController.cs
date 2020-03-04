@@ -188,8 +188,14 @@ This class ....
             if (ModelState.IsValid)
             {
                 materials.UserName = User.Identity.Name;
-                _materialsService.Create(materials);
-                return RedirectToAction("Index");
+                //Custom Code Start | Replaced Code Block
+                //Replaced Code Block Start
+                //_materialsService.Create(materials);
+                //return RedirectToAction("Index");
+                //Replaced Code Block End
+                var ixMaterial = _materialsService.Create(materials).Result;
+                return RedirectToAction("Edit", "Materials", new { id = ixMaterial });
+                //Custom Code End
             }
             //Custom Code Start | Replaced Code Block
             //Replaced Code Block Start

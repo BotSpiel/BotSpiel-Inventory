@@ -19,6 +19,7 @@ This interface ....
 */
 		Int64 ixOutboundOrderLine { get; set; }
 		String sOutboundOrderLine { get; set; }
+		Int64 ixOutboundOrder { get; set; }
 		String sOrderLineReference { get; set; }
 		Int64 ixMaterial { get; set; }
 		String sBatchNumber { get; set; }

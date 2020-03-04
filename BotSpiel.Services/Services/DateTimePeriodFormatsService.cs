@@ -32,6 +32,7 @@ This class ....
         public DateTimePeriodFormatsPost GetPost(Int64 ixDateTimePeriodFormat) => _datetimeperiodformatsRepository.GetPost(ixDateTimePeriodFormat);
         public DateTimePeriodFormats Get(Int64 ixDateTimePeriodFormat) => _datetimeperiodformatsRepository.Get(ixDateTimePeriodFormat);
         public IQueryable<DateTimePeriodFormats> Index() => _datetimeperiodformatsRepository.Index();
+        public IQueryable<DateTimePeriodFormats> IndexDb() => _datetimeperiodformatsRepository.IndexDb();
         public bool VerifyDateTimePeriodFormatUnique(Int64 ixDateTimePeriodFormat, string sDateTimePeriodFormat) => _datetimeperiodformatsRepository.VerifyDateTimePeriodFormatUnique(ixDateTimePeriodFormat, sDateTimePeriodFormat);
         public List<string> VerifyDateTimePeriodFormatDeleteOK(Int64 ixDateTimePeriodFormat, string sDateTimePeriodFormat) => _datetimeperiodformatsRepository.VerifyDateTimePeriodFormatDeleteOK(ixDateTimePeriodFormat, sDateTimePeriodFormat);
 

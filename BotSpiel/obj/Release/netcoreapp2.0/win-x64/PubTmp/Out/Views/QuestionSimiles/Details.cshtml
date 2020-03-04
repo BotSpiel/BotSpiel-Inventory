@@ -1,0 +1,48 @@
+
+@model BotSpiel.DataAccess.Models.QuestionSimiles
+
+@{
+    ViewBag.Title = "Details Question Similes";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Question Similes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixQuestionSimile)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixQuestionSimile)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sQuestionSimile)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sQuestionSimile)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Questions.sQuestion)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Questions.sQuestion, "Details", "Questions", new { id = Model.ixQuestion }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sQuestionSimileText)
+		</dt>
+		<dd>
+			@Html.TextAreaFor(model => model.sQuestionSimileText, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;" ,  @readonly = true })
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixQuestionSimile }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixQuestionSimile }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

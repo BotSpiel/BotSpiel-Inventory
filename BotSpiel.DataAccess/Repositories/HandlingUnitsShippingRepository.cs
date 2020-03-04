@@ -44,6 +44,12 @@ This class ....
             var handlingunitsshipping = _context.HandlingUnitsShipping.Include(a => a.HandlingUnits).Include(a => a.Statuses).AsNoTracking(); 
             return handlingunitsshipping;
         }
+
+        public IQueryable<HandlingUnitsShipping> IndexDb()
+        {
+            var handlingunitsshipping = _context.HandlingUnitsShipping.Include(a => a.HandlingUnits).Include(a => a.Statuses).AsNoTracking(); 
+            return handlingunitsshipping;
+        }
        public IQueryable<HandlingUnits> selectHandlingUnits()
         {
             List<HandlingUnits> handlingunits = new List<HandlingUnits>();
@@ -53,6 +59,22 @@ This class ....
             return handlingunits.AsQueryable();
         }
         public IQueryable<Statuses> selectStatuses()
+        {
+            List<Statuses> statuses = new List<Statuses>();
+            _context.Statuses.AsNoTracking()
+                .ToList()
+                .ForEach(x => statuses.Add(x));
+            return statuses.AsQueryable();
+        }
+       public IQueryable<HandlingUnits> HandlingUnitsDb()
+        {
+            List<HandlingUnits> handlingunits = new List<HandlingUnits>();
+            _context.HandlingUnits.Include(a => a.HandlingUnitsFKDiffParentHandlingUnit).Include(a => a.HandlingUnitTypes).Include(a => a.MaterialHandlingUnitConfigurations).Include(a => a.MaterialsFKDiffPackingMaterial).Include(a => a.Statuses).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffWeightUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => handlingunits.Add(x));
+            return handlingunits.AsQueryable();
+        }
+        public IQueryable<Statuses> StatusesDb()
         {
             List<Statuses> statuses = new List<Statuses>();
             _context.Statuses.AsNoTracking()

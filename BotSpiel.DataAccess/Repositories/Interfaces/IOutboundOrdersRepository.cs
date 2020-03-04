@@ -22,7 +22,11 @@ This interface ....
         OutboundOrdersPost GetPost(Int64 ixOutboundOrder);        
 		OutboundOrders Get(Int64 ixOutboundOrder);
         IQueryable<OutboundOrders> Index();
-       IQueryable<Statuses> selectStatuses();
+        IQueryable<OutboundOrders> IndexDb();
+        //Custom Code Start | Added Code Block 
+        IQueryable<OutboundOrdersPost> IndexDbPost();
+        //Custom Code End
+        IQueryable<Statuses> selectStatuses();
         IQueryable<Companies> selectCompanies();
         IQueryable<Facilities> selectFacilities();
         IQueryable<BusinessPartners> selectBusinessPartners();
@@ -30,6 +34,14 @@ This interface ....
         IQueryable<CarrierServices> selectCarrierServices();
         IQueryable<OutboundShipments> selectOutboundShipments();
         IQueryable<PickBatches> selectPickBatches();
+       IQueryable<Statuses> StatusesDb();
+        IQueryable<Companies> CompaniesDb();
+        IQueryable<Facilities> FacilitiesDb();
+        IQueryable<BusinessPartners> BusinessPartnersDb();
+        IQueryable<OutboundOrderTypes> OutboundOrderTypesDb();
+        IQueryable<CarrierServices> CarrierServicesDb();
+        IQueryable<OutboundShipments> OutboundShipmentsDb();
+        IQueryable<PickBatches> PickBatchesDb();
        List<KeyValuePair<Int64?, string>> selectOutboundShipmentsNullable();
         List<KeyValuePair<Int64?, string>> selectPickBatchesNullable();
         bool VerifyOutboundOrderUnique(Int64 ixOutboundOrder, string sOutboundOrder);

@@ -1,0 +1,48 @@
+
+@model BotSpiel.DataAccess.Models.RequestForActionSimiles
+
+@{
+    ViewBag.Title = "Details Request For Action Similes";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Request For Action Similes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixRequestForActionSimile)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixRequestForActionSimile)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sRequestForActionSimile)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sRequestForActionSimile)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.RequestsForAction.sRequestForAction)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.RequestsForAction.sRequestForAction, "Details", "RequestsForAction", new { id = Model.ixRequestForAction }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sRequestForActionSimileText)
+		</dt>
+		<dd>
+			@Html.TextAreaFor(model => model.sRequestForActionSimileText, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;" ,  @readonly = true })
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixRequestForActionSimile }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixRequestForActionSimile }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

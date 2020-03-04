@@ -1,0 +1,60 @@
+
+@model BotSpiel.DataAccess.Models.InvoicePurchaseLineTaxAmounts
+
+@{
+    ViewBag.Title = "Details Invoice Purchase Line Tax Amounts";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Invoice Purchase Line Tax Amounts</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixInvoicePurchaseLineTaxAmount)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixInvoicePurchaseLineTaxAmount)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sInvoicePurchaseLineTaxAmount)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sInvoicePurchaseLineTaxAmount)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.InvoicePurchaseLineAmounts.sInvoicePurchaseLineAmount)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.InvoicePurchaseLineAmounts.sInvoicePurchaseLineAmount, "Details", "InvoicePurchaseLineAmounts", new { id = Model.ixInvoicePurchaseLineAmount }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Taxes.sTax)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Taxes.sTax, "Details", "Taxes", new { id = Model.ixTax }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.mAmount)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.mAmount)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Currencies.sCurrency)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Currencies.sCurrency, "Details", "Currencies", new { id = Model.ixCurrency }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixInvoicePurchaseLineTaxAmount }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixInvoicePurchaseLineTaxAmount }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

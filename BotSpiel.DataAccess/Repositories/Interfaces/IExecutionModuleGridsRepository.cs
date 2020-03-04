@@ -22,6 +22,7 @@ This interface ....
         ExecutionModuleGridsPost GetPost(Int64 ixExecutionModuleGrid);        
 		ExecutionModuleGrids Get(Int64 ixExecutionModuleGrid);
         IQueryable<ExecutionModuleGrids> Index();
+        IQueryable<ExecutionModuleGrids> IndexDb();
 		IQueryable<ExecutionModuleGridsconfig> Indexconfig();
 		IQueryable<ExecutionModuleGridsmd> Indexmd();
 		IQueryable<ExecutionModuleGridstx> Indextx();

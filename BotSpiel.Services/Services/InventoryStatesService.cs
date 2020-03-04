@@ -32,6 +32,7 @@ This class ....
         public InventoryStatesPost GetPost(Int64 ixInventoryState) => _inventorystatesRepository.GetPost(ixInventoryState);
         public InventoryStates Get(Int64 ixInventoryState) => _inventorystatesRepository.Get(ixInventoryState);
         public IQueryable<InventoryStates> Index() => _inventorystatesRepository.Index();
+        public IQueryable<InventoryStates> IndexDb() => _inventorystatesRepository.IndexDb();
         public bool VerifyInventoryStateUnique(Int64 ixInventoryState, string sInventoryState) => _inventorystatesRepository.VerifyInventoryStateUnique(ixInventoryState, sInventoryState);
         public List<string> VerifyInventoryStateDeleteOK(Int64 ixInventoryState, string sInventoryState) => _inventorystatesRepository.VerifyInventoryStateDeleteOK(ixInventoryState, sInventoryState);
 

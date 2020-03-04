@@ -45,7 +45,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is AisleFaceStorageTypesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is AisleFaceStorageTypesPost)).ToList())
             {
                 var config_vw_aislefacestoragetypespost = e.Entity as AisleFaceStorageTypesPost;
                 switch (e.State)
@@ -83,12 +83,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixAisleFaceStorageType"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeAisleFaceStorageTypes @ixAisleFaceStorageType = @p0, @sAisleFaceStorageType = @p1, @UserName = @p2", config_vw_aislefacestoragetypespost.ixAisleFaceStorageType, config_vw_aislefacestoragetypespost.sAisleFaceStorageType, config_vw_aislefacestoragetypespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

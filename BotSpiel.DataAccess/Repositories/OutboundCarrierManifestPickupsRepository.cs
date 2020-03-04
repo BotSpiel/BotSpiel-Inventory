@@ -41,10 +41,42 @@ This class ....
 
         public IQueryable<OutboundCarrierManifestPickups> Index()
         {
+            //Custom Code Start | Replaced Code Block
+            //Replaced Code Block Start
+            //var outboundcarriermanifestpickups = _context.OutboundCarrierManifestPickups.Include(a => a.OutboundCarrierManifests).Include(a => a.Statuses).AsNoTracking();
+            //Replaced Code Block End
+            var outboundcarriermanifestpickups = _context.OutboundCarrierManifestPickups.OrderByDescending(a => a.ixOutboundCarrierManifestPickup).Include(a => a.OutboundCarrierManifests).Include(a => a.Statuses).AsNoTracking();
+            //Custom Code End
+            return outboundcarriermanifestpickups;
+        }
+
+        public IQueryable<OutboundCarrierManifestPickups> IndexDb()
+        {
             var outboundcarriermanifestpickups = _context.OutboundCarrierManifestPickups.Include(a => a.OutboundCarrierManifests).Include(a => a.Statuses).AsNoTracking(); 
             return outboundcarriermanifestpickups;
         }
        public IQueryable<OutboundCarrierManifests> selectOutboundCarrierManifests()
+        {
+            List<OutboundCarrierManifests> outboundcarriermanifests = new List<OutboundCarrierManifests>();
+            //Custom Code Start | Replaced Code Block
+            //Replaced Code Block Start
+            //_context.OutboundCarrierManifests.Include(a => a.Carriers).Include(a => a.InventoryLocationsFKDiffPickupInventoryLocation).Include(a => a.Statuses).AsNoTracking()
+            //Replaced Code Block End
+            _context.OutboundCarrierManifests.Where(a => a.ixStatus == StatusesDb().Where(s => s.sStatus == "Active").Select(s => s.ixStatus).FirstOrDefault()).Include(a => a.Carriers).Include(a => a.InventoryLocationsFKDiffPickupInventoryLocation).Include(a => a.Statuses).AsNoTracking()
+            //Custom Code End
+                .ToList()
+                .ForEach(x => outboundcarriermanifests.Add(x));
+            return outboundcarriermanifests.AsQueryable();
+        }
+        public IQueryable<Statuses> selectStatuses()
+        {
+            List<Statuses> statuses = new List<Statuses>();
+            _context.Statuses.AsNoTracking()
+                .ToList()
+                .ForEach(x => statuses.Add(x));
+            return statuses.AsQueryable();
+        }
+       public IQueryable<OutboundCarrierManifests> OutboundCarrierManifestsDb()
         {
             List<OutboundCarrierManifests> outboundcarriermanifests = new List<OutboundCarrierManifests>();
             _context.OutboundCarrierManifests.Include(a => a.Carriers).Include(a => a.InventoryLocationsFKDiffPickupInventoryLocation).Include(a => a.Statuses).AsNoTracking()
@@ -52,7 +84,7 @@ This class ....
                 .ForEach(x => outboundcarriermanifests.Add(x));
             return outboundcarriermanifests.AsQueryable();
         }
-        public IQueryable<Statuses> selectStatuses()
+        public IQueryable<Statuses> StatusesDb()
         {
             List<Statuses> statuses = new List<Statuses>();
             _context.Statuses.AsNoTracking()

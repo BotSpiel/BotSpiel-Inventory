@@ -32,7 +32,9 @@ This class ....
         public CarriersPost GetPost(Int64 ixCarrier) => _carriersRepository.GetPost(ixCarrier);
         public Carriers Get(Int64 ixCarrier) => _carriersRepository.Get(ixCarrier);
         public IQueryable<Carriers> Index() => _carriersRepository.Index();
+        public IQueryable<Carriers> IndexDb() => _carriersRepository.IndexDb();
        public IQueryable<CarrierTypes> selectCarrierTypes() => _carriersRepository.selectCarrierTypes();
+       public IQueryable<CarrierTypes> CarrierTypesDb() => _carriersRepository.CarrierTypesDb();
         public bool VerifyCarrierUnique(Int64 ixCarrier, string sCarrier) => _carriersRepository.VerifyCarrierUnique(ixCarrier, sCarrier);
         public List<string> VerifyCarrierDeleteOK(Int64 ixCarrier, string sCarrier) => _carriersRepository.VerifyCarrierDeleteOK(ixCarrier, sCarrier);
 

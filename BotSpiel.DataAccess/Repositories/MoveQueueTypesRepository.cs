@@ -43,6 +43,12 @@ This class ....
             var movequeuetypes = _context.MoveQueueTypes.AsNoTracking(); 
             return movequeuetypes;
         }
+
+        public IQueryable<MoveQueueTypes> IndexDb()
+        {
+            var movequeuetypes = _context.MoveQueueTypes.AsNoTracking(); 
+            return movequeuetypes;
+        }
         public bool VerifyMoveQueueTypeUnique(Int64 ixMoveQueueType, string sMoveQueueType)
         {
             if (_context.MoveQueueTypes.AsNoTracking().Where(x => x.sMoveQueueType == sMoveQueueType).Any() && ixMoveQueueType == 0L) return false;

@@ -61,7 +61,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is AssemblyModuleGridsPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is AssemblyModuleGridsPost)).ToList())
             {
                 var config_vw_assemblymodulegridspost = e.Entity as AssemblyModuleGridsPost;
                 switch (e.State)
@@ -124,12 +124,12 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixAssemblyModuleGrid"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
                         Database.ExecuteSqlCommand("exec dbo.config_sp_ChangeAssemblyModuleGrids @ixAssemblyModuleGrid = @p0, @sAssemblyModuleGrid = @p1, @sShortDescription = @p2, @sDataEntityType = @p3, @bCanCreate = @p4, @bCanEdit = @p5, @bCanDelete = @p6, @UserName = @p7", config_vw_assemblymodulegridspost.ixAssemblyModuleGrid, config_vw_assemblymodulegridspost.sAssemblyModuleGrid, config_vw_assemblymodulegridspost.sShortDescription, config_vw_assemblymodulegridspost.sDataEntityType, config_vw_assemblymodulegridspost.bCanCreate, config_vw_assemblymodulegridspost.bCanEdit, config_vw_assemblymodulegridspost.bCanDelete, config_vw_assemblymodulegridspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:

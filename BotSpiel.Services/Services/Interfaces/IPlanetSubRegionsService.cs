@@ -23,7 +23,9 @@ This interface ....
         PlanetSubRegionsPost GetPost(Int64 ixPlanetSubRegion);        
 		PlanetSubRegions Get(Int64 ixPlanetSubRegion);
         IQueryable<PlanetSubRegions> Index();
+        IQueryable<PlanetSubRegions> IndexDb();
        IQueryable<PlanetRegions> selectPlanetRegions();
+       IQueryable<PlanetRegions> PlanetRegionsDb();
         bool VerifyPlanetSubRegionUnique(Int64 ixPlanetSubRegion, string sPlanetSubRegion);
         List<string> VerifyPlanetSubRegionDeleteOK(Int64 ixPlanetSubRegion, string sPlanetSubRegion);
 

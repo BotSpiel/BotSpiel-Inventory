@@ -1,4 +1,10 @@
-
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IInboundOrderLinesService _inboundorderlinesService
+@*//Custom Code End*@
 @model BotSpiel.DataAccess.Models.InboundOrders
 
 @{
@@ -11,68 +17,87 @@
     <h4>Inbound Orders</h4>
     <hr />
     <dl class="dl-horizontal">
-		<dt>
-			@Html.DisplayNameFor(model => model.ixInboundOrder)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.ixInboundOrder)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.sInboundOrder)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.sInboundOrder)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.sOrderReference)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.sOrderReference)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.InboundOrderTypes.sInboundOrderType)
-		</dt>
-		<dd>
-			@Html.ActionLink(Model.InboundOrderTypes.sInboundOrderType, "Details", "InboundOrderTypes", new { id = Model.ixInboundOrderType }, null)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.Facilities.sFacility)
-		</dt>
-		<dd>
-			@Html.ActionLink(Model.Facilities.sFacility, "Details", "Facilities", new { id = Model.ixFacility }, null)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.Companies.sCompany)
-		</dt>
-		<dd>
-			@Html.ActionLink(Model.Companies.sCompany, "Details", "Companies", new { id = Model.ixCompany }, null)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.BusinessPartners.sBusinessPartner)
-		</dt>
-		<dd>
-			@Html.ActionLink(Model.BusinessPartners.sBusinessPartner, "Details", "BusinessPartners", new { id = Model.ixBusinessPartner }, null)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.dtExpectedAt)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.dtExpectedAt)
-		</dd>
-		<dt>
-			@Html.DisplayNameFor(model => model.Statuses.sStatus)
-		</dt>
-		<dd>
-			@Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
-		</dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ixInboundOrder)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ixInboundOrder)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.sInboundOrder)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.sInboundOrder)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.sOrderReference)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.sOrderReference)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.InboundOrderTypes.sInboundOrderType)
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.InboundOrderTypes.sInboundOrderType, "Details", "InboundOrderTypes", new { id = Model.ixInboundOrderType }, null)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Facilities.sFacility)
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.Facilities.sFacility, "Details", "Facilities", new { id = Model.ixFacility }, null)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Companies.sCompany)
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.Companies.sCompany, "Details", "Companies", new { id = Model.ixCompany }, null)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BusinessPartners.sBusinessPartner)
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.BusinessPartners.sBusinessPartner, "Details", "BusinessPartners", new { id = Model.ixBusinessPartner }, null)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.dtExpectedAt)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.dtExpectedAt)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Statuses.sStatus)
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.Statuses.sStatus, "Details", "Statuses", new { id = Model.ixStatus }, null)
+        </dd>
 
 
     </dl>
 </div>
-<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixInboundOrder }) |
-	@Html.ActionLink("Delete", "Delete", new { id = Model.ixInboundOrder }) |
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ixInboundOrder }) |
+    @Html.ActionLink("Delete", "Delete", new { id = Model.ixInboundOrder }) |
     @Html.ActionLink("Grid", "Index")
 </p>
+@*//Custom Code Start | Added Code Block*@
+<div>
+    @{
+        List<BotSpiel.DataAccess.Models.InboundOrderLines> orderLines = new List<InboundOrderLines>();
+        //Add empty record
+        InboundOrderLines inboundOrderLines = new InboundOrderLines();
+        inboundOrderLines.ixInboundOrder = Model.ixInboundOrder;
+        inboundOrderLines.InboundOrders.ixInboundOrder = Model.ixInboundOrder;
+        orderLines.Add(inboundOrderLines);
+        _inboundorderlinesService.Index().Where(x => x.ixInboundOrder == Model.ixInboundOrder).ToList().ForEach(x =>
+            {
+                orderLines.Add(x);
+            }
+            );
+    }
+    @await Html.PartialAsync("IndexInboundOrderLines", orderLines)
+</div>
+@*//Custom Code End*@
 
- 
+
 

@@ -21,7 +21,8 @@ This interface ....
 		String sBotspielBotMessage { get; set; }
 		String sMyMessage { get; set; }
 		String sYourReply { get; set; }
-		String UserName { get; set; }
+        String sMyNextMessage { get; set; }
+        String UserName { get; set; }
     }
 }
   

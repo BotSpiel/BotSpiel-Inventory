@@ -229,7 +229,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is InboundOrderLinesPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is InboundOrderLinesPost)).ToList())
             {
                 var tx_vw_inboundorderlinespost = e.Entity as InboundOrderLinesPost;
                 switch (e.State)
@@ -263,21 +263,24 @@ This class ....
                             var nBaseUnitQuantityReceived = cmd.CreateParameter();
                             nBaseUnitQuantityReceived.ParameterName = "p7";
                             nBaseUnitQuantityReceived.Value = tx_vw_inboundorderlinespost.nBaseUnitQuantityReceived;
-                            var sBatchNumber = cmd.CreateParameter();
-                            sBatchNumber.ParameterName = "p8";
-                            sBatchNumber.Value = tx_vw_inboundorderlinespost.sBatchNumber;
                             var sSerialNumber = cmd.CreateParameter();
-                            sSerialNumber.ParameterName = "p9";
+                            sSerialNumber.ParameterName = "p8";
                             sSerialNumber.Value = tx_vw_inboundorderlinespost.sSerialNumber;
+                            var sBatchNumber = cmd.CreateParameter();
+                            sBatchNumber.ParameterName = "p9";
+                            sBatchNumber.Value = tx_vw_inboundorderlinespost.sBatchNumber;
+                            var dtExpireAt = cmd.CreateParameter();
+                            dtExpireAt.ParameterName = "p10";
+                            dtExpireAt.Value = tx_vw_inboundorderlinespost.dtExpireAt;
                             var ixStatus = cmd.CreateParameter();
-                            ixStatus.ParameterName = "p10";
+                            ixStatus.ParameterName = "p11";
                             ixStatus.Value = tx_vw_inboundorderlinespost.ixStatus;
                             var UserName = cmd.CreateParameter();
-                            UserName.ParameterName = "p11";
+                            UserName.ParameterName = "p12";
                             UserName.Value = tx_vw_inboundorderlinespost.UserName;
 
                             var ixInboundOrderLine = cmd.CreateParameter();
-                            ixInboundOrderLine.ParameterName = "p12";
+                            ixInboundOrderLine.ParameterName = "p13";
                             ixInboundOrderLine.DbType = DbType.Int64;
                             ixInboundOrderLine.Direction = ParameterDirection.Output;
 
@@ -291,11 +294,12 @@ This class ....
                             if (tx_vw_inboundorderlinespost.nHandlingUnitQuantity != null) { sql.Append("@nHandlingUnitQuantity = @p5, "); }  
                             sql.Append("@nBaseUnitQuantityExpected = @p6, ");
                             sql.Append("@nBaseUnitQuantityReceived = @p7, ");
-                            if (tx_vw_inboundorderlinespost.sBatchNumber != null) { sql.Append("@sBatchNumber = @p8, "); }  
-                            if (tx_vw_inboundorderlinespost.sSerialNumber != null) { sql.Append("@sSerialNumber = @p9, "); }  
-                            sql.Append("@ixStatus = @p10, ");
-                            if (tx_vw_inboundorderlinespost.UserName != null) { sql.Append("@UserName = @p11, "); }  
-                            sql.Append("@ixInboundOrderLine = @p12 output "); 
+                            if (tx_vw_inboundorderlinespost.sSerialNumber != null) { sql.Append("@sSerialNumber = @p8, "); }  
+                            if (tx_vw_inboundorderlinespost.sBatchNumber != null) { sql.Append("@sBatchNumber = @p9, "); }  
+                            if (tx_vw_inboundorderlinespost.dtExpireAt != null) { sql.Append("@dtExpireAt = @p10, "); }  
+                            sql.Append("@ixStatus = @p11, ");
+                            if (tx_vw_inboundorderlinespost.UserName != null) { sql.Append("@UserName = @p12, "); }  
+                            sql.Append("@ixInboundOrderLine = @p13 output "); 
                             cmd.CommandText = sql.ToString();
 
                             cmd.Parameters.Add(ixInboundOrder);
@@ -306,8 +310,9 @@ This class ....
                             if (tx_vw_inboundorderlinespost.nHandlingUnitQuantity != null) { cmd.Parameters.Add(nHandlingUnitQuantity); }
                             cmd.Parameters.Add(nBaseUnitQuantityExpected);
                             cmd.Parameters.Add(nBaseUnitQuantityReceived);
-                            if (tx_vw_inboundorderlinespost.sBatchNumber != null) { cmd.Parameters.Add(sBatchNumber); }
                             if (tx_vw_inboundorderlinespost.sSerialNumber != null) { cmd.Parameters.Add(sSerialNumber); }
+                            if (tx_vw_inboundorderlinespost.sBatchNumber != null) { cmd.Parameters.Add(sBatchNumber); }
+                            if (tx_vw_inboundorderlinespost.dtExpireAt != null) { cmd.Parameters.Add(dtExpireAt); }
                             cmd.Parameters.Add(ixStatus);
                             if (tx_vw_inboundorderlinespost.UserName != null) { cmd.Parameters.Add(UserName); }
 
@@ -317,16 +322,16 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixInboundOrderLine"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
-                        Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeInboundOrderLines @ixInboundOrderLine = @p0, @ixInboundOrder = @p1, @sOrderLineReference = @p2, @ixMaterial = @p3, @ixMaterialHandlingUnitConfiguration = @p4, @ixHandlingUnitType = @p5, @nHandlingUnitQuantity = @p6, @nBaseUnitQuantityExpected = @p7, @nBaseUnitQuantityReceived = @p8, @sBatchNumber = @p9, @sSerialNumber = @p10, @ixStatus = @p11, @UserName = @p12", tx_vw_inboundorderlinespost.ixInboundOrderLine, tx_vw_inboundorderlinespost.ixInboundOrder, tx_vw_inboundorderlinespost.sOrderLineReference, tx_vw_inboundorderlinespost.ixMaterial, tx_vw_inboundorderlinespost.ixMaterialHandlingUnitConfiguration, tx_vw_inboundorderlinespost.ixHandlingUnitType, tx_vw_inboundorderlinespost.nHandlingUnitQuantity, tx_vw_inboundorderlinespost.nBaseUnitQuantityExpected, tx_vw_inboundorderlinespost.nBaseUnitQuantityReceived, tx_vw_inboundorderlinespost.sBatchNumber, tx_vw_inboundorderlinespost.sSerialNumber, tx_vw_inboundorderlinespost.ixStatus, tx_vw_inboundorderlinespost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeInboundOrderLines @ixInboundOrderLine = @p0, @ixInboundOrder = @p1, @sOrderLineReference = @p2, @ixMaterial = @p3, @ixMaterialHandlingUnitConfiguration = @p4, @ixHandlingUnitType = @p5, @nHandlingUnitQuantity = @p6, @nBaseUnitQuantityExpected = @p7, @nBaseUnitQuantityReceived = @p8, @sSerialNumber = @p9, @sBatchNumber = @p10, @dtExpireAt = @p11, @ixStatus = @p12, @UserName = @p13", tx_vw_inboundorderlinespost.ixInboundOrderLine, tx_vw_inboundorderlinespost.ixInboundOrder, tx_vw_inboundorderlinespost.sOrderLineReference, tx_vw_inboundorderlinespost.ixMaterial, tx_vw_inboundorderlinespost.ixMaterialHandlingUnitConfiguration, tx_vw_inboundorderlinespost.ixHandlingUnitType, tx_vw_inboundorderlinespost.nHandlingUnitQuantity, tx_vw_inboundorderlinespost.nBaseUnitQuantityExpected, tx_vw_inboundorderlinespost.nBaseUnitQuantityReceived, tx_vw_inboundorderlinespost.sSerialNumber, tx_vw_inboundorderlinespost.sBatchNumber, tx_vw_inboundorderlinespost.dtExpireAt, tx_vw_inboundorderlinespost.ixStatus, tx_vw_inboundorderlinespost.UserName);
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:
-                        Database.ExecuteSqlCommand("exec dbo.tx_sp_DeleteInboundOrderLines @ixInboundOrderLine = @p0, @ixInboundOrder = @p1, @sOrderLineReference = @p2, @ixMaterial = @p3, @ixMaterialHandlingUnitConfiguration = @p4, @ixHandlingUnitType = @p5, @nHandlingUnitQuantity = @p6, @nBaseUnitQuantityExpected = @p7, @nBaseUnitQuantityReceived = @p8, @sBatchNumber = @p9, @sSerialNumber = @p10, @ixStatus = @p11, @UserName = @p12", tx_vw_inboundorderlinespost.ixInboundOrderLine, tx_vw_inboundorderlinespost.ixInboundOrder, tx_vw_inboundorderlinespost.sOrderLineReference, tx_vw_inboundorderlinespost.ixMaterial, tx_vw_inboundorderlinespost.ixMaterialHandlingUnitConfiguration, tx_vw_inboundorderlinespost.ixHandlingUnitType, tx_vw_inboundorderlinespost.nHandlingUnitQuantity, tx_vw_inboundorderlinespost.nBaseUnitQuantityExpected, tx_vw_inboundorderlinespost.nBaseUnitQuantityReceived, tx_vw_inboundorderlinespost.sBatchNumber, tx_vw_inboundorderlinespost.sSerialNumber, tx_vw_inboundorderlinespost.ixStatus, tx_vw_inboundorderlinespost.UserName);
+                        Database.ExecuteSqlCommand("exec dbo.tx_sp_DeleteInboundOrderLines @ixInboundOrderLine = @p0, @ixInboundOrder = @p1, @sOrderLineReference = @p2, @ixMaterial = @p3, @ixMaterialHandlingUnitConfiguration = @p4, @ixHandlingUnitType = @p5, @nHandlingUnitQuantity = @p6, @nBaseUnitQuantityExpected = @p7, @nBaseUnitQuantityReceived = @p8, @sSerialNumber = @p9, @sBatchNumber = @p10, @dtExpireAt = @p11, @ixStatus = @p12, @UserName = @p13", tx_vw_inboundorderlinespost.ixInboundOrderLine, tx_vw_inboundorderlinespost.ixInboundOrder, tx_vw_inboundorderlinespost.sOrderLineReference, tx_vw_inboundorderlinespost.ixMaterial, tx_vw_inboundorderlinespost.ixMaterialHandlingUnitConfiguration, tx_vw_inboundorderlinespost.ixHandlingUnitType, tx_vw_inboundorderlinespost.nHandlingUnitQuantity, tx_vw_inboundorderlinespost.nBaseUnitQuantityExpected, tx_vw_inboundorderlinespost.nBaseUnitQuantityReceived, tx_vw_inboundorderlinespost.sSerialNumber, tx_vw_inboundorderlinespost.sBatchNumber, tx_vw_inboundorderlinespost.dtExpireAt, tx_vw_inboundorderlinespost.ixStatus, tx_vw_inboundorderlinespost.UserName);
                         e.State = EntityState.Detached;                           
 						break;
                 }

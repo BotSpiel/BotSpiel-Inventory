@@ -1,0 +1,48 @@
+
+@model BotSpiel.DataAccess.Models.PurchaseTextMessages
+
+@{
+    ViewBag.Title = "Details Purchase Text Messages";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Purchase Text Messages</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixPurchaseTextMessage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixPurchaseTextMessage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sPurchaseTextMessage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sPurchaseTextMessage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Purchases.sPurchase)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Purchases.sPurchase, "Details", "Purchases", new { id = Model.ixPurchase }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.SendTextMessages.sSendTextMessage)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.SendTextMessages.sSendTextMessage, "Details", "SendTextMessages", new { id = Model.ixSendTextMessage }, null)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixPurchaseTextMessage }) |
+	@Html.ActionLink("Delete", "Delete", new { id = Model.ixPurchaseTextMessage }) |
+    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

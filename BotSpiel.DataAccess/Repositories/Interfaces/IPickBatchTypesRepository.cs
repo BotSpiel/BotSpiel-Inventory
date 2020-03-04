@@ -22,6 +22,7 @@ This interface ....
         PickBatchTypesPost GetPost(Int64 ixPickBatchType);        
 		PickBatchTypes Get(Int64 ixPickBatchType);
         IQueryable<PickBatchTypes> Index();
+        IQueryable<PickBatchTypes> IndexDb();
         bool VerifyPickBatchTypeUnique(Int64 ixPickBatchType, string sPickBatchType);
         List<string> VerifyPickBatchTypeDeleteOK(Int64 ixPickBatchType, string sPickBatchType);
         void RegisterCreate(PickBatchTypesPost pickbatchtypesPost);

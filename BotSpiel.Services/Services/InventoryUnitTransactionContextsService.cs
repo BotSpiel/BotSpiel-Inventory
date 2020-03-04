@@ -32,6 +32,7 @@ This class ....
         public InventoryUnitTransactionContextsPost GetPost(Int64 ixInventoryUnitTransactionContext) => _inventoryunittransactioncontextsRepository.GetPost(ixInventoryUnitTransactionContext);
         public InventoryUnitTransactionContexts Get(Int64 ixInventoryUnitTransactionContext) => _inventoryunittransactioncontextsRepository.Get(ixInventoryUnitTransactionContext);
         public IQueryable<InventoryUnitTransactionContexts> Index() => _inventoryunittransactioncontextsRepository.Index();
+        public IQueryable<InventoryUnitTransactionContexts> IndexDb() => _inventoryunittransactioncontextsRepository.IndexDb();
         public bool VerifyInventoryUnitTransactionContextUnique(Int64 ixInventoryUnitTransactionContext, string sInventoryUnitTransactionContext) => _inventoryunittransactioncontextsRepository.VerifyInventoryUnitTransactionContextUnique(ixInventoryUnitTransactionContext, sInventoryUnitTransactionContext);
         public List<string> VerifyInventoryUnitTransactionContextDeleteOK(Int64 ixInventoryUnitTransactionContext, string sInventoryUnitTransactionContext) => _inventoryunittransactioncontextsRepository.VerifyInventoryUnitTransactionContextDeleteOK(ixInventoryUnitTransactionContext, sInventoryUnitTransactionContext);
 

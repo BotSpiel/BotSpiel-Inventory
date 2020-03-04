@@ -43,6 +43,12 @@ This class ....
             var outboundordertypes = _context.OutboundOrderTypes.AsNoTracking(); 
             return outboundordertypes;
         }
+
+        public IQueryable<OutboundOrderTypes> IndexDb()
+        {
+            var outboundordertypes = _context.OutboundOrderTypes.AsNoTracking(); 
+            return outboundordertypes;
+        }
         public bool VerifyOutboundOrderTypeUnique(Int64 ixOutboundOrderType, string sOutboundOrderType)
         {
             if (_context.OutboundOrderTypes.AsNoTracking().Where(x => x.sOutboundOrderType == sOutboundOrderType).Any() && ixOutboundOrderType == 0L) return false;

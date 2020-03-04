@@ -22,6 +22,7 @@ This interface ....
 		Int64 ixInventoryLocationEdit { get; set; }
 		String sInventoryLocation { get; set; }
 		Int64 ixLocationFunction { get; set; }
+		Int64 ixFacility { get; set; }
 		Int64? ixCompany { get; set; }
 		Int64 ixFacilityFloor { get; set; }
 		Int64 ixFacilityZone { get; set; }
@@ -48,6 +49,7 @@ This interface ....
 		String sCreatedBy { get; set; }
 		String sChangedBy { get; set; }
 		LocationFunctions LocationFunctions { get; set; }
+		Facilities Facilities { get; set; }
 		Companies Companies { get; set; }
 		FacilityFloors FacilityFloors { get; set; }
 		FacilityZones FacilityZones { get; set; }

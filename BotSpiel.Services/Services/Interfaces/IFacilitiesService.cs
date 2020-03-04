@@ -23,7 +23,9 @@ This interface ....
         FacilitiesPost GetPost(Int64 ixFacility);        
 		Facilities Get(Int64 ixFacility);
         IQueryable<Facilities> Index();
+        IQueryable<Facilities> IndexDb();
        IQueryable<Addresses> selectAddresses();
+       IQueryable<Addresses> AddressesDb();
         bool VerifyFacilityUnique(Int64 ixFacility, string sFacility);
         List<string> VerifyFacilityDeleteOK(Int64 ixFacility, string sFacility);
 

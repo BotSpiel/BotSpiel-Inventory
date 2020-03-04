@@ -31,14 +31,16 @@ This class ....
         private readonly MoveQueuesDB _contextMoveQueues;
         private readonly OutboundCarrierManifestPickupsDB _contextOutboundCarrierManifestPickups;
         private readonly OutboundCarrierManifestsDB _contextOutboundCarrierManifests;
+        private readonly OutboundOrderLinePackingDB _contextOutboundOrderLinePacking;
         private readonly OutboundOrderLinesDB _contextOutboundOrderLines;
-        private readonly OutboundOrderPackingDB _contextOutboundOrderPacking;
+        private readonly OutboundOrderLinesInventoryAllocationDB _contextOutboundOrderLinesInventoryAllocation;
         private readonly OutboundOrdersDB _contextOutboundOrders;
         private readonly OutboundShipmentsDB _contextOutboundShipments;
         private readonly PickBatchesDB _contextPickBatches;
+        private readonly PickBatchPickingDB _contextPickBatchPicking;
         private readonly ReceivingDB _contextReceiving;
   
-        public StatusesRepository(StatusesDB context, DocumentsDB contextDocuments, HandlingUnitsDB contextHandlingUnits, HandlingUnitsShippingDB contextHandlingUnitsShipping, InboundOrderLinesDB contextInboundOrderLines, InboundOrdersDB contextInboundOrders, InventoryUnitsDB contextInventoryUnits, InventoryUnitTransactionsDB contextInventoryUnitTransactions, MoveQueuesDB contextMoveQueues, OutboundCarrierManifestPickupsDB contextOutboundCarrierManifestPickups, OutboundCarrierManifestsDB contextOutboundCarrierManifests, OutboundOrderLinesDB contextOutboundOrderLines, OutboundOrderPackingDB contextOutboundOrderPacking, OutboundOrdersDB contextOutboundOrders, OutboundShipmentsDB contextOutboundShipments, PickBatchesDB contextPickBatches, ReceivingDB contextReceiving)
+        public StatusesRepository(StatusesDB context, DocumentsDB contextDocuments, HandlingUnitsDB contextHandlingUnits, HandlingUnitsShippingDB contextHandlingUnitsShipping, InboundOrderLinesDB contextInboundOrderLines, InboundOrdersDB contextInboundOrders, InventoryUnitsDB contextInventoryUnits, InventoryUnitTransactionsDB contextInventoryUnitTransactions, MoveQueuesDB contextMoveQueues, OutboundCarrierManifestPickupsDB contextOutboundCarrierManifestPickups, OutboundCarrierManifestsDB contextOutboundCarrierManifests, OutboundOrderLinePackingDB contextOutboundOrderLinePacking, OutboundOrderLinesDB contextOutboundOrderLines, OutboundOrderLinesInventoryAllocationDB contextOutboundOrderLinesInventoryAllocation, OutboundOrdersDB contextOutboundOrders, OutboundShipmentsDB contextOutboundShipments, PickBatchesDB contextPickBatches, PickBatchPickingDB contextPickBatchPicking, ReceivingDB contextReceiving)
         {
             _context = context;
            _contextDocuments = contextDocuments;
@@ -51,11 +53,13 @@ This class ....
             _contextMoveQueues = contextMoveQueues;
             _contextOutboundCarrierManifestPickups = contextOutboundCarrierManifestPickups;
             _contextOutboundCarrierManifests = contextOutboundCarrierManifests;
+            _contextOutboundOrderLinePacking = contextOutboundOrderLinePacking;
             _contextOutboundOrderLines = contextOutboundOrderLines;
-            _contextOutboundOrderPacking = contextOutboundOrderPacking;
+            _contextOutboundOrderLinesInventoryAllocation = contextOutboundOrderLinesInventoryAllocation;
             _contextOutboundOrders = contextOutboundOrders;
             _contextOutboundShipments = contextOutboundShipments;
             _contextPickBatches = contextPickBatches;
+            _contextPickBatchPicking = contextPickBatchPicking;
             _contextReceiving = contextReceiving;
   
         }
@@ -69,6 +73,12 @@ This class ....
         }
 
         public IQueryable<Statuses> Index()
+        {
+            var statuses = _context.Statuses.AsNoTracking(); 
+            return statuses;
+        }
+
+        public IQueryable<Statuses> IndexDb()
         {
             var statuses = _context.Statuses.AsNoTracking(); 
             return statuses;
@@ -94,8 +104,9 @@ This class ....
             if (_contextMoveQueues.MoveQueues.AsNoTracking().Where(x => x.ixStatus == ixStatus).Any()) existInEntities.Add("MoveQueues");
             if (_contextOutboundCarrierManifestPickups.OutboundCarrierManifestPickups.AsNoTracking().Where(x => x.ixStatus == ixStatus).Any()) existInEntities.Add("OutboundCarrierManifestPickups");
             if (_contextOutboundCarrierManifests.OutboundCarrierManifests.AsNoTracking().Where(x => x.ixStatus == ixStatus).Any()) existInEntities.Add("OutboundCarrierManifests");
+            if (_contextOutboundOrderLinePacking.OutboundOrderLinePacking.AsNoTracking().Where(x => x.ixStatus == ixStatus).Any()) existInEntities.Add("OutboundOrderLinePacking");
             if (_contextOutboundOrderLines.OutboundOrderLines.AsNoTracking().Where(x => x.ixStatus == ixStatus).Any()) existInEntities.Add("OutboundOrderLines");
-            if (_contextOutboundOrderPacking.OutboundOrderPacking.AsNoTracking().Where(x => x.ixStatus == ixStatus).Any()) existInEntities.Add("OutboundOrderPacking");
+            if (_contextOutboundOrderLinesInventoryAllocation.OutboundOrderLinesInventoryAllocation.AsNoTracking().Where(x => x.ixStatus == ixStatus).Any()) existInEntities.Add("OutboundOrderLinesInventoryAllocation");
             if (_contextOutboundOrders.OutboundOrders.AsNoTracking().Where(x => x.ixStatus == ixStatus).Any()) existInEntities.Add("OutboundOrders");
             if (_contextOutboundShipments.OutboundShipments.AsNoTracking().Where(x => x.ixStatus == ixStatus).Any()) existInEntities.Add("OutboundShipments");
             if (_contextPickBatches.PickBatches.AsNoTracking().Where(x => x.ixStatus == ixStatus).Any()) existInEntities.Add("PickBatches");

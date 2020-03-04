@@ -1,0 +1,52 @@
+
+@model BotSpiel.DataAccess.Models.Taxes
+
+@{
+    ViewBag.Title = "Details Taxes";
+}
+<br>
+<h2>Details</h2>
+
+<div>
+    <h4>Taxes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixTax)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixTax)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sTax)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sTax)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Countries.sCountry)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Countries.sCountry, "Details", "Countries", new { id = Model.ixCountry }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.CountrySubDivisions.sCountrySubDivision)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.CountrySubDivisions.sCountrySubDivision, "Details", "CountrySubDivisions", new { id = Model.ixCountrySubDivision }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.nRate)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.nRate)
+		</dd>
+
+
+    </dl>
+</div>
+<p>    @Html.ActionLink("Grid", "Index")
+</p>
+
+ 
+

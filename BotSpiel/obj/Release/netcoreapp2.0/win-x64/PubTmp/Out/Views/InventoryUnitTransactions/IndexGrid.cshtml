@@ -37,7 +37,6 @@
 				columns.Add(model => model.InventoryUnits.sInventoryUnit).Titled("Inventory Unit").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInventoryUnits);
 				columns.Add(model => model.InventoryUnitTransactionContexts.sInventoryUnitTransactionContext).Titled("Inventory Unit Transaction Context").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInventoryUnitTransactionContexts);
 				columns.Add(model => model.FacilitiesFKDiffFacilityAfter.sFacility).Titled("Facility After").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryFacilities);
-				columns.Add(model => model.CompaniesFKDiffCompanyBefore.sCompany).Titled("Company Before").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCompanies);
 				columns.Add(model => model.CompaniesFKDiffCompanyAfter.sCompany).Titled("Company After").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryCompanies);
 				columns.Add(model => model.MaterialsFKDiffMaterialAfter.sMaterial).Titled("Material After").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryMaterials);
 				columns.Add(model => model.InventoryStatesFKDiffInventoryStateAfter.sInventoryState).Titled("Inventory State After").Sortable(true).Filterable(true).MultiFilterable(true).WithFilterOptions(queryInventoryStates);

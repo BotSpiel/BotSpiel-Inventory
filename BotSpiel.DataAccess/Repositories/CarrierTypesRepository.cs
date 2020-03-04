@@ -43,6 +43,12 @@ This class ....
             var carriertypes = _context.CarrierTypes.AsNoTracking(); 
             return carriertypes;
         }
+
+        public IQueryable<CarrierTypes> IndexDb()
+        {
+            var carriertypes = _context.CarrierTypes.AsNoTracking(); 
+            return carriertypes;
+        }
         public bool VerifyCarrierTypeUnique(Int64 ixCarrierType, string sCarrierType)
         {
             if (_context.CarrierTypes.AsNoTracking().Where(x => x.sCarrierType == sCarrierType).Any() && ixCarrierType == 0L) return false;

@@ -22,6 +22,7 @@ This interface ....
         InventoryStatesPost GetPost(Int64 ixInventoryState);        
 		InventoryStates Get(Int64 ixInventoryState);
         IQueryable<InventoryStates> Index();
+        IQueryable<InventoryStates> IndexDb();
         bool VerifyInventoryStateUnique(Int64 ixInventoryState, string sInventoryState);
         List<string> VerifyInventoryStateDeleteOK(Int64 ixInventoryState, string sInventoryState);
         void RegisterCreate(InventoryStatesPost inventorystatesPost);

@@ -149,6 +149,34 @@ This class ....
             return View(carrierservices);
         }
 
+        //Custom Code Start | Added Code Block 
+        [Authorize]
+        [HttpGet]
+        public ActionResult CreateWithID(long id)
+        {
+            ViewBag.ixCarrier = new SelectList(_carrierservicesService.selectCarriers().Where(x => x.ixCarrier == id).Select(x => new { x.ixCarrier, x.sCarrier }), "ixCarrier", "sCarrier");
+
+            return View();
+        }
+
+        // POST: CarrierServices/Create 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateWithID([Bind("ixCarrierService,sCarrierService,ixCarrier")] CarrierServicesPost carrierservices)
+        {
+            if (ModelState.IsValid)
+            {
+                carrierservices.UserName = User.Identity.Name;
+                _carrierservicesService.Create(carrierservices);
+                return RedirectToAction("Edit", "Carriers", new { id = carrierservices.ixCarrier });
+            }
+            ViewBag.ixCarrier = new SelectList(_carrierservicesService.selectCarriers().Where(x => x.ixCarrier == carrierservices.ixCarrier).Select(x => new { x.ixCarrier, x.sCarrier }), "ixCarrier", "sCarrier");
+
+            return View(carrierservices);
+        }
+        //Custom Code End
+
+
         // GET: CarrierServices/Edit/1
         [Authorize]
         [HttpGet]

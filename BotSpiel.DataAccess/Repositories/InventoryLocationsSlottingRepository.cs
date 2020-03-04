@@ -44,7 +44,13 @@ This class ....
             var inventorylocationsslotting = _context.InventoryLocationsSlotting.Include(a => a.InventoryLocations).Include(a => a.Materials).AsNoTracking(); 
             return inventorylocationsslotting;
         }
-       public IQueryable<InventoryLocations> selectInventoryLocations()
+        public IQueryable<InventoryLocationsSlotting> IndexDb()
+        {
+            var inventorylocationsslotting = _context.InventoryLocationsSlotting.Include(a => a.InventoryLocations).Include(a => a.Materials).AsNoTracking();
+            return inventorylocationsslotting;
+        }
+
+        public IQueryable<InventoryLocations> selectInventoryLocations()
         {
             List<InventoryLocations> inventorylocations = new List<InventoryLocations>();
             //Custom Code Start | Replaced Code Block
@@ -67,7 +73,23 @@ This class ....
             //Replaced Code Block End
             var materialsAlreadySlotted = _context.InventoryLocationsSlottingPost.Select(x => x.ixMaterial);
             _context.Materials.Where(a => !materialsAlreadySlotted.Contains(a.ixMaterial)).Include(a => a.MaterialTypes).Include(a => a.UnitsOfMeasurementFKDiffBaseUnit).Include(a => a.UnitsOfMeasurementFKDiffDensityUnit).Include(a => a.UnitsOfMeasurementFKDiffShelflifeUnit).AsNoTracking()
-            //Custom Code End
+            //Custom Code End                
+                .ToList()
+                .ForEach(x => materials.Add(x));
+            return materials.AsQueryable();
+        }
+       public IQueryable<InventoryLocations> InventoryLocationsDb()
+        {
+            List<InventoryLocations> inventorylocations = new List<InventoryLocations>();
+            _context.InventoryLocations.Include(a => a.Companies).Include(a => a.FacilityAisleFaces).Include(a => a.FacilityFloors).Include(a => a.FacilityWorkAreas).Include(a => a.FacilityZones).Include(a => a.InventoryLocationSizes).Include(a => a.LocationFunctions).Include(a => a.UnitsOfMeasurementFKDiffXOffsetUnit).Include(a => a.UnitsOfMeasurementFKDiffYOffsetUnit).Include(a => a.UnitsOfMeasurementFKDiffZOffsetUnit).AsNoTracking()
+                .ToList()
+                .ForEach(x => inventorylocations.Add(x));
+            return inventorylocations.AsQueryable();
+        }
+        public IQueryable<Materials> MaterialsDb()
+        {
+            List<Materials> materials = new List<Materials>();
+            _context.Materials.Include(a => a.MaterialTypes).Include(a => a.UnitsOfMeasurementFKDiffBaseUnit).Include(a => a.UnitsOfMeasurementFKDiffDensityUnit).Include(a => a.UnitsOfMeasurementFKDiffHeightUnit).Include(a => a.UnitsOfMeasurementFKDiffLengthUnit).Include(a => a.UnitsOfMeasurementFKDiffShelflifeUnit).Include(a => a.UnitsOfMeasurementFKDiffWeightUnit).Include(a => a.UnitsOfMeasurementFKDiffWidthUnit).AsNoTracking()
                 .ToList()
                 .ForEach(x => materials.Add(x));
             return materials.AsQueryable();
@@ -115,3 +137,4 @@ This class ....
     }
 }
   
+

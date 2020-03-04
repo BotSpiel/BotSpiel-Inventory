@@ -32,7 +32,9 @@ This class ....
         public UnitOfMeasurementConversionsPost GetPost(Int64 ixUnitOfMeasurementConversion) => _unitofmeasurementconversionsRepository.GetPost(ixUnitOfMeasurementConversion);
         public UnitOfMeasurementConversions Get(Int64 ixUnitOfMeasurementConversion) => _unitofmeasurementconversionsRepository.Get(ixUnitOfMeasurementConversion);
         public IQueryable<UnitOfMeasurementConversions> Index() => _unitofmeasurementconversionsRepository.Index();
+        public IQueryable<UnitOfMeasurementConversions> IndexDb() => _unitofmeasurementconversionsRepository.IndexDb();
        public IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement() => _unitofmeasurementconversionsRepository.selectUnitsOfMeasurement();
+       public IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb() => _unitofmeasurementconversionsRepository.UnitsOfMeasurementDb();
         public bool VerifyUnitOfMeasurementConversionUnique(Int64 ixUnitOfMeasurementConversion, string sUnitOfMeasurementConversion) => _unitofmeasurementconversionsRepository.VerifyUnitOfMeasurementConversionUnique(ixUnitOfMeasurementConversion, sUnitOfMeasurementConversion);
         public List<string> VerifyUnitOfMeasurementConversionDeleteOK(Int64 ixUnitOfMeasurementConversion, string sUnitOfMeasurementConversion) => _unitofmeasurementconversionsRepository.VerifyUnitOfMeasurementConversionDeleteOK(ixUnitOfMeasurementConversion, sUnitOfMeasurementConversion);
 

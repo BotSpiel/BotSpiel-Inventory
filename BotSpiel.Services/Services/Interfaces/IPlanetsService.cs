@@ -23,7 +23,9 @@ This interface ....
         PlanetsPost GetPost(Int64 ixPlanet);        
 		Planets Get(Int64 ixPlanet);
         IQueryable<Planets> Index();
+        IQueryable<Planets> IndexDb();
        IQueryable<PlanetarySystems> selectPlanetarySystems();
+       IQueryable<PlanetarySystems> PlanetarySystemsDb();
         bool VerifyPlanetUnique(Int64 ixPlanet, string sPlanet);
         List<string> VerifyPlanetDeleteOK(Int64 ixPlanet, string sPlanet);
 

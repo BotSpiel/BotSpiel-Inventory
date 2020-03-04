@@ -32,8 +32,11 @@ This class ....
         public DocumentsPost GetPost(Int64 ixDocument) => _documentsRepository.GetPost(ixDocument);
         public Documents Get(Int64 ixDocument) => _documentsRepository.Get(ixDocument);
         public IQueryable<Documents> Index() => _documentsRepository.Index();
+        public IQueryable<Documents> IndexDb() => _documentsRepository.IndexDb();
        public IQueryable<Statuses> selectStatuses() => _documentsRepository.selectStatuses();
         public IQueryable<DocumentMessageTypes> selectDocumentMessageTypes() => _documentsRepository.selectDocumentMessageTypes();
+       public IQueryable<Statuses> StatusesDb() => _documentsRepository.StatusesDb();
+        public IQueryable<DocumentMessageTypes> DocumentMessageTypesDb() => _documentsRepository.DocumentMessageTypesDb();
         public bool VerifyDocumentUnique(Int64 ixDocument, string sDocument) => _documentsRepository.VerifyDocumentUnique(ixDocument, sDocument);
         public List<string> VerifyDocumentDeleteOK(Int64 ixDocument, string sDocument) => _documentsRepository.VerifyDocumentDeleteOK(ixDocument, sDocument);
 

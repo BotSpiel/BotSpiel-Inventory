@@ -21,6 +21,7 @@ This interface ....
 		Int64 ixOutboundOrderLine { get; set; }
 		Int64 ixOutboundOrderLineEdit { get; set; }
 		String sOutboundOrderLine { get; set; }
+		Int64 ixOutboundOrder { get; set; }
 		String sOrderLineReference { get; set; }
 		Int64 ixMaterial { get; set; }
 		String sBatchNumber { get; set; }
@@ -32,6 +33,7 @@ This interface ....
 		DateTime dtChangedAt { get; set; }
 		String sCreatedBy { get; set; }
 		String sChangedBy { get; set; }
+		OutboundOrders OutboundOrders { get; set; }
 		Materials Materials { get; set; }
 		Statuses Statuses { get; set; }
     }

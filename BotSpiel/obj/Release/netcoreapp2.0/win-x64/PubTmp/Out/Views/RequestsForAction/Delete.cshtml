@@ -1,0 +1,120 @@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.Services.Utilities;
+@inject IRequestsForActionService _requestsforactionService
+@model BotSpiel.DataAccess.Models.RequestsForAction
+
+@{
+    ViewBag.Title = "Delete Requests For Action";
+}
+
+@{
+    string conCat = "";
+    List<string> existInEntities = new List<string>();
+    bool DeleteOK = true;
+    existInEntities = _requestsforactionService.VerifyRequestForActionDeleteOK(Model.ixRequestForAction, Model.sRequestForAction);
+    if (existInEntities.Any()) { DeleteOK = false; }
+}
+
+
+@if (DeleteOK)
+{
+
+<br>
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Requests For Action</h4>
+    <hr />
+    <dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.ixRequestForAction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.ixRequestForAction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sRequestForAction)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sRequestForAction)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Languages.sLanguage)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Languages.sLanguage)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.LanguageStyles.sLanguageStyle)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.LanguageStyles.sLanguageStyle)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sActionRequest)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sActionRequest)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sModule)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sModule)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sEntity)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sEntity)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.sEntityIntent)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.sEntityIntent)
+		</dd>
+ 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+</div>
+}
+else
+{
+    <br>
+    <h2>Delete</h2>
+
+    <h3>The RequestForAction @Model.sRequestForAction cannot be deleted. It is referenced by the following entities:</h3>
+    <hr />
+    @foreach (var entity in existInEntities)
+    {
+        conCat = String.Join(" ", StringSplitters.SplitCamelCase(@entity.ToString()));
+        <h4>@Html.ActionLink(@conCat.ToString(), "Index", @entity.ToString())</h4>
+        <hr />
+    }
+
+    <h3>If you want to delete the RequestForAction, delete the dependent references first.</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Grid", "Index")
+        </div>
+    }
+
+}
+ 
+

@@ -13,9 +13,13 @@
     @Html.ActionLink(" | Grid Export", "IndexExport")
 </p>
 
-<p>    
+<p>
     <button type="button" id="refresh-grid" class="btn btn-default content-refresh">Refresh Grid</button>
     <button type="button" class="btn btn-default delete-rows" onclick="deleteRows('PickBatches')">Delete Selected Rows</button>
+    @*//Custom Code Start | Added Code Block*@
+    <button type="button" class="btn btn-default delete-rows" onclick="allocateRows('PickBatches')">Allocate Selected Rows</button>
+    <button type="button" class="btn btn-default delete-rows" onclick="activateRows('PickBatches')">Activate Selected Rows</button>
+    @*//Custom Code End*@
 </p>
 
 @Html.AjaxGrid(Url.Action("IndexGrid"), new { id = "pickbatches-ajax-grid" })

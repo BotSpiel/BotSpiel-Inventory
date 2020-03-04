@@ -42,8 +42,6 @@ This class ....
 		public DbSet<OutboundShipmentsPost> OutboundShipmentsPost { get; set; }
 		public DbSet<PickBatches> PickBatches { get; set; }
 		public DbSet<PickBatchesPost> PickBatchesPost { get; set; }
-		public DbSet<Facilities> Facilities { get; set; }
-		public DbSet<FacilitiesPost> FacilitiesPost { get; set; }
 		public DbSet<BusinessPartnerTypes> BusinessPartnerTypes { get; set; }
 		public DbSet<BusinessPartnerTypesPost> BusinessPartnerTypesPost { get; set; }
 		public DbSet<OutboundCarrierManifests> OutboundCarrierManifests { get; set; }
@@ -52,20 +50,22 @@ This class ....
 		public DbSet<PickBatchTypesPost> PickBatchTypesPost { get; set; }
 		public DbSet<Statuses> Statuses { get; set; }
 		public DbSet<StatusesPost> StatusesPost { get; set; }
-		public DbSet<Addresses> Addresses { get; set; }
-		public DbSet<AddressesPost> AddressesPost { get; set; }
 		public DbSet<InventoryLocations> InventoryLocations { get; set; }
 		public DbSet<InventoryLocationsPost> InventoryLocationsPost { get; set; }
 		public DbSet<Carriers> Carriers { get; set; }
 		public DbSet<CarriersPost> CarriersPost { get; set; }
-		public DbSet<CountrySubDivisions> CountrySubDivisions { get; set; }
-		public DbSet<CountrySubDivisionsPost> CountrySubDivisionsPost { get; set; }
 		public DbSet<Companies> Companies { get; set; }
 		public DbSet<CompaniesPost> CompaniesPost { get; set; }
+		public DbSet<Facilities> Facilities { get; set; }
+		public DbSet<FacilitiesPost> FacilitiesPost { get; set; }
 		public DbSet<FacilityWorkAreas> FacilityWorkAreas { get; set; }
 		public DbSet<FacilityWorkAreasPost> FacilityWorkAreasPost { get; set; }
 		public DbSet<CarrierTypes> CarrierTypes { get; set; }
 		public DbSet<CarrierTypesPost> CarrierTypesPost { get; set; }
+		public DbSet<Addresses> Addresses { get; set; }
+		public DbSet<AddressesPost> AddressesPost { get; set; }
+		public DbSet<CountrySubDivisions> CountrySubDivisions { get; set; }
+		public DbSet<CountrySubDivisionsPost> CountrySubDivisionsPost { get; set; }
 		public DbSet<Countries> Countries { get; set; }
 		public DbSet<CountriesPost> CountriesPost { get; set; }
 		public DbSet<PlanetSubRegions> PlanetSubRegions { get; set; }
@@ -140,12 +140,6 @@ This class ....
             modelBuilder.Entity<PickBatchesPost>()
                 .ToTable("tx_vw_PickBatchesPost")
                 .HasKey(c => new { c.ixPickBatch });
-            modelBuilder.Entity<Facilities>()
-                .ToTable("md_vw_Facilities")
-                .HasKey(c => new { c.ixFacility });
-            modelBuilder.Entity<FacilitiesPost>()
-                .ToTable("md_vw_FacilitiesPost")
-                .HasKey(c => new { c.ixFacility });
             modelBuilder.Entity<BusinessPartnerTypes>()
                 .ToTable("config_vw_BusinessPartnerTypes")
                 .HasKey(c => new { c.ixBusinessPartnerType });
@@ -170,12 +164,6 @@ This class ....
             modelBuilder.Entity<StatusesPost>()
                 .ToTable("config_vw_StatusesPost")
                 .HasKey(c => new { c.ixStatus });
-            modelBuilder.Entity<Addresses>()
-                .ToTable("md_vw_Addresses")
-                .HasKey(c => new { c.ixAddress });
-            modelBuilder.Entity<AddressesPost>()
-                .ToTable("md_vw_AddressesPost")
-                .HasKey(c => new { c.ixAddress });
             modelBuilder.Entity<InventoryLocations>()
                 .ToTable("md_vw_InventoryLocations")
                 .HasKey(c => new { c.ixInventoryLocation });
@@ -188,18 +176,18 @@ This class ....
             modelBuilder.Entity<CarriersPost>()
                 .ToTable("md_vw_CarriersPost")
                 .HasKey(c => new { c.ixCarrier });
-            modelBuilder.Entity<CountrySubDivisions>()
-                .ToTable("md_vw_CountrySubDivisions")
-                .HasKey(c => new { c.ixCountrySubDivision });
-            modelBuilder.Entity<CountrySubDivisionsPost>()
-                .ToTable("md_vw_CountrySubDivisionsPost")
-                .HasKey(c => new { c.ixCountrySubDivision });
             modelBuilder.Entity<Companies>()
                 .ToTable("md_vw_Companies")
                 .HasKey(c => new { c.ixCompany });
             modelBuilder.Entity<CompaniesPost>()
                 .ToTable("md_vw_CompaniesPost")
                 .HasKey(c => new { c.ixCompany });
+            modelBuilder.Entity<Facilities>()
+                .ToTable("md_vw_Facilities")
+                .HasKey(c => new { c.ixFacility });
+            modelBuilder.Entity<FacilitiesPost>()
+                .ToTable("md_vw_FacilitiesPost")
+                .HasKey(c => new { c.ixFacility });
             modelBuilder.Entity<FacilityWorkAreas>()
                 .ToTable("md_vw_FacilityWorkAreas")
                 .HasKey(c => new { c.ixFacilityWorkArea });
@@ -212,6 +200,18 @@ This class ....
             modelBuilder.Entity<CarrierTypesPost>()
                 .ToTable("config_vw_CarrierTypesPost")
                 .HasKey(c => new { c.ixCarrierType });
+            modelBuilder.Entity<Addresses>()
+                .ToTable("md_vw_Addresses")
+                .HasKey(c => new { c.ixAddress });
+            modelBuilder.Entity<AddressesPost>()
+                .ToTable("md_vw_AddressesPost")
+                .HasKey(c => new { c.ixAddress });
+            modelBuilder.Entity<CountrySubDivisions>()
+                .ToTable("md_vw_CountrySubDivisions")
+                .HasKey(c => new { c.ixCountrySubDivision });
+            modelBuilder.Entity<CountrySubDivisionsPost>()
+                .ToTable("md_vw_CountrySubDivisionsPost")
+                .HasKey(c => new { c.ixCountrySubDivision });
             modelBuilder.Entity<Countries>()
                 .ToTable("md_vw_Countries")
                 .HasKey(c => new { c.ixCountry });
@@ -325,7 +325,7 @@ This class ....
         public override int SaveChanges()
         {
             var changes = 0;
-            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.Entity is OutboundOrdersPost)).ToList())
+            foreach (var e in ChangeTracker.Entries().Where(e => (e.State != EntityState.Unchanged) && (e.State != EntityState.Detached) && (e.Entity is OutboundOrdersPost)).ToList())
             {
                 var tx_vw_outboundorderspost = e.Entity as OutboundOrdersPost;
                 switch (e.State)
@@ -335,77 +335,72 @@ This class ....
                         using (var cmd = con.CreateCommand())
                         {
                             con.Open();
-                            var sOutboundOrder = cmd.CreateParameter();
-                            sOutboundOrder.ParameterName = "p0";
-                            sOutboundOrder.Value = tx_vw_outboundorderspost.sOutboundOrder;
                             var sOrderReference = cmd.CreateParameter();
-                            sOrderReference.ParameterName = "p1";
+                            sOrderReference.ParameterName = "p0";
                             sOrderReference.Value = tx_vw_outboundorderspost.sOrderReference;
                             var ixOutboundOrderType = cmd.CreateParameter();
-                            ixOutboundOrderType.ParameterName = "p2";
+                            ixOutboundOrderType.ParameterName = "p1";
                             ixOutboundOrderType.Value = tx_vw_outboundorderspost.ixOutboundOrderType;
                             var ixFacility = cmd.CreateParameter();
-                            ixFacility.ParameterName = "p3";
+                            ixFacility.ParameterName = "p2";
                             ixFacility.Value = tx_vw_outboundorderspost.ixFacility;
                             var ixCompany = cmd.CreateParameter();
-                            ixCompany.ParameterName = "p4";
+                            ixCompany.ParameterName = "p3";
                             ixCompany.Value = tx_vw_outboundorderspost.ixCompany;
                             var ixBusinessPartner = cmd.CreateParameter();
-                            ixBusinessPartner.ParameterName = "p5";
+                            ixBusinessPartner.ParameterName = "p4";
                             ixBusinessPartner.Value = tx_vw_outboundorderspost.ixBusinessPartner;
                             var dtDeliverEarliest = cmd.CreateParameter();
-                            dtDeliverEarliest.ParameterName = "p6";
+                            dtDeliverEarliest.ParameterName = "p5";
                             dtDeliverEarliest.Value = tx_vw_outboundorderspost.dtDeliverEarliest;
                             var dtDeliverLatest = cmd.CreateParameter();
-                            dtDeliverLatest.ParameterName = "p7";
+                            dtDeliverLatest.ParameterName = "p6";
                             dtDeliverLatest.Value = tx_vw_outboundorderspost.dtDeliverLatest;
                             var ixCarrierService = cmd.CreateParameter();
-                            ixCarrierService.ParameterName = "p8";
+                            ixCarrierService.ParameterName = "p7";
                             ixCarrierService.Value = tx_vw_outboundorderspost.ixCarrierService;
                             var ixStatus = cmd.CreateParameter();
-                            ixStatus.ParameterName = "p9";
+                            ixStatus.ParameterName = "p8";
                             ixStatus.Value = tx_vw_outboundorderspost.ixStatus;
                             var ixPickBatch = cmd.CreateParameter();
-                            ixPickBatch.ParameterName = "p10";
+                            ixPickBatch.ParameterName = "p9";
                             ixPickBatch.Value = tx_vw_outboundorderspost.ixPickBatch;
                             var ixOutboundShipment = cmd.CreateParameter();
-                            ixOutboundShipment.ParameterName = "p11";
+                            ixOutboundShipment.ParameterName = "p10";
                             ixOutboundShipment.Value = tx_vw_outboundorderspost.ixOutboundShipment;
                             var UserName = cmd.CreateParameter();
-                            UserName.ParameterName = "p12";
+                            UserName.ParameterName = "p11";
                             UserName.Value = tx_vw_outboundorderspost.UserName;
 
                             var ixOutboundOrder = cmd.CreateParameter();
-                            ixOutboundOrder.ParameterName = "p13";
+                            ixOutboundOrder.ParameterName = "p12";
                             ixOutboundOrder.DbType = DbType.Int64;
                             ixOutboundOrder.Direction = ParameterDirection.Output;
 
                             var sql = new StringBuilder();
                             sql.Append(@"exec dbo.tx_sp_CreateOutboundOrders ");
-                            sql.Append("@sOutboundOrder = @p0, ");
-                            sql.Append("@sOrderReference = @p1, ");
-                            sql.Append("@ixOutboundOrderType = @p2, ");
-                            sql.Append("@ixFacility = @p3, ");
-                            sql.Append("@ixCompany = @p4, ");
-                            sql.Append("@ixBusinessPartner = @p5, ");
-                            sql.Append("@dtDeliverEarliest = @p6, ");
-                            sql.Append("@dtDeliverLatest = @p7, ");
-                            sql.Append("@ixCarrierService = @p8, ");
-                            sql.Append("@ixStatus = @p9, ");
-                            if (tx_vw_outboundorderspost.ixPickBatch != null) { sql.Append("@ixPickBatch = @p10, "); }  
-                            if (tx_vw_outboundorderspost.ixOutboundShipment != null) { sql.Append("@ixOutboundShipment = @p11, "); }  
-                            if (tx_vw_outboundorderspost.UserName != null) { sql.Append("@UserName = @p12, "); }  
-                            sql.Append("@ixOutboundOrder = @p13 output "); 
+                            sql.Append("@sOrderReference = @p0, ");
+                            sql.Append("@ixOutboundOrderType = @p1, ");
+                            sql.Append("@ixFacility = @p2, ");
+                            sql.Append("@ixCompany = @p3, ");
+                            sql.Append("@ixBusinessPartner = @p4, ");
+                            if (tx_vw_outboundorderspost.dtDeliverEarliest != null) { sql.Append("@dtDeliverEarliest = @p5, "); }  
+                            if (tx_vw_outboundorderspost.dtDeliverLatest != null) { sql.Append("@dtDeliverLatest = @p6, "); }  
+                            sql.Append("@ixCarrierService = @p7, ");
+                            sql.Append("@ixStatus = @p8, ");
+                            if (tx_vw_outboundorderspost.ixPickBatch != null) { sql.Append("@ixPickBatch = @p9, "); }  
+                            if (tx_vw_outboundorderspost.ixOutboundShipment != null) { sql.Append("@ixOutboundShipment = @p10, "); }  
+                            if (tx_vw_outboundorderspost.UserName != null) { sql.Append("@UserName = @p11, "); }  
+                            sql.Append("@ixOutboundOrder = @p12 output "); 
                             cmd.CommandText = sql.ToString();
 
-                            cmd.Parameters.Add(sOutboundOrder);
                             cmd.Parameters.Add(sOrderReference);
                             cmd.Parameters.Add(ixOutboundOrderType);
                             cmd.Parameters.Add(ixFacility);
                             cmd.Parameters.Add(ixCompany);
                             cmd.Parameters.Add(ixBusinessPartner);
-                            cmd.Parameters.Add(dtDeliverEarliest);
-                            cmd.Parameters.Add(dtDeliverLatest);
+                            if (tx_vw_outboundorderspost.dtDeliverEarliest != null) { cmd.Parameters.Add(dtDeliverEarliest); }
+                            if (tx_vw_outboundorderspost.dtDeliverLatest != null) { cmd.Parameters.Add(dtDeliverLatest); }
                             cmd.Parameters.Add(ixCarrierService);
                             cmd.Parameters.Add(ixStatus);
                             if (tx_vw_outboundorderspost.ixPickBatch != null) { cmd.Parameters.Add(ixPickBatch); }
@@ -418,16 +413,16 @@ This class ....
                             con.Close();
                         }
 						e.GetInfrastructure().MarkAsTemporary(e.Metadata.FindProperty("ixOutboundOrder"), false);
-						e.State = EntityState.Unchanged;
+						e.State = EntityState.Detached;
                         break;
 
                     case EntityState.Modified:
-                        Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeOutboundOrders @ixOutboundOrder = @p0, @sOutboundOrder = @p1, @sOrderReference = @p2, @ixOutboundOrderType = @p3, @ixFacility = @p4, @ixCompany = @p5, @ixBusinessPartner = @p6, @dtDeliverEarliest = @p7, @dtDeliverLatest = @p8, @ixCarrierService = @p9, @ixStatus = @p10, @ixPickBatch = @p11, @ixOutboundShipment = @p12, @UserName = @p13", tx_vw_outboundorderspost.ixOutboundOrder, tx_vw_outboundorderspost.sOutboundOrder, tx_vw_outboundorderspost.sOrderReference, tx_vw_outboundorderspost.ixOutboundOrderType, tx_vw_outboundorderspost.ixFacility, tx_vw_outboundorderspost.ixCompany, tx_vw_outboundorderspost.ixBusinessPartner, tx_vw_outboundorderspost.dtDeliverEarliest, tx_vw_outboundorderspost.dtDeliverLatest, tx_vw_outboundorderspost.ixCarrierService, tx_vw_outboundorderspost.ixStatus, tx_vw_outboundorderspost.ixPickBatch, tx_vw_outboundorderspost.ixOutboundShipment, tx_vw_outboundorderspost.UserName);
-                        e.State = EntityState.Unchanged;                            
+                        Database.ExecuteSqlCommand("exec dbo.tx_sp_ChangeOutboundOrders @ixOutboundOrder = @p0, @sOrderReference = @p1, @ixOutboundOrderType = @p2, @ixFacility = @p3, @ixCompany = @p4, @ixBusinessPartner = @p5, @dtDeliverEarliest = @p6, @dtDeliverLatest = @p7, @ixCarrierService = @p8, @ixStatus = @p9, @ixPickBatch = @p10, @ixOutboundShipment = @p11, @UserName = @p12", tx_vw_outboundorderspost.ixOutboundOrder, tx_vw_outboundorderspost.sOrderReference, tx_vw_outboundorderspost.ixOutboundOrderType, tx_vw_outboundorderspost.ixFacility, tx_vw_outboundorderspost.ixCompany, tx_vw_outboundorderspost.ixBusinessPartner, tx_vw_outboundorderspost.dtDeliverEarliest, tx_vw_outboundorderspost.dtDeliverLatest, tx_vw_outboundorderspost.ixCarrierService, tx_vw_outboundorderspost.ixStatus, tx_vw_outboundorderspost.ixPickBatch, tx_vw_outboundorderspost.ixOutboundShipment, tx_vw_outboundorderspost.UserName);
+                        e.State = EntityState.Detached;                            
 						break;
 
                     case EntityState.Deleted:
-                        Database.ExecuteSqlCommand("exec dbo.tx_sp_DeleteOutboundOrders @ixOutboundOrder = @p0, @sOutboundOrder = @p1, @sOrderReference = @p2, @ixOutboundOrderType = @p3, @ixFacility = @p4, @ixCompany = @p5, @ixBusinessPartner = @p6, @dtDeliverEarliest = @p7, @dtDeliverLatest = @p8, @ixCarrierService = @p9, @ixStatus = @p10, @ixPickBatch = @p11, @ixOutboundShipment = @p12, @UserName = @p13", tx_vw_outboundorderspost.ixOutboundOrder, tx_vw_outboundorderspost.sOutboundOrder, tx_vw_outboundorderspost.sOrderReference, tx_vw_outboundorderspost.ixOutboundOrderType, tx_vw_outboundorderspost.ixFacility, tx_vw_outboundorderspost.ixCompany, tx_vw_outboundorderspost.ixBusinessPartner, tx_vw_outboundorderspost.dtDeliverEarliest, tx_vw_outboundorderspost.dtDeliverLatest, tx_vw_outboundorderspost.ixCarrierService, tx_vw_outboundorderspost.ixStatus, tx_vw_outboundorderspost.ixPickBatch, tx_vw_outboundorderspost.ixOutboundShipment, tx_vw_outboundorderspost.UserName);
+                        Database.ExecuteSqlCommand("exec dbo.tx_sp_DeleteOutboundOrders @ixOutboundOrder = @p0, @sOrderReference = @p1, @ixOutboundOrderType = @p2, @ixFacility = @p3, @ixCompany = @p4, @ixBusinessPartner = @p5, @dtDeliverEarliest = @p6, @dtDeliverLatest = @p7, @ixCarrierService = @p8, @ixStatus = @p9, @ixPickBatch = @p10, @ixOutboundShipment = @p11, @UserName = @p12", tx_vw_outboundorderspost.ixOutboundOrder, tx_vw_outboundorderspost.sOrderReference, tx_vw_outboundorderspost.ixOutboundOrderType, tx_vw_outboundorderspost.ixFacility, tx_vw_outboundorderspost.ixCompany, tx_vw_outboundorderspost.ixBusinessPartner, tx_vw_outboundorderspost.dtDeliverEarliest, tx_vw_outboundorderspost.dtDeliverLatest, tx_vw_outboundorderspost.ixCarrierService, tx_vw_outboundorderspost.ixStatus, tx_vw_outboundorderspost.ixPickBatch, tx_vw_outboundorderspost.ixOutboundShipment, tx_vw_outboundorderspost.UserName);
                         e.State = EntityState.Detached;                           
 						break;
                 }

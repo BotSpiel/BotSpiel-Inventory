@@ -192,6 +192,60 @@ This class ....
             return View(materialhandlingunitconfigurations);
         }
 
+        //Custom Code Start | Added Code Block 
+        [Authorize]
+        [HttpGet]
+        public ActionResult CreateWithID(long id)
+        {
+            ViewBag.ixHandlingUnitType = new SelectList(_materialhandlingunitconfigurationsService.selectHandlingUnitTypes().Select(x => new { x.ixHandlingUnitType, x.sHandlingUnitType }), "ixHandlingUnitType", "sHandlingUnitType");
+            //Custom Code Start | Replaced Code Block
+            //Replaced Code Block Start
+            //ViewBag.ixHeightUnit = new SelectList(_materialhandlingunitconfigurationsService.selectUnitsOfMeasurement().Select( x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            //ViewBag.ixLengthUnit = new SelectList(_materialhandlingunitconfigurationsService.selectUnitsOfMeasurement().Select( x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            //ViewBag.ixMaterial = new SelectList(_materialhandlingunitconfigurationsService.selectMaterials().Select( x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial");
+            //ViewBag.ixWidthUnit = new SelectList(_materialhandlingunitconfigurationsService.selectUnitsOfMeasurement().Select( x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            //Replaced Code Block End
+            ViewBag.ixHeightUnit = new SelectList(_commonlyUsedSelects.selectUnitsOfMeasurementLength().Select(x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            ViewBag.ixLengthUnit = new SelectList(_commonlyUsedSelects.selectUnitsOfMeasurementLength().Select(x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            ViewBag.ixMaterial = new SelectList(_materialhandlingunitconfigurationsService.selectMaterials().Where(x => x.ixMaterial == id).Select(x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial");
+            ViewBag.ixWidthUnit = new SelectList(_commonlyUsedSelects.selectUnitsOfMeasurementLength().Select(x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            //Custom Code End
+            return View();
+        }
+
+        // POST: MaterialHandlingUnitConfigurations/Create 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateWithID([Bind("ixMaterialHandlingUnitConfiguration,sMaterialHandlingUnitConfiguration,ixMaterial,nNestingLevel,ixHandlingUnitType,nQuantity,nLength,ixLengthUnit,nWidth,ixWidthUnit,nHeight,ixHeightUnit")] MaterialHandlingUnitConfigurationsPost materialhandlingunitconfigurations)
+        {
+            if (ModelState.IsValid)
+            {
+                materialhandlingunitconfigurations.UserName = User.Identity.Name;
+                _materialhandlingunitconfigurationsService.Create(materialhandlingunitconfigurations);
+                return RedirectToAction("Edit", "Materials", new { id = materialhandlingunitconfigurations.ixMaterial });
+            }
+            ViewBag.ixHandlingUnitType = new SelectList(_materialhandlingunitconfigurationsService.selectHandlingUnitTypes().Select(x => new { x.ixHandlingUnitType, x.sHandlingUnitType }), "ixHandlingUnitType", "sHandlingUnitType");
+            //Custom Code Start | Replaced Code Block
+            //Replaced Code Block Start
+            //ViewBag.ixHeightUnit = new SelectList(_materialhandlingunitconfigurationsService.selectUnitsOfMeasurement().Select( x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            //ViewBag.ixLengthUnit = new SelectList(_materialhandlingunitconfigurationsService.selectUnitsOfMeasurement().Select( x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            //ViewBag.ixMaterial = new SelectList(_materialhandlingunitconfigurationsService.selectMaterials().Select( x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial");
+            //ViewBag.ixWidthUnit = new SelectList(_materialhandlingunitconfigurationsService.selectUnitsOfMeasurement().Select( x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            //Replaced Code Block End
+            ViewBag.ixHeightUnit = new SelectList(_commonlyUsedSelects.selectUnitsOfMeasurementLength().Select(x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            ViewBag.ixLengthUnit = new SelectList(_commonlyUsedSelects.selectUnitsOfMeasurementLength().Select(x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            ViewBag.ixMaterial = new SelectList(_materialhandlingunitconfigurationsService.selectMaterials().Where(x => x.ixMaterial == materialhandlingunitconfigurations.ixMaterial).Select(x => new { x.ixMaterial, x.sMaterial }), "ixMaterial", "sMaterial");
+            ViewBag.ixWidthUnit = new SelectList(_commonlyUsedSelects.selectUnitsOfMeasurementLength().Select(x => new { x.ixUnitOfMeasurement, x.sUnitOfMeasurement }), "ixUnitOfMeasurement", "sUnitOfMeasurement");
+            //Custom Code End
+
+            return View(materialhandlingunitconfigurations);
+        }
+
+        //Custom Code End
+
+
+
+
         // GET: MaterialHandlingUnitConfigurations/Edit/1
         [Authorize]
         [HttpGet]

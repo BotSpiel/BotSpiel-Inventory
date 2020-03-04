@@ -1,16 +1,22 @@
-
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IOutboundOrderLinePackingService _outboundOrderLinePackingService
+@*//Custom Code End*@
 @model BotSpiel.DataAccess.Models.OutboundOrderLines
 
 @{
-    ViewBag.Title = "Details Outbound Order Lines";
+	ViewBag.Title = "Details Outbound Order Lines";
 }
 <br>
 <h2>Details</h2>
 
 <div>
-    <h4>Outbound Order Lines</h4>
-    <hr />
-    <dl class="dl-horizontal">
+	<h4>Outbound Order Lines</h4>
+	<hr />
+	<dl class="dl-horizontal">
 		<dt>
 			@Html.DisplayNameFor(model => model.ixOutboundOrderLine)
 		</dt>
@@ -22,6 +28,12 @@
 		</dt>
 		<dd>
 			@Html.DisplayFor(model => model.sOutboundOrderLine)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.OutboundOrders.sOutboundOrder)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.OutboundOrders.sOutboundOrder, "Details", "OutboundOrders", new { id = Model.ixOutboundOrder }, null)
 		</dd>
 		<dt>
 			@Html.DisplayNameFor(model => model.sOrderLineReference)
@@ -67,12 +79,33 @@
 		</dd>
 
 
-    </dl>
+	</dl>
 </div>
-<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixOutboundOrderLine }) |
+
+@*//Custom Code Start | Added Code Block*@
+<div>
+	@{
+		List<BotSpiel.DataAccess.Models.OutboundOrderLinePacking> outboundOrderLinePacking = new List<OutboundOrderLinePacking>();
+		//Add empty record
+		OutboundOrderLinePacking outboundOrderLinePack = new OutboundOrderLinePacking();
+		outboundOrderLinePack.ixOutboundOrderLine = Model.ixOutboundOrderLine;
+		outboundOrderLinePack.OutboundOrderLines.ixOutboundOrderLine = Model.ixOutboundOrderLine;
+		outboundOrderLinePacking.Add(outboundOrderLinePack);
+		_outboundOrderLinePackingService.IndexDb().Where(x => x.ixOutboundOrderLine == Model.ixOutboundOrderLine).ToList().ForEach(x =>
+			{
+				outboundOrderLinePacking.Add(x);
+			}
+			);
+	}
+	@await Html.PartialAsync("IndexOutboundOrderLinePacking", outboundOrderLinePacking)
+</div>
+@*//Custom Code End*@
+
+<p>
+	@Html.ActionLink("Edit", "Edit", new { id = Model.ixOutboundOrderLine }) |
 	@Html.ActionLink("Delete", "Delete", new { id = Model.ixOutboundOrderLine }) |
-    @Html.ActionLink("Grid", "Index")
+	@Html.ActionLink("Grid", "Index")
 </p>
 
- 
+
 

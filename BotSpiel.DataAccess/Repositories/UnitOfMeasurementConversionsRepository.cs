@@ -44,7 +44,21 @@ This class ....
             var unitofmeasurementconversions = _context.UnitOfMeasurementConversions.Include(a => a.UnitsOfMeasurementFKDiffUnitOfMeasurementFrom).Include(a => a.UnitsOfMeasurementFKDiffUnitOfMeasurementTo).AsNoTracking(); 
             return unitofmeasurementconversions;
         }
+
+        public IQueryable<UnitOfMeasurementConversions> IndexDb()
+        {
+            var unitofmeasurementconversions = _context.UnitOfMeasurementConversions.Include(a => a.UnitsOfMeasurementFKDiffUnitOfMeasurementFrom).Include(a => a.UnitsOfMeasurementFKDiffUnitOfMeasurementTo).AsNoTracking(); 
+            return unitofmeasurementconversions;
+        }
        public IQueryable<UnitsOfMeasurement> selectUnitsOfMeasurement()
+        {
+            List<UnitsOfMeasurement> unitsofmeasurement = new List<UnitsOfMeasurement>();
+            _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()
+                .ToList()
+                .ForEach(x => unitsofmeasurement.Add(x));
+            return unitsofmeasurement.AsQueryable();
+        }
+       public IQueryable<UnitsOfMeasurement> UnitsOfMeasurementDb()
         {
             List<UnitsOfMeasurement> unitsofmeasurement = new List<UnitsOfMeasurement>();
             _context.UnitsOfMeasurement.Include(a => a.MeasurementSystems).Include(a => a.MeasurementUnitsOf).AsNoTracking()

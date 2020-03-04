@@ -1,16 +1,23 @@
-
+@*//Custom Code Start | Added Code Block*@
+@using System.Linq;
+@using System.Collections.Generic;
+@using BotSpiel.Services;
+@using BotSpiel.DataAccess.Models;
+@inject IInventoryLocationsSlottingService _inventoryLocationsSlottingService
+@inject IInventoryLocationsService _inventoryLocationsService
+@*//Custom Code End*@
 @model BotSpiel.DataAccess.Models.InventoryLocations
 
 @{
-    ViewBag.Title = "Details Inventory Locations";
+	ViewBag.Title = "Details Inventory Locations";
 }
 <br>
 <h2>Details</h2>
 
 <div>
-    <h4>Inventory Locations</h4>
-    <hr />
-    <dl class="dl-horizontal">
+	<h4>Inventory Locations</h4>
+	<hr />
+	<dl class="dl-horizontal">
 		<dt>
 			@Html.DisplayNameFor(model => model.ixInventoryLocation)
 		</dt>
@@ -28,6 +35,12 @@
 		</dt>
 		<dd>
 			@Html.ActionLink(Model.LocationFunctions.sLocationFunction, "Details", "LocationFunctions", new { id = Model.ixLocationFunction }, null)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Facilities.sFacility)
+		</dt>
+		<dd>
+			@Html.ActionLink(Model.Facilities.sFacility, "Details", "Facilities", new { id = Model.ixFacility }, null)
 		</dd>
 		<dt>
 			@Html.DisplayNameFor(model => model.Companies.sCompany)
@@ -157,12 +170,39 @@
 		</dd>
 
 
-    </dl>
+	</dl>
 </div>
-<p>    @Html.ActionLink("Edit", "Edit", new { id = Model.ixInventoryLocation }) |
+
+@*//Custom Code Start | Added Code Block*@
+<div>
+	@{
+		List<BotSpiel.DataAccess.Models.InventoryLocationsSlotting> inventorylocationsslotting = new List<InventoryLocationsSlotting>();
+		//Add empty record
+		InventoryLocationsSlotting inventorylocationsSlot = new InventoryLocationsSlotting();
+		inventorylocationsSlot.ixInventoryLocation = Model.ixInventoryLocation;
+		inventorylocationsSlot.InventoryLocations.ixInventoryLocation = Model.ixInventoryLocation;
+		inventorylocationsslotting.Add(inventorylocationsSlot);
+		_inventoryLocationsSlottingService.IndexDb().Where(x => x.ixInventoryLocation == Model.ixInventoryLocation).ToList().ForEach(x =>
+			{
+				inventorylocationsslotting.Add(x);
+			}
+			);
+	}
+	@{
+		var inventoryLocation = _inventoryLocationsService.Get(Model.ixInventoryLocation);
+		if (@inventoryLocation.LocationFunctions.sLocationFunctionCode == "FP")
+		{
+			@await Html.PartialAsync("IndexInventoryLocationsSlotting", inventorylocationsslotting);
+		}
+	}
+</div>
+@*//Custom Code End*@
+
+<p>
+	@Html.ActionLink("Edit", "Edit", new { id = Model.ixInventoryLocation }) |
 	@Html.ActionLink("Delete", "Delete", new { id = Model.ixInventoryLocation }) |
-    @Html.ActionLink("Grid", "Index")
+	@Html.ActionLink("Grid", "Index")
 </p>
 
- 
+
 

@@ -32,6 +32,7 @@ This class ....
         public MoveQueueTypesPost GetPost(Int64 ixMoveQueueType) => _movequeuetypesRepository.GetPost(ixMoveQueueType);
         public MoveQueueTypes Get(Int64 ixMoveQueueType) => _movequeuetypesRepository.Get(ixMoveQueueType);
         public IQueryable<MoveQueueTypes> Index() => _movequeuetypesRepository.Index();
+        public IQueryable<MoveQueueTypes> IndexDb() => _movequeuetypesRepository.IndexDb();
         public bool VerifyMoveQueueTypeUnique(Int64 ixMoveQueueType, string sMoveQueueType) => _movequeuetypesRepository.VerifyMoveQueueTypeUnique(ixMoveQueueType, sMoveQueueType);
         public List<string> VerifyMoveQueueTypeDeleteOK(Int64 ixMoveQueueType, string sMoveQueueType) => _movequeuetypesRepository.VerifyMoveQueueTypeDeleteOK(ixMoveQueueType, sMoveQueueType);
 

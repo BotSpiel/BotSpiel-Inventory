@@ -32,6 +32,7 @@ This class ....
         public PickBatchTypesPost GetPost(Int64 ixPickBatchType) => _pickbatchtypesRepository.GetPost(ixPickBatchType);
         public PickBatchTypes Get(Int64 ixPickBatchType) => _pickbatchtypesRepository.Get(ixPickBatchType);
         public IQueryable<PickBatchTypes> Index() => _pickbatchtypesRepository.Index();
+        public IQueryable<PickBatchTypes> IndexDb() => _pickbatchtypesRepository.IndexDb();
         public bool VerifyPickBatchTypeUnique(Int64 ixPickBatchType, string sPickBatchType) => _pickbatchtypesRepository.VerifyPickBatchTypeUnique(ixPickBatchType, sPickBatchType);
         public List<string> VerifyPickBatchTypeDeleteOK(Int64 ixPickBatchType, string sPickBatchType) => _pickbatchtypesRepository.VerifyPickBatchTypeDeleteOK(ixPickBatchType, sPickBatchType);
 
